@@ -1,0 +1,24 @@
+@(tables: List[Table], tableForm: Form[Table])
+
+@import helper._
+
+@main("Table list") {
+
+    <h1>@tables.size() table(s)</h1>
+    <ul>
+        @for(table <- tables) {
+            <li>
+                @table.name
+                @form(routes.Application.deleteTable(table.id)) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+
+    <h2>Add a new table</h2>
+    @form(routes.Application.newTable()) {
+        @inputText(tableForm("name"))
+        <input type="submit" value="Create">
+    }
+}

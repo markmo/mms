@@ -1,0 +1,15 @@
+<h1>Tables</h1>
+<div class="accordion" id="accordion1">
+    <div class="accordion-group">
+        <% _.each(tables, function (table) { %>
+        <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#table<%- table.id %>">
+                <%- table.name %>
+            </a>
+        </div>
+        <div id="table<%- table.id %>" class="accordion-body collapse">
+            <div class="accordion-inner"></div>
+        </div>
+        <% }); %>
+    </div>
+</div>

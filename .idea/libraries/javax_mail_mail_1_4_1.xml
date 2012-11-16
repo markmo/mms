@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="javax.mail_mail_1.4.1">
+    <CLASSES>
+      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/javax.mail/mail/jars/mail-1.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
