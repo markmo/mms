@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="com.google.inject_guice_3.0">
+    <CLASSES>
+      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/com.google.inject/guice/jars/guice-3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

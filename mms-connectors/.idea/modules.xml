@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DatabaseExtractor/DatabaseExtractor.iml" filepath="$PROJECT_DIR$/DatabaseExtractor/DatabaseExtractor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ExcelExtractor/ExcelExtractor.iml" filepath="$PROJECT_DIR$/ExcelExtractor/ExcelExtractor.iml" />
+    </modules>
+  </component>
+</project>
+

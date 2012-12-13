@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="asm_asm_2.2.1">
+    <CLASSES>
+      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/asm/asm/jars/asm-2.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

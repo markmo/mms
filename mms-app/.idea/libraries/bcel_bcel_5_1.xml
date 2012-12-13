@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bcel_bcel_5.1">
+    <CLASSES>
+      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/bcel/bcel/jars/bcel-5.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
