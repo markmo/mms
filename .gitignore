@@ -1,4 +1,17 @@
+# Extracted from https://github.com/ulrich/macaron-factory/blob/master/.gitignore
+# Ignore all dotfiles...
+.*
+# except for .gitignore
+!.gitignore
+
+# Ignore Play! working directory #
+db
+eclipse
+lib
+log
 logs
+modules
+precompiled
 project/project
 project/target
 target
@@ -6,3 +19,7 @@ tmp
 .history
 dist
 .DS_Store
+test-result
+server.pid
+*.iml
+*.eml
