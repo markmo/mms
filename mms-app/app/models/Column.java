@@ -19,8 +19,9 @@ import play.db.jpa.JPA;
  */
 @Entity
 @javax.persistence.Table(name = "ds_column")
+@DiscriminatorValue("COL")
 @Audited
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Column extends AuditedModel {
 
     @Id
@@ -66,11 +67,30 @@ public class Column extends AuditedModel {
 
     public String defaultValue;
 
+    public String minValue;
+
+    public String maxValue;
+
+    public int distinctCount;
+
+    @javax.persistence.Column(length = 8000)
+    public String distinctValues;
+
+    public int hasNulls;
+
     //public List<Cell> cells;
 
     @ManyToMany
     @JsonIgnore
     private Set<FilterType> filterTypes;
+
+    /*
+    @Transient
+    private String pruningState;
+
+    @Transient
+    private Map<String, String> fieldIdMap;
+    */
 
     public boolean isAutoinc() {
         return (intAutoinc == 1);
@@ -132,9 +152,23 @@ public class Column extends AuditedModel {
 
     public static List<Column> findByTableId(Long tableId) {
 //        return find.where().eq("table.id", tableId).findList();
-        return JPA.em().createQuery("from Column c where c.table.id = ?1",
+        return JPA.em().createQuery("select c from Column c where c.table.id = ?1",
                 Column.class)
                 .setParameter(1, tableId)
                 .getResultList();
+    }
+
+    public static Column findByName(String name, Table table) {
+        Column column = null;
+        try {
+            column = JPA.em().createQuery("select c from Column c where c.name = ?1 and c.table = ?2",
+                    Column.class)
+                    .setParameter(1, name)
+                    .setParameter(2, table)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // ignore
+        }
+        return column;
     }
 }

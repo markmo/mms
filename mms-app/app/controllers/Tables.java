@@ -27,7 +27,7 @@ public class Tables extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     public static Result index() {
 //        List <Table> tables = Table.find.all();
-        List<Table> tables = JPA.em().createQuery("from Table").getResultList();
+        List<Table> tables = JPA.em().createQuery("select t from Table t", Table.class).getResultList();
         JsonNode json = Json.toJson(tables);
         return ok(json);
     }

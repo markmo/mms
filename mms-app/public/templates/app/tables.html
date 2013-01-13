@@ -1,0 +1,25 @@
+<ul class="breadcrumb">
+    <li><a href="#/data-sources/{{dataSource.id}}"><span class="muted">[Data Source]</span> {{dataSource.name}}</a> <span class="divider">/</span></li>
+    <li><a href="#/schemas/{{schema.id}}/tables"><span class="muted">[Schema]</span> {{schema.name}}</a></li>
+</ul>
+<h1>Tables</h1>
+<div id="filter-type-btn-group" class="btn-group clearfix" data-toggle="buttons-checkbox">
+    {{#each filterTypes}}
+    <button type="button" class="btn pull-right">{{name}}</button>
+    {{/each}}
+</div>
+<div class="accordion" id="accordion1">
+    {{#each tables}}
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a href="#/tables/{{id}}/edit" class="pull-right"><i class="icon-edit"></i> Edit</a>
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#table{{id}}">
+                {{name}}
+            </a>
+        </div>
+        <div id="table{{id}}" class="accordion-body collapse">
+            <div class="accordion-inner"></div>
+        </div>
+    </div>
+    {{/each}}
+</div>

@@ -9,19 +9,19 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import models.TokenAction.Type;
 
+import org.apache.commons.lang.StringUtils;
 import play.data.format.Formats;
-import play.db.ebean.Model;
 import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 import scala.actors.threadpool.Arrays;
 import be.objectify.deadbolt.models.Permission;
 import be.objectify.deadbolt.models.Role;
 import be.objectify.deadbolt.models.RoleHolder;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.validation.Email;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
 import com.feth.play.module.pa.user.AuthUser;
 import com.feth.play.module.pa.user.AuthUserIdentity;
@@ -36,11 +36,14 @@ import com.feth.play.module.pa.user.NameIdentity;
  */
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") // still not working
+// using DTO at bottom for JSON serialization
 public class User implements RoleHolder {// extends Model implements RoleHolder {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
+    @GeneratedValue
 	public Long id;
 
 //	@Email
@@ -49,7 +52,37 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 	// @Column(unique = true)
 	public String email;
 
-	public String name;
+    public String firstName;
+
+    public String lastName;
+
+    public String title;
+
+    public String dept;
+
+    public String biography;
+
+    public int numberComments;
+
+    public int numberVotes;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "ds_followers",
+            joinColumns = @JoinColumn(name = "followed_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "following_user_id")
+    )
+    @JsonManagedReference("follower")
+    public List<User> followers;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "ds_followers",
+            joinColumns = @JoinColumn(name = "following_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_user_id")
+    )
+    @JsonBackReference("follower")
+    public List<User> following;
 
 	@Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date lastLogin;
@@ -58,13 +91,14 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 
 	public boolean emailValidated;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	public List<SecurityRole> roles;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference("linkedAccount") // not working - currently forced to use @JsonIdentityInfo above
 	public List<LinkedAccount> linkedAccounts;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	public List<UserPermission> permissions;
 
 //	public static final Finder<Long, User> find = new Finder<Long, User>(
@@ -79,6 +113,21 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 	public List<? extends Permission> getPermissions() {
 		return permissions;
 	}
+
+    @Transient
+    public String getName() {
+        return firstName + " " + lastName;
+    }
+
+    public void setName(String name) {
+        if (name == null) return;
+        String[] parts = name.trim().split("\\s+");
+        int len = parts.length;
+        lastName = parts[len - 1];
+        if (len > 1) {
+            firstName = StringUtils.join(Arrays.copyOfRange(parts, 0, len - 1), " ");
+        }
+    }
 
 //	public static boolean existsByAuthUserIdentity(
 //			final AuthUserIdentity identity) {
@@ -109,9 +158,10 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 //				.eq("linkedAccounts.providerKey", identity.getProvider());
 //	}
 
+    @Transactional
     private static TypedQuery<User> getAuthUserFind(final AuthUserIdentity identity) {
         return JPA.em()
-                .createQuery("from User u join LinkedAccount a where u.active = true and a.providerUserId = ?1 and a.providerKey = ?2",
+                .createQuery("select u from User u join LinkedAccount a where u.active = true and a.providerUserId = ?1 and a.providerKey = ?2",
                         User.class)
                 .setParameter(1, identity.getId())
                 .setParameter(2, identity.getProvider());
@@ -146,7 +196,11 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 
     public static User findByUsernamePasswordIdentity(
             final UsernamePasswordAuthUser identity) {
-        return getUsernamePasswordAuthUserFind(identity).getSingleResult();
+        try {
+            return getUsernamePasswordAuthUserFind(identity).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
 //	private static ExpressionList<User> getUsernamePasswordAuthUserFind(
@@ -155,15 +209,18 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 //				"linkedAccounts.providerKey", identity.getProvider());
 //	}
 
+    @Transactional
     private static TypedQuery<User> getUsernamePasswordAuthUserFind(
             final UsernamePasswordAuthUser identity) {
+        String providerKey = identity.getProvider();
         return JPA.em()
-                .createQuery("from User u join LinkedAccount a where u.active = true and u.email = ?1 and a.providerKey = ?2",
+                .createQuery("select u from User u join u.linkedAccounts a where u.active = true and u.email = ?1 and a.providerKey = ?2",
                         User.class)
                 .setParameter(1, identity.getEmail())
                 .setParameter(2, identity.getProvider());
     }
 
+    @Transactional
 	public void merge(final User otherUser) {
 		for (final LinkedAccount acc : otherUser.linkedAccounts) {
 			this.linkedAccounts.add(LinkedAccount.create(acc));
@@ -172,9 +229,10 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 
 		// deactivate the merged user that got added to this one
 		otherUser.active = false;
-		Ebean.save(Arrays.asList(new User[] { otherUser, this }));
+		JPA.em().persist(Arrays.asList(new User[] { otherUser, this }));
 	}
 
+    @Transactional
 	public static User create(final AuthUser authUser) {
 		final User user = new User();
 		user.roles = Collections.singletonList(SecurityRole
@@ -183,8 +241,17 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		// user.permissions.add(UserPermission.findByValue("printers.edit"));
 		user.active = true;
 		user.lastLogin = new Date();
-		user.linkedAccounts = Collections.singletonList(LinkedAccount
-				.create(authUser));
+
+        ///////////// this wasn't in the original
+        // TODO: was ebean creating this association automatically
+
+        LinkedAccount a = LinkedAccount.create(authUser);
+        a.user = user;
+        user.linkedAccounts = Collections.singletonList(a);
+
+        //user.linkedAccounts = Collections.singletonList(LinkedAccount
+        //		.create(authUser));
+        /////////////
 
 		if (authUser instanceof EmailIdentity) {
 			final EmailIdentity identity = (EmailIdentity) authUser;
@@ -199,7 +266,7 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 			final NameIdentity identity = (NameIdentity) authUser;
 			final String name = identity.getName();
 			if (name != null) {
-				user.name = name;
+				user.setName(name);
 			}
 		}
 
@@ -224,6 +291,7 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		return providerKeys;
 	}
 
+    @Transactional
 	public static void addLinkedAccount(final AuthUser oldUser,
 			final AuthUser newUser) {
 		final User u = User.findByAuthUserIdentity(oldUser);
@@ -232,6 +300,7 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
         JPA.em().persist(u);
 	}
 
+    @Transactional
 	public static void setLastLoginDate(final AuthUser knownUser) {
 		final User u = User.findByAuthUserIdentity(knownUser);
 		u.lastLogin = new Date();
@@ -251,9 +320,10 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 //		return find.where().eq("active", true).eq("email", email);
 //	}
 
+    @Transactional
     private static TypedQuery<User> getEmailUserFind(final String email) {
         return JPA.em()
-                .createQuery("from User u where u.active = true and u.email = ?1",
+                .createQuery("select u from User u where u.active = true and u.email = ?1",
                         User.class)
                 .setParameter(1, email);
     }
@@ -262,6 +332,7 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		return LinkedAccount.findByProviderKey(this, providerKey);
 	}
 
+    @Transactional
 	public static void verify(final User unverified) {
 		// You might want to wrap this into a transaction
 		unverified.emailValidated = true;
@@ -270,6 +341,7 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		TokenAction.deleteByUser(unverified, Type.EMAIL_VERIFICATION);
 	}
 
+    @Transactional
 	public void changePassword(final UsernamePasswordAuthUser authUser,
 			final boolean create) {
 		LinkedAccount a = this.getAccountByProvider(authUser.getProvider());
@@ -293,4 +365,37 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		this.changePassword(authUser, create);
 		TokenAction.deleteByUser(this, Type.PASSWORD_RESET);
 	}
+
+    public UserDTO getDTO() {
+        UserDTO dto = new UserDTO();
+        dto.id = id;
+        dto.email = email;
+        dto.firstName = firstName;
+        dto.lastName = lastName;
+        dto.title = title;
+        dto.dept = dept;
+        dto.numberComments = numberComments;
+        dto.numberVotes = numberVotes;
+        dto.numberFollowers = (followers == null) ? 0 : followers.size();
+        dto.numberFollowing = (following == null) ? 0 : following.size();
+        dto.biography = biography;
+
+        return dto;
+    }
+
+    public static class UserDTO {
+
+        public Long id;
+        public String email;
+        public String firstName;
+        public String lastName;
+        public String title;
+        public String dept;
+        public String biography;
+        public int numberComments;
+        public int numberVotes;
+        public int numberFollowers;
+        public int numberFollowing;
+
+    }
 }

@@ -1,9 +1,8 @@
 define [
-    'jquery',
     'underscore',
     'backbone',
     'cs!events'
-], ($, _, Backbone, Events) ->
+], (_, Backbone, app) ->
     views = {}
 
     getNestedProperty = (object, key) ->
@@ -20,11 +19,8 @@ define [
 
         view = new View(options)
         views[name] = view
-        unless context.children?
-            context.children = {}
-            context.children[name] = view
-        else
-            context.children[name] = view
+        context.children = {} unless context.children?
+        context.children[name] = view
         view.parent = context if context instanceof Backbone.View
         view.getProperty = (property) ->
             val = getNestedProperty(view, property)
@@ -32,5 +28,5 @@ define [
                 view.parent.getProperty(property)
             else val
 
-        Events.trigger 'viewCreated'
+        app.trigger 'viewCreated'
         return view

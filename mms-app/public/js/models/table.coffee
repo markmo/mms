@@ -1,5 +1,4 @@
 define [
-    'underscore',
     'backbone'
-], (_, Backbone) ->
+], (Backbone) ->
     Backbone.Model.extend()

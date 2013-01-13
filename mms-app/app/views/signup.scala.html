@@ -3,7 +3,7 @@
 @import helper._
 @import helper.twitterBootstrap._
 
-@main(Messages("playauthenticate.signup.title"),"signup") {
+@main(Messages("playauthenticate.signup.title"),"signup", null) {
 
     <div class="row">
         <div class="span6">
@@ -19,7 +19,7 @@
 
                 @if(signupForm.hasGlobalErrors) {
                     <p class="error">
-                        <span class="label label-important">@signupForm.globalError.message</span>
+                        <span class="label label-important">@signupForm.globalError.get.message</span>
                     </p>
                 }
 
@@ -32,7 +32,7 @@
 
                 @_passwordPartial(signupForm)
 
-                <input type="submit" value="@Messages(" playauthenticate.signup.now")" class="btn btn-primary">
+                <input type="submit" value="@Messages("playauthenticate.signup.now")" class="btn btn-primary">
             }
         </div>
 

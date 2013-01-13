@@ -3,11 +3,10 @@ package models;
 import static utils.CollectionUtils.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.*;
+import com.github.cleverage.elasticsearch.Indexable;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.*;
 import play.db.jpa.JPA;
@@ -19,9 +18,13 @@ import play.db.jpa.JPA;
  */
 @Entity
 @javax.persistence.Table(name = "ds_table")
+@DiscriminatorValue("TAB")
 @Audited
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-public class Table extends AuditedModel {
+
+// can't be interpreted by Backbone
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+
+public class Table extends AuditedModel implements Indexable {
 
     @Id
     @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "public.ds_table_table_id_seq")
@@ -44,7 +47,9 @@ public class Table extends AuditedModel {
     @JoinColumn(name = "table_role_id")
     public TableRole role;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "table")
+    public int rowCount;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "table")
     @OrderBy("name")
     @JsonIgnore
     private Set<Column> columns;
@@ -68,6 +73,22 @@ public class Table extends AuditedModel {
         columns.add(column);
     }
 
+    @Override
+    public Map toIndex() {
+        HashMap map = new HashMap();
+        map.put("name", name);
+        return map;
+    }
+
+    @Override
+    public Indexable fromIndex(Map map) {
+        if (map == null) {
+            return this;
+        }
+        this.name = (String)map.get("name");
+        return this;
+    }
+
 //    public static Finder<Long, Table> find = new Finder<Long, Table>(
 //            Long.class, Table.class
 //    );
@@ -75,9 +96,23 @@ public class Table extends AuditedModel {
     public static List<Table> findBySchemaId(Long schemaId) {
 //        return find.where().eq("schema.id", schemaId).findList();
         return JPA.em()
-                .createQuery("from Table t where t.schema.id = ?1",
+                .createQuery("select t from Table t where t.schema.id = ?1",
                         Table.class)
                 .setParameter(1, schemaId)
                 .getResultList();
+    }
+
+    public static Table findByName(String name, Schema schema) {
+        Table table = null;
+        try {
+            table = JPA.em().createQuery("select t from Table t where t.name = ?1 and t.schema = ?2",
+                    Table.class)
+                    .setParameter(1, name)
+                    .setParameter(2, schema)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // ignore
+        }
+        return table;
     }
 }

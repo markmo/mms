@@ -1,0 +1,16 @@
+<ul class="breadcrumb">
+    <li><a href="#/data-sources/{{dataSource.id}}"><span class="muted">[Data Source]</span> {{dataSource.name}}</a></li>
+</ul>
+<h1>Schemas</h1>
+<div class="row">
+    <div class="span7">
+        <ul class="items">
+            {{#each schemas}}
+            <li>
+                <a href="#/schemas/{{id}}/tables" class="item-title">{{name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    <div id="posts-section" class="span5"></div>
+</div>

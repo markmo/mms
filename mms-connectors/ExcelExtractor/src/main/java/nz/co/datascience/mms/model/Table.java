@@ -24,6 +24,9 @@ public class Table {
 
     private List<Column> columns;
 
+    // Statistics
+    private int rowCount;
+
     public int getId() {
         return id;
     }
@@ -126,6 +129,14 @@ public class Table {
             }
         }
         return null;
+    }
+
+    public int getRowCount() {
+        return rowCount;
+    }
+
+    public void setRowCount(int rowCount) {
+        this.rowCount = rowCount;
     }
 
     @Override

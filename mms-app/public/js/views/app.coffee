@@ -1,11 +1,10 @@
 define [
     'jquery',
-    'underscore',
     'backbone',
     'cs!vm',
     'cs!events',
     'text!templates/layout.html'
-], ($, _, Backbone, Vm, Events, layoutTemplate) ->
+], ($, Backbone, Vm, Events, layoutTemplate) ->
 
     Backbone.View.extend
         el: '.content'

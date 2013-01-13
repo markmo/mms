@@ -1,9 +1,7 @@
 define [
-    'jquery',
-    'underscore',
-    'backbone',
+    'backbone'
     'cs!models/table'
-], ($, _, Backbone, tableModel) ->
+], (Backbone, tableModel) ->
     Backbone.Collection.extend
         url: ->
             '/schemas/' + @schemaId + '/tables'
@@ -13,4 +11,5 @@ define [
         comparator: (table) ->
             table.get('name')
 
-        initialize: (@schemaId) ->
+        initialize: (models, options) ->
+            @schemaId = options.schemaId

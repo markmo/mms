@@ -1,0 +1,21 @@
+<h1>Revisions</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Revision ID</th>
+        <th>Revision Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each revisions}}
+    <tr>
+        <td>
+            <a href="#/{{../entity.type}}s/{{../entity.id}}/revisions/{{revisionId}}">{{revisionId}}</a>
+        </td>
+        <td>
+            {{revisionDate}}
+        </td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>

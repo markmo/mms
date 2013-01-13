@@ -1,5 +1,7 @@
 package module;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate3.Hibernate3Module;
 import com.google.inject.*;
 
 /**
@@ -10,4 +12,13 @@ import com.google.inject.*;
 public class Dependencies implements Module {
 
     public void configure(Binder binder) {}
+
+    @Provides
+    ObjectMapper provideObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        Hibernate3Module hm = new Hibernate3Module();
+        hm.configure(Hibernate3Module.Feature.FORCE_LAZY_LOADING, true);
+        mapper.registerModule(hm);
+        return mapper;
+    }
 }

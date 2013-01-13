@@ -1,9 +1,7 @@
 define [
-    'jquery',
-    'underscore',
-    'backbone',
+    'backbone'
     'cs!models/filter_type'
-], ($, _, Backbone, filterTypeModel) ->
+], (Backbone, filterTypeModel) ->
     Backbone.Collection.extend
         url: ->
             '/filter-types'
@@ -11,4 +9,4 @@ define [
         model: filterTypeModel
 
         comparator: (filterType) ->
-            filterType.get('name')
+            filterType.get('id')

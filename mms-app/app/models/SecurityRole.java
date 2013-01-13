@@ -18,7 +18,6 @@ package models;
 import javax.persistence.*;
 
 import be.objectify.deadbolt.models.Role;
-import play.db.ebean.Model;
 import play.db.jpa.JPA;
 
 /**
@@ -48,15 +47,15 @@ public class SecurityRole implements Role {// extends Model implements Role {
     public static SecurityRole findByRoleName(String roleName) {
 //        return find.where().eq("roleName", roleName).findUnique();
         return JPA.em()
-                .createQuery("from SecurityRole r where r.roleName = ?1",
+                .createQuery("select r from SecurityRole r where r.roleName = ?1",
                         SecurityRole.class)
                 .setParameter(1, roleName)
                 .getSingleResult();
     }
 
     public static int findRowCount() {
-        return JPA.em()
-                .createQuery("select count(*) from SecurityRole")
-                .getFirstResult();
+        return ((Number)JPA.em()
+                .createQuery("select count(r.id) from SecurityRole r")
+                .getFirstResult()).intValue();
     }
 }

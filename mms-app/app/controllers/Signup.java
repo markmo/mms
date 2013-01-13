@@ -2,6 +2,7 @@ package controllers;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 import play.data.Form;
+import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -106,6 +107,7 @@ public class Signup extends Controller {
      * @param type
      * @return
      */
+    @Transactional(readOnly = true)
     private static TokenAction tokenIsValid(final String token, final Type type) {
         TokenAction ret = null;
         if (token != null && !token.trim().isEmpty()) {
@@ -180,6 +182,7 @@ public class Signup extends Controller {
         return ok(exists.render());
     }
 
+    @Transactional
     public static Result verify(final String token) {
         com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         final TokenAction ta = tokenIsValid(token, Type.EMAIL_VERIFICATION);

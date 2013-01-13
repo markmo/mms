@@ -2,16 +2,20 @@ package nz.co.datascience.mms.extractors.DatabaseExtractor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.base.Joiner;
 import nz.co.datascience.mms.model.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * User: markmo
@@ -20,21 +24,44 @@ import java.util.Properties;
  */
 public class DatabaseExtractor {
 
-//    private String username = "markmo";
-//    private String password = "boxcar99";
-//    private String dbms = "postgresql";
-//    private String serverName = "127.0.0.1";
-//    private String portNumber = "5432";
-//    private String dbName = "mms";
     private String username = "sa";
     private String password = "Password1";
     private String dbms = "jtds:sqlserver";
-    private String serverName = "192.168.211.155";
+    private String serverName = "192.168.211.152";
     private String portNumber = "1433";
     private String dbName = "DM_ScheduALL";
+    private String dataSourceName;
 
     private List<Schema> schemas;
     private DataSource dataSource;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setDbms(String dbms) {
+        this.dbms = dbms;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
+
+    public void setPortNumber(String portNumber) {
+        this.portNumber = portNumber;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
+    }
+
+    public void setDataSourceName(String dataSourceName) {
+        this.dataSourceName = dataSourceName;
+    }
 
     public Connection getConnection() throws SQLException, ClassNotFoundException {
         Connection conn = null;
@@ -84,7 +111,7 @@ public class DatabaseExtractor {
         this.schemas.add(schema);
 
         DataSource dataSource = new DataSource();
-        dataSource.setName("SQL Server 2008 R2");
+        dataSource.setName(this.dataSourceName);
         dataSource.addSchema(schema);
         this.dataSource = dataSource;
 
@@ -158,21 +185,102 @@ public class DatabaseExtractor {
         return mapper.writeValueAsString(value);
     }
 
+    public void getStats(Schema schema) {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("net.sourceforge.jtds.jdbc.Driver");
+        dataSource.setUrl("jdbc:" + this.dbms + "://" + this.serverName + ":" + this.portNumber + "/" + this.dbName);
+        dataSource.setUsername(this.username);
+        dataSource.setPassword(this.password);
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        for (final Table table : schema.getTables()) {
+            StringBuilder sql = new StringBuilder("select COUNT(*)");
+            for (Column column : table.getColumns()) {
+                String columnName = column.getName();
+                sql.append(",MIN(").append(columnName)
+                    .append("),MAX(").append(columnName)
+                    .append(")");
+                getStats(jdbcTemplate, schema, table, column);
+            }
+            sql.append(" from ").append(schema.getName()).append(".").append(table.getName());
+            Map<String, Object> result = jdbcTemplate.queryForObject(sql.toString(),
+                    new RowMapper<Map<String, Object>>() {
+                        public Map<String, Object> mapRow(ResultSet resultSet, int i) throws SQLException {
+                            Map<String, Object> result = new HashMap<String, Object>();
+                            int j = 2;
+                            result.put("count", resultSet.getInt(1));
+                            for (Column column : table.getColumns()) {
+                                String columnName = column.getName();
+                                result.put("min" + columnName, resultSet.getObject(j++));
+                                result.put("max" + columnName, resultSet.getObject(j++));
+                            }
+                            return result;
+                        }
+                    });
+            table.setRowCount((Integer)result.get("count"));
+            for (Column column : table.getColumns()) {
+                String columnName = column.getName();
+                column.setMinValue(result.get("min" + columnName));
+                column.setMaxValue(result.get("max" + columnName));
+            }
+        }
+    }
+
+    public void getStats(JdbcTemplate jdbcTemplate, Schema schema, Table table, Column column) {
+        String distinctSql = "select distinct " + column.getName() + " from " + schema.getName() + "." + table.getName();
+        int distinctCount = jdbcTemplate.queryForInt("select COUNT(*) from (" + distinctSql + ") A");
+        column.setDistinctCount(distinctCount);
+        if (distinctCount < 100) {
+            List<Object> result = jdbcTemplate.query(distinctSql,
+                    new RowMapper<Object>() {
+                        public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+                            return resultSet.getObject(1);
+                        }
+                    });
+            Joiner joiner = Joiner.on('|').skipNulls();
+            if (!result.isEmpty()) {
+                column.setDistinctValues(joiner.join(result));
+                column.setHasNulls(result.contains(null));
+            }
+        } else {
+            column.setDistinctValues("lots");
+        }
+    }
+
     public static void main(String[] args) throws Exception {
-        DatabaseExtractor extractor = new DatabaseExtractor();
-        Connection conn = extractor.getConnection();
-        List<Schema> schemas = extractor.extract(conn);
-        DataSource dataSource = extractor.getDataSource();
-//        System.out.println(extractor.serialize(extractor.lookupSchema("public")));
-        String json = extractor.serialize(dataSource);
-        System.out.println(json);
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("http://localhost:9000/import-schema");
-        httpPost.setEntity(new StringEntity(json));
-        httpPost.setHeader("Accept", "text/json");
-        httpPost.setHeader("Content-type", "text/json; charset=UTF-8");
-        HttpResponse response = httpClient.execute(httpPost);
-        System.out.println(response.getStatusLine().getStatusCode());
-        conn.close();
+        Map conf = loadConfig();
+        List<Map> datasources = (List<Map>)conf.get("data-source");
+        for (Map source : datasources) {
+            if ((Boolean)source.get("active")) {
+                DatabaseExtractor extractor = new DatabaseExtractor();
+                extractor.setUsername((String)source.get("username"));
+                extractor.setPassword((String)source.get("password"));
+                extractor.setDbms((String)source.get("dbms"));
+                extractor.setServerName((String)source.get("server-name"));
+                extractor.setPortNumber(source.get("port-number").toString());
+                extractor.setDbName((String)source.get("db-name"));
+                extractor.setDataSourceName((String)source.get("name"));
+                Connection conn = extractor.getConnection();
+                List<Schema> schemas = extractor.extract(conn);
+                DataSource dataSource = extractor.getDataSource();
+                extractor.getStats(dataSource.getSchemas().get(0));
+                //System.out.println(extractor.serialize(extractor.lookupSchema("public")));
+                String json = extractor.serialize(dataSource);
+                System.out.println(json);
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://localhost:9000/import-schema");
+                httpPost.setEntity(new StringEntity(json));
+                httpPost.setHeader("Accept", "text/json");
+                httpPost.setHeader("Content-type", "text/json; charset=UTF-8");
+                HttpResponse response = httpClient.execute(httpPost);
+                System.out.println(response.getStatusLine().getStatusCode());
+                conn.close();
+            }
+        }
+    }
+
+    public static Map loadConfig() throws IOException {
+        InputStream input = DatabaseExtractor.class.getResourceAsStream("/datasources.yaml");
+        Yaml yaml = new Yaml();
+        return (Map)yaml.load(input);
     }
 }

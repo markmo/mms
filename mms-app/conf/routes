@@ -22,8 +22,21 @@ POST    /tables/:id/delete              controllers.Application.deleteTable(id: 
 GET     /columns                        controllers.Columns.index()
 GET     /tables/:id/columns             controllers.Columns.findColumnsByTableId(id: Long)
 
+# important! the more specific route must come before the general
+GET     /columns/:id/revisions/:revisionId   controllers.Columns.getRevision(id: Long, revisionId: java.lang.Integer)
+GET     /columns/:id/revisions           controllers.Columns.revisions(id: Long)
+
 # Filter Types
 GET     /filter-types                   controllers.FilterTypes.index()
+
+# Revisions
+GET     /revisions/:id                  controllers.Application.getRevision(id: java.lang.Integer)
+GET     /revisions                      controllers.Application.revisions()
+GET     /show-revisions                 controllers.Application.showRevisions()
+
+# Posts
+GET     /posts/:entityType/:id          controllers.Posts.posts(entityType: String, id: Long)
+POST    /posts/:entityType/:id          controllers.Posts.create(entityType: String, id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                   controllers.Assets.at(path="/public", file)
@@ -34,6 +47,8 @@ GET     /restricted                     controllers.Application.restricted
 #GET     /assets/javascript/routes.js    controllers.Application.jsRoutes
 
 GET     /profile                        controllers.Application.profile
+
+GET     /profile.json                   controllers.Application.profileAsJSON
 
 GET     /login                          controllers.Application.login
 POST    /login                          controllers.Application.doLogin
@@ -66,8 +81,15 @@ POST    /accounts/link                  controllers.Account.doLink
 GET     /accounts/merge                 controllers.Account.askMerge
 POST    /accounts/merge                 controllers.Account.doMerge
 
+GET     /account/:id/edit               controllers.Account.edit(id: Long)
+POST    /accounts                       controllers.Account.update()
+
 GET     /login/password/forgot          controllers.Signup.forgotPassword(email: String ?= "")
 POST    /login/password/forgot          controllers.Signup.doForgotPassword
+
+GET     /search/:terms                  controllers.Search.index(terms: String)
+
+GET     /themes/:theme                  controllers.Application.theme(theme: String)
 
 # Map static resources from the /public folder to the /assets URL path
 #GET     /js/*file                       controllers.Assets.at(path="/public/js", file)

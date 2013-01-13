@@ -3,7 +3,7 @@
 @import helper._
 @import helper.twitterBootstrap._
 
-@main(Messages("playauthenticate.login.title"),"login") {
+@main(Messages("playauthenticate.login.title"),"login", null) {
 
     <div class="row">
         <div class="span6">
@@ -18,7 +18,7 @@
 
                 @if(loginForm.hasGlobalErrors) {
                     <p class="error">
-                        <span class="label label-important">@loginForm.globalError.message</span>
+                        <span class="label label-important">@loginForm.globalError.get.message</span>
                     </p>
                 }
 

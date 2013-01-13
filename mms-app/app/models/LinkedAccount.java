@@ -1,10 +1,8 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-import play.db.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.db.jpa.JPA;
 
 import com.feth.play.module.pa.user.AuthUser;
@@ -15,9 +13,12 @@ public class LinkedAccount {// extends Model {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue
     public Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference("linkedAccount")
     public User user;
 
     public String providerUserId;
@@ -30,7 +31,7 @@ public class LinkedAccount {// extends Model {
 //        return find.where().eq("user", user).eq("providerKey", key)
 //                .findUnique();
         return JPA.em()
-                .createQuery("from LinkedAccount a where a.user = ?1 and a.providerKey = ?2",
+                .createQuery("select a from LinkedAccount a where a.user = ?1 and a.providerKey = ?2",
                         LinkedAccount.class)
                 .setParameter(1, user)
                 .setParameter(2, key)

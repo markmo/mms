@@ -1,3 +1,4 @@
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +8,7 @@ import play.GlobalSettings;
 import play.Logger;
 import play.db.jpa.JPA;
 import play.libs.F;
+import play.mvc.Action;
 import play.mvc.Call;
 
 import com.feth.play.module.pa.PlayAuthenticate;
@@ -16,6 +18,8 @@ import com.feth.play.module.pa.exceptions.AuthException;
 
 import controllers.routes;
 import models.SecurityRole;
+import play.mvc.Http;
+import play.mvc.Result;
 
 public class Global extends GlobalSettings {
 
@@ -79,9 +83,22 @@ public class Global extends GlobalSettings {
         });
     }
 
+    /*
+    @Override
+    public Action onRequest(Http.Request request, Method actionMethod) {
+        return new Action.Simple() {
+            public Result call(Http.Context ctx) throws Throwable {
+
+                // my intercept code here
+
+                return delegate.call(ctx);
+            }
+        };
+    }*/
+
     private void initialData() {
 //        if (SecurityRole.find.findRowCount() == 0) {
-        if (SecurityRole.findRowCount() == 0) {
+        if (SecurityRole.findRowCount() < 1) {
             for (final String roleName : Arrays.asList(controllers.Application.USER_ROLE)) {
                 final SecurityRole role = new SecurityRole();
                 role.roleName = roleName;

@@ -1,0 +1,42 @@
+<div id="new-post" class="media clearfix">
+    <a href="#" class="pull-left">
+        <img class="media-object" src="/assets/img/default-user-icon.png" alt="markmo" style="width: 48px; height: 48px;">
+    </a>
+    <div class="media-body">
+        <label for="message">New Post</label>
+        <div class="bubble me editable">
+            <textarea id="message" name="message"></textarea>
+        </div>
+    </div>
+    <div class="pull-right">
+        <button id="btn-submit" class="btn btn-primary">Post</button>
+    </div>
+</div>
+<ul id="posts" class="media-list">
+{{#loop posts}}
+    <li class="media">
+        <a href="#" class="pull-left">
+            <img class="media-object" src="/assets/img/default-user-icon.png" data-id="1" style="width: 48px; height: 48px;">
+        </a>
+        <div class="media-body">
+            <div class="bubble me clearfix">{{message}}</div>
+            <small class="me">sent {{humanize datetime}}</small>
+        </div>
+        <div class="reply">
+            <button class="btn btn-mini btn-reply" data-id="{{id}}">Reply</button>
+        </div>
+        <div class="media reply-body clearfix" style="display: none;"></div>
+        {{#loop replies}}
+        <div class="media">
+            <a href="#" class="pull-right">
+                <img class="media-object" src="/assets/img/default-user-icon.png" alt="markmo" style="width: 48px; height: 48px;">
+            </a>
+            <div class="media-body">
+                <div class="bubble you clearfix">{{message}}</div>
+                <small class="you">sent {{humanize datetime}}</small>
+            </div>
+        </div>
+        {{/loop}}
+    </li>
+{{/loop}}
+</ul>

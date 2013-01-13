@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints;
+import play.db.jpa.JPA;
 
 /**
  * User: markmo
@@ -14,7 +15,7 @@ import play.data.validation.Constraints;
 @Entity
 @javax.persistence.Table(name = "ds_sql_data_type")
 @Audited
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class SqlDataType extends AuditedModel {
 
     @Id
@@ -25,4 +26,17 @@ public class SqlDataType extends AuditedModel {
     @javax.persistence.Column(name = "sql_data_type_name")
     @Constraints.Required
     public String name;
+
+    public static SqlDataType findByName(String name) {
+        SqlDataType sqlDataType = null;
+        try {
+            sqlDataType = JPA.em().createQuery("select t from SqlDataType t where t.name = ?1",
+                    SqlDataType.class)
+                    .setParameter(1, name)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // ignore
+        }
+        return sqlDataType;
+    }
 }

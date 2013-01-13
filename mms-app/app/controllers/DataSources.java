@@ -28,7 +28,7 @@ public class DataSources extends Controller {
     public static Result index() throws IOException {
 //        List<DataSource> dataSources = DataSource.find.all();
         List<DataSource> dataSources = JPA.em().createQuery(
-                "from DataSource",
+                "select d from DataSource d",
                 DataSource.class)
                 .getResultList();
 //        JsonNode json = Json.toJson(dataSources);

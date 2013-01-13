@@ -18,8 +18,9 @@ import play.db.jpa.JPA;
  */
 @Entity
 @javax.persistence.Table(name = "ds_schema")
+@DiscriminatorValue("SCH")
 @Audited
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Schema extends AuditedModel {
 
     @Id
@@ -34,7 +35,7 @@ public class Schema extends AuditedModel {
     @JoinColumn(name = "data_source_id")
     public DataSource dataSource;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "schema")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "schema")
     @OrderBy("name")
     @JsonIgnore
     private Set<Table> tables;
@@ -66,9 +67,23 @@ public class Schema extends AuditedModel {
 //        return find.where().eq("dataSource.id", dataSourceId).findList();
         return JPA.em()
                 .createQuery(
-                        "from Schema s where s.dataSource.id = ?1",
+                        "select s from Schema s where s.dataSource.id = ?1",
                         Schema.class)
                 .setParameter(1, dataSourceId)
                 .getResultList();
+    }
+
+    public static Schema findByName(String name, DataSource dataSource) {
+        Schema schema = null;
+        try {
+            schema = JPA.em().createQuery("select s from Schema s where s.name = ?1 and s.dataSource = ?2",
+                    Schema.class)
+                    .setParameter(1, name)
+                    .setParameter(2, dataSource)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // ignore
+        }
+        return schema;
     }
 }

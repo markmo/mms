@@ -1,5 +1,8 @@
 define [
-    'underscore',
     'backbone'
-], (_, Backbone) ->
-    Backbone.Model.extend()
+], (Backbone) ->
+    Backbone.Model.extend
+        schema:
+            name: 'Text'
+            shortDescription: 'TextArea'
+            longDescription: 'Markdown'

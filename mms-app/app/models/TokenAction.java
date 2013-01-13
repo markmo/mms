@@ -10,6 +10,7 @@ import play.db.jpa.JPA;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.EnumValue;
+import play.db.jpa.Transactional;
 
 @Entity
 public class TokenAction {// extends Model {
@@ -17,10 +18,10 @@ public class TokenAction {// extends Model {
     public enum Type {
 
 //        @EnumValue("EV")
-        EMAIL_VERIFICATION("EV"),
+        EMAIL_VERIFICATION("EMAIL_VERIFICATION"),
 
 //        @EnumValue("PR")
-        PASSWORD_RESET("PR");
+        PASSWORD_RESET("PASSWORD_RESET");
 
         private String value;
 
@@ -43,12 +44,14 @@ public class TokenAction {// extends Model {
     private final static long VERIFICATION_TIME = 7 * 24 * 3600;
 
     @Id
+    @GeneratedValue
     public Long id;
 
     @Column(unique = true)
     public String token;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
     public User targetUser;
 
     @Enumerated(EnumType.STRING)
@@ -63,14 +66,19 @@ public class TokenAction {// extends Model {
 //    public static final Finder<Long, TokenAction> find = new Finder<Long, TokenAction>(
 //            Long.class, TokenAction.class);
 
+    @Transactional(readOnly = true)
     public static TokenAction findByToken(final String token, final Type type) {
 //        return find.where().eq("token", token).eq("type", type).findUnique();
-        return JPA.em()
-                .createQuery("from TokenAction t where t.token = ?1 and t.type = ?2",
-                        TokenAction.class)
-                .setParameter(1, token)
-                .setParameter(2, type)
-                .getSingleResult();
+        try {
+            return JPA.em()
+                    .createQuery("select t from TokenAction t where t.token = ?1 and t.type = ?2",
+                            TokenAction.class)
+                    .setParameter(1, token)
+                    .setParameter(2, type)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public static void deleteByUser(final User u, final Type type) {
@@ -85,6 +93,7 @@ public class TokenAction {// extends Model {
         return this.expires.after(new Date());
     }
 
+    @Transactional
     public static TokenAction create(final Type type, final String token,
                                      final User targetUser) {
         final TokenAction ua = new TokenAction();

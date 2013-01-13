@@ -9,6 +9,8 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <!--<property name="hibernate.bytecode.use_reflection_optimizer" value="false"/>-->
+            <!--<property name="hibernate.show_sql" value="true"/>-->
 
             <!-- Envers properties -->
             <property name="hibernate.ejb.event.post-insert"

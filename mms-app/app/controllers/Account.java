@@ -8,6 +8,8 @@ import play.data.Form;
 import play.data.format.Formats.NonEmpty;
 import play.data.validation.Constraints.MinLength;
 import play.data.validation.Constraints.Required;
+import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,6 +18,7 @@ import providers.MyUsernamePasswordAuthUser;
 
 import models.User;
 import views.html.account.*;
+import views.html.helper.form;
 
 public class Account extends Controller {
 
@@ -48,6 +51,31 @@ public class Account extends Controller {
 
     private static final Form<Accept> ACCEPT_FORM = form(Accept.class);
     private static final Form<Account.PasswordChange> PASSWORD_CHANGE_FORM = form(Account.PasswordChange.class);
+    private static final Form<User> USER_FORM = form(User.class);
+
+    @Transactional(readOnly = true)
+    @Restrict(Application.USER_ROLE)
+    public static Result edit(Long id) {
+        User user = JPA.em().find(User.class, id);
+        Form<User> userForm = USER_FORM.fill(user);
+        return ok(edit.render(userForm));
+    }
+
+    @Transactional
+    @Restrict(Application.USER_ROLE)
+    public static Result update() {
+        Form<User> boundForm = USER_FORM.bindFromRequest();
+        if (boundForm.hasErrors()) {
+            flash("error", "Please correct the form below.");
+            return badRequest(edit.render(boundForm));
+        }
+        User user = boundForm.get();
+        JPA.em().persist(user);
+        flash("success",
+                String.format("Successfully updated user %s", user));
+
+        return redirect(routes.Application.index());
+    }
 
     @RoleHolderPresent
     public static Result link() {

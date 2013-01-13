@@ -268,10 +268,10 @@ public class MyUsernamePasswordAuthProvider
                 .absoluteURL(ctx.request(), isSecure);
 
         final String html = views.html.account.email.password_reset
-                .render(url, token, user.name).toString();
+                .render(url, token, user.getName()).toString();
 
         final String text = views.txt.account.email.password_reset
-                .render(url, token, user.name).toString();
+                .render(url, token, user.getName()).toString();
 
         return new Body(text, html);
     }
@@ -304,10 +304,10 @@ public class MyUsernamePasswordAuthProvider
                 .absoluteURL(ctx.request(), isSecure);
 
         final String html = views.html.account.email.verify_email
-                .render(url, token, user.name, user.email).toString();
+                .render(url, token, user.getName(), user.email).toString();
 
         final String text = views.txt.account.email.verify_email
-                .render(url, token, user.name, user.email).toString();
+                .render(url, token, user.getName(), user.email).toString();
 
         return new Body(text, html);
     }
@@ -322,6 +322,6 @@ public class MyUsernamePasswordAuthProvider
     }
 
     private String getEmailName(final User user) {
-        return getEmailName(user.email, user.name);
+        return getEmailName(user.email, user.getName());
     }
 }

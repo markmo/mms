@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="" />
+        <datasource-mapping>
+          <factory-entry name="defaultPersistenceUnit" />
+        </datasource-mapping>
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/../conf/META-INF/persistence.xml" />
+      </configuration>
+    </facet>
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/../target/scala-2.9.1/classes" />
     <output-test url="file://$MODULE_DIR$/../target/scala-2.9.1/test-classes" />
@@ -105,15 +117,23 @@
     <orderEntry type="library" name="com.cedarsoft_guice-annotations_2.0.1" level="project" />
     <orderEntry type="library" name="com.intellij_annotations_7.0.3" level="project" />
     <orderEntry type="library" name="org.mindrot_jbcrypt_0.3m" level="project" />
-    <orderEntry type="library" name="com.fasterxml.jackson.core_jackson-core_2.0.6" level="project" />
-    <orderEntry type="library" name="com.fasterxml.jackson.core_jackson-annotations_2.0.6" level="project" />
-    <orderEntry type="library" name="com.fasterxml.jackson.core_jackson-databind_2.0.6" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.datatype_jackson-datatype-hibernate3_2.1.2" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core_jackson-databind_2.1.2" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core_jackson-annotations_2.1.1" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core_jackson-core_2.1.2" level="project" />
     <orderEntry type="library" name="com.typesafe_play-plugins-guice_2.0.3" level="project" />
     <orderEntry type="library" name="com.typesafe_play-plugins-inject_2.0.3" level="project" />
     <orderEntry type="library" name="com.google.inject_guice_3.0" level="project" />
     <orderEntry type="library" name="javax.inject_javax.inject_1" level="project" />
     <orderEntry type="library" name="org.sonatype.sisu.inject_cglib_2.2.1-v20090111" level="project" />
     <orderEntry type="library" name="asm_asm_3.1" level="project" />
+    <orderEntry type="library" name="com.github.cleverage_elasticsearch_2.9.1_0.4.2" level="project" />
+    <orderEntry type="library" name="org.elasticsearch_elasticsearch_0.19.10" level="project" />
+    <orderEntry type="library" name="org.apache.lucene_lucene-core_3.6.1" level="project" />
+    <orderEntry type="library" name="org.apache.lucene_lucene-analyzers_3.6.1" level="project" />
+    <orderEntry type="library" name="org.apache.lucene_lucene-queries_3.6.1" level="project" />
+    <orderEntry type="library" name="org.apache.lucene_lucene-memory_3.6.1" level="project" />
+    <orderEntry type="library" name="org.apache.lucene_lucene-highlighter_3.6.1" level="project" />
     <orderEntry type="library" scope="TEST" name="play_play-test_2.9.1_2.0.3_test" level="project" />
     <orderEntry type="library" scope="TEST" name="org.specs2_specs2_2.9.1_1.9_test" level="project" />
     <orderEntry type="library" scope="TEST" name="org.specs2_specs2-scalaz-core_2.9.1_6.0.1_test" level="project" />
@@ -151,6 +171,7 @@
     <orderEntry type="library" scope="TEST" name="org.seleniumhq.selenium_selenium-support_2.16.1_test" level="project" />
     <orderEntry type="library" scope="TEST" name="org.easytesting_fest-assert_1.4_test" level="project" />
     <orderEntry type="library" scope="TEST" name="org.easytesting_fest-util_1.1.6_test" level="project" />
+    <orderEntry type="library" name="entity-pruner-3.0.0.jar" level="project" />
     <orderEntry type="library" name="postgresql-9.1-901.jdbc4.jar" level="project" />
     <orderEntry type="module-library">
       <library>

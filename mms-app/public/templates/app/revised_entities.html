@@ -1,0 +1,33 @@
+<h1>Revised Entities</h1>
+<div>
+    <span>Revision ID:</span>
+    {{revision.id}}
+</div>
+<div>
+    <span>Revision Date:</span>
+    {{revision.date}}
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Revision Action</th>
+        <th>Entity Type</th>
+        <th>Entity ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each modifiedEntities}}
+    <tr>
+        <td>
+            {{revisionType}}
+        </td>
+        <td>
+            {{entityName}}
+        </td>
+        <td>
+            {{entityId}}
+        </td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>

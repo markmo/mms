@@ -1,0 +1,9 @@
+<h1>Data Sources</h1>
+<ul class="items">
+    {{#each dataSources}}
+    <li>
+        <a href="#/data-sources/{{id}}/edit" class="pull-right"><i class="icon-edit"></i> Edit</a>
+        <a href="#/data-sources/{{id}}/schemas" class="item-title">{{name}}</a>
+    </li>
+    {{/each}}
+</ul>

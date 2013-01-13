@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints;
+import play.db.jpa.JPA;
 
 /**
  * User: markmo
@@ -16,7 +17,7 @@ import play.data.validation.Constraints;
 @Entity
 @Table(name = "ds_filter_type")
 @Audited
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class FilterType {
 
     @Id
@@ -27,4 +28,17 @@ public class FilterType {
     @Column(name = "filter_type_name")
     @Constraints.Required
     public String name;
+
+    public static FilterType findByName(String name) {
+        FilterType filterType = null;
+        try {
+            filterType = JPA.em().createQuery("select t from FilterType t where t.name = ?1",
+                    FilterType.class)
+                    .setParameter(1, name)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // ignore
+        }
+        return filterType;
+    }
 }

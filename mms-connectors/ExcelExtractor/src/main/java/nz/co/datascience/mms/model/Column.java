@@ -37,6 +37,13 @@ public class Column implements Iterable<Cell> {
     private SortedSet<Cell> cells;
     private Set<FilterType> filterTypes;
 
+    // Statistics
+    private Object minValue;
+    private Object maxValue;
+    private int distinctCount;
+    private String distinctValues;
+    private boolean hasNulls;
+
     public int getId() {
         return id;
     }
@@ -253,6 +260,46 @@ public class Column implements Iterable<Cell> {
             filterTypes = new HashSet<FilterType>();
         }
         filterTypes.add(filterType);
+    }
+
+    public Object getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(Object minValue) {
+        this.minValue = minValue;
+    }
+
+    public Object getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(Object maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public int getDistinctCount() {
+        return distinctCount;
+    }
+
+    public void setDistinctCount(int distinctCount) {
+        this.distinctCount = distinctCount;
+    }
+
+    public String getDistinctValues() {
+        return distinctValues;
+    }
+
+    public void setDistinctValues(String distinctValues) {
+        this.distinctValues = distinctValues;
+    }
+
+    public boolean isHasNulls() {
+        return hasNulls;
+    }
+
+    public void setHasNulls(boolean hasNulls) {
+        this.hasNulls = hasNulls;
     }
 
     @Override

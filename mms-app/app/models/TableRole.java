@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.envers.Audited;
+import play.db.jpa.JPA;
 
 /**
  * User: markmo
@@ -14,7 +15,7 @@ import org.hibernate.envers.Audited;
 @Entity
 @javax.persistence.Table(name = "ds_table_role")
 @Audited
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class TableRole extends AuditedModel {
 
     @Id
@@ -29,4 +30,17 @@ public class TableRole extends AuditedModel {
     @OrderBy("name")
     @JsonIgnore
     public List<Table> tables;
+
+    public static TableRole findByName(String name) {
+        TableRole role = null;
+        try {
+            role = JPA.em().createQuery("select r from TableRole r where r.name = ?1",
+                    TableRole.class)
+                    .setParameter(1, name)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            // ignore
+        }
+        return role;
+    }
 }
