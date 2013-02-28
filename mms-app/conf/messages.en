@@ -134,6 +134,7 @@ playauthenticate.profile.logged=You are currently logged in with:
 playauthenticate.profile.session=Your user ID is {0} and your session will expire on {1}
 playauthenticate.profile.session_endless=Your user ID is {0} and your session will not expire, as it is endless
 playauthenticate.profile.password_change=Change/set a password for your account
+playauthenticate.profile.edit=Edit profile
 
 # play-authenticate - sample: Index page
 playauthenticate.index.title=Welcome to Play Authenticate

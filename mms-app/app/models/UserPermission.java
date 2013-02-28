@@ -1,10 +1,10 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import static controllers.Application.getSingleResult;
 
-import play.db.ebean.Model;
-import be.objectify.deadbolt.models.Permission;
+import javax.persistence.*;
+
+import be.objectify.deadbolt.core.models.Permission;
 import play.db.jpa.JPA;
 
 /**
@@ -12,7 +12,7 @@ import play.db.jpa.JPA;
  * Deadbolt2
  */
 @Entity
-public class UserPermission implements Permission {// extends Model implements Permission {
+public class UserPermission implements Permission {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,19 +21,16 @@ public class UserPermission implements Permission {// extends Model implements P
 
     public String value;
 
-//    public static final Finder<Long, UserPermission> find = new Finder<Long, UserPermission>(
-//            Long.class, UserPermission.class);
-
     public String getValue() {
         return value;
     }
 
     public static UserPermission findByValue(String value) {
-//        return find.where().eq("value", value).findUnique();
-        return JPA.em()
-                .createQuery("from UserPermission p where p.value = ?1",
-                        UserPermission.class)
-                .setParameter(1, value)
-                .getSingleResult();
+        return getSingleResult(UserPermission.class,
+                JPA.em().createQuery(
+                        "select p from UserPermission p where p.value = ?1"
+                )
+                        .setParameter(1, value)
+        );
     }
 }

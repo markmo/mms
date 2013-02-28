@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="findbugs_annotations_1.0.0">
-    <CLASSES>
-      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/findbugs/annotations/jars/annotations-1.0.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

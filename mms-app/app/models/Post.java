@@ -2,10 +2,10 @@ package models;
 
 import play.data.validation.Constraints;
 
-import javax.persistence.*;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
 
 /**
  * User: markmo
@@ -21,9 +21,9 @@ public class Post {
     @Column(name = "post_id")
     public long id;
 
-    @Constraints.Required
     public String subject;
 
+    @Constraints.Required
     public String message;
 
     public Date datetime;

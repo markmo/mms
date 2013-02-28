@@ -1,10 +1,9 @@
 package models;
 
-import javax.persistence.*;
 import javax.persistence.Column;
+import javax.persistence.Table;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints;
 
@@ -14,7 +13,7 @@ import play.data.validation.Constraints;
  * Time: 7:07 PM
  */
 @Entity
-@javax.persistence.Table(name = "ds_company")
+@Table(name = "ds_company")
 @Audited
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Company extends AuditedModel {

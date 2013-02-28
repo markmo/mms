@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="xerces_xmlParserAPIs_2.6.2">
-    <CLASSES>
-      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/xerces/xmlParserAPIs/jars/xmlParserAPIs-2.6.2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

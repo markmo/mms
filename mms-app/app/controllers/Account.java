@@ -1,24 +1,22 @@
 package controllers;
 
-import be.objectify.deadbolt.actions.Restrict;
-import be.objectify.deadbolt.actions.RoleHolderPresent;
+import static play.data.Form.form;
+
+import be.objectify.deadbolt.java.actions.*;
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.user.AuthUser;
 import play.data.Form;
 import play.data.format.Formats.NonEmpty;
-import play.data.validation.Constraints.MinLength;
-import play.data.validation.Constraints.Required;
+import play.data.validation.Constraints.*;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
-import play.mvc.Controller;
-import play.mvc.Result;
+import play.mvc.*;
 import providers.MyUsernamePasswordAuthProvider;
 import providers.MyUsernamePasswordAuthUser;
 
 import models.User;
 import views.html.account.*;
-import views.html.helper.form;
 
 public class Account extends Controller {
 
@@ -27,6 +25,14 @@ public class Account extends Controller {
         @Required
         @NonEmpty
         public Boolean accept;
+
+        public Boolean getAccept() {
+            return accept;
+        }
+
+        public void setAccept(Boolean accept) {
+            this.accept = accept;
+        }
 
     }
 
@@ -39,6 +45,22 @@ public class Account extends Controller {
         @MinLength(5)
         @Required
         public String repeatPassword;
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getRepeatPassword() {
+            return repeatPassword;
+        }
+
+        public void setRepeatPassword(String repeatPassword) {
+            this.repeatPassword = repeatPassword;
+        }
 
         public String validate() {
             if (password == null || !password.equals(repeatPassword)) {
@@ -54,7 +76,7 @@ public class Account extends Controller {
     private static final Form<User> USER_FORM = form(User.class);
 
     @Transactional(readOnly = true)
-    @Restrict(Application.USER_ROLE)
+    @Restrict(@Group(Application.USER_ROLE))
     public static Result edit(Long id) {
         User user = JPA.em().find(User.class, id);
         Form<User> userForm = USER_FORM.fill(user);
@@ -62,30 +84,27 @@ public class Account extends Controller {
     }
 
     @Transactional
-    @Restrict(Application.USER_ROLE)
+    @Restrict(@Group(Application.USER_ROLE))
     public static Result update() {
         Form<User> boundForm = USER_FORM.bindFromRequest();
         if (boundForm.hasErrors()) {
             flash("error", "Please correct the form below.");
             return badRequest(edit.render(boundForm));
         }
-        User user = boundForm.get();
-        JPA.em().persist(user);
+        User user = User.update(boundForm.get());
         flash("success",
                 String.format("Successfully updated user %s", user));
 
         return redirect(routes.Application.index());
     }
 
-    @RoleHolderPresent
+    @SubjectPresent
     public static Result link() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         return ok(link.render());
     }
 
-    @Restrict(Application.USER_ROLE)
+    @Restrict(@Group(Application.USER_ROLE))
     public static Result verifyEmail() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         final User user = Application.getLocalUser(session());
         if (user.emailValidated) {
             // E-Mail has been validated already
@@ -105,9 +124,8 @@ public class Account extends Controller {
         return redirect(routes.Application.profile());
     }
 
-    @Restrict(Application.USER_ROLE)
+    @Restrict(@Group(Application.USER_ROLE))
     public static Result changePassword() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         final User u = Application.getLocalUser(session());
 
         if (!u.emailValidated) {
@@ -117,9 +135,8 @@ public class Account extends Controller {
         }
     }
 
-    @Restrict(Application.USER_ROLE)
+    @Restrict(@Group(Application.USER_ROLE))
     public static Result doChangePassword() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         final Form<Account.PasswordChange> filledForm =
                 PASSWORD_CHANGE_FORM.bindFromRequest();
         if (filledForm.hasErrors()) {
@@ -136,9 +153,8 @@ public class Account extends Controller {
         }
     }
 
-    @RoleHolderPresent
+    @SubjectPresent
     public static Result askLink() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         final AuthUser u = PlayAuthenticate.getLinkUser(session());
         if (u == null) {
             // account to link could not be found, silently redirect to login
@@ -147,9 +163,8 @@ public class Account extends Controller {
         return ok(ask_link.render(ACCEPT_FORM, u));
     }
 
-    @RoleHolderPresent
+    @SubjectPresent
     public static Result doLink() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         final AuthUser u = PlayAuthenticate.getLinkUser(session());
         if (u == null) {
             // account to link could not be found, silently redirect to login
@@ -171,9 +186,8 @@ public class Account extends Controller {
         }
     }
 
-    @RoleHolderPresent
+    @SubjectPresent
     public static Result askMerge() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         // this is the currently logged in user
         final AuthUser aUser = PlayAuthenticate.getUser(session());
 
@@ -189,9 +203,8 @@ public class Account extends Controller {
         return ok(ask_merge.render(ACCEPT_FORM, aUser, bUser));
     }
 
-    @RoleHolderPresent
+    @SubjectPresent
     public static Result doMerge() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
         // this is the currently logged in user
         final AuthUser aUser = PlayAuthenticate.getUser(session());
 

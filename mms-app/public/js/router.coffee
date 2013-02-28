@@ -8,6 +8,10 @@ define [
     AppRouter = Backbone.Router.extend
         routes:
             # Pages
+            'sandboxes': 'sandboxes'
+            'sandboxes/:id/schemas': 'sandboxSchemas'
+            'sandboxes/:id/edit': 'editSandbox'
+            'data-sources': 'dataSources'
             'data-sources/:id/edit': 'editDataSource'
             'data-sources/:id/schemas': 'schemas'
             'schemas/:id/tables(/:tableId)': 'tables'
@@ -28,6 +32,20 @@ define [
         app.router = router
 
         router.on 'route:defaultAction', () ->
+            require ['cs!views/home/home'], (HomePage) ->
+                homePage = Vm.create(appView, 'HomePage', HomePage)
+                homePage.render()
+                return
+            return
+
+        router.on 'route:sandboxes', () ->
+            require ['cs!views/app/sandboxes'], (SandboxesPage) ->
+                sandboxesPage = Vm.create(appView, 'SandboxesPage', SandboxesPage)
+                sandboxesPage.render()
+                return
+            return
+
+        router.on 'route:dataSources', () ->
             require ['cs!views/app/data_sources'], (DataSourcesPage) ->
                 dataSourcesPage = Vm.create(appView, 'DataSourcesPage', DataSourcesPage)
                 dataSourcesPage.render()
@@ -43,8 +61,26 @@ define [
 
         router.on 'route:schemas', (dataSourceId) ->
             require ['cs!views/app/schemas'], (SchemasPage) ->
-                schemasPage = Vm.create(appView, 'SchemasPage', SchemasPage)
+                schemasPage = Vm.create appView, 'SchemasPage', SchemasPage,
+                    context:
+                        name: 'dataSource'
                 schemasPage.render(dataSourceId)
+                return
+            return
+
+        router.on 'route:sandboxSchemas', (sandboxId) ->
+            require ['cs!views/app/schemas'], (SchemasPage) ->
+                schemasPage = Vm.create appView, 'SchemasPage', SchemasPage,
+                    context:
+                        name: 'sandbox'
+                schemasPage.render(sandboxId)
+                return
+            return
+
+        router.on 'route:editSandbox', (sandboxId) ->
+            require ['cs!views/app/sandbox_form'], (SandboxForm) ->
+                sandboxForm = Vm.create(appView, 'SandboxForm', SandboxForm)
+                sandboxForm.render(sandboxId)
                 return
             return
 

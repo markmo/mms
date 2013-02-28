@@ -10,7 +10,6 @@ import com.github.cleverage.elasticsearch.IndexService;
 import com.google.inject.Inject;
 import indexing.TableIndex;
 import models.Table;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.facet.FacetBuilders;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -24,11 +23,15 @@ import play.mvc.*;
 public class Search extends Controller {
 
     @Inject
-    static ObjectMapper mapper;
+    ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-    public static Result index(String terms) throws IOException {
-        List<Table> tables = JPA.em().createQuery("select t from Table t", Table.class).getResultList();
+    public Result index(String terms) throws IOException {
+        @SuppressWarnings("unchecked")
+        List<Table> tables = JPA.em().createQuery(
+                "select t from Table t"
+                )
+                .getResultList();
         TableIndex tableIndex = new TableIndex();
         tableIndex.tables = tables;
         IndexService.cleanIndex();

@@ -6,7 +6,7 @@ define [
     'text!templates/app/revisions.html'
 ], ($, Backbone, Handlebars, RevisionsCollection, revisionsPageTemplate) ->
     Backbone.View.extend
-        el: '.page'
+        el: '#page'
 
         compiled: Handlebars.compile revisionsPageTemplate
 

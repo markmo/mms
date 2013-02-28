@@ -1,8 +1,8 @@
 package models;
 
-import javax.persistence.*;
-import javax.persistence.Table;
 import java.util.Date;
+import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * User: markmo

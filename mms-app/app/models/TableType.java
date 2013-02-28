@@ -1,10 +1,11 @@
 package models;
 
-import javax.persistence.*;
+import static controllers.Application.getSingleResult;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.*;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints;
 import play.db.jpa.JPA;
@@ -21,7 +22,7 @@ import play.db.jpa.JPA;
 public class TableType extends AuditedModel {
 
     @Id
-    @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "public.ds_table_type_table_type_id_seq_1")
+    @GeneratedValue
     @Column(name = "table_type_id")
     public long id;
 
@@ -30,15 +31,11 @@ public class TableType extends AuditedModel {
     public String name;
 
     public static TableType findByName(String name) {
-        TableType tableType = null;
-        try {
-            tableType = JPA.em().createQuery("select t from TableType t where t.name = ?1",
-                    TableType.class)
-                    .setParameter(1, name)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            // ignore
-        }
-        return tableType;
+        return getSingleResult(TableType.class,
+                JPA.em().createQuery(
+                        "select t from TableType t where t.name = ?1"
+                )
+                        .setParameter(1, name)
+        );
     }
 }

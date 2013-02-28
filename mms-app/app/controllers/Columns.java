@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import models.*;
 import org.codehaus.jackson.JsonNode;
-import org.hibernate.Hibernate;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.DefaultRevisionEntity;
@@ -27,22 +26,22 @@ import play.mvc.*;
 public class Columns extends Controller {
 
     @Inject
-    static ObjectMapper mapper;
-
-//    @Inject
-//    static EntityPruner pruner;
+    ObjectMapper mapper;
 
     @Transactional(readOnly = true)
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result index() {
-//        List<Column> columns = Column.find.all();
-        List<Column> columns = JPA.em().createQuery("select c from Column c", Column.class).getResultList();
+    public Result index() {
+        @SuppressWarnings("unchecked")
+        List<Column> columns = JPA.em().createQuery(
+                "select c from Column c"
+                )
+                .getResultList();
         JsonNode json = Json.toJson(columns);
         return ok(json);
     }
 
     @Transactional(readOnly = true)
-    public static Result revisions(Long id) throws IOException {
+    public Result revisions(Long id) throws IOException {
         List revisions = AuditReaderFactory.get(JPA.em()).createQuery()
                 .forRevisionsOfEntity(Column.class, false, true)
                 .add(AuditEntity.id().eq(id))
@@ -64,9 +63,8 @@ public class Columns extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public static Result getRevision(Long id, Integer revisionId) throws IOException {
+    public Result getRevision(Long id, Integer revisionId) throws IOException {
         AuditReader reader = AuditReaderFactory.get(JPA.em());
-
         Object[] revision = (Object[])reader.createQuery()
                 .forRevisionsOfEntity(Column.class, false, true)
                 .add(AuditEntity.id().eq(id))
@@ -92,10 +90,8 @@ public class Columns extends Controller {
     }
 
     @Transactional(readOnly = true)
-//    @BodyParser.Of(BodyParser.Json.class)
-    public static Result findColumnsByTableId(Long tableId) throws IOException {
+    public Result findColumnsByTableId(Long tableId) throws IOException {
         List<Column> columns = Column.findByTableId(tableId);
-//        JsonNode json = Json.toJson(columns);
         String json = mapper.writeValueAsString(columns);
         return ok(json).as("application/json");
     }

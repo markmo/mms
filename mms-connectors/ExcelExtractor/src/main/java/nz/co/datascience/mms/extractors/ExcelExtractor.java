@@ -6,7 +6,6 @@ import static nz.co.datascience.mms.model.DataTypeFactory.*;
 import nz.co.datascience.mms.analyzers.ColumnAnalyzer;
 import nz.co.datascience.mms.analyzers.ConnectedComponentAnalyzer;
 import nz.co.datascience.mms.analyzers.PropertyBag;
-import nz.co.datascience.mms.model.*;
 import nz.co.datascience.mms.util.Counter;
 import org.apache.poi.ss.formula.FormulaParser;
 import org.apache.poi.ss.formula.FormulaType;

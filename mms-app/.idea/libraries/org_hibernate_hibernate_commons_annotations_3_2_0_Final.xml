@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="org.hibernate_hibernate-commons-annotations_3.2.0.Final">
-    <CLASSES>
-      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/org.hibernate/hibernate-commons-annotations/jars/hibernate-commons-annotations-3.2.0.Final.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

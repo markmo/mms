@@ -16,12 +16,11 @@ define [
                 @tableId = options.tableId
 
         render: (filterTypes) ->
-            if not @columns?
-                @columns = new ColumnsCollection({}, {tableId: @tableId})
-                app.columns = @columns
-            @columns.fetch
+            columns = new ColumnsCollection({}, {tableId: @tableId})
+            app.columns(columns)
+            columns.fetch
                 success: =>
-                    filteredColumns = @columns.filterTypes(filterTypes)
+                    filteredColumns = columns.filterTypes(filterTypes)
                     $el = $(@el)
                     $ul = $el.find('ul.items')
                     currentIdList = []
@@ -54,8 +53,8 @@ define [
                         content = $(@compiled
                             columns: filteredColumns.toJSON()
                         )
-                        content.css('display', 'none')
+                        $el.css('display', 'none')
                         $el.html content
-                        content.show 'slow'
+                        $el.show 'slow'
                     return
             return this

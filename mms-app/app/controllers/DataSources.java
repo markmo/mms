@@ -5,10 +5,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import org.codehaus.jackson.JsonNode;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
-import play.libs.Json;
 import play.mvc.*;
 
 import models.DataSource;
@@ -21,17 +19,15 @@ import models.DataSource;
 public class DataSources extends Controller {
 
     @Inject
-    static ObjectMapper mapper;
+    ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-//    @BodyParser.Of(BodyParser.Json.class)
-    public static Result index() throws IOException {
-//        List<DataSource> dataSources = DataSource.find.all();
+    public Result index() throws IOException {
+        @SuppressWarnings("unchecked")
         List<DataSource> dataSources = JPA.em().createQuery(
-                "select d from DataSource d",
-                DataSource.class)
+                "select d from DataSource d"
+                )
                 .getResultList();
-//        JsonNode json = Json.toJson(dataSources);
         String json = mapper.writeValueAsString(dataSources);
         return ok(json).as("application/json");
     }

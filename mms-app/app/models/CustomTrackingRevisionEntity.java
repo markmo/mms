@@ -1,14 +1,13 @@
 package models;
 
-import org.hibernate.envers.DefaultRevisionEntity;
-import org.hibernate.envers.RevisionEntity;
-import utils.CustomEntityTrackingRevisionListener;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
+
+import org.hibernate.envers.DefaultRevisionEntity;
+import org.hibernate.envers.RevisionEntity;
+
+import utils.CustomEntityTrackingRevisionListener;
 
 /**
  * User: markmo

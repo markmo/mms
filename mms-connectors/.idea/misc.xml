@@ -25,6 +25,7 @@
       <list>
         <option value="$PROJECT_DIR$/ExcelExtractor/pom.xml" />
         <option value="$PROJECT_DIR$/DatabaseExtractor/pom.xml" />
+        <option value="$PROJECT_DIR$/../common/Models/pom.xml" />
       </list>
     </option>
   </component>

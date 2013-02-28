@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="com.typesafe_play-plugins-inject_2.0.3">
-    <CLASSES>
-      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/com.typesafe/play-plugins-inject/jars/play-plugins-inject-2.0.3.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -21,26 +21,30 @@ import models.Schema;
 public class Schemas extends Controller {
 
     @Inject
-    static ObjectMapper mapper;
+    ObjectMapper mapper;
 
     @Transactional(readOnly = true)
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result index() {
-//        List<Schema> schemas = Schema.find.all();
+    public Result index() {
+        @SuppressWarnings("unchecked")
         List<Schema> schemas = JPA.em().createQuery(
-                "from Schema",
-                Schema.class)
+                "select s from Schema s"
+                )
                 .getResultList();
         JsonNode json = Json.toJson(schemas);
         return ok(json);
     }
 
     @Transactional(readOnly = true)
-//    @BodyParser.Of(BodyParser.Json.class)
-    public static Result findSchemasByDataSourceId(Long dataSourceId)  throws IOException {
-        //List<Schema> schemas = Schema.find.where().eq("dataSource.id", dataSourceId).findList();
+    public Result findSchemasByDataSourceId(Long dataSourceId)  throws IOException {
         List<Schema> schemas = Schema.findByDataSourceId(dataSourceId);
-//        JsonNode json = Json.toJson(schemas);
+        String json = mapper.writeValueAsString(schemas);
+        return ok(json).as("application/json");
+    }
+
+    @Transactional(readOnly = true)
+    public Result findSchemasBySandboxId(Long sandboxId)  throws IOException {
+        List<Schema> schemas = Schema.findBySandboxId(sandboxId);
         String json = mapper.writeValueAsString(schemas);
         return ok(json).as("application/json");
     }

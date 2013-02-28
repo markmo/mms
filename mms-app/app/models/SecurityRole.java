@@ -15,9 +15,11 @@
  */
 package models;
 
+import static controllers.Application.getSingleResult;
+
 import javax.persistence.*;
 
-import be.objectify.deadbolt.models.Role;
+import be.objectify.deadbolt.core.models.Role;
 import play.db.jpa.JPA;
 
 /**
@@ -25,7 +27,7 @@ import play.db.jpa.JPA;
  * @author Mark Moloney modified for JPA
  */
 @Entity
-public class SecurityRole implements Role {// extends Model implements Role {
+public class SecurityRole implements Role {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,25 +39,23 @@ public class SecurityRole implements Role {// extends Model implements Role {
 
     public String roleName;
 
-//    public static final Finder<Long, SecurityRole> find = new Finder<Long, SecurityRole>(
-//            Long.class, SecurityRole.class);
-
-    public String getRoleName() {
+    public String getName() {
         return roleName;
     }
 
     public static SecurityRole findByRoleName(String roleName) {
-//        return find.where().eq("roleName", roleName).findUnique();
-        return JPA.em()
-                .createQuery("select r from SecurityRole r where r.roleName = ?1",
-                        SecurityRole.class)
-                .setParameter(1, roleName)
-                .getSingleResult();
+        return getSingleResult(SecurityRole.class,
+                JPA.em().createQuery(
+                        "select r from SecurityRole r where r.roleName = ?1"
+                )
+                        .setParameter(1, roleName)
+        );
     }
 
     public static int findRowCount() {
-        return ((Number)JPA.em()
-                .createQuery("select count(r.id) from SecurityRole r")
+        return ((Number)JPA.em().createQuery(
+                "select count(r.id) from SecurityRole r"
+        )
                 .getFirstResult()).intValue();
     }
 }

@@ -32,6 +32,7 @@
         <processorPath useClasspath="true" />
         <module name="DatabaseExtractor" />
         <module name="ExcelExtractor" />
+        <module name="Models" />
       </profile>
     </annotationProcessing>
   </component>

@@ -6,11 +6,12 @@ define [
     'text!templates/app/data_sources.html'
 ], ($, Backbone, Handlebars, app, dataSourcesPageTemplate) ->
     Backbone.View.extend
-        el: '.page'
+        el: '#page'
 
         compiled: Handlebars.compile dataSourcesPageTemplate
 
         render: () ->
-            $(@el).html @compiled
-                dataSources: app.dataSources.toJSON()
+            app.dataSources().done (dataSources) =>
+                $(@el).html @compiled
+                    dataSources: dataSources.toJSON()
             return this

@@ -1,11 +1,18 @@
 <div class="media">
-    <img class="media-object pull-left" src="/assets/img/default-user-icon.png" alt="markmo" style="width: 64px; height: 64px;">
-    <div class="media-body">
+    <img class="media-object pull-left" src="http://www.gravatar.com/avatar/{{emailHash}}" alt="{{user.name}}" style="width: 64px; height: 64px;">
+    <div class="media-body" style="padding-left: 10px;">
+        <div class="pull-right">
+            <button type="button" class="close" aria-hidden="true" data-popover-id="{{user.id}}">&times;</button>
+        </div>
         <h4 class="media-heading">{{user.name}}</h4>
+        {{#if user.biography}}
         <p>{{user.biography}}</p>
-        <p>{{user.numberComments}} comments&nbsp;&nbsp;{{user.votes}} votes</p>
+        {{else}}
+        <br><br>
+        {{/if}}
     </div>
     <hr>
-    <button class="btn pull-left">Follow</button>
-    <a class="pull-right">Full Profile <i class="icon-arrow-right"></i></a>
+    <a href="/profile" class="pull-right" style="margin: 0;"><small>Full Profile </small>{{!<i class="icon-chevron-right">}}</i></a>
+    <button class="btn pull-left btn-mini">Follow</button>
+    <div style="margin-left: 74px"><small>{{user.numberComments}} comments&nbsp;&nbsp;{{user.numberVotes}} votes</small></div>
 </div>

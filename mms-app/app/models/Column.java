@@ -1,11 +1,13 @@
 package models;
 
-import static utils.CollectionUtils.*;
+import static controllers.Application.getSingleResult;
+import static utils.CollectionUtils.safe;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.*;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.envers.Audited;
@@ -18,7 +20,7 @@ import play.db.jpa.JPA;
  * Time: 5:12 PM
  */
 @Entity
-@javax.persistence.Table(name = "ds_column")
+@Table(name = "ds_column")
 @DiscriminatorValue("COL")
 @Audited
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
@@ -146,29 +148,22 @@ public class Column extends AuditedModel {
 //        }
     }
 
-//    public static Finder<Long, Column> find = new Finder<Long, Column>(
-//            Long.class, Column.class
-//    );
-
+    @SuppressWarnings("unchecked")
     public static List<Column> findByTableId(Long tableId) {
-//        return find.where().eq("table.id", tableId).findList();
-        return JPA.em().createQuery("select c from Column c where c.table.id = ?1",
-                Column.class)
+        return JPA.em().createQuery(
+                "select c from Column c where c.table.id = ?1"
+        )
                 .setParameter(1, tableId)
                 .getResultList();
     }
 
     public static Column findByName(String name, Table table) {
-        Column column = null;
-        try {
-            column = JPA.em().createQuery("select c from Column c where c.name = ?1 and c.table = ?2",
-                    Column.class)
-                    .setParameter(1, name)
-                    .setParameter(2, table)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            // ignore
-        }
-        return column;
+        return getSingleResult(Column.class,
+                JPA.em().createQuery(
+                        "select c from Column c where c.name = ?1 and c.table.id = ?2"
+                )
+                        .setParameter(1, name)
+                        .setParameter(2, table.id)
+        );
     }
 }

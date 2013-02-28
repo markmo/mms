@@ -3,6 +3,8 @@ package module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate3.Hibernate3Module;
 import com.google.inject.*;
+import service.FileService;
+import service.ModeShapeFileService;
 
 /**
  * User: markmo
@@ -20,5 +22,11 @@ public class Dependencies implements Module {
         hm.configure(Hibernate3Module.Feature.FORCE_LAZY_LOADING, true);
         mapper.registerModule(hm);
         return mapper;
+    }
+
+    @Provides
+    @Singleton
+    FileService provideFileService() {
+        return new ModeShapeFileService();
     }
 }

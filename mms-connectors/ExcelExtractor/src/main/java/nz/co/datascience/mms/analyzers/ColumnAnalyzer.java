@@ -1,8 +1,6 @@
 package nz.co.datascience.mms.analyzers;
 
 import nz.co.datascience.mms.model.Cell;
-import nz.co.datascience.mms.util.Counter;
-import nz.co.datascience.mms.util.Counters;
 
 import java.util.*;
 

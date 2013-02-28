@@ -4,9 +4,13 @@ define [
 ], (Backbone, schemaModel) ->
     Backbone.Collection.extend
         url: ->
-            '/data-sources/' + @dataSourceId + '/schemas'
+            if @context.name == 'dataSource'
+                '/data-sources/' + @context.id + '/schemas'
+            else
+                '/sandboxes/' + @context.id + '/schemas'
 
         model: schemaModel
 
         initialize: (models, options) ->
-            @dataSourceId = options.dataSourceId
+            @context = options.context
+            return this

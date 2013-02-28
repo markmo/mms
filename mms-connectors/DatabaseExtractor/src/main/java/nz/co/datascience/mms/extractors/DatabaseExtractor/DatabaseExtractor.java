@@ -3,7 +3,6 @@ package nz.co.datascience.mms.extractors.DatabaseExtractor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.base.Joiner;
-import nz.co.datascience.mms.model.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -107,7 +106,8 @@ public class DatabaseExtractor {
 //            System.out.println("Catalog: " + catalogName);
 //        }
         Schema schema = new Schema();
-        schema.setName("DDS");
+//        schema.setName("DDS");
+        schema.setName("public");
         this.schemas.add(schema);
 
         DataSource dataSource = new DataSource();
@@ -115,8 +115,8 @@ public class DatabaseExtractor {
         dataSource.addSchema(schema);
         this.dataSource = dataSource;
 
-        ResultSet tables = metadata.getTables(null, "DDS", null, new String[]{"TABLE", "VIEW"});
-//        ResultSet tables = metadata.getTables("public", null, null, new String[]{"TABLE", "VIEW"});
+//        ResultSet tables = metadata.getTables(null, "DDS", null, new String[]{"TABLE", "VIEW"});
+        ResultSet tables = metadata.getTables("public", null, null, new String[]{"TABLE", "VIEW"});
         while (tables.next()) {
             String schemaName = tables.getString("TABLE_SCHEM");
             String tableName = tables.getString("TABLE_NAME");
@@ -262,9 +262,10 @@ public class DatabaseExtractor {
                 Connection conn = extractor.getConnection();
                 List<Schema> schemas = extractor.extract(conn);
                 DataSource dataSource = extractor.getDataSource();
-                extractor.getStats(dataSource.getSchemas().get(0));
+                Extraction extraction = new Extraction(new Sandbox("Test"), dataSource);
+                //extractor.getStats(dataSource.getSchemas().get(0));
                 //System.out.println(extractor.serialize(extractor.lookupSchema("public")));
-                String json = extractor.serialize(dataSource);
+                String json = extractor.serialize(extraction);
                 System.out.println(json);
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost("http://localhost:9000/import-schema");
@@ -282,5 +283,32 @@ public class DatabaseExtractor {
         InputStream input = DatabaseExtractor.class.getResourceAsStream("/datasources.yaml");
         Yaml yaml = new Yaml();
         return (Map)yaml.load(input);
+    }
+
+    static class Extraction {
+
+        private Sandbox sandbox;
+        private Object data;
+
+        public Extraction(Sandbox sandbox, Object data) {
+            this.sandbox = sandbox;
+            this.data = data;
+        }
+
+        public Sandbox getSandbox() {
+            return sandbox;
+        }
+
+        public void setSandbox(Sandbox sandbox) {
+            this.sandbox = sandbox;
+        }
+
+        public Object getData() {
+            return data;
+        }
+
+        public void setData(Object data) {
+            this.data = data;
+        }
     }
 }

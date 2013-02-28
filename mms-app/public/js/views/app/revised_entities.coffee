@@ -5,7 +5,7 @@ define [
     'text!templates/app/revised_entities.html'
 ], ($, Backbone, Handlebars, revisedEntitiesPageTemplate) ->
     Backbone.View.extend
-        el: '.page'
+        el: '#page'
 
         compiled: Handlebars.compile revisedEntitiesPageTemplate
 

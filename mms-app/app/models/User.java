@@ -1,32 +1,30 @@
 package models;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import static controllers.Application.copyProperties;
+import static controllers.Application.getSingleResult;
 
-import javax.persistence.*;
+import java.util.*;
+import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.*;
 
+import be.objectify.deadbolt.core.models.Permission;
+import be.objectify.deadbolt.core.models.Role;
+import be.objectify.deadbolt.core.models.Subject;
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import models.TokenAction.Type;
-
-import org.apache.commons.lang.StringUtils;
-import play.data.format.Formats;
-import play.db.jpa.JPA;
-import play.db.jpa.Transactional;
-import scala.actors.threadpool.Arrays;
-import be.objectify.deadbolt.models.Permission;
-import be.objectify.deadbolt.models.Role;
-import be.objectify.deadbolt.models.RoleHolder;
-
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
 import com.feth.play.module.pa.user.AuthUser;
 import com.feth.play.module.pa.user.AuthUserIdentity;
 import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
+import controllers.Application;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
+import play.data.format.Formats;
+import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
+
+import models.TokenAction.Type;
 
 /**
  * Initial version based on work by Steve Chaloner (steve@objectify.be) for
@@ -38,7 +36,7 @@ import com.feth.play.module.pa.user.NameIdentity;
 @Table(name = "users")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") // still not working
 // using DTO at bottom for JSON serialization
-public class User implements RoleHolder {// extends Model implements RoleHolder {
+public class User implements Subject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,6 +50,8 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 	// @Column(unique = true)
 	public String email;
 
+    public String name;
+
     public String firstName;
 
     public String lastName;
@@ -60,6 +60,7 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 
     public String dept;
 
+    @Column(length = 8000)
     public String biography;
 
     public int numberComments;
@@ -101,8 +102,10 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<UserPermission> permissions;
 
-//	public static final Finder<Long, User> find = new Finder<Long, User>(
-//			Long.class, User.class);
+    @Override
+    public String getIdentifier() {
+        return Long.toString(id);
+    }
 
 	@Override
 	public List<? extends Role> getRoles() {
@@ -116,7 +119,16 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 
     @Transient
     public String getName() {
-        return firstName + " " + lastName;
+        StringBuilder sb = new StringBuilder();
+        if (firstName != null) {
+            sb.append(firstName);
+        }
+        if (lastName != null) {
+            if (sb.length() > 0)
+                sb.append(" ");
+            sb.append(lastName);
+        }
+        return sb.toString();
     }
 
     public void setName(String name) {
@@ -129,20 +141,9 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
         }
     }
 
-//	public static boolean existsByAuthUserIdentity(
-//			final AuthUserIdentity identity) {
-//		final ExpressionList<User> exp;
-//		if (identity instanceof UsernamePasswordAuthUser) {
-//			exp = getUsernamePasswordAuthUserFind((UsernamePasswordAuthUser) identity);
-//		} else {
-//			exp = getAuthUserFind(identity);
-//		}
-//		return exp.findRowCount() > 0;
-//	}
-
     public static boolean existsByAuthUserIdentity(
             final AuthUserIdentity identity) {
-        final TypedQuery<User> exp;
+        final Query exp;
         if (identity instanceof UsernamePasswordAuthUser) {
             exp = getUsernamePasswordAuthUserFind((UsernamePasswordAuthUser) identity);
         } else {
@@ -151,32 +152,13 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
         return exp.getMaxResults() > 0;
     }
 
-//	private static ExpressionList<User> getAuthUserFind(
-//			final AuthUserIdentity identity) {
-//		return find.where().eq("active", true)
-//				.eq("linkedAccounts.providerUserId", identity.getId())
-//				.eq("linkedAccounts.providerKey", identity.getProvider());
-//	}
-
-    @Transactional
-    private static TypedQuery<User> getAuthUserFind(final AuthUserIdentity identity) {
-        return JPA.em()
-                .createQuery("select u from User u join LinkedAccount a where u.active = true and a.providerUserId = ?1 and a.providerKey = ?2",
-                        User.class)
+    private static Query getAuthUserFind(final AuthUserIdentity identity) {
+        return JPA.em().createQuery(
+                "select u from User u join LinkedAccount a where u.active = true and a.providerUserId = ?1 and a.providerKey = ?2"
+        )
                 .setParameter(1, identity.getId())
                 .setParameter(2, identity.getProvider());
     }
-
-//	public static User findByAuthUserIdentity(final AuthUserIdentity identity) {
-//		if (identity == null) {
-//			return null;
-//		}
-//		if (identity instanceof UsernamePasswordAuthUser) {
-//			return findByUsernamePasswordIdentity((UsernamePasswordAuthUser) identity);
-//		} else {
-//			return getAuthUserFind(identity).findUnique();
-//		}
-//	}
 
     public static User findByAuthUserIdentity(final AuthUserIdentity identity) {
         if (identity == null) {
@@ -185,42 +167,31 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
         if (identity instanceof UsernamePasswordAuthUser) {
             return findByUsernamePasswordIdentity((UsernamePasswordAuthUser) identity);
         } else {
-            return getAuthUserFind(identity).getSingleResult();
+            return getSingleResult(User.class, getAuthUserFind(identity));
         }
     }
-
-//	public static User findByUsernamePasswordIdentity(
-//			final UsernamePasswordAuthUser identity) {
-//		return getUsernamePasswordAuthUserFind(identity).findUnique();
-//	}
 
     public static User findByUsernamePasswordIdentity(
             final UsernamePasswordAuthUser identity) {
-        try {
-            return getUsernamePasswordAuthUserFind(identity).getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return getSingleResult(User.class, getUsernamePasswordAuthUserFind(identity));
     }
 
+    // original
 //	private static ExpressionList<User> getUsernamePasswordAuthUserFind(
 //			final UsernamePasswordAuthUser identity) {
 //		return getEmailUserFind(identity.getEmail()).eq(
 //				"linkedAccounts.providerKey", identity.getProvider());
 //	}
 
-    @Transactional
-    private static TypedQuery<User> getUsernamePasswordAuthUserFind(
+    private static Query getUsernamePasswordAuthUserFind(
             final UsernamePasswordAuthUser identity) {
-        String providerKey = identity.getProvider();
-        return JPA.em()
-                .createQuery("select u from User u join u.linkedAccounts a where u.active = true and u.email = ?1 and a.providerKey = ?2",
-                        User.class)
+        return JPA.em().createQuery(
+                "select u from User u join u.linkedAccounts a where u.active = true and u.email = ?1 and a.providerKey = ?2"
+        )
                 .setParameter(1, identity.getEmail())
                 .setParameter(2, identity.getProvider());
     }
 
-    @Transactional
 	public void merge(final User otherUser) {
 		for (final LinkedAccount acc : otherUser.linkedAccounts) {
 			this.linkedAccounts.add(LinkedAccount.create(acc));
@@ -232,11 +203,10 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		JPA.em().persist(Arrays.asList(new User[] { otherUser, this }));
 	}
 
-    @Transactional
 	public static User create(final AuthUser authUser) {
 		final User user = new User();
-		user.roles = Collections.singletonList(SecurityRole
-				.findByRoleName(controllers.Application.USER_ROLE));
+		user.roles = Collections.singletonList(
+                SecurityRole.findByRoleName(controllers.Application.USER_ROLE));
 		// user.permissions = new ArrayList<UserPermission>();
 		// user.permissions.add(UserPermission.findByValue("printers.edit"));
 		user.active = true;
@@ -269,11 +239,8 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 				user.setName(name);
 			}
 		}
-
-//		user.save();
-//		user.saveManyToManyAssociations("roles");
         JPA.em().persist(user);
-		// user.saveManyToManyAssociations("permissions");
+
 		return user;
 	}
 
@@ -291,40 +258,27 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		return providerKeys;
 	}
 
-    @Transactional
 	public static void addLinkedAccount(final AuthUser oldUser,
 			final AuthUser newUser) {
 		final User u = User.findByAuthUserIdentity(oldUser);
 		u.linkedAccounts.add(LinkedAccount.create(newUser));
-//		u.save();
         JPA.em().persist(u);
 	}
 
-    @Transactional
 	public static void setLastLoginDate(final AuthUser knownUser) {
 		final User u = User.findByAuthUserIdentity(knownUser);
 		u.lastLogin = new Date();
-//		u.save();
         JPA.em().persist(u);
 	}
 
-//	public static User findByEmail(final String email) {
-//		return getEmailUserFind(email).findUnique();
-//	}
-
     public static User findByEmail(final String email) {
-        return getEmailUserFind(email).getSingleResult();
+        return getSingleResult(User.class, getEmailUserFind(email));
     }
 
-//	private static ExpressionList<User> getEmailUserFind(final String email) {
-//		return find.where().eq("active", true).eq("email", email);
-//	}
-
-    @Transactional
-    private static TypedQuery<User> getEmailUserFind(final String email) {
-        return JPA.em()
-                .createQuery("select u from User u where u.active = true and u.email = ?1",
-                        User.class)
+    private static Query getEmailUserFind(final String email) {
+        return JPA.em().createQuery(
+                "select u from User u where u.active = true and u.email = ?1"
+        )
                 .setParameter(1, email);
     }
 
@@ -332,16 +286,13 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		return LinkedAccount.findByProviderKey(this, providerKey);
 	}
 
-    @Transactional
 	public static void verify(final User unverified) {
 		// You might want to wrap this into a transaction
 		unverified.emailValidated = true;
-//		unverified.save();
         JPA.em().persist(unverified);
 		TokenAction.deleteByUser(unverified, Type.EMAIL_VERIFICATION);
 	}
 
-    @Transactional
 	public void changePassword(final UsernamePasswordAuthUser authUser,
 			final boolean create) {
 		LinkedAccount a = this.getAccountByProvider(authUser.getProvider());
@@ -351,11 +302,11 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 				a.user = this;
 			} else {
 				throw new RuntimeException(
-						"Account not enabled for password usage");
+						"Account not enabled for password usage"
+                );
 			}
 		}
 		a.providerUserId = authUser.getHashedPassword();
-//		a.save();
         JPA.em().persist(a);
     }
 
@@ -366,12 +317,42 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
 		TokenAction.deleteByUser(this, Type.PASSWORD_RESET);
 	}
 
+    public static User findById(Long id) {
+        return getSingleResult(User.class, JPA.em().createQuery(
+                "select u from User u where u.id = ?"
+        )
+                .setParameter(1, id)
+        );
+    }
+
+    public static User update(User partialUser) {
+        if (partialUser.id == null) {
+            JPA.em().persist(partialUser);
+            return partialUser;
+        } else {
+            User user = User.findById(partialUser.id);
+            final String[] includedProperties = new String[]{
+                    "email",
+                    "firstName",
+                    "lastName",
+                    "name",
+                    "title",
+                    "dept",
+                    "biography"
+            };
+            copyProperties(partialUser, user, Arrays.asList(includedProperties));
+            JPA.em().persist(user);
+            return user;
+        }
+    }
+
     public UserDTO getDTO() {
         UserDTO dto = new UserDTO();
         dto.id = id;
         dto.email = email;
         dto.firstName = firstName;
         dto.lastName = lastName;
+        dto.name = getName();
         dto.title = title;
         dto.dept = dept;
         dto.numberComments = numberComments;
@@ -389,6 +370,7 @@ public class User implements RoleHolder {// extends Model implements RoleHolder 
         public String email;
         public String firstName;
         public String lastName;
+        public String name;
         public String title;
         public String dept;
         public String biography;

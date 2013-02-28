@@ -5,10 +5,10 @@ data-source:
     username: sa
     password: Password1
     dbms: jtds:sqlserver
-    server-name: 192.168.211.143
+    server-name: 192.168.211.164
     port-number: 1433
     db-name: DM_ScheduALL
-    active: true
+    active: false
 
   - name: MMS Metadata Store
     type: database
@@ -19,4 +19,4 @@ data-source:
     server-name: 127.0.0.1
     port-number: 5432
     db-name: mms
-    active: false
+    active: true

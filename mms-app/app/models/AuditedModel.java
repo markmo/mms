@@ -1,11 +1,11 @@
 package models;
 
-import org.hibernate.annotations.*;
-
-import javax.persistence.*;
-import javax.persistence.Column;
 import java.util.Date;
 import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.*;
+
+import org.hibernate.annotations.*;
 
 /**
  * User: markmo
@@ -13,7 +13,7 @@ import java.util.Set;
  * Time: 5:23 PM
  */
 @MappedSuperclass
-public class AuditedModel {// extends Model {
+public class AuditedModel {
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)

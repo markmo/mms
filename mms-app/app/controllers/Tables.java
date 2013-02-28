@@ -21,22 +21,22 @@ import models.Table;
 public class Tables extends Controller {
 
     @Inject
-    static ObjectMapper mapper;
+    ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-    @BodyParser.Of(BodyParser.Json.class)
-    public static Result index() {
-//        List <Table> tables = Table.find.all();
-        List<Table> tables = JPA.em().createQuery("select t from Table t", Table.class).getResultList();
+    public Result index() {
+        @SuppressWarnings("unchecked")
+        List<Table> tables = JPA.em().createQuery(
+                "select t from Table t"
+                )
+                .getResultList();
         JsonNode json = Json.toJson(tables);
         return ok(json);
     }
 
     @Transactional(readOnly = true)
-//    @BodyParser.Of(BodyParser.Json.class)
-    public static Result findTablesBySchemaId(Long schemaId) throws IOException {
+    public Result findTablesBySchemaId(Long schemaId) throws IOException {
         List<Table> tables = Table.findBySchemaId(schemaId);
-//        JsonNode json = Json.toJson(tables);
         String json = mapper.writeValueAsString(tables);
         return ok(json).as("application/json");
     }

@@ -5,7 +5,7 @@ define [
     'text!templates/app/column_revision.html'
 ], ($, Backbone, Handlebars, columnRevisionPageTemplate) ->
     Backbone.View.extend
-        el: '.page'
+        el: '#page'
 
         compiled: Handlebars.compile columnRevisionPageTemplate
 

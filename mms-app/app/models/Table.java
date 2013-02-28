@@ -1,14 +1,15 @@
 package models;
 
-import static utils.CollectionUtils.*;
+import static controllers.Application.getSingleResult;
+import static utils.CollectionUtils.safe;
 
-import javax.persistence.*;
 import java.util.*;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
 import com.github.cleverage.elasticsearch.Indexable;
 import org.hibernate.envers.Audited;
-import play.data.validation.Constraints.*;
+import play.data.validation.Constraints.Required;
 import play.db.jpa.JPA;
 
 /**
@@ -89,30 +90,22 @@ public class Table extends AuditedModel implements Indexable {
         return this;
     }
 
-//    public static Finder<Long, Table> find = new Finder<Long, Table>(
-//            Long.class, Table.class
-//    );
-
+    @SuppressWarnings("unchecked")
     public static List<Table> findBySchemaId(Long schemaId) {
-//        return find.where().eq("schema.id", schemaId).findList();
-        return JPA.em()
-                .createQuery("select t from Table t where t.schema.id = ?1",
-                        Table.class)
+        return JPA.em().createQuery(
+                "select t from Table t where t.schema.id = ?1"
+        )
                 .setParameter(1, schemaId)
                 .getResultList();
     }
 
     public static Table findByName(String name, Schema schema) {
-        Table table = null;
-        try {
-            table = JPA.em().createQuery("select t from Table t where t.name = ?1 and t.schema = ?2",
-                    Table.class)
-                    .setParameter(1, name)
-                    .setParameter(2, schema)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            // ignore
-        }
-        return table;
+        return getSingleResult(Table.class,
+                JPA.em().createQuery(
+                        "select t from Table t where t.name = ?1 and t.schema.id = ?2"
+                )
+                        .setParameter(1, name)
+                        .setParameter(2, schema.id)
+        );
     }
 }

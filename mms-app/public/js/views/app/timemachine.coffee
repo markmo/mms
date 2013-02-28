@@ -6,7 +6,7 @@ define [
     'text!templates/app/timemachine.html'
 ], ($, _, Backbone, app, timemachinePageTemplate) ->
     Backbone.View.extend
-        el: '.page'
+        el: '#page'
 
         compiled: timemachinePageTemplate
 

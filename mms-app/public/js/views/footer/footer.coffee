@@ -5,7 +5,7 @@ define [
     'text!templates/footer/footer.html'
 ], ($, _, Backbone, footerTemplate) ->
     Backbone.View.extend
-        el: '.footer'
+        el: '#footer'
 
         render: ->
             $(@el).html(footerTemplate)

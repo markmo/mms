@@ -1,12 +1,13 @@
 package models;
 
-import javax.persistence.*;
-import javax.persistence.Column;
+import static controllers.Application.getSingleResult;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javax.persistence.Column;
+import javax.persistence.*;
+
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints;
+import play.db.jpa.JPA;
 
 /**
  * User: markmo
@@ -27,5 +28,17 @@ public class Sandbox extends AuditedModel {
     @Column(name = "sandbox_name")
     @Constraints.Required
     public String name;
+
+    @Column(length = 8000)
+    public String description;
+
+    public static Sandbox findByName(String name) {
+        return getSingleResult(Sandbox.class,
+                JPA.em().createQuery(
+                        "select s from Sandbox s where s.name = ?1"
+                )
+                        .setParameter(1, name)
+        );
+    }
 
 }

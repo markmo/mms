@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="org.jboss.spec.javax.transaction_jboss-transaction-api_1.1_spec_1.0.0.Final">
-    <CLASSES>
-      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/org.jboss.spec.javax.transaction/jboss-transaction-api_1.1_spec/jars/jboss-transaction-api_1.1_spec-1.0.0.Final.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -1,18 +1,21 @@
 package controllers;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import static play.data.Form.form;
 
-import be.objectify.deadbolt.actions.Restrict;
+import java.io.IOException;
+import java.text.*;
+import java.util.*;
+import javax.persistence.Query;
+
+import be.objectify.deadbolt.java.actions.*;
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
+import com.feth.play.module.pa.user.AuthUser;
 import com.google.inject.Inject;
-import models.*;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import play.Routes;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -21,6 +24,7 @@ import providers.MyUsernamePasswordAuthProvider;
 import providers.MyUsernamePasswordAuthProvider.MyLogin;
 import providers.MyUsernamePasswordAuthProvider.MySignup;
 
+import models.*;
 import views.html.*;
 
 public class Application extends Controller {
@@ -32,48 +36,54 @@ public class Application extends Controller {
     static Form<Table> tableForm = form(Table.class);
 
     @Inject
-    static ObjectMapper mapper;
+    ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-//    @Restrict(Application.USER_ROLE)
-    public static Result index() {
-//        return redirect(routes.Tables.index());
+    @Restrict(@Group(Application.USER_ROLE))
+    public Result index() {
         if (session("theme") == null) {
             session("theme", "spacelab");
         }
         return ok(
-                views.html.tables.render("dataSources")
+                tables.render("dataSources")
         );
     }
 
-    public static Result theme(String theme) {
+    public Result theme(String theme) {
         session("theme", theme);
         return redirect(routes.Application.index());
     }
 
-    public static Result tables() {
+    public Result tables() {
+        @SuppressWarnings("unchecked")
+        List<Table> tables = JPA.em().createQuery(
+                "select t from Table t"
+        )
+                .getResultList();
         return ok(
-                views.html.index.render(
-                        JPA.em().createQuery("select t from Table t", Table.class).getResultList(),
-                        //Table.find.all(),
-                        tableForm)
+                index.render(tables, tableForm)
         );
     }
 
-    public static Result newTable() {
+    public Result newTable() {
         return TODO;
     }
 
-    public static Result deleteTable(Long id) {
+    public Result deleteTable(Long id) {
         return TODO;
     }
 
     @Transactional
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result importSchema() throws Exception {
+    public Result importSchema() throws Exception {
         Http.RequestBody body = request().body();
         JsonNode json = request().body().asJson();
-        DataSource dataSource = parseDataSource(json);
+        Sandbox sandbox = parseSandbox(json.path("sandbox"));
+        DataSource dataSource = parseDataSource(json.path("data"));
+        for (Schema schema : dataSource.getSchemas()) {
+            schema.sandbox = sandbox;
+            JPA.em().persist(schema);
+        }
 
 //        mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 //        DataSource dataSource = mapper.readValue(json, DataSource.class);
@@ -83,7 +93,16 @@ public class Application extends Controller {
         return ok();
     }
 
-    private static DataSource parseDataSource(JsonNode json) throws IOException {
+    private Sandbox parseSandbox(JsonNode json) throws IOException {
+        String name = json.path("name").getTextValue();
+        Sandbox existingSandbox = Sandbox.findByName(name);
+        Sandbox sandbox = (existingSandbox == null ? new Sandbox() : existingSandbox);
+        sandbox.name = name;
+        JPA.em().persist(sandbox);
+        return sandbox;
+    }
+
+    private DataSource parseDataSource(JsonNode json) throws IOException {
         String name = json.path("name").getTextValue();
         DataSource existingDataSource = DataSource.findByName(name);
         DataSource dataSource = (existingDataSource == null ? new DataSource() : existingDataSource);
@@ -106,7 +125,7 @@ public class Application extends Controller {
         return dataSource;
     }
 
-    private static Schema parseSchema(JsonNode json, DataSource dataSource) throws IOException {
+    private Schema parseSchema(JsonNode json, DataSource dataSource) throws IOException {
         String name = json.path("name").getTextValue();
         Schema existingSchema = Schema.findByName(name, dataSource);
         Schema schema = (existingSchema == null ? new Schema() : existingSchema);
@@ -130,7 +149,7 @@ public class Application extends Controller {
         return schema;
     }
 
-    private static Table parseTable(JsonNode json, Schema schema) throws IOException {
+    private Table parseTable(JsonNode json, Schema schema) throws IOException {
         String name = json.path("name").getTextValue();
         Table existingTable = Table.findByName(name, schema);
         Table table = (existingTable == null ? new Table() : existingTable);
@@ -161,7 +180,7 @@ public class Application extends Controller {
         return table;
     }
 
-    private static Column parseColumn(JsonNode json, Table table) throws IOException {
+    private Column parseColumn(JsonNode json, Table table) throws IOException {
         String name = json.path("name").getTextValue();
         int columnIndex = json.path("columnIndex").getIntValue();
         DataType dataType = mapper.readValue(json.path("dataType"), DataType.class);
@@ -220,11 +239,13 @@ public class Application extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public static Result revisions() throws IOException {
+    public Result revisions() throws IOException {
+        @SuppressWarnings("unchecked")
         List<CustomTrackingRevisionEntity> revisions = JPA.em().createQuery(
-                "select r from CustomTrackingRevisionEntity r",
-                CustomTrackingRevisionEntity.class)
+                "select r from CustomTrackingRevisionEntity r"
+                )
                 .getResultList();
+
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         for (CustomTrackingRevisionEntity revision : revisions) {
             Map<String, Object> entry = new HashMap<String, Object>();
@@ -240,17 +261,29 @@ public class Application extends Controller {
         return ok(json).as("application/json");
     }
 
-    public static Result showRevisions() {
+    public Result showRevisions() {
         return ok(views.html.tables.render("revisions"));
     }
 
     @Transactional(readOnly = true)
-    public static Result getRevision(Integer revisionId) throws IOException {
-        CustomTrackingRevisionEntity revision = JPA.em().createQuery(
-                "select r from CustomTrackingRevisionEntity r where r.id = ?1",
-                CustomTrackingRevisionEntity.class)
-                .setParameter(1, revisionId)
-                .getSingleResult();
+    public Result getRevision(Integer revisionId) throws IOException {
+        CustomTrackingRevisionEntity revision = null;
+        try {
+            @SuppressWarnings("unchecked")
+            List<CustomTrackingRevisionEntity> revisions = JPA.em().createQuery(
+                    "select r from CustomTrackingRevisionEntity r where r.id = ?1"
+                    )
+                    .setParameter(1, revisionId)
+                    .setMaxResults(1)
+                    .getResultList();
+
+            if (revisions.size() > 0) {
+                revision = revisions.get(0);
+            }
+
+        } catch (Exception e) {
+            // ignore
+        }
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("revisionId", revision.getId());
         result.put("revisionDate", revision.getRevisionDate());
@@ -272,39 +305,46 @@ public class Application extends Controller {
     }
 
     public static User getLocalUser(final Http.Session session) {
-        final User localUser = User.findByAuthUserIdentity(
-                PlayAuthenticate.getUser(session));
+        final AuthUser currentAuthUser = PlayAuthenticate.getUser(session);
+        final User localUser = User.findByAuthUserIdentity(currentAuthUser);
         return localUser;
     }
 
-    @Restrict(Application.USER_ROLE)
-    public static Result restricted() {
-        final User localUser = getLocalUser(session());
+    @Transactional(readOnly = true)
+    @Restrict(@Group(Application.USER_ROLE))
+    public Result clientSession() throws IOException {
+        final User localUser = Application.getLocalUser(session());
+        String json = mapper.writeValueAsString(localUser.getDTO());
+        return ok(json);
+    }
+
+    @Restrict(@Group(Application.USER_ROLE))
+    public Result restricted() {
+        final User localUser = Application.getLocalUser(session());
         return ok(restricted.render(localUser));
     }
 
     @Transactional(readOnly = true)
-    @Restrict(Application.USER_ROLE)
-    public static Result profile() {
-        final User localUser = getLocalUser(session());
+    @Restrict(@Group(Application.USER_ROLE))
+    public Result profile() {
+        final User localUser = Application.getLocalUser(session());
         return ok(profile.render(localUser));
     }
 
     @Transactional(readOnly = true)
-    @Restrict(Application.USER_ROLE)
-    public static Result profileAsJSON() throws IOException {
-        final User localUser = getLocalUser(session());
+    @Restrict(@Group(Application.USER_ROLE))
+    public Result profileAsJSON() throws IOException {
+        final User localUser = Application.getLocalUser(session());
         String json = mapper.writeValueAsString(localUser.getDTO());
         return ok(json).as("application/json");
     }
 
-    public static Result login() {
+    public Result login() {
         return ok(login.render(MyUsernamePasswordAuthProvider.LOGIN_FORM));
     }
 
-    @Transactional
-    public static Result doLogin() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
+    @Transactional(readOnly = true)
+    public Result doLogin() {
         final Form<MyLogin> filledForm =
                 MyUsernamePasswordAuthProvider.LOGIN_FORM.bindFromRequest();
         if (filledForm.hasErrors()) {
@@ -316,20 +356,19 @@ public class Application extends Controller {
         }
     }
 
-    public static Result signup() {
+    public Result signup() {
         return ok(signup.render(MyUsernamePasswordAuthProvider.SIGNUP_FORM));
     }
 
-    public static Result jsRoutes() {
-        return ok(
-                Routes.javascriptRouter("jsRoutes",
-                        controllers.routes.javascript.Signup.forgotPassword()))
-                .as("text/javascript");
-    }
+//    public static Result jsRoutes() {
+//        return ok(
+//                Routes.javascriptRouter("jsRoutes",
+//                        controllers.routes.javascript.Signup.forgotPassword()))
+//                .as("text/javascript");
+//    }
 
     @Transactional
-    public static Result doSignup() {
-        com.feth.play.module.pa.controllers.Authenticate.noCache(response());
+    public Result doSignup() {
         final Form<MySignup> filledForm =
                 MyUsernamePasswordAuthProvider.SIGNUP_FORM.bindFromRequest();
         if (filledForm.hasErrors()) {
@@ -345,4 +384,27 @@ public class Application extends Controller {
     public static String formatTimestamp(final long t) {
         return new SimpleDateFormat("yyyy-dd-MM HH:mm:ss").format(new Date(t));
     }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getSingleResult(Class<T> clazz, Query q) {
+        List<T> resultList = q.setMaxResults(1).getResultList();
+        return resultList.size() > 0 ? resultList.get(0) : null;
+    }
+
+    public static void copyProperties(
+            final Object source,
+            final Object target,
+            final Iterable<String> properties) {
+
+        final BeanWrapper src = new BeanWrapperImpl(source);
+        final BeanWrapper tgt = new BeanWrapperImpl(target);
+
+        for (final String propertyName : properties) {
+            tgt.setPropertyValue(
+                    propertyName,
+                    src.getPropertyValue(propertyName)
+            );
+        }
+    }
+
 }

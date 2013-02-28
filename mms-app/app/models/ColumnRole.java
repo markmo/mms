@@ -1,7 +1,10 @@
 package models;
 
-import javax.persistence.*;
+import static controllers.Application.getSingleResult;
+
 import java.util.List;
+import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.envers.Audited;
@@ -13,7 +16,7 @@ import play.db.jpa.JPA;
  * Time: 4:15 PM
  */
 @Entity
-@javax.persistence.Table(name = "ds_column_role")
+@Table(name = "ds_column_role")
 @Audited
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class ColumnRole extends AuditedModel {
@@ -32,15 +35,11 @@ public class ColumnRole extends AuditedModel {
     public List<Column> columns;
 
     public static ColumnRole findByName(String name) {
-        ColumnRole role = null;
-        try {
-            role = JPA.em().createQuery("select r from ColumnRole r where r.name = ?1",
-                    ColumnRole.class)
-                    .setParameter(1, name)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            // ignore
-        }
-        return role;
+        return getSingleResult(ColumnRole.class,
+                JPA.em().createQuery(
+                        "select r from ColumnRole r where r.name = ?1"
+                )
+                        .setParameter(1, name)
+        );
     }
 }

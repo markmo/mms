@@ -3,61 +3,61 @@
 # ~~~~
 
 # Home page
-GET     /                               controllers.Application.index()
+GET     /                               @controllers.Application.index()
 
 # Data Sources
-GET     /data-sources                   controllers.DataSources.index()
+GET     /data-sources                   @controllers.DataSources.index()
 
 # Schemas
-GET     /schemas                        controllers.Schemas.index()
-GET     /data-sources/:id/schemas       controllers.Schemas.findSchemasByDataSourceId(id: Long)
+GET     /schemas                        @controllers.Schemas.index()
+GET     /data-sources/:id/schemas       @controllers.Schemas.findSchemasByDataSourceId(id: Long)
 
 # Tables
-GET     /tables                         controllers.Tables.index()
-GET     /schemas/:id/tables             controllers.Tables.findTablesBySchemaId(id: Long)
-POST    /tables                         controllers.Application.newTable()
-POST    /tables/:id/delete              controllers.Application.deleteTable(id: Long)
+GET     /tables                         @controllers.Tables.index()
+GET     /schemas/:id/tables             @controllers.Tables.findTablesBySchemaId(id: Long)
+POST    /tables                         @controllers.Application.newTable()
+POST    /tables/:id/delete              @controllers.Application.deleteTable(id: Long)
 
 # Columns
-GET     /columns                        controllers.Columns.index()
-GET     /tables/:id/columns             controllers.Columns.findColumnsByTableId(id: Long)
+GET     /columns                        @controllers.Columns.index()
+GET     /tables/:id/columns             @controllers.Columns.findColumnsByTableId(id: Long)
 
 # important! the more specific route must come before the general
-GET     /columns/:id/revisions/:revisionId   controllers.Columns.getRevision(id: Long, revisionId: java.lang.Integer)
-GET     /columns/:id/revisions           controllers.Columns.revisions(id: Long)
+GET     /columns/:id/revisions/:revisionId   @controllers.Columns.getRevision(id: Long, revisionId: java.lang.Integer)
+GET     /columns/:id/revisions           @controllers.Columns.revisions(id: Long)
 
 # Filter Types
-GET     /filter-types                   controllers.FilterTypes.index()
+GET     /filter-types                   @controllers.FilterTypes.index()
 
 # Revisions
-GET     /revisions/:id                  controllers.Application.getRevision(id: java.lang.Integer)
-GET     /revisions                      controllers.Application.revisions()
-GET     /show-revisions                 controllers.Application.showRevisions()
+GET     /revisions/:id                  @controllers.Application.getRevision(id: java.lang.Integer)
+GET     /revisions                      @controllers.Application.revisions()
+GET     /show-revisions                 @controllers.Application.showRevisions()
 
 # Posts
-GET     /posts/:entityType/:id          controllers.Posts.posts(entityType: String, id: Long)
-POST    /posts/:entityType/:id          controllers.Posts.create(entityType: String, id: Long)
+GET     /posts/:entityType/:id          @controllers.Posts.posts(entityType: String, id: Long)
+POST    /posts/:entityType/:id          @controllers.Posts.create(entityType: String, id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                   controllers.Assets.at(path="/public", file)
 
-POST    /import-schema                  controllers.Application.importSchema()
+POST    /import-schema                  @controllers.Application.importSchema()
 
-GET     /restricted                     controllers.Application.restricted
+GET     /restricted                     @controllers.Application.restricted
 #GET     /assets/javascript/routes.js    controllers.Application.jsRoutes
 
-GET     /profile                        controllers.Application.profile
+GET     /profile                        @controllers.Application.profile
 
-GET     /profile.json                   controllers.Application.profileAsJSON
+GET     /profile.json                   @controllers.Application.profileAsJSON
 
-GET     /login                          controllers.Application.login
-POST    /login                          controllers.Application.doLogin
+GET     /login                          @controllers.Application.login
+POST    /login                          @controllers.Application.doLogin
 
 GET     /logout                         com.feth.play.module.pa.controllers.Authenticate.logout
 GET     /authenticate/:provider         com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
 
-GET     /signup                         controllers.Application.signup
-POST    /signup                         controllers.Application.doSignup
+GET     /signup                         @controllers.Application.signup
+POST    /signup                         @controllers.Application.doSignup
 
 GET     /accounts/unverified            controllers.Signup.unverified
 GET     /authenticate/:provider/denied  controllers.Signup.oAuthDenied(provider: String)
@@ -87,9 +87,27 @@ POST    /accounts                       controllers.Account.update()
 GET     /login/password/forgot          controllers.Signup.forgotPassword(email: String ?= "")
 POST    /login/password/forgot          controllers.Signup.doForgotPassword
 
-GET     /search/:terms                  controllers.Search.index(terms: String)
+GET     /search/:terms                  @controllers.Search.index(terms: String)
 
-GET     /themes/:theme                  controllers.Application.theme(theme: String)
+GET     /themes/:theme                  @controllers.Application.theme(theme: String)
+
+#GET     /room                           @controllers.Posts.chatRoom(username: String ?= null)
+GET     /room/chat                      @controllers.Posts.chat(username)
+
+GET     /session                        @controllers.Application.clientSession
+
+GET     /profile/:id                    @controllers.Users.profile(id: Long)
+
+GET     /uploads/:category/:id          @controllers.Posts.list(category: String, id: Long)
+GET     /uploads                        @controllers.Posts.listAll
+POST    /upload/metadata                @controllers.Posts.uploadMetadata
+PUT     /upload/:id                     @controllers.Posts.uploadFile(id: Long)
+DELETE  /upload/:id                     @controllers.Posts.deleteFile(id: Long)
+
+GET     /sandboxes                      @controllers.Sandboxes.index
+GET     /sandboxes/:id/schemas          @controllers.Schemas.findSchemasBySandboxId(id: Long)
+POST     /sandboxes                     @controllers.Sandboxes.create
+PUT     /sandboxes/:id                  @controllers.Sandboxes.update(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 #GET     /js/*file                       controllers.Assets.at(path="/public/js", file)

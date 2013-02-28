@@ -1,12 +1,12 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.persistence.Column;
-import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * User: markmo

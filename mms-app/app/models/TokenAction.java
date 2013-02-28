@@ -1,26 +1,24 @@
 package models;
 
+import static controllers.Application.getSingleResult;
+
 import java.util.Date;
 import javax.persistence.*;
 import javax.persistence.Column;
 
 import play.data.format.Formats;
-import play.db.ebean.Model;
 import play.db.jpa.JPA;
-
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.annotation.EnumValue;
 import play.db.jpa.Transactional;
 
 @Entity
-public class TokenAction {// extends Model {
+public class TokenAction {
 
     public enum Type {
 
-//        @EnumValue("EV")
+        //@EnumValue("EV")
         EMAIL_VERIFICATION("EMAIL_VERIFICATION"),
 
-//        @EnumValue("PR")
+        //@EnumValue("PR")
         PASSWORD_RESET("PASSWORD_RESET");
 
         private String value;
@@ -63,28 +61,21 @@ public class TokenAction {// extends Model {
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date expires;
 
-//    public static final Finder<Long, TokenAction> find = new Finder<Long, TokenAction>(
-//            Long.class, TokenAction.class);
-
     @Transactional(readOnly = true)
     public static TokenAction findByToken(final String token, final Type type) {
-//        return find.where().eq("token", token).eq("type", type).findUnique();
-        try {
-            return JPA.em()
-                    .createQuery("select t from TokenAction t where t.token = ?1 and t.type = ?2",
-                            TokenAction.class)
-                    .setParameter(1, token)
-                    .setParameter(2, type)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return getSingleResult(TokenAction.class,
+                JPA.em().createQuery(
+                        "select t from TokenAction t where t.token = ?1 and t.type = ?2"
+                )
+                        .setParameter(1, token)
+                        .setParameter(2, type)
+        );
     }
 
     public static void deleteByUser(final User u, final Type type) {
-//        Ebean.delete(find.where().eq("targetUser.id", u.id).eq("type", type)
-//                .findIterate());
-        JPA.em().createQuery("delete from TokenAction t where t.targetUser.id = ?1 and t.type = ?2")
+        JPA.em().createQuery(
+                "delete from TokenAction t where t.targetUser.id = ?1 and t.type = ?2"
+        )
                 .setParameter(1, u.id)
                 .setParameter(2, type);
     }
@@ -103,7 +94,6 @@ public class TokenAction {// extends Model {
         final Date created = new Date();
         ua.created = created;
         ua.expires = new Date(created.getTime() + VERIFICATION_TIME * 1000);
-//        ua.save();
         JPA.em().persist(ua);
         return ua;
     }

@@ -1,12 +1,13 @@
 package models;
 
-import static utils.CollectionUtils.*;
+import static controllers.Application.getSingleResult;
+import static utils.CollectionUtils.safe;
 
-import javax.persistence.*;
-import javax.persistence.Column;
-import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.envers.Audited;
@@ -25,7 +26,7 @@ import play.db.jpa.JPA;
 public class DataSource extends AuditedModel {
 
     @Id
-    @GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "public.ds_data_source_data_source_id_seq_1")
+    @GeneratedValue
     @Column(name = "data_source_id")
     public long id;
 
@@ -61,20 +62,12 @@ public class DataSource extends AuditedModel {
         schemas.add(schema);
     }
 
-//    public static Finder<Long, DataSource> find = new Finder<Long, DataSource>(
-//            Long.class, DataSource.class
-//    );
-
     public static DataSource findByName(String name) {
-        DataSource dataSource = null;
-        try {
-            dataSource = JPA.em().createQuery("select s from DataSource s where s.name = ?1",
-                    DataSource.class)
-                    .setParameter(1, name)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            // ignore
-        }
-        return dataSource;
+        return getSingleResult(DataSource.class,
+                JPA.em().createQuery(
+                        "select s from DataSource s where s.name = ?1"
+                )
+                        .setParameter(1, name)
+        );
     }
 }

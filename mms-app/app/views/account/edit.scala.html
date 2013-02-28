@@ -16,41 +16,42 @@
     <div class="span3">
         @helper.form(routes.Account.update) {
 
-        @if(accountForm.hasGlobalErrors) {
-        <p class="error">
-            <span class="label label-important">@accountForm.globalError.get.message</span>
-        </p>
-        }
+            @if(accountForm.hasGlobalErrors) {
+            <p class="error">
+                <span class="label label-important">@accountForm.globalError.message</span>
+            </p>
+            }
 
-        @inputText(
-        accountForm("firstName"),
-        '_label -> Messages("account.edit.firstName")
-        )
+            @inputText(
+            accountForm("firstName"),
+            '_label -> Messages("account.edit.firstName")
+            )
 
-        @inputText(
-        accountForm("lastName"),
-        '_label -> Messages("account.edit.lastName")
-        )
+            @inputText(
+            accountForm("lastName"),
+            '_label -> Messages("account.edit.lastName")
+            )
 
-        @_emailPartial(accountForm)
+            @_emailPartial(accountForm)
 
-        @inputText(
-        accountForm("title"),
-        '_label -> Messages("account.edit.userTitle")
-        )
+            @inputText(
+            accountForm("title"),
+            '_label -> Messages("account.edit.userTitle")
+            )
 
-        @inputText(
-        accountForm("dept"),
-        '_label -> Messages("account.edit.dept")
-        )
+            @inputText(
+            accountForm("dept"),
+            '_label -> Messages("account.edit.dept")
+            )
 
-        @textarea(
-        accountForm("biography"),
-        '_label -> Messages("account.edit.biography"),
-        'class -> "input-xxlarge", 'rows -> 5
-        )
+            @textarea(
+            accountForm("biography"),
+            '_label -> Messages("account.edit.biography"),
+            'class -> "input-xxlarge", 'rows -> 5
+            )
 
-        <input type="submit" value="@Messages("account.edit.submit")" class="btn btn-primary">
+            <input type="hidden" name="id" value="@accountForm("id").value">
+            <input type="submit" value="@Messages("account.edit.submit")" class="btn btn-primary">
         }
     </div>
 

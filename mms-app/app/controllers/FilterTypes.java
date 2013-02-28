@@ -19,13 +19,14 @@ import models.FilterType;
 public class FilterTypes extends Controller {
 
     @Inject
-    static ObjectMapper mapper;
+    ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-    public static Result index() throws IOException {
+    public Result index() throws IOException {
+        @SuppressWarnings("unchecked")
         List<FilterType> filterTypes = JPA.em().createQuery(
-                "from FilterType",
-                FilterType.class)
+                "select f from FilterType f"
+                )
                 .getResultList();
         String json = mapper.writeValueAsString(filterTypes);
         return ok(json).as("application/json");

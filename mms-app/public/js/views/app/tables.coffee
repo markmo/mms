@@ -10,12 +10,13 @@ define [
     'text!templates/app/tables.html'
 ], ($, Backbone, Handlebars, app, Vm, FilterTypesCollection, TablesCollection, ColumnsSection, tablesPageTemplate) ->
     Backbone.View.extend
-        el: '.page'
+        el: '#page'
 
         compiled: Handlebars.compile tablesPageTemplate
 
         events:
             'show .collapse': 'show'
+            'shown .collapse': 'shown'
             'hidden .collapse': 'hidden'
             'click #filter-type-btn-group .btn': 'filterColumns'
 
@@ -32,6 +33,11 @@ define [
                 columnsSection.render(@filterTypes)
             heading = collapsible.prev()
             heading.addClass('selected')
+            return
+
+        shown: (event) ->
+            collapsible = $(event.target)
+            $('body').animate({scrollTop: collapsible.parent().offset().top - 44}, 'slow')
             return
 
         hidden: (event) ->
@@ -65,29 +71,29 @@ define [
             return true
 
         render: (schemaId, tableId) ->
-            schema = app.schemas.get(schemaId)
-            dataSource = schema.get('dataSource')
-            filterTypes = new FilterTypesCollection
-            filterTypes.fetch
-                success: =>
-                    tables = new TablesCollection({}, {schemaId: schemaId})
-                    app.tables = tables
-                    tables.fetch
-                        success: =>
-                            content = $('<div class="page-content clearfix"></div>')
-                            content.html @compiled
-                                dataSource: dataSource
-                                schema: schema.toJSON()
-                                filterTypes: filterTypes.toJSON()
-                                tables: tables.toJSON()
-                            $(@el).html content
-                            content.animate({top: 0}, 'fast', ->
-                                if tableId?
-                                    section = $('#table' + tableId)
-                                    section.collapse('show')
-                                    $('body').animate({scrollTop: section.parent().offset().top - 44}, 'slow')
+            app.schemas().done (schemas) =>
+                schema = schemas.get(schemaId)
+                dataSource = schema.get('dataSource')
+                filterTypes = new FilterTypesCollection
+                filterTypes.fetch
+                    success: =>
+                        tables = new TablesCollection({}, {schemaId: schemaId})
+                        tables.fetch
+                            success: =>
+                                content = $('<div class="page-content clearfix"></div>')
+                                content.html @compiled
+                                    dataSource: dataSource
+                                    schema: schema.toJSON()
+                                    filterTypes: filterTypes.toJSON()
+                                    tables: tables.toJSON()
+                                $(@el).html content
+                                content.animate({top: 0}, 'fast', ->
+                                    if tableId?
+                                        section = $('#table' + tableId)
+                                        section.collapse('show')
+                                        $('body').animate({scrollTop: section.parent().offset().top - 44}, 'slow')
+                                    return
+                                )
                                 return
-                            )
-                            return
-                    return
+                        return
             return this

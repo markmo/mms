@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="com.fasterxml.jackson.core_jackson-core_2.0.6">
-    <CLASSES>
-      <root url="jar:///usr/local/Cellar/play/2.0.3/libexec/repository/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.0.6.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

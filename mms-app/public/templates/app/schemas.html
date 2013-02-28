@@ -1,5 +1,9 @@
 <ul class="breadcrumb">
-    <li><a href="#/data-sources/{{dataSource.id}}"><span class="muted">[Data Source]</span> {{dataSource.name}}</a></li>
+    {{#if isDataSource}}
+    <li><a href="#/data-sources/{{context.id}}/schemas"><span class="muted">[Data Source]</span> {{context.name}}</a></li>
+    {{else}}
+    <li><a href="#/sandboxes/{{context.id}}"><span class="muted">[Sandbox]</span> {{context.name}}</a></li>
+    {{/if}}
 </ul>
 <h1>Schemas</h1>
 <div class="row">
@@ -12,5 +16,5 @@
             {{/each}}
         </ul>
     </div>
-    <div id="posts-section" class="span5"></div>
+    <div id="posts-section"></div>
 </div>

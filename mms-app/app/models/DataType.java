@@ -1,9 +1,11 @@
 package models;
 
-import javax.persistence.*;
-import javax.persistence.Column;
+import static controllers.Application.getSingleResult;
 
-import com.fasterxml.jackson.annotation.*;
+import javax.persistence.Column;
+import javax.persistence.Table;
+import javax.persistence.*;
+
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints;
 import play.db.jpa.JPA;
@@ -14,7 +16,7 @@ import play.db.jpa.JPA;
  * Time: 5:12 PM
  */
 @Entity
-@javax.persistence.Table(name = "ds_data_type")
+@Table(name = "ds_data_type")
 @Audited
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class DataType extends AuditedModel {
@@ -29,15 +31,11 @@ public class DataType extends AuditedModel {
     public String name;
 
     public static DataType findByName(String name) {
-        DataType dataType = null;
-        try {
-            dataType = JPA.em().createQuery("select t from DataType t where t.name = ?1",
-                    DataType.class)
-                    .setParameter(1, name)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            // ignore
-        }
-        return dataType;
+        return getSingleResult(DataType.class,
+                JPA.em().createQuery(
+                        "select t from DataType t where t.name = ?1"
+                )
+                        .setParameter(1, name)
+        );
     }
 }

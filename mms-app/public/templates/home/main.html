@@ -1,1 +1,52 @@
-Hello world
+<div class="row" style="margin-bottom: 40px;">
+    <div class="span3"></div>
+    <div class="span6">
+        <h3>Find</h3>
+        <form>
+            <div class="input-append">
+                <input type="text" class="span5">
+                <button type="submit" class="btn">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="home-features" class="row">
+    <div class="span4 bot-right">
+        <div>
+            <h3>Select Sandbox</h3>
+            <div class="clearfix" style="margin-bottom: 10px;">
+                <button class="btn btn-small btn-success" type="button">
+                    <i class="icon-plus icon-white"></i>
+                    <span>New sandbox&hellip;</span>
+                </button>
+            </div>
+            <form>
+                {{#each sandboxes}}
+                <label class="radio">
+                    <input type="radio" name="sandbox" value="{{id}}">
+                    <span>{{name}}</span>
+                </label>
+                {{/each}}
+                <p style="margin-top: 10px; text-align: center;">
+                    <button class="btn btn-primary" type="button">Select</button>
+                </p>
+            </form>
+        </div>
+    </div>
+    <div class="span4 bot-right">
+        <div>
+            <h3>Explore</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="/#/data-sources">Data Sources</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="span4 bot-right">
+        <div>
+            <h3>Ingest and Analyze</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="/#/data-sources">Create Dataset</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
