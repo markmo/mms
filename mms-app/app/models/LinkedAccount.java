@@ -15,6 +15,7 @@ public class LinkedAccount {
 
     @Id
     @GeneratedValue
+    @Column(name = "linked_account_id")
     public Long id;
 
     @ManyToOne

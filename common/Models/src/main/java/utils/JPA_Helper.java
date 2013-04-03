@@ -1,7 +1,7 @@
 package utils;
 
-import javax.persistence.Query;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  * User: markmo

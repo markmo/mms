@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>MMS - information asset management - API</title>
+<link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet" type="text/css"/>
+<link href="@routes.Assets.at("css/hightlight.default.css")" media="screen" rel="stylesheet" type="text/css"/>
+<link href="@routes.Assets.at("css/screen.css")" media="screen" rel="stylesheet" type="text/css"/>
+<script src="@routes.Assets.at("js/lib/jquery/jquery-1.9.1.min.js")"></script>
+<script src="@routes.Assets.at("js/lib/jquery/jquery-migrate-1.1.1.min.js")"></script>
+<script src="@routes.Assets.at("js/lib/jquery-plugins/jquery.slideto.min.js")"></script>
+<script src="@routes.Assets.at("js/lib/jquery-plugins/jquery.wiggle.min.js")"></script>
+<script src="@routes.Assets.at("js/lib/jquery-plugins/jquery.ba-bbq.min.js")"></script>
+<script src="@routes.Assets.at("js/lib/handlebars/handlebars-1.0.rc.1.js")"></script>
+<script src="@routes.Assets.at("js/lib/underscore/underscore-min.js")"></script>
+<script src="@routes.Assets.at("js/lib/backbone/backbone-min.js")"></script>
+<script src="@routes.Assets.at("js/lib/swagger-ui/swagger.js")"></script>
+<script src="@routes.Assets.at("js/lib/swagger-ui/swagger-ui.min.js")"></script>
+<script src="@routes.Assets.at("js/lib/highlight/highlight.7.3.pack.js")"></script>
+<script>
+    $(function () {
+        window.swaggerUi = new SwaggerUi({
+            discoveryUrl: 'http://localhost:9000/api-docs.json',
+            apiKey: 'special-key',
+            dom_id: 'swagger-ui-container',
+            supportHeaderParams: false,
+            supportedSubmitMethods: ['get', 'post', 'put'],
+            onComplete: function (swaggerApi, swaggerUi) {
+                if (console) {
+                    console.log('Loaded SwaggerUI');
+                    console.log(swaggerApi);
+                    console.log(swaggerUi);
+                }
+                $('pre code').each(function (i, e) {hljs.highlightBlock(e)});
+            },
+            onFailure: function (data) {
+                if (console) {
+                    console.log('Unable to load SwaggerUI');
+                    console.log(data);
+                }
+            },
+            docExpansion: 'none'
+        });
+        window.swaggerUi.load();
+    });
+</script>
+</head>
+<body>
+<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+</body>
+</html>

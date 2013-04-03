@@ -1,0 +1,12 @@
+<ivysettings>
+    <property name="ivy.checksums" value=""/>
+    <resolvers>
+        <url name="play-plugin-releases" alwaysCheckExactRevision="yes" checkmodified="true">
+            <ivy pattern="http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/[organization]/[artifact]/[revision]/ivys/ivy.xml"/>
+            <artifact pattern="http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/[organization]/[artifact]/[revision]/jars/[artifact](.[ext])"/>
+        </url>
+    </resolvers>
+    <modules>
+        <module organization="com.clever-age" name="play2-elasticsearch" matcher="regexp" resolver="play-plugin-releases"/>
+    </modules>
+</ivysettings>

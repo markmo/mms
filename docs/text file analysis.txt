@@ -1,0 +1,28 @@
+Text File Analysis Psuedocode
+
+Check mime-type
+
+  If mime-type != "text/plain" break
+  
+Check file extension
+
+  If extension not in ["csv", "tsv", "txt", "", "dat"] break
+
+Split on line break
+
+Read first row + sample 10 rows
+
+If all rows have same length, flag as possible fixed-width
+
+
+
+
+Detect header row
+The first row has columns that are not strings or are empty
+The first row's columns are not all unique
+The first row appears to contain dates or other common data formats (eg, xx-xx-xx)
+
+
+Detect column separator
+
+Max occurrence: http://www.codeproject.com/Articles/231582/Auto-detect-CSV-separator

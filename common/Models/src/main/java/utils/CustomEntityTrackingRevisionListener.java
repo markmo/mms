@@ -1,10 +1,11 @@
 package utils;
 
-import models.audit.CustomTrackingRevisionEntity;
+import java.io.Serializable;
+
 import org.hibernate.envers.EntityTrackingRevisionListener;
 import org.hibernate.envers.RevisionType;
 
-import java.io.Serializable;
+import mms.common.models.audit.CustomTrackingRevisionEntity;
 
 /**
  * User: markmo

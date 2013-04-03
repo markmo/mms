@@ -6,22 +6,27 @@ define [
     'cs!events'
 ], ($, _, Backbone, Vm, app) ->
     AppRouter = Backbone.Router.extend
+
         routes:
             # Pages
-            'sandboxes': 'sandboxes'
-            'sandboxes/:id/schemas': 'sandboxSchemas'
             'sandboxes/:id/edit': 'editSandbox'
-            'data-sources': 'dataSources'
-            'data-sources/:id/edit': 'editDataSource'
-            'data-sources/:id/schemas': 'schemas'
-            'schemas/:id/tables(/:tableId)': 'tables'
-            'tables/:id/columns': 'columns'
+            'sandboxes': 'sandboxes'
+            'datasources/:id/edit': 'editDatasource'
+            'datasources': 'datasources'
+            'datasources/:id/namespaces': 'namespaces'
+            'sandboxes/:id/namespaces': 'sandboxNamespaces'
+            'namespaces/:id/datasets(/:datasetId)': 'datasets'
+            'datasets/new': 'editDataset'
+            'datasets/:id/edit': 'editDataset'
+            'datasets/:id/columns': 'columns'
+            'datasets/:id/stats': 'showDatasetStats'
             'columns/:id/edit': 'editColumn'
-            'columns/:id': 'showColumn'
-            'columns/:id/revisions': 'showColumnRevisions'
             'columns/:id/revisions/:revisionId': 'showColumnRevision'
+            'columns/:id/revisions': 'showColumnRevisions'
+            'columns/:id': 'showColumn'
             'revisions/:id': 'showRevision'
             'revisions': 'revisions'
+            'files': 'files'
 
             # Default
             '*actions': 'defaultAction'
@@ -31,10 +36,10 @@ define [
         router = new AppRouter(options)
         app.router = router
 
-        router.on 'route:defaultAction', () ->
-            require ['cs!views/home/home'], (HomePage) ->
-                homePage = Vm.create(appView, 'HomePage', HomePage)
-                homePage.render()
+        router.on 'route:editSandbox', (sandboxId) ->
+            require ['cs!views/app/sandbox_form'], (SandboxForm) ->
+                sandboxForm = Vm.create(appView, 'SandboxForm', SandboxForm)
+                sandboxForm.render(sandboxId)
                 return
             return
 
@@ -45,63 +50,63 @@ define [
                 return
             return
 
-        router.on 'route:dataSources', () ->
-            require ['cs!views/app/data_sources'], (DataSourcesPage) ->
-                dataSourcesPage = Vm.create(appView, 'DataSourcesPage', DataSourcesPage)
-                dataSourcesPage.render()
+        router.on 'route:editDatasource', (datasourceId) ->
+            require ['cs!views/app/datasource_form'], (DatasourceForm) ->
+                datasourceForm = Vm.create(appView, 'DatasourceForm', DatasourceForm)
+                datasourceForm.render(datasourceId)
                 return
             return
 
-        router.on 'route:editDataSource', (dataSourceId) ->
-            require ['cs!views/app/data_source_form'], (DataSourceForm) ->
-                dataSourceForm = Vm.create(appView, 'DataSourceForm', DataSourceForm)
-                dataSourceForm.render(dataSourceId)
+        router.on 'route:datasources', () ->
+            require ['cs!views/app/datasources'], (DatasourcesPage) ->
+                datasourcesPage = Vm.create(appView, 'DatasourcesPage', DatasourcesPage)
+                datasourcesPage.render()
                 return
             return
 
-        router.on 'route:schemas', (dataSourceId) ->
-            require ['cs!views/app/schemas'], (SchemasPage) ->
-                schemasPage = Vm.create appView, 'SchemasPage', SchemasPage,
+        router.on 'route:namespaces', (datasourceId) ->
+            require ['cs!views/app/namespaces'], (NamespacesPage) ->
+                namespacesPage = Vm.create appView, 'NamespacesPage', NamespacesPage,
                     context:
-                        name: 'dataSource'
-                schemasPage.render(dataSourceId)
+                        name: 'datasource'
+                namespacesPage.render(datasourceId)
                 return
             return
 
-        router.on 'route:sandboxSchemas', (sandboxId) ->
-            require ['cs!views/app/schemas'], (SchemasPage) ->
-                schemasPage = Vm.create appView, 'SchemasPage', SchemasPage,
+        router.on 'route:sandboxNamespaces', (sandboxId) ->
+            require ['cs!views/app/namespaces'], (NamespacesPage) ->
+                namespacesPage = Vm.create appView, 'NamespacesPage', NamespacesPage,
                     context:
                         name: 'sandbox'
-                schemasPage.render(sandboxId)
+                namespacesPage.render(sandboxId)
                 return
             return
 
-        router.on 'route:editSandbox', (sandboxId) ->
-            require ['cs!views/app/sandbox_form'], (SandboxForm) ->
-                sandboxForm = Vm.create(appView, 'SandboxForm', SandboxForm)
-                sandboxForm.render(sandboxId)
+        router.on 'route:datasets', (namespaceId, datasetId) ->
+            require ['cs!views/app/datasets'], (DatasetsPage) ->
+                datasetsPage = Vm.create(appView, 'DatasetsPage', DatasetsPage)
+                datasetsPage.render(namespaceId, datasetId)
                 return
             return
 
-        router.on 'route:tables', (schemaId, tableId) ->
-            require ['cs!views/app/tables'], (TablesPage) ->
-                tablesPage = Vm.create(appView, 'TablesPage', TablesPage)
-                tablesPage.render(schemaId, tableId)
+        router.on 'route:editDataset', (datasetId) ->
+            require ['cs!views/app/dataset_form'], (DatasetForm) ->
+                datasetForm = Vm.create(appView, 'DatasetForm', DatasetForm, {datasetId: datasetId})
+                datasetForm.render()
                 return
             return
 
-        router.on 'route:columns', (tableId) ->
+        router.on 'route:columns', (datasetId) ->
             require ['cs!views/app/columns'], (ColumnsPage) ->
                 columnsPage = Vm.create(appView, 'ColumnsPage', ColumnsPage)
-                columnsPage.render(tableId)
+                columnsPage.render(datasetId)
                 return
             return
 
-        router.on 'route:showColumn', (columnId) ->
-            require ['cs!views/app/column'], (ColumnPage) ->
-                columnPage = Vm.create(appView, 'ColumnPage', ColumnPage)
-                columnPage.render(columnId)
+        router.on 'route:showDatasetStats', (datasetId) ->
+            require ['cs!views/app/dataset_stats'], (DatasetStatsPage) ->
+                datasetStatsPage = Vm.create(appView, 'DatasetStatsPage', DatasetStatsPage)
+                datasetStatsPage.render(datasetId)
                 return
             return
 
@@ -112,6 +117,13 @@ define [
                 return
             return
 
+        router.on 'route:showColumnRevision', (columnId, revisionId) ->
+            require ['cs!views/app/column_revision'], (ColumnRevisionPage) ->
+                columnRevisionPage = Vm.create(appView, 'ColumnRevisionPage', ColumnRevisionPage)
+                columnRevisionPage.render(columnId, revisionId)
+                return
+            return
+
         router.on 'route:showColumnRevisions', (columnId) ->
             require ['cs!views/app/revisions'], (RevisionsPage) ->
                 revisionsPage = Vm.create(appView, 'RevisionsPage', RevisionsPage)
@@ -119,10 +131,17 @@ define [
                 return
             return
 
-        router.on 'route:showColumnRevision', (columnId, revisionId) ->
-            require ['cs!views/app/column_revision'], (ColumnRevisionPage) ->
-                columnRevisionPage = Vm.create(appView, 'ColumnRevisionPage', ColumnRevisionPage)
-                columnRevisionPage.render(columnId, revisionId)
+        router.on 'route:showColumn', (columnId) ->
+            require ['cs!views/app/column'], (ColumnPage) ->
+                columnPage = Vm.create(appView, 'ColumnPage', ColumnPage)
+                columnPage.render(columnId)
+                return
+            return
+
+        router.on 'route:showRevision', (revisionId) ->
+            require ['cs!views/app/revised_entities'], (RevisedEntitiesPage) ->
+                revisedEntitiesPage = Vm.create(appView, 'RevisedEntitiesPage', RevisedEntitiesPage)
+                revisedEntitiesPage.render(revisionId)
                 return
             return
 
@@ -133,10 +152,19 @@ define [
                 return
             return
 
-        router.on 'route:showRevision', (revisionId) ->
-            require ['cs!views/app/revised_entities'], (RevisedEntitiesPage) ->
-                revisedEntitiesPage = Vm.create(appView, 'RevisedEntitiesPage', RevisedEntitiesPage)
-                revisedEntitiesPage.render(revisionId)
+        router.on 'route:files', ->
+            require ['cs!views/file/browser'], (BrowserPage) ->
+                browserPage = Vm.create(appView, 'BrowserPage', BrowserPage)
+                browserPage.render()
+                return
+            return
+
+        router.on 'route:defaultAction', () ->
+            require ['cs!views/home/home'], (HomePage) ->
+                homePage = Vm.create(appView, 'HomePage', HomePage)
+                homePage.render()
+                return
+            return
 
         Backbone.history.start
             silent: options?.silent || false

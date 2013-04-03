@@ -17,6 +17,7 @@ public class UserPermission implements Permission {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "permission_id")
     public Long id;
 
     public String value;

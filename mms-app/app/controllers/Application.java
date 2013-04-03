@@ -24,7 +24,14 @@ import providers.MyUsernamePasswordAuthProvider;
 import providers.MyUsernamePasswordAuthProvider.MyLogin;
 import providers.MyUsernamePasswordAuthProvider.MySignup;
 
-import models.*;
+import mms.common.models.Catalog;
+import mms.common.models.Datasource;
+import mms.common.models.Namespace;
+import mms.common.models.Sandbox;
+import mms.common.models.audit.CustomTrackingRevisionEntity;
+import mms.common.models.audit.ModifiedEntityTypeEntity;
+import mms.common.models.relational.Table;
+import models.User;
 import views.html.*;
 
 public class Application extends Controller {
@@ -45,13 +52,17 @@ public class Application extends Controller {
             session("theme", "spacelab");
         }
         return ok(
-                tables.render("dataSources")
+                tables.render("datasources")
         );
     }
 
     public Result theme(String theme) {
         session("theme", theme);
         return redirect(routes.Application.index());
+    }
+
+    public static Result api() {
+        return ok(apidocs.render());
     }
 
     public Result tables() {
@@ -65,177 +76,26 @@ public class Application extends Controller {
         );
     }
 
-    public Result newTable() {
-        return TODO;
-    }
-
-    public Result deleteTable(Long id) {
-        return TODO;
-    }
-
     @Transactional
     @BodyParser.Of(BodyParser.Json.class)
-    public Result importSchema() throws Exception {
+    public Result importDatasource() throws Exception {
         Http.RequestBody body = request().body();
         JsonNode json = request().body().asJson();
-        Sandbox sandbox = parseSandbox(json.path("sandbox"));
-        DataSource dataSource = parseDataSource(json.path("data"));
-        for (Schema schema : dataSource.getSchemas()) {
-            schema.sandbox = sandbox;
-            JPA.em().persist(schema);
+        Sandbox sandbox = Sandbox.parseSandbox(json.path("sandbox"));
+        Datasource datasource = Datasource.parseDatasource(mapper, json.path("data"));
+        for (Catalog catalog : datasource.getCatalogs()) {
+            for (Namespace namespace : catalog.getNamespaces()) {
+                namespace.setSandbox(sandbox);
+                JPA.em().persist(namespace);
+            }
         }
 
 //        mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//        DataSource dataSource = mapper.readValue(json, DataSource.class);
-//        dataSource.save();
-//        JPA.em().persist(dataSource);
+//        Datasource datasource = mapper.readValue(json, Datasource.class);
+//        datasource.save();
+//        JPA.em().persist(datasource);
 
         return ok();
-    }
-
-    private Sandbox parseSandbox(JsonNode json) throws IOException {
-        String name = json.path("name").getTextValue();
-        Sandbox existingSandbox = Sandbox.findByName(name);
-        Sandbox sandbox = (existingSandbox == null ? new Sandbox() : existingSandbox);
-        sandbox.name = name;
-        JPA.em().persist(sandbox);
-        return sandbox;
-    }
-
-    private DataSource parseDataSource(JsonNode json) throws IOException {
-        String name = json.path("name").getTextValue();
-        DataSource existingDataSource = DataSource.findByName(name);
-        DataSource dataSource = (existingDataSource == null ? new DataSource() : existingDataSource);
-        dataSource.name = name;
-        JPA.em().persist(dataSource);
-        Set<Schema> schemas = null;
-        JsonNode schemasJson = json.path("schemas");
-        if (schemasJson.size() > 0) {
-            schemas = new HashSet<Schema>();
-            Iterator<JsonNode> it = schemasJson.getElements();
-            while (it.hasNext()) {
-                Schema schema = parseSchema(it.next(), dataSource);
-                if (schema != null) {
-                    schemas.add(schema);
-                }
-            }
-        }
-        dataSource.setSchemas(schemas);
-        JPA.em().persist(dataSource);
-        return dataSource;
-    }
-
-    private Schema parseSchema(JsonNode json, DataSource dataSource) throws IOException {
-        String name = json.path("name").getTextValue();
-        Schema existingSchema = Schema.findByName(name, dataSource);
-        Schema schema = (existingSchema == null ? new Schema() : existingSchema);
-        schema.name = name;
-        schema.dataSource = dataSource;
-        JPA.em().persist(schema);
-        Set<Table> tables = null;
-        JsonNode tablesJson = json.path("tables");
-        if (tablesJson.size() > 0) {
-            tables = new HashSet<Table>();
-            Iterator<JsonNode> it = tablesJson.getElements();
-            while (it.hasNext()) {
-                Table table = parseTable(it.next(), schema);
-                if (table != null) {
-                    tables.add(table);
-                }
-            }
-        }
-        schema.setTables(tables);
-        JPA.em().persist(schema);
-        return schema;
-    }
-
-    private Table parseTable(JsonNode json, Schema schema) throws IOException {
-        String name = json.path("name").getTextValue();
-        Table existingTable = Table.findByName(name, schema);
-        Table table = (existingTable == null ? new Table() : existingTable);
-        table.name = name;
-        TableType tableType = mapper.readValue(json.path("tableType"), TableType.class);
-        TableType existingTableType = TableType.findByName(tableType.name);
-        table.tableType = (existingTableType == null ? tableType : existingTableType);
-        TableRole tableRole = mapper.readValue(json.path("role"), TableRole.class);
-        TableRole existingTableRole = TableRole.findByName(tableRole.name);
-        table.role = (existingTableRole == null ? tableRole : existingTableRole);
-        table.rowCount = json.path("rowCount").getIntValue();
-        JPA.em().persist(table);
-        Set<Column> columns = null;
-        JsonNode columnsJson = json.path("columns");
-        if (columnsJson.size() > 0) {
-            columns = new HashSet<Column>();
-            Iterator<JsonNode> it = columnsJson.getElements();
-            while (it.hasNext()) {
-                Column column = parseColumn(it.next(), table);
-                if (column != null) {
-                    column.table = null; // TODO
-                    columns.add(column);
-                }
-            }
-        }
-        table.setColumns(columns);
-        JPA.em().persist(table);
-        return table;
-    }
-
-    private Column parseColumn(JsonNode json, Table table) throws IOException {
-        String name = json.path("name").getTextValue();
-        int columnIndex = json.path("columnIndex").getIntValue();
-        DataType dataType = mapper.readValue(json.path("dataType"), DataType.class);
-        DataType existingDataType = DataType.findByName(dataType.name);
-        SqlDataType sqlDataType = mapper.readValue(json.path("sqlDataType"), SqlDataType.class);
-        SqlDataType existingSqlDataType = SqlDataType.findByName(sqlDataType.name);
-        ColumnRole columnRole = mapper.readValue(json.path("role"), ColumnRole.class);
-        ColumnRole existingColumnRole = ColumnRole.findByName(columnRole.name);
-        int intAutoInc = json.path("autoinc").getIntValue();
-        int intNullable = json.path("nullable").getIntValue();
-        int precision = json.path("precision").getIntValue();
-        int scale = json.path("scale").getIntValue();
-        String defaultValue = json.path("defaultValue").getTextValue();
-        String minValue = json.path("minValue").getTextValue();
-        String maxValue = json.path("maxValue").getTextValue();
-        int distinctCount = json.path("distinctCount").getIntValue();
-        String distinctValues = json.path("distinctValues").getTextValue();
-        Set<FilterType> filterTypes = null;
-        JsonNode filterTypesJson = json.path("filterTypes");
-        if (filterTypesJson.size() > 0) {
-            filterTypes = new HashSet<FilterType>();
-            Iterator<JsonNode> it = filterTypesJson.getElements();
-            while (it.hasNext()) {
-                JsonNode filterTypeJson = it.next();
-                String filterTypeName = filterTypeJson.path("name").getTextValue();
-                FilterType existingFilterType = FilterType.findByName(filterTypeName);
-                if (existingFilterType == null) {
-                    FilterType filterType = mapper.readValue(filterTypeJson, FilterType.class);
-                    JPA.em().persist(filterType);
-                    filterTypes.add(filterType);
-                } else {
-                    filterTypes.add(existingFilterType);
-                }
-            }
-
-        }
-        Column existingColumn = Column.findByName(name, table);
-        Column column = (existingColumn == null ? new Column() : existingColumn);
-        column.name = name;
-        column.columnIndex = columnIndex;
-        column.dataType = (existingDataType == null ? dataType : existingDataType);
-        column.sqlDataType = (existingSqlDataType == null ? sqlDataType : existingSqlDataType);
-        column.role = (existingColumnRole == null ? columnRole : existingColumnRole);
-        column.intAutoinc = intAutoInc;
-        column.intNullable = intNullable;
-        column.precision = precision;
-        column.scale = scale;
-        column.defaultValue = defaultValue;
-        column.minValue = minValue;
-        column.maxValue = maxValue;
-        column.distinctCount = distinctCount;
-        column.distinctValues = distinctValues;
-        column.setFilterTypes(filterTypes);
-        JPA.em().persist(column);
-        return column;
     }
 
     @Transactional(readOnly = true)
@@ -291,7 +151,7 @@ public class Application extends Controller {
         for (ModifiedEntityTypeEntity mod : revision.getModifiedEntityTypes()) {
             Map<String, Object> entry = new HashMap<String, Object>();
             entry.put("revisionType", mod.revisionType);
-            entry.put("entityName", mod.entityName);
+            entry.put("entityType", mod.entityType);
             entry.put("entityId", mod.entityId);
             modifiedEntities.add(entry);
         }

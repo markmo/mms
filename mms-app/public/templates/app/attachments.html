@@ -1,8 +1,10 @@
 <div id="fileupload">
     <div class="fileupload-buttonbar">
+        {{#if popoverId}}
         <div class="pull-right">
             <button type="button" class="close" aria-hidden="true" data-popover-id="{{popoverId}}">&times;</button>
         </div>
+        {{/if}}
         <div class="clearfix">
             <!-- The fileinput-button span is used to style the file input field as button -->
             <span class="btn btn-success btn-small fileinput-button">

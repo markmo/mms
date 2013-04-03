@@ -13,12 +13,12 @@ define [
         render: (columnId) ->
             app.columns().done (columns) =>
                 column = columns.get(columnId)
-                table = column.get('table')
-                schema = table.schema
-                dataSource = schema.dataSource
+                dataset = column.get('dataset')
+                namespace = dataset.namespace
+                datasource = namespace.datasource
                 $(@el).html @compiled
-                    dataSource: dataSource
-                    schema: schema
-                    table: table
+                    datasource: datasource
+                    namespace: namespace
+                    dataset: dataset
                     column: column.toJSON()
             return this

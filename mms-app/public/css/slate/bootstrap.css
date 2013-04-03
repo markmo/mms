@@ -1,5 +1,5 @@
 /*!
- * Bootstrap v2.3.0
+ * Bootstrap v2.3.1
  *
  * Copyright 2012 Twitter, Inc
  * Licensed under the Apache License v2.0
@@ -896,7 +896,7 @@ dd {
 hr {
   margin: 21px 0;
   border: 0;
-  border-top: 1px solid #bbbfc2;
+  border-top: 1px solid #1c1e22;
   border-bottom: 1px solid #ffffff;
 }
 
@@ -6173,12 +6173,13 @@ pre {
   border: 1px solid #1c1e22;
 }
 
-hr,
 legend,
 .page-header {
-  background-color: transparent;
-  border-top: none;
   border-bottom: 1px solid #1c1e22;
+}
+
+hr {
+  border-bottom: none;
 }
 
 .navbar .navbar-inner {
@@ -6270,11 +6271,11 @@ legend,
 .navbar-inverse .nav li > a:hover,
 .navbar-inverse .nav li.active > a,
 .navbar-inverse .nav li.active > a:hover {
-  background-color: #272b30;
-  background-image: -moz-linear-gradient(280deg, #202328, #272b30);
-  background-image: -webkit-linear-gradient(280deg, #202328, #272b30);
-  background-image: -o-linear-gradient(280deg, #202328, #272b30);
-  background-image: linear-gradient(280deg, #202328, #272b30);
+  background-color: #1c1e22;
+  background-image: -moz-linear-gradient(280deg, #101214, #1c1e22);
+  background-image: -webkit-linear-gradient(280deg, #101214, #1c1e22);
+  background-image: -o-linear-gradient(280deg, #101214, #1c1e22);
+  background-image: linear-gradient(280deg, #101214, #1c1e22);
   background-repeat: repeat-x;
 }
 
@@ -6388,7 +6389,7 @@ div.subnav.subnav-fixed .nav > li:first-child > a:hover {
 }
 
 .nav .nav-header {
-  text-shadow: none;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
 }
 
 .nav > li > a {

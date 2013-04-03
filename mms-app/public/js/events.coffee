@@ -6,20 +6,23 @@ define [
 
     class App
 
-        dataSources: (value, options) ->
-            this.collections('data_sources', value, options)
+        datasources: (value, options) ->
+            this.collections('datasources', value, options)
 
         sandboxes: (value, options) ->
             this.collections('sandboxes', value, options)
 
-        schemas: (value, options) ->
-            this.collections('schemas', value, options)
+        namespaces: (value, options) ->
+            this.collections('namespaces', value, options)
 
-        tables: (value, options) ->
-            this.collections('tables', value, options)
+        datasets: (value, options) ->
+            this.collections('datasets', value, options)
 
         columns: (value, options) ->
             this.collections('columns', value, options)
+
+        files: (value, options) ->
+            this.collections('files', value, options)
 
         collections: (name, value, options) ->
             memo = '_' + name

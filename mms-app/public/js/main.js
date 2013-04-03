@@ -6,7 +6,7 @@ require.config({
         underscore: 'lib/underscore/underscore-min',
         backbone: 'lib/backbone/backbone-min',
         'backbone-forms': 'lib/backbone/backbone-forms.min',
-        handlebars: 'lib/handlebars/handlebars-1.0.rc.1',
+        handlebars: 'lib/handlebars/handlebars',
         bootstrap: 'lib/bootstrap/bootstrap.min',
         'jquery.ui.widget': 'lib/jquery-file-upload/vendor/jquery.ui.widget',
         tmpl: 'lib/jquery-file-upload/vendor/tmpl.min',
@@ -86,6 +86,19 @@ require([
             ret = inverse(this);
         }
         return ret;
+    });
+
+    Handlebars.registerHelper('foreach', function (arr, options) {
+        if (options.inverse && !arr.length)
+            return options.inverse(this);
+
+        return arr.map(function (item, index) {
+            item.$index = index;
+            item.$first = index === 0;
+            item.$last  = index === arr.length - 1;
+            item.$more  = index < arr.length - 1;
+            return options.fn(item);
+        }).join('');
     });
 
     var session = new Session();

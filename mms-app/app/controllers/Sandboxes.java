@@ -13,7 +13,7 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.*;
 
-import models.Sandbox;
+import mms.common.models.Sandbox;
 
 /**
  * User: markmo
@@ -44,7 +44,7 @@ public class Sandboxes extends Controller {
             return badRequest();
         } else {
             JPA.em().persist(sandbox);
-            return ok("{\"id\":\"" + sandbox.id + "\"}").as("application/json");
+            return ok("{\"id\":\"" + sandbox.getId() + "\"}").as("application/json");
         }
     }
 
@@ -57,10 +57,9 @@ public class Sandboxes extends Controller {
         if (sandboxForm.hasErrors()) {
             return badRequest();
         } else {
-            sandbox.id = id;
+            sandbox.setId(id);
             JPA.em().merge(sandbox);
-            return ok("{\"id\":\"" + sandbox.id + "\"}").as("application/json");
+            return ok("{\"id\":\"" + sandbox.getId() + "\"}").as("application/json");
         }
     }
-
 }

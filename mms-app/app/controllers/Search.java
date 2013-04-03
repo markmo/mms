@@ -9,11 +9,12 @@ import com.github.cleverage.elasticsearch.IndexResults;
 import com.github.cleverage.elasticsearch.IndexService;
 import com.google.inject.Inject;
 import indexing.TableIndex;
-import models.Table;
 import org.elasticsearch.search.facet.FacetBuilders;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
+
+import mms.common.models.relational.Table;
 
 /**
  * User: markmo

@@ -20,6 +20,7 @@ import static controllers.Application.getSingleResult;
 import javax.persistence.*;
 
 import be.objectify.deadbolt.core.models.Role;
+import play.data.validation.Constraints;
 import play.db.jpa.JPA;
 
 /**
@@ -27,16 +28,17 @@ import play.db.jpa.JPA;
  * @author Mark Moloney modified for JPA
  */
 @Entity
+@Table(name = "user_role")
 public class SecurityRole implements Role {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-//    @SequenceGenerator(name="id_seq", sequenceName="public.security_role_id_seq_1")
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_seq")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "role_id")
     public Long id;
 
+    @Constraints.Required
     public String roleName;
 
     public String getName() {

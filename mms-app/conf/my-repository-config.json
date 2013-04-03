@@ -5,11 +5,39 @@
         "default": "default",
         "allowCreation": true
     },
+    "storage": {
+        "cacheConfiguration": "infinispan/cache/configuration.xml",
+        "cacheName": "MMS File Repository",
+        "transactionManagerLookup": "org.infinispan.transaction.lookup.GenericTransactionManagerLookup",
+        "binaryStorage": {
+            "minimumBinarySizeInBytes": 4096,
+            "minimumStringSize": 4096,
+            "type": "file",
+            "directory": "/data/mms/binary"
+        }
+    },
     "security": {
         "anonymous": {
-            "roles": ["readonly","readwrite","admin"],
+            "roles": ["readonly", "readwrite", "admin"],
             "useOnFailedLogin": false
         }
     },
-    "jndiName": ""
+    "jndiName": "",
+    "sequencing": {
+        "removeDerivedContentWithOriginal": true,
+        "sequencers": {
+            "Delimited text sequencer": {
+                "classname": "delimitedtext",
+                "pathExpressions": ["default:/files/FlatFile/*/(*.csv)/jcr:content[@jcr:data] => /text"],
+                "commentMarker": "#",
+                "maximumLinesToRead": 5
+            },
+            "Fixed width text sequencer": {
+                "classname": "fixedwidthtext",
+                "pathExpressions": ["default:/files/FlatFile/*/(*.txt)/jcr:content[@jcr:data] => /text"],
+                "commentMarker": "#",
+                "maximumLinesToRead": 5
+            }
+        }
+    }
 }

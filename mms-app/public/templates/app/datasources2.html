@@ -1,0 +1,15 @@
+<h1>Data Sources</h1>
+<div class="tabbable tabs-left">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#datasources">Data Sources</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="datasources">
+            <ul>
+                <% _.each(datasources, function (datasource) { %>
+                <li><%- datasource.name %></li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+</div>

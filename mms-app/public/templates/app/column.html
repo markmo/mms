@@ -1,7 +1,7 @@
 <ul class="breadcrumb">
-    <li><a href="#/data-sources/{{dataSource.id}}/schemas"><span class="muted">[Data Source]</span> {{dataSource.name}}</a> <span class="divider">/</span></li>
-    <li><a href="#/schemas/{{schema.id}}/tables"><span class="muted">[Schema]</span> {{schema.name}}</a> <span class="divider">/</span></li>
-    <li><a href="#/schemas/{{schema.id}}/tables/{{table.id}}"><span class="muted">[Table]</span> {{table.name}}</a></li>
+    <li><a href="#/datasources/{{datasource.id}}/namespaces"><span class="muted">[Data Source]</span> {{datasource.name}}</a> <span class="divider">/</span></li>
+    <li><a href="#/namespaces/{{namespace.id}}/tables"><span class="muted">[Namespace]</span> {{namespace.name}}</a> <span class="divider">/</span></li>
+    <li><a href="#/namespaces/{{namespace.id}}/tables/{{table.id}}"><span class="muted">[Table]</span> {{table.name}}</a></li>
 </ul>
 {{#with column}}
 <a class="btn btn-primary pull-right" href="#/columns/{{id}}/revisions">Revisions</a>

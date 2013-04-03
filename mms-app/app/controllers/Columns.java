@@ -1,13 +1,14 @@
 package controllers;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.text.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import models.*;
 import org.codehaus.jackson.JsonNode;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
@@ -17,6 +18,8 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.*;
+
+import mms.common.models.Column;
 
 /**
  * User: markmo
@@ -90,8 +93,8 @@ public class Columns extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public Result findColumnsByTableId(Long tableId) throws IOException {
-        List<Column> columns = Column.findByTableId(tableId);
+    public Result findColumnsByDatasetId(Long tableId) throws IOException {
+        List<Column> columns = Column.findByDatasetId(tableId);
         String json = mapper.writeValueAsString(columns);
         return ok(json).as("application/json");
     }

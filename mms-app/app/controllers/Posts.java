@@ -2,23 +2,22 @@ package controllers;
 
 import static play.data.Form.form;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
-import models.*;
-import models.Thread;
-
 import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
-import service.FileService;
+
+import mms.common.models.Datasource;
+import mms.common.models.posts.DiscussionThread;
+import mms.common.models.posts.Post;
+import models.ChatRoom;
+import models.User;
 
 /**
  * User: markmo
@@ -30,17 +29,14 @@ public class Posts extends Controller {
     @Inject
     ObjectMapper mapper;
 
-    @Inject
-    FileService fileService;
-
     @Transactional(readOnly = true)
     public Result posts(String entityType, Long entityId) throws IOException {
         List<Post> posts = new ArrayList<Post>();
-        if (entityType.equals("dataSource")) {
-            DataSource dataSource = JPA.em().find(DataSource.class, entityId);
-            if (dataSource.threads != null && !dataSource.threads.isEmpty()) {
-                for (models.Thread thread : dataSource.threads) {
-                    posts.addAll(thread.posts);
+        if (entityType.equals("datasource")) {
+            Datasource datasource = JPA.em().find(Datasource.class, entityId);
+            if (datasource.getThreads() != null && !datasource.getThreads().isEmpty()) {
+                for (DiscussionThread thread : datasource.getThreads()) {
+                    posts.addAll(thread.getPosts());
                 }
             }
         }
@@ -52,14 +48,14 @@ public class Posts extends Controller {
     public Result create(String entityType, Long entityId) throws IOException {
         Form<PostInput> postInputForm = form(PostInput.class);
         PostInput postInput = postInputForm.bindFromRequest().get();
-        if (postInput.entityType.equals("dataSource")) {
-            DataSource dataSource = JPA.em().find(DataSource.class, postInput.entityId);
-            Thread thread = null;
-            if (dataSource.threads == null || dataSource.threads.isEmpty()) {
-                thread = new Thread();
-                dataSource.threads = new HashSet<Thread>(Collections.singletonList(thread));
+        if (postInput.entityType.equals("datasource")) {
+            Datasource datasource = JPA.em().find(Datasource.class, postInput.entityId);
+            DiscussionThread thread = null;
+            if (datasource.getThreads() == null || datasource.getThreads().isEmpty()) {
+                thread = new DiscussionThread();
+                datasource.setThreads(new HashSet<DiscussionThread>(Collections.singletonList(thread)));
             } else {
-                thread = dataSource.threads.iterator().next();
+                thread = datasource.getThreads().iterator().next();
             }
 
             // TODO: replace with authenticated user
@@ -71,76 +67,20 @@ public class Posts extends Controller {
             }
 
             Post post = new Post();
-            post.datetime = new Date();
-            post.subject = postInput.subject;
-            post.message = postInput.message;
-            post.parent = parent;
-            post.thread = thread;
-            post.user = user;
-            if (thread.posts == null) {
-                thread.posts = new ArrayList<Post>();
+            post.setDatetime(new Date());
+            post.setSubject(postInput.subject);
+            post.setMessage(postInput.message);
+            post.setParent(parent);
+            post.setThread(thread);
+            post.setUserId(user.id);
+            if (thread.getPosts() == null) {
+                thread.setPosts(new ArrayList<Post>());
             }
-            thread.posts.add(post);
+            thread.addPost(post);
             JPA.em().persist(thread);
             JPA.em().flush();
-            JPA.em().persist(dataSource);
+            JPA.em().persist(datasource);
         }
-        return ok();
-    }
-
-    public Result listAll() {
-        fileService.listAll();
-        return ok();
-    }
-
-    @Transactional(readOnly = true)
-    public Result list(String category, Long id) {
-        List<FileInput> files = FileInput.findByEntityTypeAndId(category, id);
-        ObjectNode root = mapper.createObjectNode();
-        ArrayNode filesArray = mapper.createArrayNode();
-        for (FileInput file : files) {
-            filesArray.add(mapper.valueToTree(file));
-        }
-        root.set("files", filesArray);
-        return ok(root.toString());
-    }
-
-    @Transactional
-    public Result uploadMetadata() throws IOException {
-        Form<FileInput> fileForm = form(FileInput.class);
-        if (fileForm.hasErrors()) {
-            return badRequest();
-        } else {
-            FileInput file = fileForm.bindFromRequest().get();
-            JPA.em().persist(file);
-            ObjectNode root = mapper.createObjectNode();
-            ArrayNode filesArray = mapper.createArrayNode();
-            filesArray.add(mapper.valueToTree(file));
-            root.set("files", filesArray);
-            return ok(root.toString());
-        }
-    }
-
-    @Transactional
-    public Result uploadFile(Long id) {
-        File file = request().body().asRaw().asFile();
-        FileInput fileInput = JPA.em().find(FileInput.class, id);
-        fileInput.file = file;
-        System.out.println("uploaded file: " + fileInput.name);
-        FileContext context = new FileContext(fileInput.entityType, fileInput.entityId);
-        fileService.store(context, fileInput);
-        ObjectNode root = mapper.createObjectNode();
-        ArrayNode filesArray = mapper.createArrayNode();
-        ObjectNode fileNode = mapper.valueToTree(fileInput);
-        fileNode.put("delete_url", "/upload/" + fileInput.id);
-        filesArray.add(fileNode);
-        root.set("files", filesArray);
-        return ok(root.toString());
-    }
-
-    @Transactional
-    public Result deleteFile(Long id) {
-        JPA.em().createQuery("delete from FileInput where id = ?1").setParameter(1, id);
         return ok();
     }
 

@@ -4,8 +4,6 @@ import static controllers.Application.copyProperties;
 import static controllers.Application.getSingleResult;
 
 import java.util.*;
-import javax.persistence.Column;
-import javax.persistence.Table;
 import javax.persistence.*;
 
 import be.objectify.deadbolt.core.models.Permission;
@@ -17,12 +15,9 @@ import com.feth.play.module.pa.user.AuthUser;
 import com.feth.play.module.pa.user.AuthUserIdentity;
 import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
-import controllers.Application;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import play.data.format.Formats;
 import play.db.jpa.JPA;
-import play.db.jpa.Transactional;
 
 import models.TokenAction.Type;
 
@@ -42,6 +37,7 @@ public class User implements Subject {
 
 	@Id
     @GeneratedValue
+    @Column(name = "user_id")
 	public Long id;
 
 //	@Email
@@ -69,7 +65,7 @@ public class User implements Subject {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "ds_followers",
+            name = "followers",
             joinColumns = @JoinColumn(name = "followed_user_id"),
             inverseJoinColumns = @JoinColumn(name = "following_user_id")
     )
@@ -78,9 +74,9 @@ public class User implements Subject {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "ds_followers",
+            name = "followers",
             joinColumns = @JoinColumn(name = "following_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "follower_user_id")
+            inverseJoinColumns = @JoinColumn(name = "followed_user_id")
     )
     @JsonBackReference("follower")
     public List<User> following;
@@ -93,6 +89,11 @@ public class User implements Subject {
 	public boolean emailValidated;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
 	public List<SecurityRole> roles;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -100,6 +101,11 @@ public class User implements Subject {
 	public List<LinkedAccount> linkedAccounts;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_permissions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
 	public List<UserPermission> permissions;
 
     @Override

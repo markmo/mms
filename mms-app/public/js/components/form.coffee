@@ -44,18 +44,18 @@ define [
             'click #btnCancel': 'cancel'
             'click #btnSubmit': 'submit'
 
-        initialize: (model) ->
+        initialize: (model, options) ->
             if model instanceof Backbone.Model
-                options = {
+                opts = {
                     fieldsets: [
-                        legend: model.get('friendlyName') || model.get('name') || model.get('description')
+                        legend: model.get('friendlyName') || model.get('name') || model.get('description') || options?.title
                         fields: _.keys(model.schema)
                     ]
                     model: model
                 }
             else
-                options = model
-            Backbone.Form.prototype.initialize.call(this, options)
+                opts = model
+            Backbone.Form.prototype.initialize.call(this, opts)
 
         cancel: (event) ->
             event.preventDefault()

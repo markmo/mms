@@ -1,16 +1,17 @@
 package indexing;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.github.cleverage.elasticsearch.Index;
 import com.github.cleverage.elasticsearch.IndexUtils;
 import com.github.cleverage.elasticsearch.Indexable;
 import com.github.cleverage.elasticsearch.annotations.IndexMapping;
 import com.github.cleverage.elasticsearch.annotations.IndexType;
-import models.Table;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import mms.common.models.relational.Table;
 
 /**
  * User: markmo

@@ -23,7 +23,9 @@
             <emptyLine />
             <package name="" withSubpackages="true" static="false" />
             <emptyLine />
+            <package name="mms" withSubpackages="true" static="false" />
             <package name="models" withSubpackages="true" static="false" />
+            <package name="service" withSubpackages="true" static="false" />
             <package name="utils" withSubpackages="true" static="false" />
             <package name="views" withSubpackages="true" static="false" />
           </value>

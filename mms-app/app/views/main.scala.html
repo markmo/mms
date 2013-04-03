@@ -11,8 +11,8 @@
     <!-- Le meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Play Authenticate - an authentication module for the Play! Framework 2.0">
-    <meta name="author" content="The Play Authenticate Team">
+    <meta name="description" content="MMS - information asset management">
+    <meta name="author" content="Mark Moloney &copy; Datascience Ltd.">
     <!-- Le scripts -->
     @if(scripts == null) {
     <script src="@routes.Assets.at("js/lib/bootstrap/bootstrap.min.js")"></script>
@@ -36,6 +36,7 @@
     <link href="@routes.Assets.at("css/rickshaw/rickshaw.min.css")" rel="stylesheet">
     <link href="@routes.Assets.at("css/jquery-file-upload/css/jquery.fileupload-ui.css")" rel="stylesheet">
     <link href="@routes.Assets.at("css/jquery-file-upload/css/bootstrap-image-gallery.min.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/jqtree.css")" rel="stylesheet">
     <link href="@routes.Assets.at("stylesheets/main.min.css")" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -44,76 +45,82 @@
     <![endif]-->
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <a class="brand" href="@routes.Application.index()"><span class="appname">MMS</span> <em><span style="font-size: 14px;">information asset management</span></em></a>
+    <div id="layout-container">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="@routes.Application.index()"><span class="appname">MMS</span> <em><span style="font-size: 14px;">information asset management</span></em></a>
 
-                <div class="btn-group pull-right">
-                    @subjectPresentOr() {
-                        @defining(Application.getLocalUser(session())) { user =>
-                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                <em class="icon-user"></em> @user.getName()
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="@routes.Application.profile()">@Messages("playauthenticate.navigation.profile")</a></li>
-                                <li><a href="@routes.Account.link()">@Messages("playauthenticate.navigation.link_more")</a></li>
-                                <li class="divider"></li>
-                                <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()"><em
-                                        class="icon-off"></em> @Messages("playauthenticate.navigation.logout")</a></li>
-                            </ul>
+                    <div class="btn-group pull-right">
+                        @subjectPresentOr() {
+                            @defining(Application.getLocalUser(session())) { user =>
+                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <em class="icon-user"></em> @user.getName()
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@routes.Application.profile()">@Messages("playauthenticate.navigation.profile")</a></li>
+                                    <li><a href="@routes.Account.link()">@Messages("playauthenticate.navigation.link_more")</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()"><em
+                                            class="icon-off"></em> @Messages("playauthenticate.navigation.logout")</a></li>
+                                </ul>
+                            }
+                        }{
+                            <a href="@routes.Application.login()" class="btn btn-primary @("disabled".when(nav == "login"))">@Messages("playauthenticate.navigation.login")</a>
                         }
-                    }{
-                        <a href="@routes.Application.login()" class="btn btn-primary @("disabled".when(nav == "login"))">@Messages("playauthenticate.navigation.login")</a>
-                    }
-                </div>
+                    </div>
 
-                <div class="nav-collapse">
-                    <ul class="nav">
-                        <li class="dropdown@(" active".when(nav == ""))">
-                            <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                Start
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="@routes.Application.index()">@Messages("playauthenticate.navigation.home")</a></li>
-                                <li><a href="@routes.Application.showRevisions()">Revisions</a></li>
-                            </ul>
-                        </li>
-                        @*<li class="@(" active".when(nav == "restricted"))"><a href="@routes.Application.restricted()">@Messages("playauthenticate.navigation.restricted")</a></li>*@
-                        @subjectNotPresent() {
-                            <li class="@(" active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("playauthenticate.navigation.signup")</a></li>
-                        }
-                    </ul>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="dropdown@(" active".when(nav == ""))">
+                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                    Start
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="@routes.Application.index()">@Messages("playauthenticate.navigation.home")</a></li>
+                                    <li><a href="@routes.Application.showRevisions()">Revisions</a></li>
+                                    <li><a href="@routes.Application.api()">API</a></li>
+                                </ul>
+                            </li>
+                            @*<li class="@(" active".when(nav == "restricted"))"><a href="@routes.Application.restricted()">@Messages("playauthenticate.navigation.restricted")</a></li>*@
+                            @subjectNotPresent() {
+                                <li class="@(" active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("playauthenticate.navigation.signup")</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
                 </div>
-                <!--/.nav-collapse -->
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        @if(flash.contains(Application.FLASH_ERROR_KEY)) {
-            <div class="alert alert-error">
-                @flash().get(Application.FLASH_ERROR_KEY)
-            </div>
-        }
-        @if(flash.contains(Application.FLASH_MESSAGE_KEY)) {
-            <div class="alert alert-success">
-                @flash().get(Application.FLASH_MESSAGE_KEY)
-            </div>
-        }
-        @content
+        <div class="container">
+            @if(flash.contains(Application.FLASH_ERROR_KEY)) {
+                <div class="alert alert-error">
+                    @flash().get(Application.FLASH_ERROR_KEY)
+                </div>
+            }
+            @if(flash.contains(Application.FLASH_MESSAGE_KEY)) {
+                <div class="alert alert-success">
+                    @flash().get(Application.FLASH_MESSAGE_KEY)
+                </div>
+            }
+            @content
+        </div>
+        <!-- /container -->
+    </div>
+    <footer class="clearfix">
         <hr>
-        <footer class="clearfix">
+        <div style="width: 940px; margin-left: auto; margin-right: auto;">
             <p class="pull-left">&copy; 2013 Data Science Ltd</p>
-            <div class="btn-group pull-right dropup">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <div class="btn-group pull-right dropup" style="margin-top: 156px;">
+                <a class="btn btn-small btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
                     <em class="icon-picture"></em> @session.get("theme")
                     <span class="caret"></span>
                 </a>
@@ -130,9 +137,8 @@
                     <li><a href="@routes.Application.theme("journal")">journal</a></li>
                 </ul>
             </div>
-        </footer>
-    </div>
-    <!-- /container -->
+        </div>
+    </footer>
     <div id="side-buttons"></div>
 </body>
 </html>

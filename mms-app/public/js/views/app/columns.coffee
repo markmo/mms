@@ -13,10 +13,10 @@ define [
         initialize: (options) ->
             if options
                 @el = options.el
-                @tableId = options.tableId
+                @datasetId = options.datasetId
 
         render: (filterTypes) ->
-            columns = new ColumnsCollection({}, {tableId: @tableId})
+            columns = new ColumnsCollection({}, {datasetId: @datasetId})
             app.columns(columns)
             columns.fetch
                 success: =>

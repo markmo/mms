@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import module.Dependencies;
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
 import play.db.jpa.JPA;
 import play.libs.F;
 import play.mvc.Call;
@@ -16,12 +17,15 @@ import com.feth.play.module.pa.exceptions.AuthException;
 
 import controllers.routes;
 import models.SecurityRole;
+import service.FileRepoService;
 
 public class Global extends GlobalSettings {
 
     private Injector injector = Guice.createInjector(new Dependencies());
 
+    @Override
     public void onStart(Application app) {
+        Logger.info("Application has started");
         PlayAuthenticate.setResolver(new Resolver() {
 
             @Override
@@ -75,10 +79,19 @@ public class Global extends GlobalSettings {
         //Logger.warn("Getting an instance from guice: " + app.plugin(InjectPlugin.class).getInstance(ObjectMapper.class));
         JPA.withTransaction(new F.Callback0() {
             @Override
-            public void invoke() throws Throwable {
+            public void invoke() {
                 initialData();
             }
         });
+    }
+
+    @Override
+    public void onStop(Application app) {
+        Logger.info("Application shutdown...");
+        FileRepoService repo = injector.getInstance(FileRepoService.class);
+        if (repo != null) {
+            repo.shutdown();
+        }
     }
 
     /*

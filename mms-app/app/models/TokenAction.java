@@ -43,6 +43,7 @@ public class TokenAction {
 
     @Id
     @GeneratedValue
+    @Column(name = "token_action_id")
     public Long id;
 
     @Column(unique = true)
@@ -53,6 +54,7 @@ public class TokenAction {
     public User targetUser;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "token_type")
     public Type type;
 
     @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")

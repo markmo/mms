@@ -1,0 +1,94 @@
+<div id="fileupload">
+    <div class="fileupload-buttonbar">
+        <div class="clearfix">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success btn-small fileinput-button">
+                <i class="icon-plus icon-white"></i>
+                <span>Add files&hellip;</span>
+                <input id="files" type="file" name="files[]" multiple="">
+            </span>
+            <button type="reset" class="btn btn-warning btn-small cancel" style="display: none;">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>Cancel upload</span>
+            </button>
+            <span class="delete-btn" style="display: none;">
+                <button type="button" class="btn btn-danger btn-small delete">
+                    <i class="icon-trash icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" class="toggle">
+            </span>
+        </div>
+        <div class="dropzone">drop files here</div>
+        <!-- The global progress information -->
+        <div class="fileupload-progress fade">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="bar" style="width:0%;"></div>
+            </div>
+            <!-- The extended global progress information -->
+            <div class="progress-extended">&nbsp;</div>
+        </div>
+    </div>
+    <!-- The loading indicator is shown during file processing -->
+    <div class="fileupload-loading"></div>
+    <br>
+    <!-- The table listing the files available for upload/download -->
+    <table role="presentation" class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+</div>
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td class="preview"><span class="fade"></span></td>
+        <td class="name">
+            {% if (file.error) { %}
+            <div><small><span class="label label-important">Error</span> {%=file.error%}</small></div>
+            {% } %}
+            <div class="wordwrap"><small>{%=file.name%}</small></div>
+        </td>
+        <td class="size"><small><span>{%=o.formatFileSize(file.size)%}</span></small></td>
+        {% if (file.error) { %}
+        {{!<td class="error" colspan="2"><small><span class="label label-important">Error</span> {%=file.error%}</small></td>}}
+        {% } else if (o.files.valid && !i) { %}
+        <td></td>
+        {% } %}
+        <td class="cancel">{% if (!i) { %}
+            <button class="btn btn-warning btn-mini">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>Cancel</span>
+            </button>
+            {% } %}</td>
+    </tr>
+    {% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        {% if (file.error) { %}
+        <td></td>
+        <td class="name">
+            <div><small><span class="label label-important">Error</span> {%=file.error%}</small></div>
+            <div class="wordwrap"><small>{%=file.name%}</small></div>
+        </td>
+        {% } else { %}
+        <td class="preview">{% if (file.thumbnail_url) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+            {% } %}</td>
+        <td class="name">
+            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}"><small>{%=file.name%}</small></a>
+        </td>
+        {% } %}
+        <td class="size"><small><span>{%=o.formatFileSize(file.size)%}</span></small></td>
+        <td></td>
+        <td class="delete">
+            <button class="btn btn-danger btn-mini" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                <i class="icon-trash icon-white"></i>
+                <span>Delete</span>
+            </button>
+            <input type="checkbox" name="delete" value="1">
+        </td>
+    </tr>
+    {% } %}
+</script>

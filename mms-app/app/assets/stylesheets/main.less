@@ -1,7 +1,31 @@
 @charset "UTF-8";
 
+html, body {
+  height: 100%;
+}
+
 body {
-    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+  background-image: url("../img/backgrounds/furley_bg.png")
+}
+
+#layout-container {
+  min-height: 100%;
+}
+
+footer {
+  position: relative;
+  height: 250px;
+  margin-top: -250px;
+  background: url("../img/backgrounds/zen_garden.jpg") no-repeat bottom right;
+  background-size: 100% 228px; /* width height *//* 1676px 228px */
+  p {
+    color: #333;
+  }
+}
+
+#layout-container > .container {
+  padding-top: 42px;
+  padding-bottom: 250px;
 }
 
 form .error {
@@ -31,14 +55,6 @@ form .error {
 
 h1 {
 	margin-bottom: 20px !important;
-}
-
-.page {
-  min-height: 250px;
-}
-
-footer {
-  margin-bottom: 20px;
 }
 
 .brand {
@@ -404,7 +420,7 @@ small.you {
 }
 
 .dropzone.in {
-  width: 468px;
+  /*width: 468px;*/
   height: 200px;
   line-height: 200px;
   font-size: larger;
@@ -618,18 +634,18 @@ small.you {
 .bot-right:before {
   top: -3px;
   width: 3px;
-  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000), to(transparent));
-  background-image: -webkit-linear-gradient(transparent, #000);
-  background-image: -moz-linear-gradient(transparent, #000);
-  backgorund-image: -o-linear-gradient(transparent, #000);
+  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#333), to(transparent)); /*08c*/
+  background-image: -webkit-linear-gradient(transparent, #333);
+  background-image: -moz-linear-gradient(transparent, #333);
+  backgorund-image: -o-linear-gradient(transparent, #333);
 }
 .bot-right:after {
   left: -3px;
   height: 3px;
-  background-image: -webkit-gradient(linear, 100% 0, 0 0, from(#000), to(transparent));
-  background-image: -webkit-linear-gradient(right, #000, transparent);
-  background-image: -mox-linear-gradient(right, #000, transparent);
-  background-image: -o-linear-gradient(right, #000, transparent);
+  background-image: -webkit-gradient(linear, 100% 0, 0 0, from(#333), to(transparent));
+  background-image: -webkit-linear-gradient(right, #333, transparent);
+  background-image: -mox-linear-gradient(right, #333, transparent);
+  background-image: -o-linear-gradient(right, #333, transparent);
 }
 
 .top-left {
@@ -646,20 +662,52 @@ small.you {
 .top-left:before {
   bottom: -3px;
   width: 3px;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#000), to(transparent));
-  background-image: -webkit-linear-gradient(bottom, transparent, #000);
-  background-image: -moz-linear-gradient(bottom, transparent, #000);
-  backgorund-image: -o-linear-gradient(bottom, transparent, #000);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333), to(transparent));
+  background-image: -webkit-linear-gradient(bottom, transparent, #333);
+  background-image: -moz-linear-gradient(bottom, transparent, #333);
+  backgorund-image: -o-linear-gradient(bottom, transparent, #333);
 }
 .top-left:after {
   right: -3px;
   height: 3px;
-  background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#000), to(transparent));
-  background-image: -webkit-linear-gradient(left, #000, transparent);
-  background-image: -mox-linear-gradient(left, #000, transparent);
-  background-image: -o-linear-gradient(left, #000, transparent);
+  background-image: -webkit-gradient(linear, 0 0, 100% 0, from(#333), to(transparent));
+  background-image: -webkit-linear-gradient(left, #333, transparent);
+  background-image: -mox-linear-gradient(left, #333, transparent);
+  background-image: -o-linear-gradient(left, #333, transparent);
 }
 
 div[class*="span"] > div {
   padding: 0 10px;
+}
+
+#tree1 {
+  margin-bottom: 1em;
+  background-color: #ccc;
+  padding: 1em;
+}
+
+.jqtree-tree .jqtree-loading > div .jqtree-title:after {
+  content: url(../img/spinner.gif);
+  margin-left: 8px;
+}
+
+#stats-link {
+  display: none;
+  padding-left: 20px;
+}
+
+#stats-link.red {
+  background: url("../img/red_light.png") no-repeat left center;
+}
+
+#stats-link.green {
+  background: url("../img/green_light.png") no-repeat left center;
+}
+
+#home-features > div {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+#home-features div div {
+  min-height: 120px;
 }
