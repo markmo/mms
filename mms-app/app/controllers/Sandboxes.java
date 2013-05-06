@@ -33,10 +33,11 @@ public class Sandboxes extends Controller {
         )
                 .getResultList();
         JsonNode json = Json.toJson(sandboxes);
-        return ok(json);
+        return ok(json).as("application/json");
     }
 
     @Transactional
+    @BodyParser.Of(BodyParser.Json.class)
     public Result create() {
         Form<Sandbox> sandboxForm = form(Sandbox.class);
         Sandbox sandbox = sandboxForm.bindFromRequest().get();

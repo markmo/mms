@@ -2,21 +2,16 @@ package controllers;
 
 import java.io.IOException;
 import java.text.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import org.codehaus.jackson.JsonNode;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.query.AuditEntity;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
-import play.libs.Json;
 import play.mvc.*;
 
 import mms.common.models.Column;
@@ -32,15 +27,14 @@ public class Columns extends Controller {
     ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result index() {
+    public Result index() throws IOException {
         @SuppressWarnings("unchecked")
         List<Column> columns = JPA.em().createQuery(
                 "select c from Column c"
                 )
                 .getResultList();
-        JsonNode json = Json.toJson(columns);
-        return ok(json);
+        String json = mapper.writeValueAsString(columns);
+        return ok(json).as("application/json");
     }
 
     @Transactional(readOnly = true)

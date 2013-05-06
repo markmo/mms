@@ -1,0 +1,41 @@
+@(id: Long, settingsForm: Form[_])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@scripts = {
+    <script src="@routes.Assets.at("js/lib/jquery/jquery-1.9.1.min.js")"></script>
+    <script src="@routes.Assets.at("js/lib/ace/ace.js")"></script>
+    <script>
+        $(function () {
+            var editor = ace.edit('editor');
+            //editor.setTheme('ace/theme/twilight');
+            var session = editor.getSession();
+            session.setMode('ace/mode/json');
+            session.setTabSize(2);
+            var textarea = $('#customSchema');
+            session.setValue(textarea.val());
+            $('#settingsForm').submit(function () {
+                textarea.val(editor.getSession().getValue());
+            });
+        })
+    </script>
+}
+
+@main("Settings", "", scripts) {
+
+    <h1>Settings</h1>
+    @helper.form(routes.Settings.update(id), 'id -> "settingsForm") {
+        @if(settingsForm.hasGlobalErrors) {
+            <p class="error">
+                <span class="label label-important">@settingsForm.globalError.message</span>
+            </p>
+        }
+        <label for="customSchema">Custom Metadata Schema</label>
+        <div id="editor"></div>
+        <div style="display: none;">
+            @helper.textarea(settingsForm("customSchema"))
+        </div>
+        <input id="btnSubmit" type="submit" value="Update" class="btn btn-primary">
+    }
+}

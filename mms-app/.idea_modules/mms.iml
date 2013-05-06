@@ -11,6 +11,12 @@
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/../conf/META-INF/persistence.xml" />
       </configuration>
     </facet>
+    <facet type="scala" name="Scala">
+      <configuration>
+        <option name="compilerLibraryLevel" value="Project" />
+        <option name="compilerLibraryName" value="Scala 2.10.1" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/../target/scala-2.10/classes" />

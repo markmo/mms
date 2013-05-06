@@ -38,6 +38,7 @@
     <link href="@routes.Assets.at("css/jquery-file-upload/css/bootstrap-image-gallery.min.css")" rel="stylesheet">
     <link href="@routes.Assets.at("css/jqtree.css")" rel="stylesheet">
     <link href="@routes.Assets.at("stylesheets/main.min.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("stylesheets/snap.min.css")" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -45,62 +46,73 @@
     <![endif]-->
 </head>
 <body>
-    <div id="layout-container">
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="@routes.Application.index()"><span class="appname">MMS</span> <em><span style="font-size: 14px;">information asset management</span></em></a>
+    <div class="drawers absolute">
+        <div class="left-drawer absolute">
+            <div id="left-drawer"></div>
+        </div>
+    </div>
 
-                    <div class="btn-group pull-right">
-                        @subjectPresentOr() {
+    <div id="main" class="absolute">
+        <div id="layout-container">
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <a href="#" id="open-left" class="pull-left" onclick="return false;"></a>
+                    <div class="container">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="@routes.Application.index()"><span class="appname">MMS</span> <em><span style="font-size: 14px;">information asset management</span></em></a>
+
+                        <div class="btn-group pull-right">
+                            @subjectPresentOr() {
                             @defining(Application.getLocalUser(session())) { user =>
-                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <em class="icon-user"></em> @user.getName()
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="@routes.Application.profile()">@Messages("playauthenticate.navigation.profile")</a></li>
-                                    <li><a href="@routes.Account.link()">@Messages("playauthenticate.navigation.link_more")</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()"><em
-                                            class="icon-off"></em> @Messages("playauthenticate.navigation.logout")</a></li>
-                                </ul>
-                            }
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                <em class="icon-user"></em> @user.getName()
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@routes.Application.profile()">@Messages("playauthenticate.navigation.profile")</a></li>
+                                <li><a href="@routes.Account.link()">@Messages("playauthenticate.navigation.link_more")</a></li>
+                                <li class="divider"></li>
+                                <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()"><em
+                                class="icon-off"></em> @Messages("playauthenticate.navigation.logout")</a></li>
+                            </ul>
+                        }
                         }{
                             <a href="@routes.Application.login()" class="btn btn-primary @("disabled".when(nav == "login"))">@Messages("playauthenticate.navigation.login")</a>
                         }
-                    </div>
+                        </div>
 
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                            <li class="dropdown@(" active".when(nav == ""))">
-                                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                    Start
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="@routes.Application.index()">@Messages("playauthenticate.navigation.home")</a></li>
-                                    <li><a href="@routes.Application.showRevisions()">Revisions</a></li>
-                                    <li><a href="@routes.Application.api()">API</a></li>
-                                </ul>
-                            </li>
-                            @*<li class="@(" active".when(nav == "restricted"))"><a href="@routes.Application.restricted()">@Messages("playauthenticate.navigation.restricted")</a></li>*@
-                            @subjectNotPresent() {
+                        <div class="nav-collapse">
+                            <ul class="nav">
+                                <li>
+                                    <a href="@routes.Application.glossary()">Glossary</a>
+                                </li>
+                                <li class="dropdown@(" active".when(nav == ""))">
+                                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                            Start
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="@routes.Application.index()">@Messages("playauthenticate.navigation.home")</a></li>
+                                        <li><a href="@routes.Application.showRevisions()">Revisions</a></li>
+                                        <li><a href="@routes.Settings.edit()">Settings</a></li>
+                                        @*<li><a href="@routes.Application.api()">API</a></li>*@
+                                    </ul>
+                                </li>
+                                @*<li class="@(" active".when(nav == "restricted"))"><a href="@routes.Application.restricted()">@Messages("playauthenticate.navigation.restricted")</a></li>*@
+                                @subjectNotPresent() {
                                 <li class="@(" active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("playauthenticate.navigation.signup")</a></li>
                             }
-                        </ul>
+                            </ul>
+                        </div><!--/.nav-collapse -->
                     </div>
-                    <!--/.nav-collapse -->
                 </div>
             </div>
-        </div>
 
-        <div class="container">
+            <div class="container">
             @if(flash.contains(Application.FLASH_ERROR_KEY)) {
                 <div class="alert alert-error">
                     @flash().get(Application.FLASH_ERROR_KEY)
@@ -112,33 +124,32 @@
                 </div>
             }
             @content
+            </div><!-- /container -->
         </div>
-        <!-- /container -->
-    </div>
-    <footer class="clearfix">
-        <hr>
-        <div style="width: 940px; margin-left: auto; margin-right: auto;">
-            <p class="pull-left">&copy; 2013 Data Science Ltd</p>
-            <div class="btn-group pull-right dropup" style="margin-top: 156px;">
-                <a class="btn btn-small btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                    <em class="icon-picture"></em> @session.get("theme")
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="@routes.Application.theme("spacelab")">spacelab</a></li>
-                    <li><a href="@routes.Application.theme("default")">default</a></li>
-                    <li><a href="@routes.Application.theme("slate")">slate</a></li>
-                    <li><a href="@routes.Application.theme("simplex")">simplex</a></li>
-                    <li><a href="@routes.Application.theme("united")">united</a></li>
-                    <li><a href="@routes.Application.theme("cosmo")">cosmo</a></li>
-                    <li><a href="@routes.Application.theme("readable")">readable</a></li>
-                    <li><a href="@routes.Application.theme("cerulean")">cerulean</a></li>
-                    <li><a href="@routes.Application.theme("cyborg")">cyborg</a></li>
-                    <li><a href="@routes.Application.theme("journal")">journal</a></li>
-                </ul>
+        <footer class="clearfix">
+            <div style="width: 940px; margin-left: auto; margin-right: auto;">
+                <p class="pull-left"><small>&copy; 2013 Data Science Ltd</small></p>
+                <div class="btn-group pull-right dropup">@* style="margin-top: 156px;">*@
+                    <a class="btn btn-small btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                        <em class="icon-picture"></em> @session.get("theme")
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@routes.Application.theme("spacelab")">spacelab</a></li>
+                        <li><a href="@routes.Application.theme("default")">default</a></li>
+                        <li><a href="@routes.Application.theme("slate")">slate</a></li>
+                        <li><a href="@routes.Application.theme("simplex")">simplex</a></li>
+                        <li><a href="@routes.Application.theme("united")">united</a></li>
+                        <li><a href="@routes.Application.theme("cosmo")">cosmo</a></li>
+                        <li><a href="@routes.Application.theme("readable")">readable</a></li>
+                        <li><a href="@routes.Application.theme("cerulean")">cerulean</a></li>
+                        <li><a href="@routes.Application.theme("cyborg")">cyborg</a></li>
+                        <li><a href="@routes.Application.theme("journal")">journal</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
     <div id="side-buttons"></div>
 </body>
 </html>

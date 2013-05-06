@@ -17,7 +17,7 @@ public class Tests extends Controller {
     private FileService fileService;
 
     public Result sniff() {
-        String analysisHtmlResults = fileService.extractMetadata("test5.csv");
+//        String analysisHtmlResults = fileService.extractMetadata("test5.csv");
         return ok();
     }
 

@@ -1,110 +1,61 @@
-# --- Created by Ebean DDL
-# To stop Ebean DDL generation, remove this comment and start using Evolutions
-
 # --- !Ups
 
-create table linked_account (
-  id                        bigint not null,
-  user_id                   bigint,
-  provider_user_id          varchar(255),
-  provider_key              varchar(255),
-  constraint pk_linked_account primary key (id))
-;
+insert into mms.analysis_type(analysis_type_id, analysis_type_name) values(1, 'String analyzer');
+insert into mms.analysis_type(analysis_type_id, analysis_type_name) values(2, 'Number analyzer');
+insert into mms.analysis_type(analysis_type_id, analysis_type_name) values(3, 'Date/time analyzer');
+insert into mms.analysis_type(analysis_type_id, analysis_type_name) values(4, 'Boolean analyzer');
+insert into mms.analysis_type(analysis_type_id, analysis_type_name) values(5, 'Pattern finder');
 
-create table security_role (
-  id                        bigint not null,
-  role_name                 varchar(255),
-  constraint pk_security_role primary key (id))
-;
+insert into mms.metric(metric_id, metric_name, description) values (1, 'Row count', 'The number of rows.');
+insert into mms.metric(metric_id, metric_name, description) values (2, 'Null count', 'The number of rows with Null values.');
+insert into mms.metric(metric_id, metric_name, description) values (3, 'Highest value', 'The highest value by natural ordering.');
+insert into mms.metric(metric_id, metric_name, description) values (4, 'Lowest value', 'The lowest value by natural ordering.');
+insert into mms.metric(metric_id, metric_name, description) values (5, 'Sum', 'The sum of all values in this column.');
+insert into mms.metric(metric_id, metric_name, description) values (6, 'Mean', 'The arithmetic mean, or average, of values in this column.');
+insert into mms.metric(metric_id, metric_name, description) values (7, 'Geometric mean', 'The central tendency or typical value of values in this column. It is calculated as the nth root (where n is the row count) of the product of the numbers.');
+insert into mms.metric(metric_id, metric_name, description) values (8, 'Standard deviation', 'A measure of the amount of variation or dispersion from the mean (expected value). It is calculated as the square root of the variance.');
+insert into mms.metric(metric_id, metric_name, description) values (9, 'Variance', 'A measure of how far the set of numbers is spread out.');
+insert into mms.metric(metric_id, metric_name, description) values (10, 'Second moment', 'In mathematics, a moment is, loosely speaking, a quantitative measure of the shape of a set of points. The second moment measures the ""width"" (in a particular sense) os a set of points in one dimension, or in higher dimensions measures the shape of a cloud of points as it could be fit by an ellipsoid.');
+insert into mms.metric(metric_id, metric_name, description) values (11, 'Sum of squares', 'A measure of dispersion (also called variability). It is defined as being the sum, over all observations, of the squared differences of each observation from the overall mean.');
+insert into mms.metric(metric_id, metric_name, description) values (12, 'Median', 'A numerical value separating the higher half of the set of numbers from the lower half.');
+insert into mms.metric(metric_id, metric_name, description) values (13, '25th percentile', 'The value below which a quarter of the values fall. Also known as the first quartile.');
+insert into mms.metric(metric_id, metric_name, description) values (14, '75th percentile', 'The value below which three quarters of the values fall. Also known as the third quartile.');
+insert into mms.metric(metric_id, metric_name, description) values (15, 'Skewness', 'A measure of the extent to which the set of numbers ""leans"" to one side of the mean. The skewness value can be positive, negative or neutral.');
+insert into mms.metric(metric_id, metric_name, description) values (16, 'Kurtosis', 'A measure of the ""peakedness"" of the set of numbers. A high kurtosis distribution has a sharper peak and longer, fatter tails, while a low kurtosis distribution has a more rounded peak and shorter, thinner tails.');
 
-create table token_action (
-  id                        bigint not null,
-  token                     varchar(255),
-  target_user_id            bigint,
-  type                      varchar(2),
-  created                   timestamp,
-  expires                   timestamp,
-  constraint ck_token_action_type check (type in ('EV','PR')),
-  constraint uq_token_action_token unique (token),
-  constraint pk_token_action primary key (id))
-;
+insert into mms.metric(metric_id, metric_name, description) values (17, 'Blank count', 'The number of rows with empty values.');
+insert into mms.metric(metric_id, metric_name, description) values (18, 'Entirely uppercase count', 'The number of rows with entirely uppercase values.');
+insert into mms.metric(metric_id, metric_name, description) values (19, 'Entirely lowercase count', 'The number of rows with entirely lowercase values.');
+insert into mms.metric(metric_id, metric_name, description) values (20, 'Total char count', 'The total number of characters across all rows in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (21, 'Max chars', 'The maximum number of characters in any one row.');
+insert into mms.metric(metric_id, metric_name, description) values (22, 'Min chars', 'The minimum number of characters in any one row.');
+insert into mms.metric(metric_id, metric_name, description) values (23, 'Avg chars', 'The average number of characters per row.');
+insert into mms.metric(metric_id, metric_name, description) values (24, 'Max white spaces', 'The maximum number of white spaces in any one row.');
+insert into mms.metric(metric_id, metric_name, description) values (25, 'Min white spaces', 'The minumum number of white spaces in any one row.');
+insert into mms.metric(metric_id, metric_name, description) values (26, 'Avg white spaces', 'The average number of white spaces per row.');
+insert into mms.metric(metric_id, metric_name, description) values (27, 'Uppercase chars', 'The number of uppercase characters across all rows in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (28, 'Uppercase chars (excl. first letters)', 'The number of uppercase characters, except for first letters, across all rows in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (29, 'Lowercase chars', 'The number of lowercase characters across all rows in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (30, 'Digit chars', 'The number of characters that are numbers 0-9 across all rows in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (31, 'Diacritic chars', 'The number of diacritic characters across all rows in the column. The main use of diacritical marks in the Latin-derived alphabet is to change the sound value of the letter to which they are added.');
+insert into mms.metric(metric_id, metric_name, description) values (32, 'Non-letter chars', 'The number of characters that are not in the alphabet a-z or A-Z across all rows in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (33, 'Word count', 'The total word count across all rows in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (34, 'Max words', 'The maximum number of words in any one row.');
+insert into mms.metric(metric_id, metric_name, description) values (35, 'Min words', 'The minimum number of rows in any one row.');
 
-create table users (
-  id                        bigint not null,
-  email                     varchar(255),
-  name                      varchar(255),
-  last_login                timestamp,
-  active                    boolean,
-  email_validated           boolean,
-  constraint pk_users primary key (id))
-;
+insert into mms.metric(metric_id, metric_name, description) values (36, 'Highest date', 'The most recent date in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (37, 'Lowest date', 'The oldest date in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (38, 'Highest time', 'The most recent time in the column.');
+insert into mms.metric(metric_id, metric_name, description) values (39, 'Lowest time', 'The oldest time in the column.');
 
-create table user_permission (
-  id                        bigint not null,
-  value                     varchar(255),
-  constraint pk_user_permission primary key (id))
-;
+insert into mms.metric(metric_id, metric_name, description) values (40, 'Least frequent', 'The least frequent occurring value.');
+insert into mms.metric(metric_id, metric_name, description) values (41, 'Most frequent', 'The most frequent occurring value.');
+insert into mms.metric(metric_id, metric_name, description) values (42, 'False count', 'The number of rows with false values.');
+insert into mms.metric(metric_id, metric_name, description) values (43, 'True count', 'The number of rows with true values.');
 
-
-create table users_security_role (
-  users_id                       bigint not null,
-  security_role_id               bigint not null,
-  constraint pk_users_security_role primary key (users_id, security_role_id))
-;
-
-create table users_user_permission (
-  users_id                       bigint not null,
-  user_permission_id             bigint not null,
-  constraint pk_users_user_permission primary key (users_id, user_permission_id))
-;
-create sequence linked_account_seq;
-
-create sequence security_role_seq;
-
-create sequence token_action_seq;
-
-create sequence users_seq;
-
-create sequence user_permission_seq;
-
-alter table linked_account add constraint fk_linked_account_user_1 foreign key (user_id) references users (id);
-create index ix_linked_account_user_1 on linked_account (user_id);
-alter table token_action add constraint fk_token_action_targetUser_2 foreign key (target_user_id) references users (id);
-create index ix_token_action_targetUser_2 on token_action (target_user_id);
-
-
-
-alter table users_security_role add constraint fk_users_security_role_users_01 foreign key (users_id) references users (id);
-
-alter table users_security_role add constraint fk_users_security_role_securi_02 foreign key (security_role_id) references security_role (id);
-
-alter table users_user_permission add constraint fk_users_user_permission_user_01 foreign key (users_id) references users (id);
-
-alter table users_user_permission add constraint fk_users_user_permission_user_02 foreign key (user_permission_id) references user_permission (id);
 
 # --- !Downs
 
-drop table if exists linked_account cascade;
+truncate table mms.analysis_type;
 
-drop table if exists security_role cascade;
-
-drop table if exists token_action cascade;
-
-drop table if exists users cascade;
-
-drop table if exists users_security_role cascade;
-
-drop table if exists users_user_permission cascade;
-
-drop table if exists user_permission cascade;
-
-drop sequence if exists linked_account_seq;
-
-drop sequence if exists security_role_seq;
-
-drop sequence if exists token_action_seq;
-
-drop sequence if exists users_seq;
-
-drop sequence if exists user_permission_seq;
-
+truncate table mms.metric;

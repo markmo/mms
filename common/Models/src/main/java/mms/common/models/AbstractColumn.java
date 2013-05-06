@@ -1,9 +1,12 @@
 package mms.common.models;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
+import com.github.cleverage.elasticsearch.Indexable;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints;
 
@@ -15,7 +18,7 @@ import play.data.validation.Constraints;
 @Entity
 @Table(name = "columns")
 @Audited
-public abstract class AbstractColumn extends AuditedModel {
+public abstract class AbstractColumn extends AuditedModel implements Indexable {
 
     @Id
     @GeneratedValue
@@ -80,6 +83,23 @@ public abstract class AbstractColumn extends AuditedModel {
 
     public void setDataset(Dataset dataset) {
         this.dataset = dataset;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map toIndex() {
+        HashMap map = new HashMap();
+        map.put("id", id);
+        map.put("objectType", "Column");
+        map.put("name", name);
+        return map;
+    }
+
+    public Indexable fromIndex(Map map) {
+        if (map == null) {
+            return this;
+        }
+        name = (String)map.get("name");
+        return this;
     }
 
     @Override

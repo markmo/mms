@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
+import indexing.ColumnIndex;
+import indexing.DatasetIndex;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -21,8 +23,11 @@ import play.libs.Akka;
 import play.libs.F;
 import play.mvc.*;
 
+import mms.common.models.AbstractColumn;
+import mms.common.models.Column;
 import mms.common.models.file.FileContext;
 import mms.common.models.file.FileUpload;
+import mms.common.models.file.FlatFile;
 import service.FileRepoService;
 import service.FileService;
 
@@ -66,6 +71,12 @@ public class Files extends Controller {
                 return JPA.em().find(FileUpload.class, id);
             }
         });
+        final FlatFile flatFile = JPA.withTransaction(new F.Function0<FlatFile>() {
+            @Override
+            public FlatFile apply() {
+                return JPA.em().find(FlatFile.class, upload.getEntityId());
+            }
+        });
         upload.setFile(file);
         System.out.println("uploaded file: " + upload.getName());
         FileContext context = new FileContext(upload.getEntityType(), upload.getEntityId());
@@ -74,7 +85,17 @@ public class Files extends Controller {
         Promise<String> analyzeFile = Akka.future(
             new Callable<String>() {
                 public String call() {
-                    return fileService.extractMetadata(upload.getName(), file);
+                    try {
+                        return JPA.withTransaction(new F.Function0<String>() {
+                            @Override
+                            public String apply() {
+                                return fileService.extractMetadata(upload.getName(), file, flatFile);
+                            }
+                        });
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                        return "";
+                    }
                 }
             }
         );
@@ -87,8 +108,23 @@ public class Files extends Controller {
                             @Override
                             public void invoke() {
                                 JPA.em().merge(upload);
+
+                                FlatFile ff = flatFile;
+
+                                if (!JPA.em().contains(ff)) {
+                                    ff = JPA.em().find(FlatFile.class, ff.getId());
+                                }
+                                for (AbstractColumn column : ff.getColumns()) {
+                                    ColumnIndex columnIndex = new ColumnIndex();
+                                    columnIndex.setColumn((Column)column);
+                                    columnIndex.index();
+                                }
+                                DatasetIndex datasetIndex = new DatasetIndex();
+                                datasetIndex.setDataset(ff);
+                                datasetIndex.index();
                             }
                         });
+
                         ObjectNode root = mapper.createObjectNode();
                         ArrayNode filesArray = mapper.createArrayNode();
                         ObjectNode fileNode = mapper.valueToTree(upload);

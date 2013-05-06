@@ -1,0 +1,17 @@
+<label>Relationships</label>
+<table class="associations table table-hover">
+    <thead>
+    <tr>
+        <th>Object</th>
+        <th>Predicate</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each associations}}
+    <tr>
+        <td>{{object}}</td>
+        <td>{{predicate}}</td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>

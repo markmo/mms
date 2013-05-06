@@ -27,16 +27,16 @@ object ApplicationBuild extends Build {
     ,"com.clever-age" % "play2-elasticsearch" % "0.5-SNAPSHOT" excludeAll(
       ExclusionRule(organization = "org.apache.lucene")
       )
-    ,"org.apache.lucene" % "lucene-analyzers" % "3.5.0"
-    ,"org.apache.lucene" % "lucene-highlighter" % "3.5.0"
-    ,"org.apache.lucene" % "lucene-memory" % "3.5.0"
-    ,"org.apache.lucene" % "lucene-queries" % "3.5.0"
+    ,"org.apache.lucene" % "lucene-analyzers" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-highlighter" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-memory" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-queries" % "3.6.2"
 
     ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
     ,"com.google.inject" % "guice" % "3.0"
     ,"net.sf.opencsv" % "opencsv" % "2.4-SNAPSHOT"
     ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
-    ,"com.wordnik" %% "swagger-play2" % "1.2.1-SNAPSHOT"
+//    ,"com.wordnik" %% "swagger-play2" % "1.2.1-SNAPSHOT"
     ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-basic-analyzers" % "0.29"
     ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-cli" % "0.29" excludeAll(
       ExclusionRule(organization = "berkeleydb")
@@ -154,6 +154,8 @@ object ApplicationBuild extends Build {
     // Add your own project settings here
     scalaVersion := "2.10.1",
     ebeanEnabled := false,
+
+    offline := true,
 
     resolvers += Resolver.url("Objectify Play Repository (release)", url("http://schaloner.github.com/releases/"))(Resolver.ivyStylePatterns),
     resolvers += Resolver.url("Objectify Play Repository (snapshot)", url("http://schaloner.github.com/snapshots/"))(Resolver.ivyStylePatterns),

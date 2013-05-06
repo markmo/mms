@@ -1,0 +1,13 @@
+{{#with term}}
+<h3>{{name}}</h3>
+<label>Definition</label>
+<p>{{definition}}</p>
+<label>Description</label>
+<p>{{description}}</p>
+<p><label>Domain:</label> {{domain.name}}</p>
+<p><label>Parent:</label> {{parent.name}}</p>
+<p><label>Security Classification:</label> {{securityClassification.name}}</p>
+<p><label>Tags:</label> {{#each tags}}<span class="label">{{tag.name}}</span>{{#if $more}},{{/if}}{{/each}}</p>
+<label>Custom Metadata</label>
+<p id="custom-metadata"></p>
+{{/with}}

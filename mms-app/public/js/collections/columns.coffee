@@ -6,7 +6,10 @@ define [
 ], (_, Backbone, columnModel, stringutils) ->
     ColumnsCollection = Backbone.Collection.extend
         url: ->
-            '/datasets/' + @datasetId + '/columns'
+            if @datasetId
+                '/datasets/' + @datasetId + '/columns'
+            else
+                '/columns'
 
         model: columnModel
 
@@ -14,7 +17,7 @@ define [
             column.get('id')
 
         initialize: (models, options) ->
-            @datasetId = options.datasetId
+            @datasetId = options?.datasetId
 
         filterTypes: (filterTypes) ->
             return this unless filterTypes and filterTypes.length

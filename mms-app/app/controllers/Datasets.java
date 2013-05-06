@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
+import indexing.DatasetIndex;
 import org.codehaus.jackson.JsonNode;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -57,6 +58,11 @@ public class Datasets extends Controller {
             return badRequest();
         } else {
             JPA.em().persist(dataset);
+
+            // done in file upload
+//            DatasetIndex datasetIndex = new DatasetIndex();
+//            datasetIndex.setDataset(dataset);
+//            datasetIndex.index();
             return ok("{\"id\":\"" + dataset.getId() + "\"}").as("application/json");
         }
     }

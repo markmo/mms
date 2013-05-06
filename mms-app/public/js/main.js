@@ -5,13 +5,28 @@ require.config({
         jquery: 'lib/jquery/jquery-1.9.1',
         underscore: 'lib/underscore/underscore-min',
         backbone: 'lib/backbone/backbone-min',
-        'backbone-forms': 'lib/backbone/backbone-forms.min',
+        'backbone-forms': 'lib/backbone/backbone-forms',
+        'backbone-associations': 'lib/backbone/backbone-associations',
+        'backbone-collectionsubset': 'lib/backbone/backbone.collectionsubset.min',
         handlebars: 'lib/handlebars/handlebars',
         bootstrap: 'lib/bootstrap/bootstrap.min',
         'jquery.ui.widget': 'lib/jquery-file-upload/vendor/jquery.ui.widget',
+        'jquery-resize': 'lib/jquery/jquery.ba-resize.min',
         tmpl: 'lib/jquery-file-upload/vendor/tmpl.min',
         'load-image': 'lib/jquery-file-upload/vendor/load-image.min',
         'canvas-to-blob': 'lib/jquery-file-upload/vendor/canvas-to-blob.min',
+        facetview: 'lib/facetview/jquery.facetview',
+        linkify: 'lib/linkify/1.0/jquery.linkify-1.0-min',
+        jqueryui_custom: 'lib/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.min',
+        chosen: 'lib/chosen/chosen.jquery.min',
+        select2: 'lib/select2/select2',
+        snap: 'lib/snap/snap.min',
+        jsonform: 'lib/jsonform/jsonform',
+        tagautocomplete: 'lib/tagautocomplete/bootstrap-tagautocomplete',
+        'bootstrap-typeahead': 'lib/tagautocomplete/bootstrap-typeahead',
+        'caret-position': 'lib/tagautocomplete/caret-position',
+        'rangy-core': 'lib/tagautocomplete/rangy-core',
+        'annotator': 'lib/annotator/annotator-full.min',
 
         // Require.js plugins
         cs: 'lib/require/cs',
@@ -28,11 +43,25 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
+        'backbone-associations': {
+            deps: ['backbone']
+        },
         handlebars: {
             exports: 'Handlebars'
+        },
+        facetview: {
+            deps: ['jquery', 'jqueryui_custom', 'linkify']
+        },
+        tagautocomplete: {
+            deps: ['bootstrap-typeahead', 'rangy-core', 'caret-position']
         }
     }
 });
+
+var v0 = function (fn) {
+    fn();
+    return void 0;
+};
 
 require([
     'jquery',
@@ -74,6 +103,7 @@ require([
 //            return value;
 //        }
     });
+
     Handlebars.registerHelper('loop', function (context, options) {
         var fn = options.fn,
             inverse = options.inverse,
@@ -117,6 +147,13 @@ require([
 
         location.href = '/#/revisions'; // TODO: is this the only way?
         //router.navigate('revisions', {trigger: true, replace: true}); // doesn't work - just appends #revisions to current url
+
+    } else if (global.start === 'glossary') {
+        Router.initialize({appView: appView, silent: true});
+        $('#spinner').html('');
+        appView.render();
+
+        location.href = '/#/terms';
 
     } else {
         Router.initialize({appView: appView});

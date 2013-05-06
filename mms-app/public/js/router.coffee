@@ -27,6 +27,8 @@ define [
             'revisions/:id': 'showRevision'
             'revisions': 'revisions'
             'files': 'files'
+            'search': 'search'
+            'terms': 'terms'
 
             # Default
             '*actions': 'defaultAction'
@@ -156,6 +158,20 @@ define [
             require ['cs!views/file/browser'], (BrowserPage) ->
                 browserPage = Vm.create(appView, 'BrowserPage', BrowserPage)
                 browserPage.render()
+                return
+            return
+
+        router.on 'route:search', ->
+            require ['cs!views/app/search'], (SearchPage) ->
+                searchPage = Vm.create(appView, 'SearchPage', SearchPage)
+                searchPage.render()
+                return
+            return
+
+        router.on 'route:terms', ->
+            require ['cs!views/glossary/terms'], (TermsPage) ->
+                termsPage = Vm.create(appView, 'TermsPage', TermsPage)
+                termsPage.render()
                 return
             return
 

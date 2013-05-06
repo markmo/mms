@@ -1,35 +1,33 @@
 package service
 
-import analysis.FileUtils._
+import analysis.Analyzer._
+import analysis.Dialect
+import analysis.EmbedHtmlAnalysisResultWriter
 import collection.JavaConversions._
-import collection.mutable
-import java.io._
-import javax.jcr.Binary
-import io.Source
 import com.google.inject.Inject
-import analysis.{EmbedHtmlAnalysisResultWriter, DSVReader}
-import org.eobjects.metamodel.util.SimpleTableDef
-import org.eobjects.metamodel.schema.{MutableTable, MutableColumn, ColumnType}
-import org.eobjects.metamodel.pojo.ArrayTableDataProvider
-import org.eobjects.analyzer.configuration.AnalyzerBeansConfigurationImpl
-import org.eobjects.analyzer.job.builder.AnalysisJobBuilder
-import org.eobjects.analyzer.connection.PojoDatastore
-import org.eobjects.analyzer.job.runner.AnalysisRunnerImpl
-import org.eobjects.analyzer.beans.{BooleanAnalyzer, DateAndTimeAnalyzer, NumberAnalyzer, StringAnalyzer}
-import org.eobjects.analyzer.data.MetaModelInputColumn
-import org.eobjects.analyzer.result.renderer.{AnnotatedRowsHtmlRenderer, CrosstabHtmlRenderer, CrosstabTextRenderer}
-import org.eobjects.analyzer.result.{SimpleAnalysisResult, CrosstabResult}
-import org.eobjects.analyzer.beans.stringpattern.{PatternFinderResultHtmlRenderer, PatternFinderResultTextRenderer, PatternFinderResult, PatternFinderAnalyzer}
 import data.transformers.{EntityRecognitionTransformer, DateTransformer, IntegerTransformer}
-import utils.DateUtils._
-import org.eobjects.analyzer.beans.convert.{ConvertToBooleanTransformer, ConvertToNumberTransformer}
-import org.eobjects.analyzer.result.html.HtmlAnalysisResultWriter
-import org.eobjects.analyzer.descriptors.{Descriptors, SimpleDescriptorProvider}
-import java.util.Date
-import org.joda.time.DateTime
-import scala.Some
-import edu.stanford.nlp.ling.CoreLabel
 import edu.stanford.nlp.ie.AbstractSequenceClassifier
+import edu.stanford.nlp.ling.CoreLabel
+import io.Source
+import java.io._
+import java.util.Date
+import javax.jcr.Binary
+import mms.common.models._
+import mms.common.models.file.{FlatFile, FileColumn}
+import org.eobjects.analyzer.beans._
+import org.eobjects.analyzer.beans.convert.{ConvertToBooleanTransformer, ConvertToNumberTransformer}
+import org.eobjects.analyzer.beans.stringpattern.{PatternFinderResult, PatternFinderResultHtmlRenderer, PatternFinderAnalyzer}
+import org.eobjects.analyzer.configuration.AnalyzerBeansConfigurationImpl
+import org.eobjects.analyzer.data.MetaModelInputColumn
+import org.eobjects.analyzer.descriptors.{Descriptors, SimpleDescriptorProvider}
+import org.eobjects.analyzer.job.builder.{AnalysisJobBuilder, TransformerJobBuilder}
+import org.eobjects.analyzer.job.runner.AnalysisRunnerImpl
+import org.eobjects.analyzer.result.renderer.{AnnotatedRowsHtmlRenderer, CrosstabHtmlRenderer}
+import org.eobjects.analyzer.result.{CrosstabDimension, Crosstab, SimpleAnalysisResult}
+import org.eobjects.metamodel.schema.{MutableTable, MutableColumn, ColumnType}
+import play.db.jpa.JPA
+import scala.Predef._
+import scala.Some
 
 class FileService {
 
@@ -49,204 +47,364 @@ class FileService {
     }
   }
 
-  def extractMetadata(filename: String): String = {
+  def extractMetadata(filename: String, dataset: FlatFile): String = {
     var binary: Binary = null
     try {
       binary = repo.getBinary(filename)
-      extractMetadata(filename, binary.getStream)
+      val dialect = analyzeStructure(filename, binary.getStream)
+      analyzeContents(filename, dialect, binary.getStream, dataset)
     } finally {
       if (binary != null) binary.dispose()
     }
   }
 
-  def extractMetadata(filename: String, file: File): String = {
+  def extractMetadata(filename: String, file: File, dataset: FlatFile): String = {
+    var in: InputStream = null
     try {
-      extractMetadata(filename, new FileInputStream(file))
+      in = new FileInputStream(file)
+      val dialect = analyzeStructure(filename, in)
+      in.close()
+      in = new FileInputStream(file)
+      analyzeContents(filename, dialect, in, dataset)
     } catch {
       case e: FileNotFoundException => {
         e.printStackTrace()
         ""
       }
+    } finally {
+      if (in != null) in.close()
     }
   }
 
-  def extractMetadata(filename: String, in: InputStream): String = {
+  def analyzeStructure(filename: String, in: InputStream): Dialect = {
     var src: Source = null
     try {
       src = Source.fromInputStream(in)
-      val lines = src.getLines().take(10)
-      val data = lines.mkString("\n")
-      val dialect = sniff(data)
-      println(dialect)
-      var reader: Reader = new StringReader(data)
-      var csv = DSVReader.open(reader, dialect.delimiter.get,
-        dialect.quoteChar.getOrElse('\0'), dialect.escapeChar, 0, false,
-        dialect.skipInitialSpace.get, dialect.quoteChar == None)
-      val stream = csv.toStream()
-      val sample = stream.take(20)
-      val firstRow = sample(0)
-      val numberColumns = firstRow.length
-      println(s"Number of columns: $numberColumns")
-      val header = hasHeader(sample.toList)
-      println(s"has-header: $header")
-      dialect.hasHeader = Some(header)
+      val sample = src.getLines().take(10).toList
+      val (dialect, numColumns) = deduceFileStructure(sample)
+      println(s"Number of columns in file $filename: $numColumns")
+      dialect
+    } finally {
+      if (src != null) src.close()
+    }
+  }
 
-      // reset the stream
-      csv.close()
-      //val skipRow = if (header) 1 else 0
-      reader = new StringReader(data)
-      csv = DSVReader.open(reader, dialect.delimiter.get,
-        dialect.quoteChar.getOrElse('\0'), dialect.escapeChar, 0, false,
-        dialect.skipInitialSpace.get, dialect.quoteChar == None)
-      val headers = csv.readNext() getOrElse List()
-      val rows = csv.all() //if (header) csv.allWithHeaders() else csv.all()
+  def analyzeContents(filename: String, dialect: Dialect, in: InputStream, dataset: FlatFile): String = {
+    var reader: Reader = null
+    try {
+      reader = new InputStreamReader(in)
+      val dsv = dsvReader(dialect, reader)
+      val headers = dsv.readNext() getOrElse List()
+      val rows = dsv.all() //if (header) csv.allWithHeaders() else csv.all()
       val columns = rows.transpose
 
-      val columnDataTypes = mutable.HashMap[String, mutable.Set[String]]().withDefaultValue(mutable.Set[String]())
-      for (col <- columns.zipWithIndex;
-           cell <- col._1) {
-        val dataType = deduceDataType(cell) getOrElse "Unknown"
-        val colName = headers(col._2)
-        columnDataTypes(colName) = columnDataTypes(colName) + dataType
-      }
+      val columnDataTypes = deduceColumns(columns, headers)
+      val (columnNames, columnTypes) = deduceSqlTypesByColumn(columnDataTypes, headers)
+//      val conf = new AnalyzerBeansConfigurationImpl()
+//      val analysisJobBuilder = createAnalysisJobBuilder(conf,
+//        classOf[CrosstabHtmlRenderer],
+//        classOf[PatternFinderResultHtmlRenderer],
+//        classOf[AnnotatedRowsHtmlRenderer])
 
-      val columnTypes: List[(String, ColumnType)] = columnDataTypes.toList.map(entry => {
-        val (colName, dataTypes) = entry
-        if (dataTypes.size == 1) {
-          dataTypes.head match {
-            case "Integer" => (colName, ColumnType.INTEGER)
-            case "Decimal" => (colName, ColumnType.DECIMAL)
-            case "Date" => (colName, ColumnType.DATE)
-            case "Boolean" | "Integer-Boolean" => (colName, ColumnType.BOOLEAN)
-            case "Text" => (colName, ColumnType.LONGNVARCHAR)
-            case _ => (colName, ColumnType.NVARCHAR)
-          }
-        } else if (dataTypes.size == 2 && dataTypes.count(_.startsWith("Integer")) == 2) {
-          (colName, ColumnType.INTEGER)
-        } else {
-          (colName, ColumnType.NVARCHAR)
-        }
-      })
-      val (colNames, colTypes) =
-        columnTypes
-        .sortWith((e1, e2) => headers.indexOf(e1._1) < headers.indexOf(e2._1))
-        .unzip
-
-      var arrays: mutable.ArrayBuffer[Array[AnyRef]] = mutable.ArrayBuffer()
-      rows.foreach(arrays += _.toArray)
-
-      val tableDef = new SimpleTableDef(filename, colNames.toArray, colTypes.toArray)
-      val dataProvider = new ArrayTableDataProvider(tableDef, arrays)
       val descriptorProvider = new SimpleDescriptorProvider()
       descriptorProvider.addRendererBeanDescriptor(Descriptors.ofRenderer(classOf[CrosstabHtmlRenderer]))
       descriptorProvider.addRendererBeanDescriptor(Descriptors.ofRenderer(classOf[PatternFinderResultHtmlRenderer]))
       descriptorProvider.addRendererBeanDescriptor(Descriptors.ofRenderer(classOf[AnnotatedRowsHtmlRenderer]))
       val conf = (new AnalyzerBeansConfigurationImpl()).replace(descriptorProvider)
-      val builder = new AnalysisJobBuilder(conf)
-      val datastore = new PojoDatastore("file", filename, mutable.ArrayBuffer(dataProvider))
-      builder.setDatastore(datastore)
-      colNames.foreach(builder.addSourceColumns(_))
-      val stringAnalyzerBuilder = builder.addAnalyzer(classOf[StringAnalyzer])
-      val patternAnalyzerBuilder = builder.addAnalyzer(classOf[PatternFinderAnalyzer])
+      val analysisJobBuilder = new AnalysisJobBuilder(conf)
+
+      val datastore = createPojoDatastore(filename, rows, columnNames, columnTypes)
+      analysisJobBuilder.setDatastore(datastore)
+      columnNames.foreach(analysisJobBuilder.addSourceColumns(_))
+
+      val distinctColumnTypes = columnTypes.toSet
+      val analyzerJobBuilderMap =
+        createAnalyzerJobBuilderMap(analysisJobBuilder, distinctColumnTypes,
+          (ColumnType.NVARCHAR, classOf[StringAnalyzer]),
+          (ColumnType.INTEGER, classOf[NumberAnalyzer]),
+          (ColumnType.DECIMAL, classOf[NumberAnalyzer]),
+          (ColumnType.DATE, classOf[DateAndTimeAnalyzer]),
+          (ColumnType.BOOLEAN, classOf[BooleanAnalyzer]))
+
+      val transformerJobBuilderMap =
+        createTransformerJobBuilderMap(analysisJobBuilder, distinctColumnTypes,
+          (ColumnType.INTEGER, classOf[IntegerTransformer]),
+          (ColumnType.DECIMAL, classOf[ConvertToNumberTransformer]),
+          (ColumnType.DATE, classOf[DateTransformer]),
+          (ColumnType.BOOLEAN, classOf[ConvertToBooleanTransformer]))
+
+      val addTransformerJobBuilder: Option[(ColumnType, TransformerJobBuilder[_])] =
+        if (columnTypes.contains(ColumnType.LONGNVARCHAR)) {
+          val entityTransformerJobBuilder =
+            analysisJobBuilder.addTransformer(classOf[EntityRecognitionTransformer])
+          entityTransformerJobBuilder.setConfiguredProperty("Classifier", classifier)
+          Some((ColumnType.LONGNVARCHAR, entityTransformerJobBuilder))
+        } else {
+          None
+        }
+
+      val originalColumnTypes = List.fill(columnNames.length) {ColumnType.NVARCHAR}
+      addAnalyzers(analysisJobBuilder, filename, columnNames, originalColumnTypes, analyzerJobBuilderMap)
+
+      val patternAnalyzerBuilder = analysisJobBuilder.addAnalyzer(classOf[PatternFinderAnalyzer])
       val table = new MutableTable(filename)
-      colNames.zipWithIndex.foreach(c => {
-        val (colName: String, i: Int) = c
-        if (colTypes(i) == ColumnType.NVARCHAR)
-          stringAnalyzerBuilder.addInputColumn(new MetaModelInputColumn(new MutableColumn(colName, ColumnType.NVARCHAR, table, i, true)))
-        patternAnalyzerBuilder.addInputColumn(new MetaModelInputColumn(new MutableColumn(colName, ColumnType.NVARCHAR, table, i, true)))
-      })
-      val job = builder.toAnalysisJob
+      columnNames.zipWithIndex.foreach {
+        case (columnName, columnIndex) => {
+          patternAnalyzerBuilder.addInputColumn(
+            new MetaModelInputColumn(
+              new MutableColumn(columnName, ColumnType.NVARCHAR, table, columnIndex, true)))
+        }
+      }
+      addTransformers(analysisJobBuilder, filename, columnNames, columnTypes, analyzerJobBuilderMap,
+        if (addTransformerJobBuilder.isEmpty)
+          transformerJobBuilderMap
+        else
+          transformerJobBuilderMap + addTransformerJobBuilder.get)
+
+      val job = analysisJobBuilder.toAnalysisJob
       val runner = new AnalysisRunnerImpl(conf)
       val future = runner.run(job)
       val stringWriter: Writer = new StringWriter()
       val htmlResultWriter = new EmbedHtmlAnalysisResultWriter()
       future.await()
-      if (future.isSuccessful) {
-  //        val writer = new TextAnalysisResultWriter()
-  //        val stringWriter = new StringWriter()
-  //        writer.write(future, conf, new ImmutableRef(stringWriter), new ImmutableRef(System.out))
-        /*
-        future.getResults.foreach { result =>
-          result match {
-            case r: CrosstabResult => {
-              println()
-              println("Text Analysis:")
-              val rendered = new CrosstabTextRenderer().render(r)
-              val lines = rendered.split("\n")
-              lines.foreach(println(_))
-            }
-            case r: PatternFinderResult => {
-              val rendered = new PatternFinderResultTextRenderer().render(r)
-              val lines = rendered.split("\n")
-              println()
-              println(s"Column: ${r.getColumn.getName}")
-              lines.foreach(println(_))
-            }
-            case r => println(r)
+      val results = new SimpleAnalysisResult(future.getResultMap, new Date())
+
+      val columnsByType: List[(String, FileColumn)] = columnNames.zipWithIndex.map {
+        case (columnName, columnIndex) => {
+          val column = new FileColumn
+          column.setDataset(dataset)
+          column.setHasHeaderRow(dialect.hasHeader.getOrElse(false))
+          column.setName(columnName)
+          column.setColumnIndex(columnIndex + 1)
+          val columnType = columnTypes(columnIndex)
+
+          import ColumnType._
+
+          val dataTypeName = columnType match {
+            case INTEGER | DECIMAL => "Numeric"
+            case NVARCHAR | LONGNVARCHAR => "String"
+            case BOOLEAN => "Boolean"
+            case DATE => "Date"
+            case _ => "String"
           }
-        }*/
-      } else {
-        future.getErrors.foreach(e => {
-          println(e.getMessage)
-          println(e.printStackTrace())
-        })
+          val dataType = DataType.findByName(dataTypeName)
+          column.setDataType(dataType)
+
+          JPA.em().persist(column)
+
+          (dataTypeName, column)
+        }
       }
 
-      val builder2 = new AnalysisJobBuilder(conf)
-      builder2.setDatastore(datastore)
-      colNames.foreach(builder2.addSourceColumns(_))
-      val integerTransformerBuilder = if (colTypes.contains(ColumnType.INTEGER)) builder2.addTransformer(classOf[IntegerTransformer]) else null
-      val decimalTransformerBuilder = if (colTypes.contains(ColumnType.DECIMAL)) builder2.addTransformer(classOf[ConvertToNumberTransformer]) else null
-      val dateTransformerBuilder = if (colTypes.contains(ColumnType.DATE)) builder2.addTransformer(classOf[DateTransformer]) else null
-      val booleanTransformerBuilder = if (colTypes.contains(ColumnType.BOOLEAN)) builder2.addTransformer(classOf[ConvertToBooleanTransformer]) else null
-      val entityTransformerBuilder = if (colTypes.contains(ColumnType.LONGNVARCHAR)) builder2.addTransformer(classOf[EntityRecognitionTransformer]) else null
-      val numberAnalyzerBuilder = if (colTypes.contains(ColumnType.INTEGER) || colTypes.contains(ColumnType.DECIMAL)) builder2.addAnalyzer(classOf[NumberAnalyzer]) else null
-      val dateAnalyzerBuilder = if (colTypes.contains(ColumnType.DATE)) builder2.addAnalyzer(classOf[DateAndTimeAnalyzer]) else null
-      val booleanAnalyzerBuilder = if (colTypes.contains(ColumnType.BOOLEAN)) builder2.addAnalyzer(classOf[BooleanAnalyzer]) else null
-      if (colTypes.contains(ColumnType.INTEGER) || colTypes.contains(ColumnType.DECIMAL)) numberAnalyzerBuilder.setConfiguredProperty("Descriptive statistics", true)
-      if (colTypes.contains(ColumnType.DATE)) dateAnalyzerBuilder.setConfiguredProperty("Descriptive statistics", true)
-      if (colTypes.contains(ColumnType.LONGNVARCHAR)) entityTransformerBuilder.setConfiguredProperty("Classifier", classifier)
-      colNames.zipWithIndex.foreach(c => {
-        val (colName: String, i: Int) = c
-        if (colTypes(i) == ColumnType.INTEGER) {
-          integerTransformerBuilder.addInputColumn(new MetaModelInputColumn(new MutableColumn(colName, ColumnType.NVARCHAR, table, i, true)))
-          numberAnalyzerBuilder.addInputColumn(integerTransformerBuilder.getOutputColumnByName(colName + " (as int)"))
-        } else if (colTypes(i) == ColumnType.DECIMAL) {
-          decimalTransformerBuilder.addInputColumn(new MetaModelInputColumn(new MutableColumn(colName, ColumnType.NVARCHAR, table, i, true)))
-          numberAnalyzerBuilder.addInputColumn(decimalTransformerBuilder.getOutputColumnByName(colName + " (as number)"))
-        } else if (colTypes(i) == ColumnType.DATE) {
-          dateTransformerBuilder.addInputColumn(new MetaModelInputColumn(new MutableColumn(colName, ColumnType.NVARCHAR, table, i, true)))
-          dateAnalyzerBuilder.addInputColumn(dateTransformerBuilder.getOutputColumnByName(colName + " (as date)"))
-        } else if (colTypes(i) == ColumnType.BOOLEAN) {
-          booleanTransformerBuilder.addInputColumn(new MetaModelInputColumn(new MutableColumn(colName, ColumnType.NVARCHAR, table, i, true)))
-          booleanAnalyzerBuilder.addInputColumn(booleanTransformerBuilder.getOutputColumnByName(colName + " (as boolean)"))
-        } else if (colTypes(i) == ColumnType.LONGNVARCHAR) {
-          entityTransformerBuilder.addInputColumn(new MetaModelInputColumn(new MutableColumn(colName, ColumnType.NVARCHAR, table, i, true)))
-        }
-      })
-      val job2 = builder2.toAnalysisJob
-      val runner2 = new AnalysisRunnerImpl(conf)
-      val future2 = runner2.run(job2)
-      future2.await()
-      val resultsMap = future.getResultMap
-      val combinedResultsMap = resultsMap ++ future2.getResultMap
-      val results = new SimpleAnalysisResult(combinedResultsMap, new Date())
-      htmlResultWriter.write(results, conf, stringWriter)
-      //println(stringWriter)
-      //println()
-      //println("Number Analysis:")
-      if (future2.isSuccessful) {
-        /*
-        future2.getResults.foreach { result =>
-          result match {
-            case r: CrosstabResult => {
-              val rendered = new CrosstabTextRenderer().render(r)
-              val lines = rendered.split("\n")
-              lines.foreach(println(_))
+      future.getResultMap.values() foreach {
+        case result: StringAnalyzerResult =>
+
+//          val inputColumnMap = result.getColumns map(inputColumn => {
+//            val name = inputColumn.getName
+//            if (inputColumn.isPhysicalColumn) {
+//              (name, inputColumn)
+//            } else {
+//              val nameP = """^(.+)(\s+\(as .+\))$""".r
+//              val nameP(origName, _) = name
+//              (origName, inputColumn)
+//            }
+//          }) groupBy(_._1)
+
+          columnsByType flatMap {
+            case (_, column) => {
+
+              import StringAnalyzer._
+
+              List(MEASURE_AVG_CHARS, MEASURE_AVG_WHITE_SPACES, MEASURE_BLANK_COUNT, MEASURE_DIACRITIC_CHARS,
+                MEASURE_DIGIT_CHARS, MEASURE_ENTIRELY_LOWERCASE_COUNT, MEASURE_ENTIRELY_UPPERCASE_COUNT, MEASURE_LOWERCASE_CHARS,
+                MEASURE_MAX_CHARS, MEASURE_MAX_WHITE_SPACES, MEASURE_MAX_WORDS, MEASURE_MIN_CHARS, MEASURE_MIN_WHITE_SPACES,
+                MEASURE_MIN_WORDS, MEASURE_NON_LETTER_CHARS, MEASURE_NULL_COUNT, MEASURE_ROW_COUNT, MEASURE_TOTAL_CHAR_COUNT,
+                MEASURE_UPPERCASE_CHARS, MEASURE_UPPERCASE_CHARS_EXCL_FIRST_LETTERS, MEASURE_WORD_COUNT
+              ) map(metricName => {
+                val metric = Metric.findByName(metricName)
+                val analysisType = AnalysisType.findByName("String analyzer")
+                val pk = new MetricValuePK
+                pk.setAnalysisType(analysisType)
+                pk.setMetric(metric)
+                pk.setColumn(column)
+                val value = new MetricValue
+                value.setPk(pk)
+                val metricValue = result.getCrosstab.where(DIMENSION_COLUMN, column.getName)
+                  .where(DIMENSION_MEASURES, metricName).get()
+                if (metricValue != null) {
+                  metricValue match {
+                    case v: Number => value.setValue(new java.math.BigDecimal(v.toString))
+                    case v => value.setStringValue(v.toString)
+                  }
+                } else {
+                  println("Couldn't find a metric value for Metric=" + metricName +
+                    " and Column=" + column.getName + " (as date)")
+                }
+
+                JPA.em().persist(value)
+
+                metric
+              })
             }
-            case r => println(r)
           }
-        }*/
+        case result: NumberAnalyzerResult => columnsByType filter {
+            case ("Numeric", _) => true
+            case _ => false
+          } flatMap {
+            case (_, column) => {
+
+              val columnTypeByNameMap = (columnNames zip columnTypes).toMap
+
+              import NumberAnalyzer._
+
+              List(MEASURE_GEOMETRIC_MEAN, MEASURE_HIGHEST_VALUE, MEASURE_KURTOSIS, MEASURE_LOWEST_VALUE,
+                MEASURE_MEAN, MEASURE_MEDIAN, MEASURE_NULL_COUNT, MEASURE_PERCENTILE25, MEASURE_PERCENTILE75,
+                MEASURE_ROW_COUNT, MEASURE_SECOND_MOMENT, MEASURE_SKEWNESS, MEASURE_STANDARD_DEVIATION,
+                MEASURE_SUM, MEASURE_SUM_OF_SQUARES, MEASURE_VARIANCE
+              ) map(metricName => {
+                val metric = Metric.findByName(metricName)
+                val analysisType = AnalysisType.findByName("Number analyzer")
+                val pk = new MetricValuePK
+                pk.setAnalysisType(analysisType)
+                pk.setMetric(metric)
+                pk.setColumn(column)
+                val value = new MetricValue
+                value.setPk(pk)
+                val name = columnTypeByNameMap(column.getName) match {
+                  case ColumnType.INTEGER => column.getName + " (as int)"
+                  case ColumnType.DECIMAL => column.getName + " (as number)"
+                  case _ => column.getName
+                }
+                val metricValue = result.getCrosstab.where(DIMENSION_COLUMN, name)
+                  .where(DIMENSION_MEASURE, metricName).get()
+                if (metricValue != null) {
+                  metricValue match {
+                    case v: Number => value.setValue(new java.math.BigDecimal(v.toString))
+                    case v => value.setStringValue(v.toString)
+                  }
+                } else {
+                  println("Couldn't find a metric value for Metric=" + metricName +
+                    " and Column=" + column.getName + " (as date)")
+                }
+                JPA.em().persist(value)
+
+                metric
+              })
+            }
+          }
+        case result: DateAndTimeAnalyzerResult => columnsByType filter {
+            case ("Date", _) => true
+            case _ => false
+          } flatMap {
+            case (_, column) => {
+
+              import DateAndTimeAnalyzer._
+
+              List(MEASURE_HIGHEST_DATE, MEASURE_HIGHEST_TIME, MEASURE_KURTOSIS, MEASURE_LOWEST_DATE,
+                MEASURE_LOWEST_TIME, MEASURE_MEAN, MEASURE_MEDIAN, MEASURE_NULL_COUNT,
+                MEASURE_PERCENTILE25, MEASURE_PERCENTILE75, MEASURE_ROW_COUNT, MEASURE_SKEWNESS
+              ) map(metricName => {
+                val metric = Metric.findByName(metricName)
+                val analysisType = AnalysisType.findByName("Date/time analyzer")
+                val pk = new MetricValuePK
+                pk.setAnalysisType(analysisType)
+                pk.setMetric(metric)
+                pk.setColumn(column)
+                val value = new MetricValue
+                value.setPk(pk)
+                val metricValue = result.getCrosstab.where(DIMENSION_COLUMN, column.getName + " (as date)")
+                  .where(DIMENSION_MEASURE, metricName).get()
+                if (metricValue != null) {
+                  metricValue match {
+                    case v: Number => value.setValue(new java.math.BigDecimal(v.toString))
+                    case v => value.setStringValue(v.toString)
+                  }
+                } else {
+                  println("Couldn't find a metric value for Metric=" + metricName +
+                    " and Column=" + column.getName + " (as date)")
+                }
+                JPA.em().persist(value)
+
+                metric
+              })
+            }
+          }
+        case result: BooleanAnalyzerResult => columnsByType filter {
+            case ("Boolean", _) => true
+            case _ => false
+          } flatMap {
+            case (_, column) => {
+
+              import BooleanAnalyzer._
+
+              List(MEASURE_FALSE_COUNT, MEASURE_LEAST_FREQUENT, MEASURE_MOST_FREQUENT, MEASURE_NULL_COUNT,
+                MEASURE_ROW_COUNT, MEASURE_TRUE_COUNT
+              ) map(metricName => {
+                val metric = Metric.findByName(metricName)
+                val analysisType = AnalysisType.findByName("Boolean analyzer")
+                val pk = new MetricValuePK
+                pk.setAnalysisType(analysisType)
+                pk.setMetric(metric)
+                pk.setColumn(column)
+                val value = new MetricValue
+                value.setPk(pk)
+                val metricValue = result.getColumnStatisticsCrosstab.where(DIMENSION_COLUMN, column.getName + " (as boolean)")
+                  .where(DIMENSION_MEASURE, metricName).get()
+                if (metricValue != null) {
+                  metricValue match {
+                    case v: Number => value.setValue(new java.math.BigDecimal(v.toString))
+                    case v => value.setStringValue(v.toString)
+                  }
+                } else {
+                  println("Couldn't find a metric value for Metric=" + metricName +
+                    " and Column=" + column.getName + " (as date)")
+                }
+                JPA.em().persist(value)
+
+                metric
+              })
+            }
+          }
+        case result: PatternFinderResult => columnsByType filter {
+          case (_, column) => column.getName == result.getColumn.getName
+        } flatMap {
+            case (_, column) => {
+
+              import PatternFinderAnalyzer._
+
+              val analysisType = AnalysisType.findByName("Pattern finder")
+              val crosstab: Crosstab[_] = result.getSingleCrosstab
+              val patternDimension: CrosstabDimension = crosstab.getDimension(DIMENSION_NAME_PATTERN)
+              val categories = patternDimension.getCategories
+              categories.map(pattern => {
+                val patternResult = new PatternResult
+                patternResult.setColumn(column)
+                patternResult.setAnalysisType(analysisType)
+                patternResult.setPattern(pattern)
+                val matchCount = crosstab
+                    .where(patternDimension, pattern)
+                    .where(DIMENSION_NAME_MEASURES, MEASURE_MATCH_COUNT)
+                    .get()
+                patternResult.setMatchCount(matchCount match {
+                  case k: Number => k.intValue()
+                  case _ => 0
+                })
+                val sample = crosstab
+                  .where(patternDimension, pattern)
+                  .where(DIMENSION_NAME_MEASURES, MEASURE_SAMPLE)
+                  .get().asInstanceOf[String]
+                patternResult.setSample(sample)
+
+                JPA.em().persist(patternResult)
+
+                patternResult
+              })
+            }
+          }
+      }
+
+      htmlResultWriter.write(results, conf, stringWriter)
+      if (future.isSuccessful) {
       } else {
         future.getErrors.foreach(e => {
           println(e.getMessage)
@@ -257,54 +415,7 @@ class FileService {
       stringWriter.toString
 
     } finally {
-      if (src != null) src.close()
+      if (reader != null) reader.close()
     }
   }
-
-  def deduceDataType(value: String): Option[String] = {
-    if (value == null || value.length == 0) {
-      None
-    } else {
-      val v = value.trim
-      if (v.length > 0) {
-        try {
-          val int = Integer.parseInt(v)
-          if (int == 0 || int == 1)
-            return Some("Integer-Boolean")
-          else
-            return Some("Integer")
-        } catch {
-          case e: NumberFormatException => //skip
-        }
-        try {
-          java.lang.Double.parseDouble(v)
-          return Some("Decimal")
-        } catch {
-          case e: NumberFormatException => //skip
-        }
-        val date = parseDate(v)
-        if (date != None)
-          return Some("Date")
-        val bool = parseBoolean(v)
-        if (bool != None)
-          return Some("Boolean")
-        if (v.length >= 128)
-          Some("Text")
-        else
-          Some("String")
-      } else {
-        Some("String")
-      }
-    }
-  }
-
-  def parseBoolean(value: String = "") = {
-    val v = value.trim.toLowerCase
-    if (List("true", "yes", "1").contains(v))
-      Some(true)
-    else if (List("false", "no", "0").contains(v))
-      Some(false)
-    else
-      None
-   }
 }

@@ -7,7 +7,10 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import play.db.jpa.JPA;
+
+import mms.common.models.business.BusinessTerm;
 
 /**
  * User: markmo
@@ -86,6 +89,11 @@ public abstract class Column extends AbstractColumn implements Iterable<Cell> {
     @JsonIgnore
     private Set<FilterType> filterTypes;
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @ManyToOne
+    @JoinColumn(name = "business_term_id")
+    private BusinessTerm businessTerm;
+
     // Statistics
     private String minValue;
     private String maxValue;
@@ -96,9 +104,27 @@ public abstract class Column extends AbstractColumn implements Iterable<Cell> {
 
     private boolean hasNulls;
 
-
     @Transient
     protected SortedSet<Cell> cells;
+
+    /*
+    metadataItemType - Derived, Input, Matrix, Compound
+    technicalName - derived from object class, the property of the data element, measure/representational class, and format.
+    registrationStatus e.g. Current, Proposed, Superseded
+    standards
+    context
+    denominatorSource
+    representationalClass - Percentage, Rate, Mean, Count, Average, Code, Text, Date, Identifier, Total, Ratio, Currency, Quantity, Time
+    dataType - numeric, text, alphanumeric
+    format, e.g. 9999.9
+    maxCharacterLength
+    permissibleValues
+    calculation
+
+    objectClass
+    property, e.g. name
+    unitOfMeasure
+     */
 
     /**
      * The length of fixed length character or byte strings.
@@ -264,5 +290,14 @@ public abstract class Column extends AbstractColumn implements Iterable<Cell> {
             return null;
         }
         return new ArrayList<Cell>(cells);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Map toIndex() {
+        Map map = super.toIndex();
+        map.put("columnType", "Column");
+        map.put("dataType", dataType.getName());
+        return map;
     }
 }

@@ -13,3 +13,5 @@ define [
             precision: 'Text'
             scale: 'Text'
             defaultValue: 'Text'
+
+        toString: -> this.get('friendlyName') or this.get('name')

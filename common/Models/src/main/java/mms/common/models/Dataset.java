@@ -6,9 +6,9 @@ import static utils.JPA_Helper.getSingleResult;
 
 import java.util.*;
 import javax.persistence.*;
-import javax.persistence.Column;
 
 import com.fasterxml.jackson.annotation.*;
+import com.github.cleverage.elasticsearch.IndexUtils;
 import com.github.cleverage.elasticsearch.Indexable;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints;
@@ -29,14 +29,14 @@ public abstract class Dataset extends AuditedModel implements Indexable {
 
     @Id
     @GeneratedValue
-    @Column(name = "dataset_id")
+    @javax.persistence.Column(name = "dataset_id")
     private Long id;
 
-    @Column(name = "dataset_name")
+    @javax.persistence.Column(name = "dataset_name")
     @Constraints.Required
     private String name;
 
-    @Column(length = 8000)
+    @javax.persistence.Column(length = 8000)
     private String description;
 
     private String url;
@@ -62,6 +62,65 @@ public abstract class Dataset extends AuditedModel implements Indexable {
     @OrderBy("name")
     @JsonIgnore
     private List<AbstractColumn> columns;
+
+    /*
+    code
+    // source details
+    purpose
+    scope
+    coverage
+    collectionMethod, e.g. Survey, Administrative Data, Census, Registry
+    // data details
+    conceptualFramework
+    mainOutputs
+    classifications
+    otherConcepts
+    accuracy - sources of error, e.g. processing error, coding error; If survey: sample size, % of population sampled, response rate, and sampling error; areas where careful interpretation is required
+    geographicalAreas
+    groups
+    comments
+    collectionFrequency
+    frequencyComments
+    collectionHistory
+    dataAvailability
+    dataAvailabilityComments
+    // source and reference attribute
+    organizationName - of unit responsible for the data
+    custodianName - data owner
+    referenceDocument
+    // contact
+    contactName
+        position
+        email
+        phone
+    responsibleOfficer
+        position
+        email
+        phone
+    // templates
+    templateCode
+
+    collectionMethods
+    collectionHistory
+    availableCrossTabulations
+    internationalComparability
+        country
+        dataSources
+        relatedWebSites
+    nationalComparability
+    comments
+        Known quality issues
+        Sample size
+        Response rate
+        Blank fields
+        Social desirability bias
+        Breaks in series
+    glossary
+    steward
+    contact
+    referenceDocuments
+     */
+
 
     // Statistics
     private long rowCount;
@@ -204,9 +263,17 @@ public abstract class Dataset extends AuditedModel implements Indexable {
         this.rowCount = rowCount;
     }
 
+    @SuppressWarnings("unchecked")
     public Map toIndex() {
         HashMap map = new HashMap();
+        map.put("id", id);
+        map.put("objectType", "Dataset");
+        map.put("dataType", "Complex");
         map.put("name", name);
+        map.put("description", description);
+        if (columns != null) {
+            map.put("columns", IndexUtils.toIndex(columns));
+        }
         return map;
     }
 
@@ -214,7 +281,15 @@ public abstract class Dataset extends AuditedModel implements Indexable {
         if (map == null) {
             return this;
         }
-        this.name = (String)map.get("name");
+        name = (String)map.get("name");
+        description = (String)map.get("description");
+        String columnType = (String)map.get("columnType");
+        if ("column".equals(columnType)) {
+            List<Column> columns1 = IndexUtils.getIndexables(map, "columns", Column.class);
+            for (Column column : columns1) {
+                addColumn(column);
+            }
+        }
         return this;
     }
 

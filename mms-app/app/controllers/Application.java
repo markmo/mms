@@ -125,6 +125,10 @@ public class Application extends Controller {
         return ok(views.html.tables.render("revisions"));
     }
 
+    public Result glossary() {
+        return ok(views.html.tables.render("glossary"));
+    }
+
     @Transactional(readOnly = true)
     public Result getRevision(Integer revisionId) throws IOException {
         CustomTrackingRevisionEntity revision = null;

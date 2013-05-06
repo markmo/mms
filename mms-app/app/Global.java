@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+import com.github.cleverage.elasticsearch.IndexService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import module.Dependencies;
@@ -83,6 +84,8 @@ public class Global extends GlobalSettings {
                 initialData();
             }
         });
+
+        //IndexService.cleanIndex();
     }
 
     @Override
