@@ -6,7 +6,7 @@ define [
     'text!templates/glossary/associations.html'
 ], ($, Backbone, Handlebars, app, associationsPageTemplate) ->
     Backbone.View.extend
-        el: '#term-associations'
+        el: '#relationships'
 
         compiled: Handlebars.compile associationsPageTemplate
 

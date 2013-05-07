@@ -4,14 +4,26 @@ define [
     'handlebars'
     'cs!events'
     'cs!utils/json-viewer',
-    'text!templates/glossary/term.html'
+    'text!templates/glossary/term_view.html'
     'annotator'
 ], ($, Backbone, Handlebars, app, JsonViewer, termPageTemplate) ->
     Backbone.View.extend
 
-        el: '#term-form'
+        el: '#attributes'
+
+        events:
+            'click #btnCancel': 'cancel'
+            'click #btnEdit': 'edit'
 
         compiled: Handlebars.compile termPageTemplate
+
+        edit: ->
+            this.clean();
+            this.trigger('edit')
+
+        cancel: ->
+            this.clean();
+            this.trigger('closed')
 
         initialize: (options) ->
             app.loadCss '/assets/css/annotator/annotator.min.css'
@@ -41,4 +53,5 @@ define [
             else schema
 
         clean: ->
+            @$el.html('');
             app.unloadCss '/assets/css/annotator/annotator.min.css'

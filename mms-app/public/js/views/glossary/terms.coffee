@@ -6,13 +6,11 @@ define [
     'cs!vm'
     'snap'
     'cs!views/glossary/domains'
-    'cs!views/glossary/term'
-    'cs!views/glossary/term_form'
-    'cs!views/glossary/associations'
+    'cs!views/glossary/term_section'
     'text!templates/glossary/terms.html'
     'lib/jqtree/jquery.cookie'
     'lib/jqtree/tree.jquery'
-], ($, Backbone, Handlebars, app, Vm, Snap, DomainsSection, TermView, TermForm, AssociationsSection, termsPageTemplate) ->
+], ($, Backbone, Handlebars, app, Vm, Snap, DomainsSection, TermSection, termsPageTemplate) ->
     Backbone.View.extend
         el: '#page'
 
@@ -29,48 +27,23 @@ define [
             href = a.attr('href')
             a.data 'timer', setTimeout(->
                 window.location = href
-            ,500) unless a.data 'timer'
+            ,500) unless a.data('timer')
             return false
 
         create: ->
-            termForm = Vm.create(this, 'TermForm', TermForm)
-            termForm.render().done =>
-
-                # TODO replace with data-snap-ignore="true" on the elements
-
-                $('.editable').on('mouseover', => @snapper.disable())
-                $('.editable').on('mouseout', => @snapper.enable())
-                $('#custom-form').on('mouseover', 'select,input,textarea', => @snapper.disable())
-                $('#custom-form').on('mouseout', 'select,input,textarea', => @snapper.enable())
-                return
-            return false
+            termSection = Vm.create(this, 'TermSection', TermSection)
+            termSection.render().createTerm()
 
         edit: ->
-            termForm = Vm.create(this, 'TermForm', TermForm,
+            termSection = Vm.create(this, 'TermSection', TermSection,
                 termId: @termId
                 parentTerm: @parentTerm)
-            termForm.render().done =>
-                $('.editable').on('mouseover', => @snapper.disable())
-                $('.editable').on('mouseout', => @snapper.enable())
-                $('#custom-form').on('mouseover', 'select,input,textarea', => @snapper.disable())
-                $('#custom-form').on('mouseout', 'select,input,textarea', => @snapper.enable())
-                return
-
-            associationsSection = Vm.create(this, 'AssociationsSection', AssociationsSection,
-                termId: @termId
-            )
-            associationsSection.render()
-            termForm.on('closed', ->
-                associationsSection.clean()
-                termForm.off()
-            )
-            return false
+            termSection.render().editTerm()
 
         show: ->
-            termView = Vm.create(this, 'TermView', TermView,
+            termSection = Vm.create(this, 'TermSection', TermSection,
                 termId: @termId)
-            termView.render()
-            return false
+            termSection.render().showTerm()
 
         initialize: (options) ->
             @domainId = options?.domainId
@@ -87,10 +60,11 @@ define [
                     @$el.html @compiled
                         domain: domain?.toString() || 'ALL'
                     $('#terms-tree').tree({data: terms, dragAndDrop: true})
-                        .bind('tree.select', (event) =>
+                        .bind('tree.click', (event) =>
                             node = event.node
-                            @termId = node.id
-                            this.show(event)
+                            if node
+                                @termId = node.id
+                                this.show(event)
                             return
                         )
                         .bind('tree.move', (event) =>
@@ -114,8 +88,6 @@ define [
                         else snapper.open('left')
                         return
                     )
-                    @snapper = snapper
-
                     this.delay(2000, ->
                         $.bootstrapGrowl 'Double click an item to open the edit form',
                             type: 'info'

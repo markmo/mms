@@ -1,0 +1,39 @@
+<h1>People</h1>
+<div class="clearfix" style="margin-bottom: 10px;">
+    <button id="create-person" class="btn btn-small btn-success" type="button">
+        <i class="icon-plus icon-white"></i>
+        <span>New domain&hellip;</span>
+    </button>
+</div>
+{{#if people}}
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Roles</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each people}}
+    <tr>
+        <td><a href="#" id="{{id}}" class="person-name">{{name}}</a></td>
+        <td>{{title}}</td>
+        <td>{{email}}</td>
+        <td>{{phone}}</td>
+        <td>
+            <ul>
+                {{#each roles}}
+                <li>{{name}}</li>
+                {{/each}}
+            </ul>
+        </td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+{{else}}
+<p>None defined.</p>
+{{/if}}

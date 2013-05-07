@@ -12,7 +12,7 @@ define [
 ], ($, _, Backbone, Handlebars, app, Form, Term) ->
     Backbone.View.extend
 
-        el: '#term-form'
+        el: '#attributes'
 
         initialize: (options) ->
             @termId = options?.termId
@@ -23,12 +23,12 @@ define [
             app.terms().done (terms) =>
                 terms.add(@term)
                 @term.save()
+                this.trigger('closed')
                 this.parent.render()
             return
 
         cancel: ->
             this.clean();
-            @$el.html('');
             this.trigger('closed')
 
         render: ->
@@ -93,7 +93,7 @@ define [
 
                 @$el.find('textarea').css('overflow', 'hidden').autogrow()
 
-                $('#term-form').resize ->
+                $('#attributes').resize ->
                     docHeight = $(document).height()
                     $('.drawers').css('height', docHeight)
                     $('#main').css('height', docHeight)
@@ -105,12 +105,12 @@ define [
             return dfd
 
         clean: ->
-            this.cleanForm()
             app.off 'change:columns'
             app.off 'change:tags'
             app.off 'change:terms'
             app.off 'change:domains'
-            $('#term-form').off()
+            this.cleanForm()
+            @$el.html('');
             app.unloadCss '/assets/css/select2/select2.css'
             app.unloadCss '/assets/css/chosen/chosen.css'
             return
@@ -118,3 +118,4 @@ define [
         cleanForm: ->
             @form.undelegateEvents()
             @form.remove()
+            return

@@ -35,15 +35,20 @@ define [
         schema:
             name:
                 type: 'Text'
-                editorClass: 'span5 editable'
+                editorClass: 'span5'
+                editorAttrs:
+                    'data-snap-ignore': true
 
             definition:
                 type: 'TaggableContent'
-                editorClass: 'editable'
+                editorAttrs:
+                    'data-snap-ignore': true
 
             description:
                 type: 'TextArea'
-                editorClass: 'span5 editable'
+                editorClass: 'span5'
+                editorAttrs:
+                    'data-snap-ignore': true
 
             domain:
                 type: 'Domains'
@@ -69,14 +74,6 @@ define [
                     app.securityClassifications().done (securityClassifications) ->
                         callback(securityClassifications)
 
-#            tags:
-#                type: 'Select'
-#                options: (callback) ->
-#                    app.tags().done (tags) ->
-#                        array = tags.map (model) ->
-#                            {val: model.id, label: model.toString()}
-#                        array.unshift({val: null, label: ''})
-#                        callback(array)
             tags:
                 type: 'Tags'
 

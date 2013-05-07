@@ -9,32 +9,41 @@ define [
 
     class App
 
-        datasources: (value, options) ->
-            this.collections('datasources', value, options)
-
-        sandboxes: (value, options) ->
-            this.collections('sandboxes', value, options)
-
-        namespaces: (value, options) ->
-            this.collections('namespaces', value, options)
-
-        datasets: (value, options) ->
-            this.collections('datasets', value, options)
+        associations: (value, options) ->
+            this.collections('associations', value, options)
 
         columns: (value, options) ->
             this.collections('columns', value, options)
 
-        files: (value, options) ->
-            this.collections('files', value, options)
+        datasets: (value, options) ->
+            this.collections('datasets', value, options)
+
+        datasources: (value, options) ->
+            this.collections('datasources', value, options)
 
         domains: (value, options) ->
             this.collections('domains', value, options)
 
+        files: (value, options) ->
+            this.collections('files', value, options)
+
+        namespaces: (value, options) ->
+            this.collections('namespaces', value, options)
+
+        people: (value, options) ->
+            this.collections('people', value, options)
+
+        sandboxes: (value, options) ->
+            this.collections('sandboxes', value, options)
+
+        securityClassifications: (value, options) ->
+            this.collections('security_classifications', value, options)
+
+        tags: (value, options) ->
+            this.collections('tags', value, options)
+
         terms: (value, options) ->
             this.collections('terms', value, options)
-
-        associations: (value, options) ->
-            this.collections('associations', value, options)
 
         termsByDomain: (domainId, options) ->
             if domainId
@@ -54,12 +63,6 @@ define [
             else
                 #dfd.reject('No domainId')
                 this.terms(null, options)
-
-        securityClassifications: (value, options) ->
-            this.collections('security_classifications', value, options)
-
-        tags: (value, options) ->
-            this.collections('tags', value, options)
 
         collections: (name, value, options) ->
             memo = '_' + name

@@ -34,7 +34,9 @@ define [
 
         initialize: (options) ->
             Backbone.Form.editors.Base.prototype.initialize.call(this, options)
-            @$el.attr('id', 'custom-form').addClass('custom form-vertical')
+            @$el.attr('id', 'custom-form')
+                .attr('data-snap-ignore', true)
+                .addClass('custom form-vertical')
             this.render()
             $.ajax(
                 type: 'GET'

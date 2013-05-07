@@ -1,4 +1,4 @@
-<label>Relationships</label>
+{{#if associations}}
 <table class="associations table table-hover">
     <thead>
     <tr>
@@ -15,3 +15,6 @@
     {{/each}}
     </tbody>
 </table>
+{{else}}
+<p>None defined.</p>
+{{/if}}
