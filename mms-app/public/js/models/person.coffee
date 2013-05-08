@@ -20,7 +20,14 @@ define [
 
         initialize: ->
             Backbone.Model.prototype.initialize.apply(this, arguments)
-            this.on 'change', -> this.set('name', this.name())
+            this.on 'change', (model, options) ->
+                this.set({name: this.name()}, {silent: true})
+
+        get: (attr) ->
+            if typeof this[attr] == 'function'
+                this[attr]()
+            else
+                Backbone.Model.prototype.get.call(this, attr)
 
         name: (value) ->
             if value?
@@ -32,7 +39,7 @@ define [
                 name = ''
                 if this.has('firstName')
                     name += this.get('firstName')
-                if this.has('lasName')
+                if this.has('lastName')
                     if this.has('firstName')
                         name += ' '
                     name += this.get('lastName')

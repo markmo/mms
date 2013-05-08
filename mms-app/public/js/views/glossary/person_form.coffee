@@ -12,8 +12,8 @@ define [
                 @person.set(@form.getValue())
                 app.people().done (people) =>
                     people.add(@person)
-                    @person.save()
-                    this.parent.render()
+                    @person.save null,
+                        success: => this.parent.render()
 
             this.on 'cancel', ->
                 #alert 'cancel'

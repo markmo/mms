@@ -67,6 +67,7 @@ POST    /settings/:id                   controllers.Settings.update(id: Long)
 GET     /people                         controllers.People.index
 POST    /people                         controllers.People.create
 PUT     /people/:id                     controllers.People.update(id: Long)
+DELETE  /people                         controllers.People.delete
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                   controllers.Assets.at(path="/public", file)

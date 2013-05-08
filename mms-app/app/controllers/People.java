@@ -59,4 +59,16 @@ public class People extends Controller {
             return ok("{\"id\":\"" + person.getId() + "\"}").as("application/json");
         }
     }
+
+    @Transactional
+    public static Result delete() {
+        String[] ids = request().body().asFormUrlEncoded().get("id[]");
+        for (String id : ids) {
+            Person person = JPA.em().find(Person.class, Long.parseLong(id));
+            if (person != null) {
+                JPA.em().remove(person);
+            }
+        }
+        return ok();
+    }
 }

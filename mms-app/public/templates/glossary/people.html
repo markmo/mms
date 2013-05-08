@@ -1,8 +1,8 @@
 <h1>People</h1>
 <div class="clearfix" style="margin-bottom: 10px;">
-    <button id="create-person" class="btn btn-small btn-success" type="button">
+    <button id="create-person" class="btn btn-small btn-success">
         <i class="icon-plus icon-white"></i>
-        <span>New domain&hellip;</span>
+        <span>New person&hellip;</span>
     </button>
 </div>
 {{#if people}}
@@ -14,12 +14,13 @@
         <th>Email</th>
         <th>Phone</th>
         <th>Roles</th>
+        <th colspan="2" style="width: 91px;"></th>
     </tr>
     </thead>
     <tbody>
     {{#each people}}
     <tr>
-        <td><a href="#" id="{{id}}" class="person-name">{{name}}</a></td>
+        <td><a href="#" data-id="{{id}}" class="person-name">{{name}}</a></td>
         <td>{{title}}</td>
         <td>{{email}}</td>
         <td>{{phone}}</td>
@@ -30,9 +31,22 @@
                 {{/each}}
             </ul>
         </td>
+        <td style="width: 14px;"><a href="#" class="person-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
+        <td style="width: 77px;"><input class="person-delete" data-id="{{id}}" type="checkbox"></td>
     </tr>
     {{/each}}
     </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="6"></td>
+        <td style="width: 77px;">
+            <button id="btnDelete" class="btn btn-small btn-danger">
+                <i class="icon-remove icon-white"></i>
+                <span>Delete</span>
+            </button>
+        </td>
+    </tr>
+    </tfoot>
 </table>
 {{else}}
 <p>None defined.</p>

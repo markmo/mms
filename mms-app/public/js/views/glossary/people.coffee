@@ -13,6 +13,8 @@ define [
         events:
             'click #create-person': 'create'
             'click .person-name': 'edit'
+            'click .person-edit': 'edit'
+            'click #btnDelete': 'remove'
 
         compiled: Handlebars.compile peoplePageTemplate
 
@@ -26,7 +28,7 @@ define [
             return false
 
         edit: (event) ->
-            id = $(event.target).attr('id')
+            id = $(event.currentTarget).data('id')
             personForm = Vm.create(this, 'PersonForm', PersonForm, {personId: id})
             modal = new Backbone.BootstrapModal(
                 title: 'Edit Person'
@@ -35,8 +37,24 @@ define [
             ).open()
             return false
 
+        remove: ->
+            deletions = []
+            $('.person-delete').each ->
+                deletions.push($(this).data('id')) if $(this).attr('checked')
+            if deletions.length
+                $.ajax(
+                    type: 'DELETE'
+                    url: '/people'
+                    data: {id: deletions}
+                ).done =>
+                    _.each deletions, (id) =>
+                        @people.remove(@people.get(id))
+                    this.render()
+            return false
+
         render: ->
             app.people().done (coll) =>
+                @people = coll
                 @$el.html @compiled
                     people: coll.toJSON()
             return this
