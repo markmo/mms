@@ -22,7 +22,7 @@ define [
 
         show: (event) ->
             id = event.target.id
-            datasetId = id.substr(5)
+            datasetId = id.substr(7)
             collapsible = $(event.target)
             if not @children?[id]
                 el = collapsible.find('.accordion-inner')
@@ -73,7 +73,8 @@ define [
         render: (namespaceId, datasetId) ->
             app.namespaces().done (namespaces) =>
                 namespace = namespaces.get(namespaceId)
-                datasource = namespace.get('datasource')
+                catalog = namespace.get('catalog')
+                datasource = catalog.datasource
                 filterTypes = new FilterTypesCollection
                 filterTypes.fetch
                     success: =>
@@ -83,6 +84,7 @@ define [
                                 content = $('<div class="page-content clearfix"></div>')
                                 content.html @compiled
                                     datasource: datasource
+                                    catalog: catalog
                                     namespace: namespace.toJSON()
                                     filterTypes: filterTypes.toJSON()
                                     datasets: datasets.toJSON()

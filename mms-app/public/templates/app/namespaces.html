@@ -1,17 +1,18 @@
 <ul class="breadcrumb">
-    {{#if isDatasource}}
-    <li><a href="#/datasources/{{context.id}}/namespaces"><span class="muted">[Data Source]</span> {{context.name}}</a></li>
+    {{#if isCatalog}}
+    <li><a href="#/datasources/{{datasource.id}}/catalogs"><span class="muted">[Data Source]</span> {{datasource.name}}</a></li>
+    <li><a href="#/datasources/{{context.id}}/namespaces"><span class="muted">[Catalog]</span> {{context.name}}</a></li>
     {{else}}
     <li><a href="#/sandboxes/{{context.id}}"><span class="muted">[Sandbox]</span> {{context.name}}</a></li>
     {{/if}}
 </ul>
-<h1>Schemas</h1>
+<h1>Namespaces</h1>
 <div class="row">
     <div class="span7">
         <ul class="items">
             {{#each namespaces}}
             <li>
-                <a href="#/namespaces/{{id}}/tables" class="item-title">{{name}}</a>
+                <a href="#/namespaces/{{id}}/datasets" class="item-title">{{name}}</a>
             </li>
             {{/each}}
         </ul>

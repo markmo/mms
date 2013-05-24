@@ -20,21 +20,21 @@ define [
 
         create: ->
             personForm = Vm.create(this, 'PersonForm', PersonForm)
-            modal = new Backbone.BootstrapModal(
+            modal = new Backbone.BootstrapModal
                 title: 'New Person'
                 content: personForm
                 animate: true
-            ).open()
+            modal.open()
             return false
 
         edit: (event) ->
             id = $(event.currentTarget).data('id')
             personForm = Vm.create(this, 'PersonForm', PersonForm, {personId: id})
-            modal = new Backbone.BootstrapModal(
+            modal = new Backbone.BootstrapModal
                 title: 'Edit Person'
                 content: personForm
                 animate: true
-            ).open()
+            modal.open()
             return false
 
         remove: ->

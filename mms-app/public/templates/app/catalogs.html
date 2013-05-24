@@ -1,0 +1,16 @@
+<ul class="breadcrumb">
+    <li><a href="#/datasources/{{datasource.id}}/namespaces"><span class="muted">[Data Source]</span> {{datasource.name}}</a></li>
+</ul>
+<h1>Catalogs</h1>
+<div class="row">
+    <div class="span7">
+        <ul class="items">
+            {{#each catalogs}}
+            <li>
+                <a href="#/catalogs/{{id}}/namespaces" class="item-title">{{name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    <div id="posts-section"></div>
+</div>

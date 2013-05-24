@@ -19,19 +19,19 @@ define [
                 #alert 'cancel'
 
         render: ->
-            app.people().done (people) =>
-                if @personId
-                    @person = people.get(@personId)
-                else
-                    @person = new Person
-                @clean() if @form?
-                @form = new Backbone.Form(
-                    model: @person
-                ).render()
-                $(@el).html @form.el
+            if @personId
+                app.people().done (people) =>
+                    person = people.get(@personId)
+                    this.renderForm(person)
+            else this.renderForm(new Person)
+
+        renderForm: (person) ->
+            this.cleanForm() if @form
+            @form = new Backbone.Form({model: person}).render()
+            @person = person
+            @$el.html @form.el
             return this
 
-        clean: ->
-            @form.undelegateEvents()
+        cleanForm: ->
             @form.remove()
             return

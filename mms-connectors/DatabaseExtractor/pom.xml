@@ -10,6 +10,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>mms</groupId>
+            <artifactId>mms-models</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.1-901.jdbc4</version>
@@ -48,11 +53,6 @@
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-actor</artifactId>
             <version>2.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>ExcelExtractor</groupId>
-            <artifactId>ExcelExtractor</artifactId>
-            <version>1.0</version>
         </dependency>
     </dependencies>
 

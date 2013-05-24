@@ -25,6 +25,7 @@ import play.db.jpa.JPA;
  */
 @Entity
 @Audited
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public abstract class Dataset extends AuditedModel implements Indexable {
 
     @Id
@@ -47,6 +48,7 @@ public abstract class Dataset extends AuditedModel implements Indexable {
 
     @ManyToOne
     @JoinColumn(name = "namespace_id")
+    //@JsonBackReference("namespace_datasets")
     private Namespace namespace;
 
     @ManyToMany
@@ -60,6 +62,7 @@ public abstract class Dataset extends AuditedModel implements Indexable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dataset")
     @OrderBy("name")
+    //@JsonManagedReference("dataset_columns")
     @JsonIgnore
     private List<AbstractColumn> columns;
 

@@ -1,8 +1,9 @@
 <ul class="breadcrumb">
-    <li><a href="#/datasources/{{datasource.id}}/namespaces"><span class="muted">[Data Source]</span> {{datasource.name}}</a> <span class="divider">/</span></li>
+    <li><a href="#/datasources/{{datasource.id}}/catalogs"><span class="muted">[Data Source]</span> {{datasource.name}}</a> <span class="divider">/</span></li>
+    <li><a href="#/catalogs/{{catalog.id}}/namespaces"><span class="muted">[Catalog]</span> {{catalog.name}}</a> <span class="divider">/</span></li>
     <li><a href="#/namespaces/{{namespace.id}}/tables"><span class="muted">[Namespace]</span> {{namespace.name}}</a></li>
 </ul>
-<h1>Tables</h1>
+<h1>Datasets</h1>
 <div id="filter-type-btn-group" class="btn-group clearfix" data-toggle="buttons-checkbox">
     {{#each filterTypes}}
     <button type="button" class="btn pull-right">{{name}}</button>
@@ -17,7 +18,7 @@
                 {{name}}
             </a>
         </div>
-        <div id="table{{id}}" class="accordion-body collapse">
+        <div id="dataset{{id}}" class="accordion-body collapse">
             <div class="accordion-inner"></div>
         </div>
     </div>

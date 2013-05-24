@@ -9,8 +9,14 @@ define [
 
     class App
 
+        applications: (value, options) ->
+            this.collections('applications', value, options)
+
         associations: (value, options) ->
             this.collections('associations', value, options)
+
+        catalogs: (value, options) ->
+            this.collections('catalogs', value, options)
 
         columns: (value, options) ->
             this.collections('columns', value, options)
@@ -33,11 +39,17 @@ define [
         people: (value, options) ->
             this.collections('people', value, options)
 
+        posts: (value, options) ->
+            this.collections('posts', value, options)
+
         sandboxes: (value, options) ->
             this.collections('sandboxes', value, options)
 
         securityClassifications: (value, options) ->
             this.collections('security_classifications', value, options)
+
+        stakeholderRoles: (value, options) ->
+            this.collections('stakeholder_roles', value, options)
 
         tags: (value, options) ->
             this.collections('tags', value, options)
@@ -64,6 +76,12 @@ define [
                 #dfd.reject('No domainId')
                 this.terms(null, options)
 
+        userGroups: (value, options) ->
+            this.collections('user_groups', value, options)
+
+        vendors: (value, options) ->
+            this.collections('vendors', value, options)
+
         collections: (name, value, options) ->
             memo = '_' + name
             if value and value instanceof Backbone.Collection
@@ -72,7 +90,7 @@ define [
 
             dfd = $.Deferred()
 
-            return dfd.resolve(@[memo]) if @[memo]
+            return dfd.resolve(@[memo]) if @[memo] and not options?.refresh
 
             require ['cs!collections/' + name], (Collection) =>
                 coll = new Collection(value, options)

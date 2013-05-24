@@ -38,19 +38,21 @@ define [
                 .attr('data-snap-ignore', true)
                 .addClass('custom form-vertical')
             this.render()
-            $.ajax(
-                type: 'GET'
-                url: '/settings'
-            ).done((schema) =>
-                $('#custom-form').jsonForm(this.getSchema(schema, @value))
-                return
-            ).fail((jqXHR, textStatus, errorThrown) ->
-                alert(errorThrown)
-            )
+            if @value
+                $.ajax(
+                    type: 'GET'
+                    url: '/settings'
+                ).done((schema) =>
+                    $('#custom-form').jsonForm(this.getSchema(schema, @value))
+                    return
+                ).fail((jqXHR, textStatus, errorThrown) ->
+                    alert(errorThrown)
+                )
             return this
 
         getValue: ->
-            $('#custom-form').data('jsonform-tree').root.getFormValues()
+            data = $('#custom-form').data('jsonform-tree')
+            if data then JSON.stringify(data.root.getFormValues()) else null
 
         setValue: (value) ->
 
@@ -76,6 +78,32 @@ define [
             if id?
                 domain = @domains.get(id)
                 domain or null
+            else null
+
+        setValue: (value) ->
+            if value instanceof Backbone.Model
+                @$el.val(value.id)
+
+
+    Backbone.Form.editors.ModelSelect = Backbone.Form.editors.Select.extend
+
+        initialize: (options) ->
+            collectionName = options.schema.collection
+            options.schema.options = (callback) ->
+                app[collectionName].call(app).done (coll) ->
+                    array = coll.map (model) ->
+                        {val: model.id, label: model.toString()}
+                    array.unshift({val: null, label: ''})
+                    callback(array)
+            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            app[collectionName].call(app).done (coll) =>
+                @coll = coll
+
+        getValue: ->
+            id = @$el.val()
+            if id?
+                model = @coll.get(id)
+                model or null
             else null
 
         setValue: (value) ->
@@ -132,10 +160,17 @@ define [
             Backbone.Form.editors.Base.prototype.initialize.call(this, options)
             @$el.attr('contenteditable', true).addClass('autotag')
             app.terms().done (terms) =>
+                @terms = terms
                 tags = terms.map (term) -> ('#' + term.toString())
                 @$el.tagautocomplete
                     source: tags
                     character: '#'
+                    updater: (val) ->
+                        if /\s/g.test(val)
+                            if /"/g.test(val)
+                                '#{' + val.substring(1) + '}'
+                            else '#"' + val.substring(1) + '"'
+                        else val
                 this.setValue(@value) if @value
                 return
 
@@ -205,10 +240,12 @@ define [
             'click #btnSubmit': 'submit'
 
         initialize: (model, options) ->
+            unless options?.nolegend
+                legend = model.get('friendlyName') || model.get('name') || model.get('description') || options?.title
             if model instanceof Backbone.Model
                 opts = {
                     fieldsets: [
-                        legend: model.get('friendlyName') || model.get('name') || model.get('description') || options?.title
+                        legend: legend
                         fields: _.keys(model.schema)
                     ]
                     model: model

@@ -62,4 +62,7 @@ define [
                         return
                     )
                 return
-            return
+            return this
+
+        clean: ->
+            $('#left-drawer').off('click', '#create-domain')

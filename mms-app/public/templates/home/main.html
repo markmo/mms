@@ -19,20 +19,20 @@
                     <i class="icon-plus icon-white"></i>
                     <span>New sandbox&hellip;</span>
                 </button>
+                <form>
+                    {{#each sandboxes}}
+                    <label class="radio">
+                        <input type="radio" name="sandbox" value="{{id}}">
+                        <span>{{name}}</span>
+                    </label>
+                    {{/each}}
+                    {{#if sandboxes.length}}
+                    <p style="margin-top: 10px; text-align: center;">
+                        <button class="btn btn-primary" type="button">Select</button>
+                    </p>
+                    {{/if}}
+                </form>
             </div>
-            <form>
-                {{#each sandboxes}}
-                <label class="radio">
-                    <input type="radio" name="sandbox" value="{{id}}">
-                    <span>{{name}}</span>
-                </label>
-                {{/each}}
-                {{#if sandboxes.length}}
-                <p style="margin-top: 10px; text-align: center;">
-                    <button class="btn btn-primary" type="button">Select</button>
-                </p>
-                {{/if}}
-            </form>
         </div>
     </div>
     <div class="span4 top-left">

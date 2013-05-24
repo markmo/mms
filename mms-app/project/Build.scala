@@ -11,19 +11,19 @@ object ApplicationBuild extends Build {
 
   val appDependencies = Seq(
     // Add your project dependencies here
-    "postgresql" % "postgresql" % "9.1-901.jdbc4"
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
     ,"log4j" % "log4j" % "1.2.17"
     ,javaCore
     ,javaJdbc
     ,javaJpa
-    ,"org.hibernate" % "hibernate-entitymanager" % "4.1.10.Final"
-    ,"org.hibernate" % "hibernate-envers" % "4.1.10.Final"
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.2.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.2.Final"
     ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
-    ,"com.feth" %% "play-authenticate" % "0.2.4-SNAPSHOT"
-    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.1.4"
-    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.1.4"
-    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.1.4"
-    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.1.2"
+    ,"com.feth" %% "play-authenticate" % "0.2.5-SNAPSHOT"
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
+    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.1"
     ,"com.clever-age" % "play2-elasticsearch" % "0.5-SNAPSHOT" excludeAll(
       ExclusionRule(organization = "org.apache.lucene")
       )
@@ -37,11 +37,11 @@ object ApplicationBuild extends Build {
     ,"net.sf.opencsv" % "opencsv" % "2.4-SNAPSHOT"
     ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
 //    ,"com.wordnik" %% "swagger-play2" % "1.2.1-SNAPSHOT"
-    ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-basic-analyzers" % "0.29"
-    ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-cli" % "0.29" excludeAll(
+    ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-basic-analyzers" % "0.30"
+    ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-cli" % "0.30" excludeAll(
       ExclusionRule(organization = "berkeleydb")
       )
-    ,"org.eobjects.metamodel" % "MetaModel-pojo" % "3.3.3"
+    ,"org.eobjects.metamodel" % "MetaModel-pojo" % "3.4.1"
     ,"nz.co.datascience" % "rel_2.9.1" % "0.3.1"
 
     // Hadoop
@@ -110,14 +110,14 @@ object ApplicationBuild extends Build {
     ,"org.modeshape" % "modeshape-sequencer-wsdl" % "3.2-SNAPSHOT"
     ,"org.modeshape" % "modeshape-sequencer-zip" % "3.2-SNAPSHOT"
     ,"org.modeshape" % "modeshape-extractor-tika" % "3.2-SNAPSHOT"
-    ,"org.infinispan" % "infinispan-core" % "5.2.1.Final" excludeAll(
+    ,"org.infinispan" % "infinispan-core" % "5.3.0.Beta2" excludeAll(
       ExclusionRule(organization = "org.codehaus.woodstox", name = "woodstox-core-asl"),
       ExclusionRule(organization = "org.codehaus.woodstox", name = "stax2-api")
       )
-    ,"org.infinispan" % "infinispan-lucene-directory" % "5.2.1.Final"
-    ,"org.infinispan" % "infinispan-cachestore-bdbje" % "5.2.1.Final"
-    ,"org.infinispan" % "infinispan-cachestore-jdbm" % "5.2.1.Final"
-    ,"org.infinispan" % "infinispan-cachestore-jdbc" % "5.2.1.Final"
+    ,"org.infinispan" % "infinispan-lucene-directory" % "5.3.0.Beta2"
+    ,"org.infinispan" % "infinispan-cachestore-bdbje" % "5.3.0.Beta2"
+    ,"org.infinispan" % "infinispan-cachestore-jdbm" % "5.3.0.Beta2"
+    ,"org.infinispan" % "infinispan-cachestore-jdbc" % "5.3.0.Beta2"
     ,"c3p0" % "c3p0" % "0.9.1.2" //same as the one used by Infinispan's JDBC cache store
     ,"org.hibernate" % "hibernate-search-engine" % "4.2.0.Final" excludeAll(
       ExclusionRule(organization = "org.hibernate")

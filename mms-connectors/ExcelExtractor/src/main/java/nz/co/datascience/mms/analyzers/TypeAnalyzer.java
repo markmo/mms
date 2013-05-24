@@ -1,14 +1,14 @@
 package nz.co.datascience.mms.analyzers;
 
-import static nz.co.datascience.mms.analyzers.Types.*;
-
-import nz.co.datascience.mms.model.Cell;
+import mms.common.models.Cell;
 import nz.co.datascience.mms.util.Counter;
 import nz.co.datascience.mms.util.Counters;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static nz.co.datascience.mms.analyzers.Types.*;
 
 /**
  * User: markmo

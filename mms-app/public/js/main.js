@@ -46,6 +46,9 @@ require.config({
         'backbone-associations': {
             deps: ['backbone']
         },
+        'backbone-collectionsubset': {
+            deps: ['backbone']
+        },
         handlebars: {
             exports: 'Handlebars'
         },
@@ -69,12 +72,13 @@ require([
     'handlebars',
     'cs!views/app',
     'cs!router',
-    'cs!vm',
     'cs!events',
+    'cs!vm',
+    'snap',
     'cs!models/session',
     'lib/backbone/templates/bootstrap',
     'lib/jquery-file-upload/jquery.fileupload'
-], function($, Backbone, Handlebars, AppView, Router, Vm, app, Session) {
+], function($, Backbone, Handlebars, AppView, Router, app, Vm, Snap, Session) {
 
     require([
         'bootstrap',
@@ -130,6 +134,45 @@ require([
             return options.fn(item);
         }).join('');
     });
+
+    Handlebars.registerHelper('isRoleSelected', function (context, options) {
+        var hash = options.hash;
+        var roleId = context.id;
+        var term = hash.term;
+        var personId = hash.person.id;
+        var isSelected = false;
+        if (term.people) {
+            for (var i = 0, n = term.people.length; i < n; i += 1) {
+                var r = term.people[i];
+                if (r.person.id === personId &&
+                    r.stakeholderRole.id === roleId)
+                {
+                    isSelected = true;
+                    break;
+                }
+            }
+        }
+        return isSelected ? "selected" : "";
+    });
+
+    // Sliding main window
+    // https://github.com/jakiestfu/Snap.js/
+    var snapper = new Snap({
+        element: document.getElementById('main'),
+        touchToDrag: false,
+        minPosition: -398
+    });
+    $('.navbar-inner')
+        .on('click', '#open-left', function (event) {
+            event.preventDefault();
+            if (snapper.state().state === 'left') snapper.close()
+            else snapper.open('left');
+        })
+        .on('click', '#open-right', function (event) {
+            event.preventDefault();
+            if (snapper.state().state === 'right') snapper.close()
+            else snapper.open('right');
+        });
 
     var session = new Session();
     $.ajax('/session').done(function (data) {

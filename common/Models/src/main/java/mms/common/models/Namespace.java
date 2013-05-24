@@ -28,6 +28,7 @@ import play.db.jpa.JPA;
  */
 @Entity
 @Audited
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Namespace extends AuditedModel {
 
     @Id
@@ -45,10 +46,12 @@ public class Namespace extends AuditedModel {
 
     @ManyToOne
     @JoinColumn(name = "catalog_id")
+    //@JsonBackReference("catalog_namespaces")
     private Catalog catalog;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "namespace")
     @OrderBy("name")
+    //@JsonManagedReference("namespace_datasets")
     @JsonIgnore
     private Set<Dataset> datasets;
 
@@ -80,15 +83,15 @@ public class Namespace extends AuditedModel {
         )
                 .setParameter(1, name)
                 .setParameter(2, catalog.getId())
-                        //.getSingleResult();
+                //.getSingleResult();
 
-                        // getSingleResult results in IllegalArgumentException: Type
-                        // specified for TypedQuery [models.Namespace] is incompatible
-                        // with query return type [interface java.util.Map]
-                        // Could be a class loading issue?
-                        // http://jacoblewallen.wordpress.com/2012/06/20/type-for-typedquery-incompatible-with-query-return-type/
-                        // But the following works??
-                        // TODO see if fixed in 2.1-final as was working with Play 2.0.4 and Scala 2.9.2
+                // getSingleResult results in IllegalArgumentException: Type
+                // specified for TypedQuery [models.Namespace] is incompatible
+                // with query return type [interface java.util.Map]
+                // Could be a class loading issue?
+                // http://jacoblewallen.wordpress.com/2012/06/20/type-for-typedquery-incompatible-with-query-return-type/
+                // But the following works??
+                // TODO see if fixed in 2.1-final as was working with Play 2.0.4 and Scala 2.9.2
                 .setMaxResults(1)
                 .getResultList();
 
@@ -110,7 +113,7 @@ public class Namespace extends AuditedModel {
         namespace.catalog = catalog;
         JPA.em().persist(namespace);
         Set<Dataset> tables = null;
-        JsonNode tablesJson = json.path("tables");
+        JsonNode tablesJson = json.path("datasets");
         if (tablesJson.size() > 0) {
             tables = new HashSet<Dataset>();
             Iterator<JsonNode> it = tablesJson.getElements();
@@ -189,7 +192,7 @@ public class Namespace extends AuditedModel {
 
         Namespace namespace = (Namespace) o;
 
-        if (id != namespace.id) return false;
+        if (id != null ? !id.equals(namespace.id) : namespace.id != null) return false;
         if (name != null ? !name.equals(namespace.name) : namespace.name != null) return false;
 
         return true;
@@ -197,7 +200,7 @@ public class Namespace extends AuditedModel {
 
     @Override
     public int hashCode() {
-        int result = id.intValue();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

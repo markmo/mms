@@ -1,8 +1,7 @@
 package nz.co.datascience.mms.extractors;
 
-import static org.apache.poi.ss.usermodel.Cell.*;
-import static nz.co.datascience.mms.model.DataTypeFactory.*;
-
+import mms.common.models.*;
+import mms.common.models.excel.*;
 import nz.co.datascience.mms.analyzers.ColumnAnalyzer;
 import nz.co.datascience.mms.analyzers.ConnectedComponentAnalyzer;
 import nz.co.datascience.mms.analyzers.PropertyBag;
@@ -28,6 +27,9 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.List;
 
+import static mms.common.models.factory.DataTypeFactory.getDataType;
+import static org.apache.poi.ss.usermodel.Cell.*;
+
 /**
  * User: markmo
  * Date: 24/09/12
@@ -35,7 +37,7 @@ import java.util.List;
  */
 public class ExcelExtractor {
 
-    private static Map<String, Region> regions = new HashMap<String, Region>();
+    private static Map<String, ExcelRegion> regions = new HashMap<String, ExcelRegion>();
 
     public static void main(String[] args) throws Exception {
         InputStream inp = new FileInputStream("/Users/markmo/Downloads/Electricity.xlsx");
@@ -45,7 +47,7 @@ public class ExcelExtractor {
 //        for (Sheet sheet : wb) {
             System.out.println(sheet.getSheetName());
             System.out.println("======================================================");
-            Region currentRegion = null;
+            ExcelRegion currentRegion = null;
 
         // Construct matrix
             int firstRowNum = sheet.getFirstRowNum();
@@ -72,7 +74,7 @@ public class ExcelExtractor {
                 }
             }
 
-            List<Cell> cells = new ArrayList<Cell>();
+            List<ExcelCell> cells = new ArrayList<ExcelCell>();
 
             XSSFSheet xsheet = (XSSFSheet)sheet;
 
@@ -83,7 +85,7 @@ public class ExcelExtractor {
                 for (org.apache.poi.ss.usermodel.Cell cell : row) {
                     int columnIndex = cell.getColumnIndex();
                     CellReference cellRef = new CellReference(rowNum, columnIndex);
-                    Cell mycell = new Cell();
+                    ExcelCell mycell = new ExcelCell();
                     mycell.setCellRef(cellRef.formatAsString());
                     mycell.setColumnIndex(columnIndex);
                     mycell.setRowNum(rowNum);
@@ -217,14 +219,14 @@ public class ExcelExtractor {
             }
             System.out.println();
 
-            for (int i = 0; i < componentAnalyzer.getMaxLabel(); i++) {
-                Region region = new Region();
+            for (long i = 0; i < componentAnalyzer.getMaxLabel(); i++) {
+                ExcelRegion region = new ExcelRegion();
                 region.setId(i + 1);
                 regions.put(sheet.getSheetName() + (i + 1), region);
             }
 
-            for (Cell mycell : cells) {
-                Region region = regions.get(sheet.getSheetName() + (labeledMatrix[mycell.getColumnIndex() - firstColumnIndex][mycell.getRowNum() - firstRowNum]));
+            for (ExcelCell mycell : cells) {
+                ExcelRegion region = regions.get(sheet.getSheetName() + (labeledMatrix[mycell.getColumnIndex() - firstColumnIndex][mycell.getRowNum() - firstRowNum]));
                 if (region != null) {
                     region.addCell(mycell);
                 }
@@ -232,11 +234,11 @@ public class ExcelExtractor {
 
 
             // Merge related regions
-            List<Region> sortedRegions = new ArrayList<Region>(regions.values());
+            List<ExcelRegion> sortedRegions = new ArrayList<ExcelRegion>(regions.values());
             Collections.sort(sortedRegions, new RegionComparator());
-            Map<String, Region> newRegions = new HashMap<String, Region>();
-            Region lastRegion = null;
-            for (Region region : sortedRegions) {
+            Map<String, ExcelRegion> newRegions = new HashMap<String, ExcelRegion>();
+            ExcelRegion lastRegion = null;
+            for (ExcelRegion region : sortedRegions) {
                 if (lastRegion != null) {
                     if (region.isRegionUnderAndMatchesWidth(lastRegion))
                     {
@@ -267,7 +269,7 @@ public class ExcelExtractor {
 //        }
 
         ColumnAnalyzer columnAnalyzer = new ColumnAnalyzer();
-        for (Region region : regions.values()) {
+        for (ExcelRegion region : regions.values()) {
             Set<Integer> headerIndexGuesses = new HashSet<Integer>();
 
             // process columns
@@ -285,7 +287,7 @@ public class ExcelExtractor {
                 }
             }
             boolean hasHeaderRow = headerIndexGuesses.contains(0);
-            for (Column column : region) {
+            for (ExcelColumn column : region) {
                 column.setHasHeaderRow(hasHeaderRow);
                 column.setHidden(sheet.isColumnHidden(column.getColumnIndex()));
                 PropertyBag columnStats = (PropertyBag)columnAnalyzer.analyze(column.getValues());
@@ -298,7 +300,7 @@ public class ExcelExtractor {
                 int s = column.getValues().size();
                 double variability = (double)((Counter)columnStats.get("valueCounter")).keySet().size() / column.getValues().size();
                 boolean isPossibleDimension = (isUniform && (isStringType || isIntegerType || isDateType) && (variability < 0.5));
-                column.setDimension(isPossibleDimension);
+//                column.setDimension(isPossibleDimension);
 //                System.out.println("\nColumn: " + column.getName());
 //                System.out.println("isDimension: " + isPossibleDimension);
 //                for (Object key : columnStats.keySet()) {
@@ -308,17 +310,18 @@ public class ExcelExtractor {
 
             // process rows
 
-            for (Row row : region.getRows()) {
+            for (ExcelRow row : region.getRows()) {
                 int maxIndentLevel = 0;
                 for (Cell cell : row) {
-                    maxIndentLevel = Math.max(maxIndentLevel, cell.getIndentLevel());
+                    ExcelCell excelCell = (ExcelCell)cell;
+                    maxIndentLevel = Math.max(maxIndentLevel, excelCell.getIndentLevel());
                 }
                 row.setMaxIndentLevel(maxIndentLevel);
             }
 
             boolean rowSumsBelow = xsheet.getRowSumsBelow();
             boolean rowSumsRight = xsheet.getRowSumsRight();
-            for (Row row : region.getRows()) {
+            for (ExcelRow row : region.getRows()) {
                 row.setOutlineLevel(1);
             }
             region.print();

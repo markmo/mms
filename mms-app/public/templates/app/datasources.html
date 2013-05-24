@@ -1,9 +1,19 @@
 <h1>Data Sources</h1>
+<div class="clearfix" style="margin-bottom: 10px;">
+    <button id="create-datasource" class="btn btn-small btn-success">
+        <i class="icon-plus icon-white"></i>
+        <span>New source&hellip;</span>
+    </button>
+</div>
+{{#if datasources}}
 <ul class="items">
     {{#each datasources}}
     <li>
-        <a href="#/datasources/{{id}}/edit" class="pull-right"><i class="icon-edit"></i>Edit</a>
-        <a href="#/datasources/{{id}}/namespaces" class="item-title">{{name}}</a>
+        <a href="#" class="datasource-edit pull-right" data-id="{{id}}"><i class="icon-edit"></i>Edit</a>
+        <a href="#/datasources/{{id}}/catalogs" class="item-title">{{name}}</a>
     </li>
     {{/each}}
 </ul>
+{{else}}
+<p>None defined.</p>
+{{/if}}

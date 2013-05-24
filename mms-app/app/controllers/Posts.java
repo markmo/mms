@@ -13,7 +13,9 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
+import mms.common.models.Catalog;
 import mms.common.models.Datasource;
+import mms.common.models.business.BusinessTerm;
 import mms.common.models.posts.DiscussionThread;
 import mms.common.models.posts.Post;
 import models.ChatRoom;
@@ -39,6 +41,20 @@ public class Posts extends Controller {
                     posts.addAll(thread.getPosts());
                 }
             }
+        } else if (entityType.equals("catalog")) {
+            Catalog catalog = JPA.em().find(Catalog.class, entityId);
+            if (catalog.getThreads() != null && !catalog.getThreads().isEmpty()) {
+                for (DiscussionThread thread : catalog.getThreads()) {
+                    posts.addAll(thread.getPosts());
+                }
+            }
+        } else if (entityType.equals("term")) {
+            BusinessTerm term = JPA.em().find(BusinessTerm.class, entityId);
+            if (term.getThreads() != null && !term.getThreads().isEmpty()) {
+                for (DiscussionThread thread : term.getThreads()) {
+                    posts.addAll(thread.getPosts());
+                }
+            }
         }
         String json = mapper.writeValueAsString(posts);
         return ok(json).as("application/json");
@@ -48,15 +64,36 @@ public class Posts extends Controller {
     public Result create(String entityType, Long entityId) throws IOException {
         Form<PostInput> postInputForm = form(PostInput.class);
         PostInput postInput = postInputForm.bindFromRequest().get();
+        Datasource datasource = null;
+        Catalog catalog = null;
+        BusinessTerm term = null;
+        DiscussionThread thread = null;
         if (postInput.entityType.equals("datasource")) {
-            Datasource datasource = JPA.em().find(Datasource.class, postInput.entityId);
-            DiscussionThread thread = null;
+            datasource = JPA.em().find(Datasource.class, postInput.entityId);
             if (datasource.getThreads() == null || datasource.getThreads().isEmpty()) {
                 thread = new DiscussionThread();
                 datasource.setThreads(new HashSet<DiscussionThread>(Collections.singletonList(thread)));
             } else {
                 thread = datasource.getThreads().iterator().next();
             }
+        } else if (postInput.entityType.equals("catalog")) {
+            catalog = JPA.em().find(Catalog.class, postInput.entityId);
+            if (catalog.getThreads() == null || catalog.getThreads().isEmpty()) {
+                thread = new DiscussionThread();
+                catalog.setThreads(new HashSet<DiscussionThread>(Collections.singletonList(thread)));
+            } else {
+                thread = catalog.getThreads().iterator().next();
+            }
+        } else if (postInput.entityType.equals("term")) {
+            term = JPA.em().find(BusinessTerm.class, postInput.entityId);
+            if (term.getThreads() == null || term.getThreads().isEmpty()) {
+                thread = new DiscussionThread();
+                term.setThreads(new HashSet<DiscussionThread>(Collections.singletonList(thread)));
+            } else {
+                thread = term.getThreads().iterator().next();
+            }
+        }
+        if (thread != null) {
 
             // TODO: replace with authenticated user
             User user = JPA.em().find(User.class, postInput.userId);
@@ -79,7 +116,13 @@ public class Posts extends Controller {
             thread.addPost(post);
             JPA.em().persist(thread);
             JPA.em().flush();
-            JPA.em().persist(datasource);
+            if (postInput.entityType.equals("datasource")) {
+                JPA.em().persist(datasource);
+            } else if (postInput.entityType.equals("catalog")) {
+                JPA.em().persist(catalog);
+            } else if (postInput.entityType.equals("term")) {
+                JPA.em().persist(term);
+            }
         }
         return ok();
     }

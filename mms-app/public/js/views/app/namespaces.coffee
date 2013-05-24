@@ -21,25 +21,28 @@ define [
             if not @namespaces?
                 @namespaces = new NamespacesCollection({}, {context: @context})
                 app.namespaces(@namespaces)
-            if @context.name == 'datasource'
-                isDatasource = true
-                dfd = app.datasources()
+            if @context.name == 'catalog'
+                isCatalog = true
+                dfd = app.catalogs()
             else
                 dfd = app.sandboxes()
             dfd.done (coll) =>
                 ctx = coll.get(contextId)
+                if isCatalog
+                    datasource = ctx.get('datasource')
                 @namespaces.fetch
                     success: =>
                         content = $('<div class="page-content clearfix"></div>')
                         content.html @compiled
                             context: ctx.toJSON()
-                            isDatasource: isDatasource
+                            isCatalog: isCatalog
                             namespaces: @namespaces.toJSON()
+                            datasource: datasource
                         $(@el).html content
                         content.animate({top: 0}, 'fast')
-                        if isDatasource
+                        if isCatalog
                             postsSection = Vm.create(this, 'PostsSection', PostsSection,
-                                entityType: 'datasource'
+                                entityType: 'catalog'
                                 entityId: contextId
                             )
                             postsSection.render()

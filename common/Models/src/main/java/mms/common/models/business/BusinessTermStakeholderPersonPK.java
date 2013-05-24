@@ -3,6 +3,8 @@ package mms.common.models.business;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
+
 /**
  * User: markmo
  * Date: 3/05/13
@@ -15,6 +17,7 @@ public class BusinessTermStakeholderPersonPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "business_term_id")
+    @JsonIgnore
     private BusinessTerm businessTerm;
 
     @ManyToOne
@@ -24,6 +27,30 @@ public class BusinessTermStakeholderPersonPK implements Serializable {
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
+
+    public BusinessTerm getBusinessTerm() {
+        return businessTerm;
+    }
+
+    public void setBusinessTerm(BusinessTerm businessTerm) {
+        this.businessTerm = businessTerm;
+    }
+
+    public StakeholderRole getStakeholderRole() {
+        return stakeholderRole;
+    }
+
+    public void setStakeholderRole(StakeholderRole stakeholderRole) {
+        this.stakeholderRole = stakeholderRole;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
     @Override
     public String toString() {

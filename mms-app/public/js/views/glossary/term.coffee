@@ -29,11 +29,27 @@ define [
             app.loadCss '/assets/css/annotator/annotator.min.css'
             @termId = options?.termId
 
+        getDefinitionMarkup: (val, terms) ->
+            if val and val.length
+                re = /#\w+|#["}][^"}]+["}]/g
+                p = /^#["}]?([^"}]+)["}]?$/
+                matches = val.match(re)
+                if matches
+                    for match in matches
+                        tag = p.exec(match)[1]
+                        term = terms.findWhere({name: tag})
+                        if term
+                            link = '<a href="/#/terms/' + term.id + '">' + term + '</a>'
+                            val = val.replace(match, link)
+            val
+
         render: ->
             app.terms().done (terms) =>
                 term = terms.get(@termId)
+                defn = this.getDefinitionMarkup(term.get('definition'), terms)
                 @$el.html @compiled
                     term: term.toJSON()
+                    defn: defn
                 @$el.addClass('readonly')
                 $.ajax(
                     type: 'GET'

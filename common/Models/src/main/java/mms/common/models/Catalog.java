@@ -27,6 +27,7 @@ import play.db.jpa.JPA;
  */
 @Entity
 @Audited
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Catalog extends AuditedModel {
 
     public static Catalog findByName(String name) {
@@ -87,10 +88,12 @@ public class Catalog extends AuditedModel {
 
     @ManyToOne
     @JoinColumn(name = "datasource_id")
+    //@JsonBackReference("datasource_catalogs")
     private Datasource datasource;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalog")
     @OrderBy("name")
+    //@JsonManagedReference("catalog_namespaces")
     @JsonIgnore
     private Set<Namespace> namespaces;
 

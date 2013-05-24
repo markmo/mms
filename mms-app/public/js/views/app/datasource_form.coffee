@@ -2,37 +2,47 @@ define [
     'jquery'
     'underscore'
     'backbone'
-    'cs!components/form'
     'cs!events'
-], ($, _, Backbone, Form, app) ->
+    'cs!models/datasource'
+], ($, _, Backbone, app, Datasource) ->
     Backbone.View.extend
-        el: '#page'
 
-        render: (datasourceId) ->
+        ok: ->
+            @datasource.set(@form.getValue())
             app.datasources().done (datasources) =>
-                datasource = datasources.get(datasourceId)
-                @clean() if @form?
-                form = new Form(datasource).render()
+                datasources.add(@datasource)
+                @datasource.save null,
+                    success: => this.parent.render()
+            return
 
-                form.on 'cancel', ->
-                    alert 'cancel'
+        cancel: ->
 
-                form.on 'submit', ->
-                    alert 'submit'
+        initialize: (options) ->
+            @datasourceId = options?.datasourceId
+            this.on 'ok', _.bind(this.ok, this)
+            this.on 'cancel', _.bind(this.cancel, this)
 
-                @form = form
-                $(@el).html form.el
-                editor = new EpicEditor
-                    basePath: '/assets/js/lib/epiceditor'
-                    theme:
-                        base: '/themes/base/epiceditor.css'
-                        preview: '/themes/preview/preview-light.css'
-                        editor: '/themes/editor/epic-light.css'
-                editor.load()
+        render: ->
+            if @datasourceId
+                app.datasources().done (datasources) =>
+                    datasource = datasources.get(@datasourceId)
+                    this.renderForm(datasource)
+            else this.renderForm(new Datasource)
 
+        renderForm: (datasource) ->
+            this.cleanForm() if @form
+            @form = new Backbone.Form({model: datasource}).render()
+            @datasource = datasource
+            @$el.html @form.el
+#            editor = new EpicEditor
+#                basePath: '/assets/js/lib/epiceditor'
+#                theme:
+#                    base: '/themes/base/epiceditor.css'
+#                    preview: '/themes/preview/github.css'
+#                    editor: '/themes/editor/epic-light.css'
+#            editor.load()
             return this
 
-        clean: ->
-            @form.undelegateEvents()
+        cleanForm: ->
             @form.remove()
             return

@@ -48,8 +48,11 @@ define [
                     message: message.trim()
                     datetime: new Date()
                     userId: app.session.authId()
-                app.posts().done (posts) -> posts.add(post)
+                @posts.add(post)
                 post.save()
+#                app.posts(null, {entityType: @entityType, entityId: @entityId}).done (posts) =>
+#                    posts.add(post)
+#                    post.save()
             return
 
         replySubmit: (event) ->
@@ -62,8 +65,11 @@ define [
                 parentId: $('#reply-to-post-id').val()
                 datetime: new Date()
                 userId: app.session.authId()
-            app.posts().done (posts) -> posts.add(post)
+            @posts.add(post)
             post.save()
+#            app.posts(null, {entityType: @entityType, entityId: @entityId}).done (posts) ->
+#                posts.add(post)
+#                post.save()
             return
 
         showReplyForm: (event) ->
@@ -128,8 +134,13 @@ define [
                     parent = dict[post.parent.id]
                     parent.replies = [] unless parent.replies?
                     parent.replies.push(post)
-            posts = (post for id, post of dict when _.isNull(post.parent) or _.isUndefined(post.parent))
-
+            posts = (post for id, post of dict when post.parent == null)
+            _.chain(dict)
+                .values()
+                .filter((post) -> !_.isEmpty(post.replies))
+                .each((post) ->
+                    post.replies = _.sortBy(post.replies, (reply) -> -reply.datetime)
+                )
             setNestedIndex = (nodes, childrenProperty, levels = 2) ->
                 _setNestedIndex = (children, start, level) ->
                     return unless children?
@@ -143,7 +154,7 @@ define [
 
             setNestedIndex(posts, 'replies', 2)
 
-            $('#side-buttons').append('<div id="social-toggle" class="side-button"><a href="#">Social</a></div>')
+#            $('#side-buttons').append('<div id="social-toggle" class="side-button"><a href="#">Social</a></div>')
 
             posts = _.sortBy(posts, (post) -> -post.datetime)
             $(@el).html @compiled
@@ -152,24 +163,24 @@ define [
 
             #$('#side-buttons').affix()
 
-            updateSidePanelLocation = ->
-                if not $('#side-panel').hasClass('in')
-                    $('#side-panel').addClass('notransition')
-                    $('#side-panel').css('left', $(window).width() - $('#side-panel').position().left)
-                    $('#side-panel').removeClass('notransition')
-                return
-
-            updateSidePanelLocation()
-            $('#side-panel').css('display', 'block')
-            $(window).resize ->
-                updateSidePanelLocation()
+#            updateSidePanelLocation = ->
+#                if not $('#side-panel').hasClass('in')
+#                    $('#side-panel').addClass('notransition')
+#                    $('#side-panel').css('left', $(window).width() - $('#side-panel').position().left)
+#                    $('#side-panel').removeClass('notransition')
+#                return
+#
+#            updateSidePanelLocation()
+#            $('#side-panel').css('display', 'block')
+#            $(window).resize ->
+#                updateSidePanelLocation()
 
             $('#side-panel .side-panel-content-border').css('height', (134 + 113.5 * posts.length) + 'px')
 
-            $('#social-toggle').click (e) ->
-                e.preventDefault()
-                $('#side-panel').toggleClass('in')
-                return
+#            $('#social-toggle').click (e) ->
+#                e.preventDefault()
+#                $('#side-panel').toggleClass('in')
+#                return
 
 #            $('#social-toggle').hover((e) ->
 #                $(this).animate({'right': -40 + 'px'}, 400)
@@ -199,6 +210,7 @@ define [
             $('#posts-section .media > a').popover
                 placement: 'left'
                 trigger: 'click'
+                container: 'body'
                 delay:
                     show: 500
                     hide: 100
@@ -230,6 +242,7 @@ define [
 
             $('#btn-attachments').popover
                 placement: 'bottom'
+                container: 'body'
                 trigger: 'click'
                 delay:
                     show: 500

@@ -18,6 +18,7 @@ import play.data.validation.Constraints;
 @Entity
 @Table(name = "columns")
 @Audited
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public abstract class AbstractColumn extends AuditedModel implements Indexable {
 
     @Id
@@ -37,7 +38,7 @@ public abstract class AbstractColumn extends AuditedModel implements Indexable {
 
     @ManyToOne
     @JoinColumn(name = "dataset_id")
-    @JsonIgnore
+    //@JsonBackReference("dataset_columns")
     private Dataset dataset;
 
     public Long getId() {

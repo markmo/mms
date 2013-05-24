@@ -6,18 +6,16 @@ import static controllers.Application.getSingleResult;
 import java.util.*;
 import javax.persistence.*;
 
-import be.objectify.deadbolt.core.models.Permission;
-import be.objectify.deadbolt.core.models.Role;
-import be.objectify.deadbolt.core.models.Subject;
+import be.objectify.deadbolt.core.models.*;
 import com.fasterxml.jackson.annotation.*;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
-import com.feth.play.module.pa.user.AuthUser;
-import com.feth.play.module.pa.user.AuthUserIdentity;
-import com.feth.play.module.pa.user.EmailIdentity;
-import com.feth.play.module.pa.user.NameIdentity;
+import com.feth.play.module.pa.user.*;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import play.data.format.Formats;
 import play.db.jpa.JPA;
+import play.libs.F;
 
 import models.TokenAction.Type;
 
@@ -64,6 +62,7 @@ public class User implements Subject {
     public int numberVotes;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "followers",
             joinColumns = @JoinColumn(name = "followed_user_id"),
@@ -73,6 +72,7 @@ public class User implements Subject {
     public List<User> followers;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "followers",
             joinColumns = @JoinColumn(name = "following_user_id"),
@@ -89,6 +89,7 @@ public class User implements Subject {
 	public boolean emailValidated;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -97,10 +98,12 @@ public class User implements Subject {
 	public List<SecurityRole> roles;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference("linkedAccount") // not working - currently forced to use @JsonIdentityInfo above
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference("linkedAccount")
 	public List<LinkedAccount> linkedAccounts;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "user_permissions",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -170,16 +173,27 @@ public class User implements Subject {
         if (identity == null) {
             return null;
         }
-        if (identity instanceof UsernamePasswordAuthUser) {
-            return findByUsernamePasswordIdentity((UsernamePasswordAuthUser) identity);
-        } else {
-            return getSingleResult(User.class, getAuthUserFind(identity));
-        }
+//        try {
+//            return JPA.withTransaction(new F.Function0<User>() {
+//                @Override
+//                public User apply() {
+                    if (identity instanceof UsernamePasswordAuthUser) {
+                        return findByUsernamePasswordIdentity((UsernamePasswordAuthUser) identity);
+                    } else {
+                        return getSingleResult(User.class, getAuthUserFind(identity));
+                    }
+//                }
+//            });
+//        } catch (Throwable e) {
+//            e.printStackTrace();
+//            return null;
+//        }
     }
 
     public static User findByUsernamePasswordIdentity(
             final UsernamePasswordAuthUser identity) {
-        return getSingleResult(User.class, getUsernamePasswordAuthUserFind(identity));
+        return getSingleResult(User.class,
+                getUsernamePasswordAuthUserFind(identity));
     }
 
     // original
@@ -192,7 +206,9 @@ public class User implements Subject {
     private static Query getUsernamePasswordAuthUserFind(
             final UsernamePasswordAuthUser identity) {
         return JPA.em().createQuery(
-                "select u from User u join u.linkedAccounts a where u.active = true and u.email = ?1 and a.providerKey = ?2"
+                "select u from User u join u.linkedAccounts a " +
+                "where u.active = true and u.email = ?1 " +
+                "and a.providerKey = ?2"
         )
                 .setParameter(1, identity.getEmail())
                 .setParameter(2, identity.getProvider());
@@ -272,8 +288,8 @@ public class User implements Subject {
 	}
 
 	public static void setLastLoginDate(final AuthUser knownUser) {
-		final User u = User.findByAuthUserIdentity(knownUser);
-		u.lastLogin = new Date();
+        final User u = User.findByAuthUserIdentity(knownUser);
+        u.lastLogin = new Date();
         JPA.em().persist(u);
 	}
 
@@ -325,7 +341,7 @@ public class User implements Subject {
 
     public static User findById(Long id) {
         return getSingleResult(User.class, JPA.em().createQuery(
-                "select u from User u where u.id = ?"
+                "select u from User u where u.id = ?1"
         )
                 .setParameter(1, id)
         );

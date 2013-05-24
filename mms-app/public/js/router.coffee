@@ -9,6 +9,9 @@ define [
 
         routes:
             # Pages
+            'access': 'access'
+            'applications': 'applications'
+            'catalogs/:id/namespaces': 'namespaces'
             'columns/:id/edit': 'editColumn'
             'columns/:id/revisions/:revisionId': 'showColumnRevision'
             'columns/:id/revisions': 'showColumnRevisions'
@@ -17,19 +20,23 @@ define [
             'datasets/:id/edit': 'editDataset'
             'datasets/:id/stats': 'showDatasetStats'
             'datasets/new': 'editDataset'
-            'datasources/:id/edit': 'editDatasource'
-            'datasources/:id/namespaces': 'namespaces'
+            'datasources/:id/catalogs': 'catalogs'
             'datasources': 'datasources'
             'files': 'files'
             'namespaces/:id/datasets(/:datasetId)': 'datasets'
             'people': 'people'
+            'responsibilities': 'responsibilities'
             'revisions/:id': 'showRevision'
             'revisions': 'revisions'
             'sandboxes/:id/edit': 'editSandbox'
             'sandboxes/:id/namespaces': 'sandboxNamespaces'
             'sandboxes': 'sandboxes'
             'search': 'search'
+            'stakeholder-roles': 'stakeholderRoles'
+            'terms/:id': 'showTerm'
             'terms': 'terms'
+            'usergroups': 'userGroups'
+            'vendors': 'vendors'
 
             # Default
             '*actions': 'defaultAction'
@@ -38,6 +45,23 @@ define [
         appView = options.appView
         router = new AppRouter(options)
         app.router = router
+
+        router.on 'route:access', ->
+            require ['cs!views/glossary/access'], (AccessPage) ->
+                accessPage = Vm.create appView, 'AccessPage', AccessPage
+                accessPage.render()
+
+        router.on 'route:applications', ->
+            require ['cs!views/glossary/applications'], (ApplicationsPage) ->
+                applicationsPage = Vm.create(appView, 'ApplicationsPage', ApplicationsPage)
+                applicationsPage.render()
+
+        router.on 'route:namespaces', (catalogId) ->
+            require ['cs!views/app/namespaces'], (NamespacesPage) ->
+                namespacesPage = Vm.create appView, 'NamespacesPage', NamespacesPage,
+                    context:
+                        name: 'catalog'
+                namespacesPage.render(catalogId)
 
         router.on 'route:editColumn', (columnId) ->
             require ['cs!views/app/column_form'], (ColumnForm) ->
@@ -74,17 +98,11 @@ define [
                 datasetStatsPage = Vm.create(appView, 'DatasetStatsPage', DatasetStatsPage)
                 datasetStatsPage.render(datasetId)
 
-        router.on 'route:editDatasource', (datasourceId) ->
-            require ['cs!views/app/datasource_form'], (DatasourceForm) ->
-                datasourceForm = Vm.create(appView, 'DatasourceForm', DatasourceForm)
-                datasourceForm.render(datasourceId)
-
-        router.on 'route:namespaces', (datasourceId) ->
-            require ['cs!views/app/namespaces'], (NamespacesPage) ->
-                namespacesPage = Vm.create appView, 'NamespacesPage', NamespacesPage,
-                    context:
-                        name: 'datasource'
-                namespacesPage.render(datasourceId)
+        router.on 'route:catalogs', (datasourceId) ->
+            require ['cs!views/app/catalogs'], (CatalogsPage) ->
+                catalogsPage = Vm.create appView, 'CatalogsPage', CatalogsPage,
+                    datasourceId: datasourceId
+                catalogsPage.render()
 
         router.on 'route:datasources', ->
             require ['cs!views/app/datasources'], (DatasourcesPage) ->
@@ -105,6 +123,11 @@ define [
             require ['cs!views/glossary/people'], (PeoplePage) ->
                 peoplePage = Vm.create(appView, 'PeoplePage', PeoplePage)
                 peoplePage.render()
+
+        router.on 'route:responsibilities', ->
+            require ['cs!views/glossary/responsibilities'], (ResponsibilitiesPage) ->
+                responsibilitiesPage = Vm.create appView, 'ResponsibilitiesPage', ResponsibilitiesPage
+                responsibilitiesPage.render()
 
         router.on 'route:showRevision', (revisionId) ->
             require ['cs!views/app/revised_entities'], (RevisedEntitiesPage) ->
@@ -138,10 +161,30 @@ define [
                 searchPage = Vm.create(appView, 'SearchPage', SearchPage)
                 searchPage.render()
 
+        router.on 'route:stakeholderRoles', ->
+            require ['cs!views/glossary/stakeholder_roles'], (StakeholderRolesPage) ->
+                rolesPage = Vm.create(appView, 'StakeholderRolesPage', StakeholderRolesPage)
+                rolesPage.render()
+
+        router.on 'route:showTerm', (termId) ->
+            require ['cs!views/glossary/terms'], (TermsPage) ->
+                termsPage = Vm.create(appView, 'TermsPage', TermsPage, {termId: termId})
+                termsPage.render()
+
         router.on 'route:terms', ->
             require ['cs!views/glossary/terms'], (TermsPage) ->
                 termsPage = Vm.create(appView, 'TermsPage', TermsPage)
                 termsPage.render()
+
+        router.on 'route:userGroups', ->
+            require ['cs!views/glossary/user_groups'], (UserGroupsPage) ->
+                userGroupsPage = Vm.create(appView, 'UserGroupsPage', UserGroupsPage)
+                userGroupsPage.render()
+
+        router.on 'route:vendors', ->
+            require ['cs!views/glossary/vendors'], (VendorsPage) ->
+                vendorsPage = Vm.create(appView, 'VendorsPage', VendorsPage)
+                vendorsPage.render()
 
         router.on 'route:defaultAction', () ->
             require ['cs!views/home/home'], (HomePage) ->

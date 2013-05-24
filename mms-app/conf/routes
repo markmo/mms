@@ -5,16 +5,13 @@
 # Home page
 GET     /                               @controllers.Application.index
 
-# Data Sources
-GET     /datasources                    @controllers.Datasources.index
-
 # Catalogs
-GET     /catalogs                       @controllers.Catalogs.index
 GET     /datasources/:id/catalogs       @controllers.Catalogs.findCatalogsByDatasourceId(id: Long)
+GET     /catalogs                       @controllers.Catalogs.index
 
-# Namespaces
-GET     /namespaces                     @controllers.Namespaces.index
-GET     /catalogs/:id/namespaces        @controllers.Namespaces.findNamespacesByCatalogId(id: Long)
+# Columns
+GET     /columns                        @controllers.Columns.index
+GET     /datasets/:id/columns           @controllers.Columns.findColumnsByDatasetId(id: Long)
 
 # Datasets
 GET     /datasets                       controllers.Datasets.index
@@ -24,85 +21,125 @@ POST    /datasets                       controllers.Datasets.create
 PUT     /datasets/:id                   controllers.Datasets.update(id: Long)
 POST    /datasets/:id/delete            controllers.Datasets.delete(id: Long)
 
-# Columns
-GET     /columns                        @controllers.Columns.index
-GET     /datasets/:id/columns           @controllers.Columns.findColumnsByDatasetId(id: Long)
+# Data Sources
+GET     /datasources                    @controllers.Datasources.index
+POST    /datasources                    controllers.Datasources.create
+PUT     /datasources/:id                controllers.Datasources.update(id: Long)
 
-# important! the more specific route must come before the general
-GET     /columns/:id/revisions/:revisionId @controllers.Columns.getRevision(id: Long, revisionId: java.lang.Integer)
-GET     /columns/:id/revisions          @controllers.Columns.revisions(id: Long)
+POST    /import-datasource              @controllers.Application.importDatasource
 
 # Filter Types
 GET     /filter-types                   @controllers.FilterTypes.index
+
+# Namespaces
+GET     /catalogs/:id/namespaces        @controllers.Namespaces.findNamespacesByCatalogId(id: Long)
+GET     /namespaces                     @controllers.Namespaces.index
+
+# Posts
+GET     /posts/:entityType/:id          @controllers.Posts.posts(entityType: String, id: Long)
+POST    /posts/:entityType/:id          @controllers.Posts.create(entityType: String, id: Long)
 
 # Revisions
 GET     /revisions/:id                  @controllers.Application.getRevision(id: java.lang.Integer)
 GET     /revisions                      @controllers.Application.revisions
 GET     /show-revisions                 @controllers.Application.showRevisions
 
-# Posts
-GET     /posts/:entityType/:id          @controllers.Posts.posts(entityType: String, id: Long)
-POST    /posts/:entityType/:id          @controllers.Posts.create(entityType: String, id: Long)
+# important! the more specific route must come before the general
+GET     /columns/:id/revisions/:revisionId @controllers.Columns.getRevision(id: Long, revisionId: java.lang.Integer)
+GET     /columns/:id/revisions          @controllers.Columns.revisions(id: Long)
 
-# Glossary
-GET     /glossary                       @controllers.Application.glossary
+#GET     /room                           @controllers.Posts.chatRoom(username: String ?= null)
+GET     /room/chat                      @controllers.Posts.chat(username)
 
+GET     /sandboxes                      @controllers.Sandboxes.index
+GET     /sandboxes/:id/namespaces       @controllers.Namespaces.findNamespacesBySandboxId(id: Long)
+POST    /sandboxes                      @controllers.Sandboxes.create
+PUT     /sandboxes/:id                  @controllers.Sandboxes.update(id: Long)
+
+GET     /search/:terms                  @controllers.Search.index(terms: String)
+
+GET     /session                        @controllers.Application.clientSession
+
+GET     /themes/:theme                  @controllers.Application.theme(theme: String)
+
+GET     /files/deleteall                @controllers.Files.deleteAll
+GET     /files                          @controllers.Files.index(node ?= null)
+GET     /uploads/:category/:id          @controllers.Files.list(category: String, id: Long)
+GET     /uploads                        @controllers.Files.listAll
+POST    /upload/metadata                @controllers.Files.uploadMetadata
+PUT     /upload/read                    @controllers.Files.readFile
+PUT     /upload/:id                     @controllers.Files.uploadFile(id: Long)
+DELETE  /upload/:id                     @controllers.Files.deleteFile(id: Long)
+
+
+## Business Glossary Module
+
+# Access Privileges
+PUT     /access-privileges              controllers.BusinessAccess.update
+
+# Business Applications
+GET     /applications                   @controllers.BusinessApplications.index
+POST    /applications                   controllers.BusinessApplications.create
+PUT     /applications/:id               controllers.BusinessApplications.update(id: Long)
+DELETE  /applications/:id               controllers.BusinessApplications.delete(id: Long)
+
+# Domains
 GET     /domains                        @controllers.Domains.index
 POST    /domains                        controllers.Domains.create
 PUT     /domains/:id                    controllers.Domains.update(id: Long)
 
-GET     /tags                           controllers.Tags.index
+# Glossary
+GET     /glossary                       @controllers.Application.glossary
 
-GET     /terms                          @controllers.BusinessTerms.index
-POST    /terms                          controllers.BusinessTerms.create
-PUT     /terms/:id                      controllers.BusinessTerms.update(id: Long)
-GET     /associations/:id               @controllers.BusinessTerms.associations(id: Long)
-
-GET     /security-classifications       controllers.SecurityClassifications.index
-
-GET     /settings                       controllers.Settings.show
-GET     /settings/edit                  controllers.Settings.edit
-POST    /settings/:id                   controllers.Settings.update(id: Long)
-
+# People
 GET     /people                         controllers.People.index
 POST    /people                         controllers.People.create
 PUT     /people/:id                     controllers.People.update(id: Long)
 DELETE  /people                         controllers.People.delete
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file                   controllers.Assets.at(path="/public", file)
+# Responsibilities
+PUT     /responsibilities               controllers.Responsibilities.update
 
-POST    /import-datasource              @controllers.Application.importDatasource
+# Security Classifications
+GET     /security-classifications       controllers.SecurityClassifications.index
 
-GET     /restricted                     @controllers.Application.restricted
-#GET     /assets/javascript/routes.js    controllers.Application.jsRoutes
+# Settings
+GET     /settings                       controllers.Settings.show
+GET     /settings/edit                  controllers.Settings.edit
+POST    /settings/:id                   controllers.Settings.update(id: Long)
 
-GET     /profile                        @controllers.Application.profile
+# Stakeholder Roles
+GET     /stakeholder-roles              controllers.StakeholderRoles.index
+POST    /stakeholder-roles              controllers.StakeholderRoles.create
+PUT     /stakeholder-roles/:id          controllers.StakeholderRoles.update(id: Long)
+DELETE  /stakeholder-roles              controllers.StakeholderRoles.delete
 
-GET     /profile.json                   @controllers.Application.profileAsJSON
+# Tags
+GET     /tags                           controllers.Tags.index
 
-GET     /login                          @controllers.Application.login
-POST    /login                          @controllers.Application.doLogin
+# Terms
+GET     /terms                          @controllers.BusinessTerms.index
+POST    /terms                          controllers.BusinessTerms.create
+PUT     /terms/:id                      controllers.BusinessTerms.update(id: Long)
+GET     /associations/:id               @controllers.BusinessTerms.associations(id: Long)
 
-GET     /logout                         com.feth.play.module.pa.controllers.Authenticate.logout
-GET     /authenticate/:provider         com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
+# User Groups
+GET     /usergroups                     controllers.UserGroups.index
+POST    /usergroups                     controllers.UserGroups.create
+PUT     /usergroups/:id                 controllers.UserGroups.update(id: Long)
+DELETE  /usergroups                     controllers.UserGroups.delete
 
-GET     /signup                         @controllers.Application.signup
-POST    /signup                         @controllers.Application.doSignup
+# Vendors
+GET     /vendors                        @controllers.Vendors.index
+POST    /vendors                        controllers.Vendors.create
+PUT     /vendors/:id                    controllers.Vendors.update(id: Long)
+DELETE  /vendors                        controllers.Vendors.delete
 
-GET     /accounts/unverified            controllers.Signup.unverified
-GET     /authenticate/:provider/denied  controllers.Signup.oAuthDenied(provider: String)
 
-GET     /accounts/verify/:token         controllers.Signup.verify(token: String)
-GET     /accounts/exists                controllers.Signup.exists
+## Authentication and Account Management Module
 
-GET     /accounts/password/reset/:token controllers.Signup.resetPassword(token: String)
-POST    /accounts/password/reset        controllers.Signup.doResetPassword
-
-GET     /accounts/password/change       controllers.Account.changePassword
-POST    /accounts/password/change       controllers.Account.doChangePassword
-
-GET     /accounts/verify                controllers.Account.verifyEmail
+GET     /account/:id/edit               controllers.Account.edit(id: Long)
+POST    /accounts                       controllers.Account.update()
 
 GET     /accounts/add                   controllers.Account.link
 
@@ -112,35 +149,45 @@ POST    /accounts/link                  controllers.Account.doLink
 GET     /accounts/merge                 controllers.Account.askMerge
 POST    /accounts/merge                 controllers.Account.doMerge
 
-GET     /account/:id/edit               controllers.Account.edit(id: Long)
-POST    /accounts                       controllers.Account.update()
+GET     /accounts/exists                controllers.Signup.exists
+
+GET     /accounts/password/change       controllers.Account.changePassword
+POST    /accounts/password/change       controllers.Account.doChangePassword
+
+GET     /accounts/password/reset/:token controllers.Signup.resetPassword(token: String)
+POST    /accounts/password/reset        controllers.Signup.doResetPassword
+
+GET     /accounts/unverified            controllers.Signup.unverified
+
+GET     /accounts/verify/:token         controllers.Signup.verify(token: String)
+GET     /accounts/verify                controllers.Account.verifyEmail
+
+GET     /authenticate/:provider/denied  controllers.Signup.oAuthDenied(provider: String)
+GET     /authenticate/:provider         com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
 
 GET     /login/password/forgot          controllers.Signup.forgotPassword(email: String ?= "")
 POST    /login/password/forgot          controllers.Signup.doForgotPassword
 
-GET     /search/:terms                  @controllers.Search.index(terms: String)
+GET     /login                          @controllers.Application.login
+POST    /login                          @controllers.Application.doLogin
 
-GET     /themes/:theme                  @controllers.Application.theme(theme: String)
-
-#GET     /room                           @controllers.Posts.chatRoom(username: String ?= null)
-GET     /room/chat                      @controllers.Posts.chat(username)
-
-GET     /session                        @controllers.Application.clientSession
+GET     /logout                         com.feth.play.module.pa.controllers.Authenticate.logout
 
 GET     /profile/:id                    @controllers.Users.profile(id: Long)
+GET     /profile                        @controllers.Application.profile
+GET     /profile.json                   @controllers.Application.profileAsJSON
 
-GET     /uploads/:category/:id          @controllers.Files.list(category: String, id: Long)
-GET     /uploads                        @controllers.Files.listAll
-POST    /upload/metadata                @controllers.Files.uploadMetadata
-PUT     /upload/:id                     @controllers.Files.uploadFile(id: Long)
-DELETE  /upload/:id                     @controllers.Files.deleteFile(id: Long)
-GET     /files                          @controllers.Files.index(node ?= null)
-GET     /files/deleteall                @controllers.Files.deleteAll
+GET     /restricted                     @controllers.Application.restricted
 
-GET     /sandboxes                      @controllers.Sandboxes.index
-GET     /sandboxes/:id/namespaces       @controllers.Namespaces.findNamespacesBySandboxId(id: Long)
-POST    /sandboxes                      @controllers.Sandboxes.create
-PUT     /sandboxes/:id                  @controllers.Sandboxes.update(id: Long)
+GET     /signup                         @controllers.Application.signup
+POST    /signup                         @controllers.Application.doSignup
+
+
+## Assets
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                   controllers.Assets.at(path="/public", file)
+#GET     /assets/javascript/routes.js    controllers.Application.jsRoutes
 
 # Map static resources from the /public folder to the /assets URL path
 #GET     /js/*file                       controllers.Assets.at(path="/public/js", file)
@@ -153,5 +200,8 @@ GET     /assets/*file                   controllers.Assets.at(path="/public", fi
 #GET     /api-docs.json                  controllers.ApiHelpController.getResources
 #GET     /api-docs.json/catalogs         controllers.ApiHelpController.getResource(path = "/catalogs")
 #GET     /api-docs                       controllers.Application.api
+
+
+## Test APIs
 
 GET     /test                           @controllers.Tests.sniff

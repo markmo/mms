@@ -3,6 +3,8 @@ package mms.common.models.business;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.*;
+
 /**
  * User: markmo
  * Date: 3/05/13
@@ -12,6 +14,7 @@ import javax.persistence.Entity;
 public class BusinessTermStakeholderPerson {
 
     @EmbeddedId
+    @JsonIgnore
     private BusinessTermStakeholderPersonPK pk;
 
     public BusinessTermStakeholderPersonPK getPk() {
@@ -20,6 +23,14 @@ public class BusinessTermStakeholderPerson {
 
     public void setPk(BusinessTermStakeholderPersonPK pk) {
         this.pk = pk;
+    }
+
+    public Person getPerson() {
+        return (pk != null) ? pk.getPerson() : null;
+    }
+
+    public StakeholderRole getStakeholderRole() {
+        return (pk != null) ? pk.getStakeholderRole() : null;
     }
 
     @Override

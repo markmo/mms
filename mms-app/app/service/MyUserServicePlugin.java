@@ -5,6 +5,8 @@ import play.Application;
 import com.feth.play.module.pa.user.AuthUser;
 import com.feth.play.module.pa.user.AuthUserIdentity;
 import com.feth.play.module.pa.service.UserServicePlugin;
+import play.db.jpa.JPA;
+import play.libs.F;
 
 import models.User;
 
@@ -16,11 +18,21 @@ public class MyUserServicePlugin extends UserServicePlugin {
 
     @Override
     public Object save(final AuthUser authUser) {
-        final boolean isLinked = User.existsByAuthUserIdentity(authUser);
-        if (!isLinked) {
-            return User.create(authUser).id;
-        } else {
-            // we have this user already, so return null
+        try {
+            return JPA.withTransaction(new F.Function0<Object>() {
+                @Override
+                public Object apply() {
+                    final boolean isLinked = User.existsByAuthUserIdentity(authUser);
+                    if (!isLinked) {
+                        return User.create(authUser).id;
+                    } else {
+                        // we have this user already, so return null
+                        return null;
+                    }
+                }
+            });
+        } catch (Throwable e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -39,16 +51,36 @@ public class MyUserServicePlugin extends UserServicePlugin {
 
     @Override
     public AuthUser merge(final AuthUser newUser, final AuthUser oldUser) {
-        if (!oldUser.equals(newUser)) {
-            User.merge(oldUser, newUser);
+        try {
+            return JPA.withTransaction(new F.Function0<AuthUser>() {
+                @Override
+                public AuthUser apply() {
+                    if (!oldUser.equals(newUser)) {
+                        User.merge(oldUser, newUser);
+                    }
+                    return oldUser;
+                }
+            });
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
         }
-        return oldUser;
     }
 
     @Override
     public AuthUser link(final AuthUser oldUser, final AuthUser newUser) {
-        User.addLinkedAccount(oldUser, newUser);
-        return newUser;
+        try {
+            return JPA.withTransaction(new F.Function0<AuthUser>() {
+                @Override
+                public AuthUser apply() {
+                    User.addLinkedAccount(oldUser, newUser);
+                    return newUser;
+                }
+            });
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

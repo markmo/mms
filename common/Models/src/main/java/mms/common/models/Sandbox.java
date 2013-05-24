@@ -92,11 +92,13 @@ public class Sandbox extends AuditedModel {
 
         Sandbox sandbox = (Sandbox) o;
 
-        return (id == sandbox.id);
+        if (id != null ? !id.equals(sandbox.id) : sandbox.id != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 }

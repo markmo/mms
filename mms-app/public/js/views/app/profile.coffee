@@ -19,7 +19,7 @@ define [
             $.ajax "/profile/#{@userId}",
                 success: (data) =>
                     user = JSON.parse(data)
-                    $(@el).html @compiled
+                    @$el.html @compiled
                         user: user
                         emailHash: md5(user.email)
                     if typeof @onLoad == 'function'

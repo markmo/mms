@@ -45,7 +45,7 @@ public class Application extends Controller {
     @Inject
     ObjectMapper mapper;
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Restrict(@Group(Application.USER_ROLE))
     public Result index() {
         if (session("theme") == null) {
@@ -207,7 +207,7 @@ public class Application extends Controller {
         return ok(login.render(MyUsernamePasswordAuthProvider.LOGIN_FORM));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Result doLogin() {
         final Form<MyLogin> filledForm =
                 MyUsernamePasswordAuthProvider.LOGIN_FORM.bindFromRequest();

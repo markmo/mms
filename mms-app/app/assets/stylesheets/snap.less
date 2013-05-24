@@ -28,9 +28,7 @@
 
 .left-drawer, .right-drawer {
   top: 0;
-  left: 0;
   bottom: 0;
-  width: 265px;
   padding: 10px;
   background: url(../img/backgrounds/wild_oliva/wild_oliva.png);
   color: #ccc;
@@ -45,6 +43,8 @@
 }
 
 .left-drawer {
+  left: 0;
+  width: 265px;
   z-index: 2;
 
   h3 {
@@ -52,9 +52,25 @@
   }
 }
 
+.right-drawer {
+  right: 0;
+  width: 398;
+  z-index: 2;
+  margin-top: 10px;
+
+  h3 {
+    color: #ccc;
+    margin-top: 0;
+  }
+}
+
 #left-drawer {
   padding: 10px;
   padding-top: 0;
+  background: #333;
+}
+
+#side-panel {
   background: #333;
 }
 
@@ -65,17 +81,17 @@
   right: 0;
   z-index: 3;
   -webkit-transform: translate3d(0, 0, 0);
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden; /* Chrome and Safari */
-  -moz-backface-visibility:hidden; /* Firefox */
-  -ms-backface-visibility:hidden; /* Internet Explorer 10+ */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; /* Chrome and Safari */
+  -moz-backface-visibility: hidden; /* Firefox */
+  -ms-backface-visibility: hidden; /* Internet Explorer 10+ */
 }
 
-#layout-container {
+/*#layout-container {
   background: transparent url(../img/snap/drag.png) 50% 100% no-repeat;
-}
+}*/
 
-#open-left {
+.snap-btn {
   background: url(../img/snap/open.png) 50% 50% no-repeat;
   display: block;
   width: 40px;

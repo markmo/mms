@@ -4,13 +4,14 @@ define [
     'handlebars'
     'cs!events'
     'cs!vm'
-    'snap'
+    'cs!views/app/posts'
     'cs!views/glossary/domains'
+    'cs!views/glossary/left_menu'
     'cs!views/glossary/term_section'
     'text!templates/glossary/terms.html'
     'lib/jqtree/jquery.cookie'
     'lib/jqtree/tree.jquery'
-], ($, Backbone, Handlebars, app, Vm, Snap, DomainsSection, TermSection, termsPageTemplate) ->
+], ($, Backbone, Handlebars, app, Vm, PostsSection, DomainsSection, LeftMenuSection, TermSection, termsPageTemplate) ->
     Backbone.View.extend
         el: '#page'
 
@@ -44,11 +45,19 @@ define [
             termSection = Vm.create(this, 'TermSection', TermSection,
                 termId: @termId)
             termSection.render().showTerm()
+            postsSection = Vm.create(this, 'PostsSection', PostsSection,
+                entityType: 'term'
+                entityId: @termId
+            )
+            postsSection.render()
 
         initialize: (options) ->
             @domainId = options?.domainId
+            @termId = options?.termId
             domainsSection = Vm.create(this, 'DomainsSection', DomainsSection)
             domainsSection.render()
+            leftMenuSection = Vm.create(this, 'LeftMenuSection', LeftMenuSection)
+            leftMenuSection.render()
             return this
 
         render: (domainId) ->
@@ -77,27 +86,58 @@ define [
                             this.edit(event)
                             return
                         )
-
-                    snapper = new Snap
-                        element: document.getElementById('main')
-                        touchToDrag: false
-
-                    $('#open-left').on('click', (event) ->
-                        event.preventDefault()
-                        if snapper.state().state == 'left' then snapper.close()
-                        else snapper.open('left')
-                        return
-                    )
                     this.delay(2000, ->
                         $.bootstrapGrowl 'Double click an item to open the edit form',
                             type: 'info'
                             delay: 4000
                     ) unless app.session.notifiedOf('dblclick') or coll.isEmpty()
-                    return
+
+                    $fileupload = $('#fileupload')
+                    $fileupload.fileupload
+                        maxNumberOfFiles: 1
+                        acceptFileTypes: /(\.|\/)(txt|docx?)$/i
+                        autoUpload: true
+                        uploadTemplateId: null
+                        downloadTemplateId: null
+                        submit: (e, data) =>
+                            file = data.files[0]
+                            metadata =
+                                name: file.name
+                                size: file.size
+                                type: file.type
+                                lastModifiedDate: file.lastModifiedDate
+                            $fileupload.fileupload 'option',
+                                url: "upload/read"
+                                type: 'PUT'
+                                multipart: false
+                            $fileupload.fileupload('send', data)
+                            return false
+
+                    $(document).bind 'dragover', (event) =>
+                        dropzone = $('.full-window-dropzone')
+                        timeout = window.dropzoneTimeout
+                        if timeout
+                            clearTimeout(timeout)
+                        else
+                            dropzone.addClass('in')
+                        if (event.target == dropzone[0])
+                            dropzone.addClass('hover')
+                        else
+                            dropzone.removeClass('hover')
+                        window.dropzoneTimeout = this.delay 100, ->
+                            window.dropzoneTimeout = null
+                            dropzone.removeClass('in hover')
+
+                    $(document).bind 'drop dragover', (event) ->
+                        event.preventDefault()
+                        return false
+
+                    if @termId then this.show()
                 return
             return this
 
         clean: ->
-            $('#open-left').off()
-            $('#left-drawer').off()
+#            $('#open-left').off()
+#            $('#open-right').off()
+#            $('#left-drawer').off()
             $('.editable').off()

@@ -19,7 +19,7 @@ import mms.common.models.Column;
  * Time: 2:36 PM
  */
 @Entity
-public class BusinessTerm {
+public class BusinessTerm extends AuditedModel {
 
     @Id
     @GeneratedValue
@@ -70,6 +70,12 @@ public class BusinessTerm {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pk.businessTerm")
     private Set<BusinessTermStakeholder> stakeholders;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pk.businessTerm")
+    private Set<BusinessTermStakeholderPerson> people;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pk.businessTerm")
+    private Set<AccessPrivileges> accessPrivileges;
 
     @javax.persistence.Column(length = 8000)
     private String customMetadata;
@@ -177,6 +183,22 @@ public class BusinessTerm {
 
     public void setStakeholders(Set<BusinessTermStakeholder> stakeholders) {
         this.stakeholders = stakeholders;
+    }
+
+    public Set<BusinessTermStakeholderPerson> getPeople() {
+        return people;
+    }
+
+    public void setPeople(Set<BusinessTermStakeholderPerson> people) {
+        this.people = people;
+    }
+
+    public Set<AccessPrivileges> getAccessPrivileges() {
+        return accessPrivileges;
+    }
+
+    public void setAccessPrivileges(Set<AccessPrivileges> accessPrivileges) {
+        this.accessPrivileges = accessPrivileges;
     }
 
     public String getCustomMetadata() {

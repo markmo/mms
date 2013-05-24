@@ -36,7 +36,7 @@ define [
             termForm.render()
             $('ul.nav a[href="#relationships"]').hide()
             termForm.once 'closed', =>
-                this.clean()
+                this.showTerm()
             return
 
         editTerm: ->
@@ -45,7 +45,7 @@ define [
                 parentTerm: @parentTerm)
             termForm.render()
             termForm.once 'closed', =>
-                this.clean()
+                this.showTerm()
             return
 
         render: ->
@@ -57,5 +57,5 @@ define [
             return this
 
         clean: ->
-            @associationsSection.clean() if @associationsSection?
+            @associationsSection.clean() if @associationsSection
             @$el.html('')

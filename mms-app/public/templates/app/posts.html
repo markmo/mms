@@ -1,8 +1,13 @@
 <div id="side-panel" class="pull-right">
-    <div class="side-panel-head ps-top-to-bottom">
-        <a href="#">Social</a>
+    <div class="side-panel-head ps-top-to-bottomX">
+        <!--<a href="#">Social</a>-->
+        <h3>Comment</h3>
     </div>
-    <div class="side-panel-content-border ps-top-to-bottom"></div>
+    <div class="side-panel-content-border ps-top-to-bottomX"></div>
+    <div id="members" style="display: none;">
+        <div>Co-conspirators:</div>
+        <ul id="members-list"></ul>
+    </div>
     <div class="side-panel-content">
         <div>
             <a href="#" id="btn-attachments" data-popover-id="fileupload">
@@ -58,9 +63,5 @@
             </li>
             {{/loop}}
         </ul>
-        <div id="members" style="display: none;">
-            <div>Collaborators present:</div>
-            <ul id="members-list"></ul>
-        </div>
     </div>
 </div>

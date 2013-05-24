@@ -1,4 +1,4 @@
-data-source:
+datasource:
   - name: ScheduALL Data Warehouse
     type: database
     description: SQL Server 2008 R2
@@ -7,7 +7,7 @@ data-source:
     dbms: jtds:sqlserver
     server-name: 192.168.211.164
     port-number: 1433
-    db-name: DM_ScheduALL
+    dbname: DM_ScheduALL
     active: false
 
   - name: MMS Metadata Store
@@ -18,5 +18,5 @@ data-source:
     dbms: postgresql
     server-name: 127.0.0.1
     port-number: 5432
-    db-name: mms
+    dbname: mms
     active: true

@@ -27,6 +27,7 @@ import mms.common.models.business.*;
  */
 @Entity
 @Audited
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Datasource extends AuditedModel {
 
     @Id
@@ -43,6 +44,7 @@ public class Datasource extends AuditedModel {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "datasource")
     @OrderBy("name")
+    //@JsonManagedReference("datasource_catalogs")
     @JsonIgnore
     private Set<Catalog> catalogs;
 

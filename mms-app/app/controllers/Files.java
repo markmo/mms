@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import indexing.ColumnIndex;
 import indexing.DatasetIndex;
+import org.apache.tika.Tika;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -174,5 +175,13 @@ public class Files extends Controller {
         }
         root.set("files", filesArray);
         return ok(root.toString());
+    }
+
+    public Result readFile() throws Exception {
+        File file = request().body().asRaw().asFile();
+        Tika tika = new Tika();
+        String text = tika.parseToString(file);
+        System.out.println(text);
+        return ok();
     }
 }

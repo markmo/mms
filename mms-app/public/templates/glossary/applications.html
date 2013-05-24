@@ -1,0 +1,43 @@
+<h1>Applications</h1>
+<div class="clearfix" style="margin-bottom: 10px;">
+    <button id="create-application" class="btn btn-small btn-success">
+        <i class="icon-plus icon-white"></i>
+        <span>New application&hellip;</span>
+    </button>
+</div>
+{{#if applications}}
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Data Source</th>
+        <th>Vendor</th>
+        <th colspan="2" style="width: 91px;"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each applications}}
+    <tr>
+        <td><a href="#" data-id="{{id}}" class="application-name">{{name}}</a></td>
+        <td>{{datasource}}</td>
+        <td>{{vendor}}</td>
+        <td style="width: 14px;"><a href="#" class="application-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
+        <td style="width: 77px;"><input class="application-delete" data-id="{{id}}" type="checkbox"></td>
+    </tr>
+    {{/each}}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4"></td>
+        <td style="width: 77px;">
+            <button id="btnDelete" class="btn btn-small btn-danger">
+                <i class="icon-remove icon-white"></i>
+                <span>Delete</span>
+            </button>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+{{else}}
+<p>None defined.</p>
+{{/if}}

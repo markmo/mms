@@ -202,6 +202,11 @@ public class MyUsernamePasswordAuthProvider
     }
 
     @Override
+    protected MyLoginUsernamePasswordAuthUser transformAuthUser(final MyUsernamePasswordAuthUser authUser, final Context context) {
+        return new MyLoginUsernamePasswordAuthUser(authUser.getEmail());
+    }
+
+    @Override
     protected String getVerifyEmailMailingSubject(
             final MyUsernamePasswordAuthUser user, final Context ctx) {
         return Messages.get("playauthenticate.password.verify_signup.subject");

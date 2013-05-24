@@ -21,20 +21,19 @@ define [
                 #alert 'cancel'
 
         render: ->
-            app.domains().done (domains) =>
-                if @domainId
-                    @domain = domains.get(@domainId)
-                else
-                    @domain = new Domain
-                @clean() if @form?
-                @form = new Backbone.Form(
-                    model: @domain
-                ).render()
-                $(@el).html @form.el
+            if @domainId
+                app.domains().done (domains) =>
+                    domain = domains.get(@domainId)
+                    this.renderForm(domain)
+            else this.renderForm(new Domain)
 
+        renderForm: (domain) ->
+            this.cleanForm() if @form
+            @form = new Backbone.Form({model: domain}).render()
+            @domain = domain
+            @$el.html @form.el
             return this
 
-        clean: ->
-            @form.undelegateEvents()
+        cleanForm: ->
             @form.remove()
             return

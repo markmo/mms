@@ -8,7 +8,7 @@
         <non-jta-data-source>DefaultDS</non-jta-data-source>
         <jar-file>/usr/local/Cellar/play/2.1.0/libexec/repository/cache/mms/mms-models/jars/mms-models-1.0-SNAPSHOT.jar</jar-file>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
             <property name="hibernate.default_schema" value="mms"/>
             <!--<property name="hibernate.bytecode.use_reflection_optimizer" value="false"/>-->

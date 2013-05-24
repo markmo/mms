@@ -24,7 +24,6 @@ define [
                 terms.add(@term)
                 @term.save()
                 this.trigger('closed')
-                this.parent.render()
             return
 
         cancel: ->
@@ -35,74 +34,77 @@ define [
             app.loadCss '/assets/css/chosen/chosen.css'
             app.loadCss '/assets/css/select2/select2.css'
             dfd = $.Deferred()
-            app.terms().done (terms) =>
-                if @termId?
-                    @term = terms.get(@termId)
-                    @term.set('parent', @parentTerm) if @parentTerm?
-                else
-                    @term = new Term({parent: @parentTerm})
-                this.cleanForm() if @form?
-                app.on 'change:domains', =>
-                    @$el.find('select[name="domain"]').trigger('liszt:updated')
-                app.on 'change:terms', =>
-                    @$el.find('select[name="parent"]').trigger('liszt:updated')
-                app.on 'change:tags', =>
-                    @$el.find('select[name="tags"]').trigger('liszt:updated')
-                app.on 'change:columns', =>
-                    @$el.find('select[name="representations"]').trigger('liszt:updated')
-                form = new Form(@term,
-                    title: 'Define Term'
-                    template: 'form_with_buttons'
-                ).render()
-
-                form.on 'cancel', _.bind(this.cancel, this)
-
-                form.on 'submit', _.bind(this.submit, this)
-
-                @form = form
-                @$el.html form.el
-                @$el.find('select[name="representations"]')
-                    .attr('data-placeholder', 'Select a Column')
-                    .chosen
-                        no_results_text: 'No results matched'
-                        allow_single_deselect: true
-
-#                @$el.find('select[name="tags"]')
-#                    .attr('data-placeholder', 'Type one or more tags')
-#                    .attr('multiple', '')
-#                    .chosen()
-                app.tags().done (tags) =>
-                    array = tags.map (model) ->
-                        {id: model.id, text: model.toString()}
-                    @$el.find('input[name="tags"]')
-                        .attr('data-placeholder', 'Type one or more tags')
-                        .attr('multiple', '')
-                        .select2({tags: array})
-
-                @$el.find('select[name="parent"]')
-                    .attr('data-placeholder', 'Select the parent term')
-                    .chosen
-                        no_results_text: 'No results matched'
-                        allow_single_deselect: true
-
-                @$el.find('select[name="domain"]')
-                    .attr('data-placeholder', 'Select the domain')
-                    .chosen
-                        no_results_text: 'No results matched'
-                        allow_single_deselect: true
-
-                @$el.find('textarea').css('overflow', 'hidden').autogrow()
-
-                $('#attributes').resize ->
-                    docHeight = $(document).height()
-                    $('.drawers').css('height', docHeight)
-                    $('#main').css('height', docHeight)
-
+            if @termId
+                app.terms().done (terms) =>
+                    term = terms.get(@termId)
+                    term.set('parent', @parentTerm) if @parentTerm
+                    this.renderForm(term)
+                    dfd.resolve()
+            else
+                this.renderForm(new Term({parent: @parentTerm}))
                 dfd.resolve()
-
-                return
-
             return dfd
+
+        renderForm: (term) ->
+            this.cleanForm() if @form
+            app.on 'change:domains', =>
+                @$el.find('select[name="domain"]').trigger('liszt:updated')
+            app.on 'change:terms', =>
+                @$el.find('select[name="parent"]').trigger('liszt:updated')
+            app.on 'change:tags', =>
+                @$el.find('select[name="tags"]').trigger('liszt:updated')
+            app.on 'change:columns', =>
+                @$el.find('select[name="representations"]').trigger('liszt:updated')
+            form = new Form(term,
+                title: 'Define Term'
+                template: 'form_with_buttons'
+            ).render()
+
+            form.on 'cancel', _.bind(this.cancel, this)
+
+            form.on 'submit', _.bind(this.submit, this)
+
+            @form = form
+            @term = term
+            @$el.html form.el
+            @$el.find('select[name="representations"]')
+                .attr('data-placeholder', 'Select a Column')
+                .chosen
+                    no_results_text: 'No results matched'
+                    allow_single_deselect: true
+
+#            @$el.find('select[name="tags"]')
+#                .attr('data-placeholder', 'Type one or more tags')
+#                .attr('multiple', '')
+#                .chosen()
+            app.tags().done (tags) =>
+                array = tags.map (model) ->
+                    {id: model.id, text: model.toString()}
+                @$el.find('input[name="tags"]')
+                    .attr('data-placeholder', 'Type one or more tags')
+                    .attr('multiple', '')
+                    .select2({tags: array})
+
+            @$el.find('select[name="parent"]')
+                .attr('data-placeholder', 'Select the parent term')
+                .chosen
+                    no_results_text: 'No results matched'
+                    allow_single_deselect: true
+
+            @$el.find('select[name="domain"]')
+                .attr('data-placeholder', 'Select the domain')
+                .chosen
+                    no_results_text: 'No results matched'
+                    allow_single_deselect: true
+
+            @$el.find('textarea').css('overflow', 'hidden').autogrow()
+
+            $('#attributes').resize ->
+                docHeight = $(document).height()
+                $('.drawers').css('height', docHeight)
+                $('#main').css('height', docHeight)
+
+            return this
 
         clean: ->
             app.off 'change:columns'

@@ -1,8 +1,8 @@
 package nz.co.datascience.mms.analyzers;
 
-import nz.co.datascience.mms.model.Cell;
+import mms.common.models.Cell;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * User: markmo

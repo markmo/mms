@@ -37,7 +37,7 @@ define [
 
 
         render: ->
-            $(@el).html datasetPageTemplate
+            @$el.html datasetPageTemplate
             $('#file-upload-container').html @compiled
 
             $fileupload = $('#fileupload')
@@ -126,9 +126,9 @@ define [
 
             $(document).bind 'drop dragover', (event) ->
                 event.preventDefault()
-                return false;
+                return false
 
-            if @datasetId?
+            if @datasetId
                 app.datasets().done (datasets) =>
                     if @datasetId?
                         @dataset = datasets.get(@datasetId)
