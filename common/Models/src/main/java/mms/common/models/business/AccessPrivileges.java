@@ -73,7 +73,6 @@ public class AccessPrivileges {
 
         AccessPrivileges that = (AccessPrivileges) o;
 
-        if (access != null ? !access.equals(that.access) : that.access != null) return false;
         if (pk != null ? !pk.equals(that.pk) : that.pk != null) return false;
 
         return true;
@@ -81,8 +80,6 @@ public class AccessPrivileges {
 
     @Override
     public int hashCode() {
-        int result = pk != null ? pk.hashCode() : 0;
-        result = 31 * result + (access != null ? access.hashCode() : 0);
-        return result;
+        return pk != null ? pk.hashCode() : 0;
     }
 }

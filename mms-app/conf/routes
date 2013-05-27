@@ -75,7 +75,9 @@ DELETE  /upload/:id                     @controllers.Files.deleteFile(id: Long)
 ## Business Glossary Module
 
 # Access Privileges
+PUT     /access-privileges/patch        controllers.BusinessAccess.patchUpdate
 PUT     /access-privileges              controllers.BusinessAccess.update
+DELETE  /access-privileges              controllers.BusinessAccess.delete
 
 # Business Applications
 GET     /applications                   @controllers.BusinessApplications.index
@@ -98,7 +100,9 @@ PUT     /people/:id                     controllers.People.update(id: Long)
 DELETE  /people                         controllers.People.delete
 
 # Responsibilities
+PUT     /responsibilities/patch         controllers.Responsibilities.patchUpdate
 PUT     /responsibilities               controllers.Responsibilities.update
+DELETE  /responsibilities               controllers.Responsibilities.delete
 
 # Security Classifications
 GET     /security-classifications       controllers.SecurityClassifications.index

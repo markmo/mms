@@ -2,183 +2,42 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="716c433e-460e-411b-a2ac-6b6e6f63c867" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/conf/evolutions/default/6.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/conf/evolutions/default/7.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/conf/evolutions/default/8.sql.0" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivileges.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivilegesPK.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Algorithm.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/AnalysisModel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/AnalysisModelLifecycleStage.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/AnalysisModelVersionStatus.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/providers/AzureUsernamePasswordAuthProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/BusinessAccess.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/BusinessApplications.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/Responsibilities.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/StakeholderRoles.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/UserGroups.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/Vendors.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/access.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/access.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/application.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/application_form.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/collections/applications.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/applications.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/applications.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/collections/catalogs.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/app/catalogs.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/app/catalogs.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/glossary/intro.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/left_menu.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/left_menu.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/responsibilities.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/responsibilities.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/stakeholder_role.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/stakeholder_role_form.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/collections/stakeholder_roles.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/stakeholder_roles.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/stakeholder_roles.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/user_group.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/user_group_form.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/collections/user_groups.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/user_groups.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/user_groups.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/vendor.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/vendor_form.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/collections/vendors.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/vendors.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/vendors.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/_state/global-838" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/_percolator/0/_state/state-1526" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/0/_state/state-1304" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/0/index/_checksums-1366934564370" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/0/index/segments_3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/0/translog/translog-1366418487855" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/1/_state/state-1304" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/1/index/_checksums-1366934564387" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/1/index/segments_3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/1/translog/translog-1366418487872" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/2/_state/state-1304" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/2/index/_checksums-1366934564373" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/2/index/segments_3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/2/translog/translog-1366418487942" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/3/_state/state-1304" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/3/index/_checksums-1366934564467" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/3/index/segments_3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/3/translog/translog-1366418487961" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/4/_state/state-1304" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/4/index/_checksums-1366934564596" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/4/index/segments_3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/4/translog/translog-1366418488008" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/images/funnel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/ant.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/codeStyleSettings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__com_eaio_stringsearch_stringsearch_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_0_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_0_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_0_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__com_google_guava_guava_13_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__commons_codec_commons_codec_1_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__commons_codec_commons_codec_1_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__commons_logging_commons_logging_1_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__dom4j_dom4j_1_6_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__net_sourceforge_jtds_jtds_1_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__org_apache_poi_poi_3_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__org_apache_poi_poi_ooxml_3_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__org_apache_poi_poi_ooxml_schemas_3_8.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__org_apache_xmlbeans_xmlbeans_2_3_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__org_eobjects_analyzerbeans_AnalyzerBeans_0_21.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__postgresql_postgresql_9_1_901_jdbc4.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/Maven__xml_apis_xml_apis_1_0_b2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/libraries/java.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/scopes/scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/.idea/workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/DatabaseExtractor/src/main/java/nz/co/datascience/mms/extractors/DatabaseExtractor/DatabaseExtractor.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/ExcelExtractor.iml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/controllers/DataSources.java" afterPath="$PROJECT_DIR$/app/controllers/Datasources.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/0/index/segments.gen" afterPath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/0/index/segments.gen" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/1/index/segments.gen" afterPath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/1/index/segments.gen" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/2/index/segments.gen" afterPath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/2/index/segments.gen" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/3/index/segments.gen" afterPath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/3/index/segments.gen" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/4/index/segments.gen" afterPath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/4/index/segments.gen" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/AbstractColumn.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/AbstractColumn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/analyzers/Analyzer.java" afterPath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/analyzers/Analyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Application.java" afterPath="$PROJECT_DIR$/app/controllers/Application.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/Build.scala" afterPath="$PROJECT_DIR$/project/Build.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTerm.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTerm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTermStakeholderPerson.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTermStakeholderPerson.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTermStakeholderPersonPK.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTermStakeholderPersonPK.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Catalog.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Catalog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/analyzers/ColumnAnalyzer.java" afterPath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/analyzers/ColumnAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mms-connectors/DatabaseExtractor/DatabaseExtractor.iml" afterPath="$PROJECT_DIR$/../mms-connectors/DatabaseExtractor/DatabaseExtractor.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Dataset.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Dataset.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Datasource.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Datasource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/extractors/ExcelExtractor.java" afterPath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/extractors/ExcelExtractor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Files.java" afterPath="$PROJECT_DIR$/app/controllers/Files.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/service/MyUserServicePlugin.java" afterPath="$PROJECT_DIR$/app/service/MyUserServicePlugin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/providers/MyUsernamePasswordAuthProvider.java" afterPath="$PROJECT_DIR$/app/providers/MyUsernamePasswordAuthProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Namespace.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Namespace.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Posts.java" afterPath="$PROJECT_DIR$/app/controllers/Posts.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Sandbox.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/Sandbox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/analyzers/TypeAnalyzer.java" afterPath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/analyzers/TypeAnalyzer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/User.java" afterPath="$PROJECT_DIR$/app/models/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/application.conf" afterPath="$PROJECT_DIR$/conf/application.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app/dataset_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/app/dataset_form.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app/datasets.coffee" afterPath="$PROJECT_DIR$/public/js/views/app/datasets.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/app/datasets.html" afterPath="$PROJECT_DIR$/public/templates/app/datasets.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/datasource.coffee" afterPath="$PROJECT_DIR$/public/js/models/datasource.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app/datasource_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/app/datasource_form.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app/datasources.coffee" afterPath="$PROJECT_DIR$/public/js/views/app/datasources.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/app/datasources.html" afterPath="$PROJECT_DIR$/public/templates/app/datasources.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mms-connectors/DatabaseExtractor/src/main/resources/datasources.yaml" afterPath="$PROJECT_DIR$/../mms-connectors/DatabaseExtractor/src/main/resources/datasources.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/domain_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/domain_form.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/domains.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/domains.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/SourceType.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/access.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/access_form.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/models/responsibility.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/responsibility_form.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/term_access.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/term_access.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/glossary/term_responsibilities.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/term_responsibilities.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/_state/global-1404" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/_percolator/0/_state/state-2658" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/0/_state/state-2436" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/1/_state/state-2436" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/2/_state/state-2436" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/3/_state/state-2436" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/play2-elasticsearch/nodes/0/indices/play2-elasticsearch/4/_state/state-2436" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivileges.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivileges.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/BusinessAccess.java" afterPath="$PROJECT_DIR$/app/controllers/BusinessAccess.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTermAssociation.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTermAssociation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/BusinessTerms.java" afterPath="$PROJECT_DIR$/app/controllers/BusinessTerms.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Responsibilities.java" afterPath="$PROJECT_DIR$/app/controllers/Responsibilities.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/access.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/access.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/associations.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/associations.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/associations.html" afterPath="$PROJECT_DIR$/public/templates/glossary/associations.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/events.coffee" afterPath="$PROJECT_DIR$/public/js/events.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/form.coffee" afterPath="$PROJECT_DIR$/public/js/components/form.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/home/main.html" afterPath="$PROJECT_DIR$/public/templates/home/main.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/main.js" afterPath="$PROJECT_DIR$/public/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/main.less" afterPath="$PROJECT_DIR$/app/assets/stylesheets/main.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/main.scala.html" afterPath="$PROJECT_DIR$/app/views/main.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/play-authenticate/mine.conf" afterPath="$PROJECT_DIR$/conf/play-authenticate/mine.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea_modules/mms.iml" afterPath="$PROJECT_DIR$/.idea_modules/mms.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/collections/namespaces.coffee" afterPath="$PROJECT_DIR$/public/js/collections/namespaces.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app/namespaces.coffee" afterPath="$PROJECT_DIR$/public/js/views/app/namespaces.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/app/namespaces.html" afterPath="$PROJECT_DIR$/public/templates/app/namespaces.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/people.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/people.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/conf/META-INF/persistence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/person_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/person_form.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/pom.xml" afterPath="$PROJECT_DIR$/../common/Models/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mms-connectors/DatabaseExtractor/pom.xml" afterPath="$PROJECT_DIR$/../mms-connectors/DatabaseExtractor/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/pom.xml" afterPath="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app/posts.coffee" afterPath="$PROJECT_DIR$/public/js/views/app/posts.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/app/posts.html" afterPath="$PROJECT_DIR$/public/templates/app/posts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app/profile.coffee" afterPath="$PROJECT_DIR$/public/js/views/app/profile.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/profile.scala.html" afterPath="$PROJECT_DIR$/app/views/profile.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/app/revised_entities.html" afterPath="$PROJECT_DIR$/public/templates/app/revised_entities.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/app/revisions.html" afterPath="$PROJECT_DIR$/public/templates/app/revisions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/router.coffee" afterPath="$PROJECT_DIR$/public/js/router.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/person.coffee" afterPath="$PROJECT_DIR$/public/js/models/person.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/responsibilities.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/responsibilities.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/routes" afterPath="$PROJECT_DIR$/conf/routes" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/play-authenticate/smtp.conf" afterPath="$PROJECT_DIR$/conf/play-authenticate/smtp.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/snap.less" afterPath="$PROJECT_DIR$/app/assets/stylesheets/snap.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/term.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/term.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/term_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/term_form.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/stakeholder_role.coffee" afterPath="$PROJECT_DIR$/public/js/models/stakeholder_role.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/term.coffee" afterPath="$PROJECT_DIR$/public/js/models/term.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/term_section.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/term_section.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/term_view.html" afterPath="$PROJECT_DIR$/public/templates/glossary/term_view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/terms.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/terms.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/terms.html" afterPath="$PROJECT_DIR$/public/templates/glossary/terms.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/term_section.html" afterPath="$PROJECT_DIR$/public/templates/glossary/term_section.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/user_group.coffee" afterPath="$PROJECT_DIR$/public/js/models/user_group.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mms-app.iws" />
@@ -218,10 +77,10 @@
     <file path="/posts.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368586830799" ignored="false" />
     <file path="/ChatRoom.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1360151721864" ignored="false" />
     <file path="/Posts.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368529566477" ignored="false" />
-    <file path="/routes" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369198846957" ignored="false" />
+    <file path="/routes" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369623481264" ignored="false" />
     <file path="/main.scala.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368678034385" ignored="false" />
-    <file path="/main.js" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369351077694" ignored="false" />
-    <file path="/main.less" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369188565217" ignored="false" />
+    <file path="/main.js" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369626518697" ignored="false" />
+    <file path="/main.less" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369635055402" ignored="false" />
     <file path="/profile.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1360479540175" ignored="false" />
     <file path="/profile.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369352171393" ignored="false" />
     <file path="/Account.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1360385806823" ignored="false" />
@@ -290,7 +149,7 @@
     <file path="$PROJECT_DIR$/../mms-connectors/ExcelExtractor/src/main/java/nz/co/datascience/mms/model/Schema.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1361426837464" ignored="false" />
     <file path="/DatabaseExtractor.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368397787909" ignored="false" />
     <file path="/data_sources.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1361482023525" ignored="false" />
-    <file path="/events.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368763788211" ignored="false" />
+    <file path="/events.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369468807197" ignored="false" />
     <file path="/column.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1366935218470" ignored="false" />
     <file path="/column_form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1361480013986" ignored="false" />
     <file path="/data_source_form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1361480137570" ignored="false" />
@@ -426,7 +285,7 @@
     <file path="$PROJECT_DIR$/../common/Models/ivyconf.xml" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362113581375" ignored="false" />
     <file path="/ivyconf.xml" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362116124381" ignored="false" />
     <file path="$PROJECT_DIR$/../common/Models/src/main/resources/ivyconf.xml" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362116124381" ignored="false" />
-    <file path="/Dummy.txt" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369344704866" ignored="false" />
+    <file path="/Dummy.txt" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369620128180" ignored="false" />
     <file path="$PROJECT_DIR$/../common/Models/src/main/java/mms/models/AbstractColumn.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362120208734" ignored="false" />
     <file path="$PROJECT_DIR$/../common/Models/src/main/java/mms/models/Activity.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362120208734" ignored="false" />
     <file path="$PROJECT_DIR$/../common/Models/src/main/java/mms/models/AuditedModel.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362120208735" ignored="false" />
@@ -490,7 +349,7 @@
     <file path="/namespaces.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368422405581" ignored="false" />
     <file path="/datasources.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368746719508" ignored="false" />
     <file path="/datasources2.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362357081803" ignored="false" />
-    <file path="/form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369347162921" ignored="false" />
+    <file path="/form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369635332466" ignored="false" />
     <file path="/Datasources.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368746215148" ignored="false" />
     <file path="/Catalogs.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362546314623" ignored="false" />
     <file path="/index.scala.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1362613069234" ignored="false" />
@@ -628,10 +487,10 @@
     <file path="$PROJECT_DIR$/../../metamorphic/blogs.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1366759079763" ignored="false" />
     <file path="/blogs.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1366759075804" ignored="false" />
     <file path="/main.css" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1366759638792" ignored="false" />
-    <file path="/term.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369350820300" ignored="false" />
+    <file path="/term.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369631485135" ignored="false" />
     <file path="/verify_email_en.scala.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1366844341425" ignored="false" />
     <file path="/verify_email_en.scala.txt" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1366844369817" ignored="false" />
-    <file path="/BusinessTerms.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367545402636" ignored="false" />
+    <file path="/BusinessTerms.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369550692920" ignored="false" />
     <file path="/terms.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369350288880" ignored="false" />
     <file path="/terms.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368757893493" ignored="false" />
     <file path="/term_form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368770558384" ignored="false" />
@@ -651,11 +510,11 @@
     <file path="/settings.scala.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367458738410" ignored="false" />
     <file path="/5.sql" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367452134293" ignored="false" />
     <file path="/Setting.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367452103747" ignored="false" />
-    <file path="/BusinessTermAssociation.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367543007848" ignored="false" />
+    <file path="/BusinessTermAssociation.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369546415458" ignored="false" />
     <file path="/term_form.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367546087769" ignored="false" />
-    <file path="/associations.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367567967181" ignored="false" />
-    <file path="/term_section.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367907164438" ignored="false" />
-    <file path="/term_section.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369351396512" ignored="false" />
+    <file path="/associations.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369378347585" ignored="false" />
+    <file path="/term_section.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369630524585" ignored="false" />
+    <file path="/term_section.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369632809020" ignored="false" />
     <file path="/caret-position.js" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367561964187" ignored="false" />
     <file path="/association.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367564833430" ignored="false" />
     <file path="/associations.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367908091524" ignored="false" />
@@ -667,7 +526,7 @@
     <file path="/json-viewer.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1367825590753" ignored="false" />
     <file path="/people.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368008483901" ignored="false" />
     <file path="/people.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368592492516" ignored="false" />
-    <file path="/person.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368009679992" ignored="false" />
+    <file path="/person.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369626821216" ignored="false" />
     <file path="/person_form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368768642608" ignored="false" />
     <file path="$PROJECT_DIR$/../mms-connectors/DatabaseExtractor/src/main/java/nz/co/datascience/mms/extractors/DatabaseExtractor.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368397814355" ignored="false" />
     <file path="/catalogs.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368503842298" ignored="false" />
@@ -675,16 +534,16 @@
     <file path="/post_reply.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368574526021" ignored="false" />
     <file path="/revisions.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368591661201" ignored="false" />
     <file path="/stakeholder_roles.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368592637168" ignored="false" />
-    <file path="/stakeholder_role.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368591976518" ignored="false" />
+    <file path="/stakeholder_role.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369621566169" ignored="false" />
     <file path="/stakeholder_roles.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368592214845" ignored="false" />
     <file path="/6.sql" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368593071329" ignored="false" />
     <file path="/stakeholder_role_form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368768304577" ignored="false" />
     <file path="/StakeholderRoles.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368594461479" ignored="false" />
     <file path="/assignments.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368663946827" ignored="false" />
     <file path="/assignments.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368598148507" ignored="false" />
-    <file path="/responsibilities.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368674049926" ignored="false" />
+    <file path="/responsibilities.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369553248817" ignored="false" />
     <file path="/responsibilities.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368940250807" ignored="false" />
-    <file path="/Responsibilities.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368671167326" ignored="false" />
+    <file path="/Responsibilities.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369628400819" ignored="false" />
     <file path="/left_menu.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369188168554" ignored="false" />
     <file path="/left_menu.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368678068551" ignored="false" />
     <file path="/BusinessApplications.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1368680367310" ignored="false" />
@@ -714,14 +573,23 @@
     <file path="$PROJECT_DIR$/../../java/jpmml/pom.xml" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369032804775" ignored="false" />
     <file path="$PROJECT_DIR$/../../java/jpmml/pmml-model/src/main/schema/pmml.xjb" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369032804777" ignored="false" />
     <file path="/access.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369201647106" ignored="false" />
-    <file path="/access.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369202503849" ignored="false" />
+    <file path="/access.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369633238041" ignored="false" />
     <file path="/bootstrap.css" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369188518179" ignored="false" />
-    <file path="/BusinessAccess.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369198446751" ignored="false" />
+    <file path="/BusinessAccess.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369636478180" ignored="false" />
     <file path="/mine.conf" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369269952162" ignored="false" />
     <file path="/smtp.conf" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369269992073" ignored="false" />
     <file path="/intro.md" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369279836337" ignored="false" />
     <file path="/MyUserServicePlugin.java" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369287902874" ignored="false" />
     <file path="/term_view.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369347707590" ignored="false" />
+    <file path="/tables.scala.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369374993478" ignored="false" />
+    <file path="/term_responsibilities.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369630369073" ignored="false" />
+    <file path="/term_responsibilities.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369627989032" ignored="false" />
+    <file path="/responsibility.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369553938113" ignored="false" />
+    <file path="/responsibility_form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369622255498" ignored="false" />
+    <file path="/term_access.html" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369631002329" ignored="false" />
+    <file path="/term_access.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369636717073" ignored="false" />
+    <file path="/access_form.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369632601569" ignored="false" />
+    <file path="/user_group.coffee" changelist="716c433e-460e-411b-a2ac-6b6e6f63c867" time="1369633472024" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -741,8 +609,6 @@
     <sortChildren value="false" />
   </component>
   <component name="DebuggerManager">
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -779,6 +645,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -788,28 +656,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="profile.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/templates/social/profile.html">
+      <file leaf-file-name="BusinessAccess.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/BusinessAccess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="58" column="0" selection-start="1994" selection-end="1994" vertical-scroll-proportion="0.33333334">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccessPrivileges.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivileges.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="69" column="37" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="profile.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/views/app/profile.coffee">
+      <file leaf-file-name="AccessPrivilegesPK.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivilegesPK.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="0" selection-start="839" selection-end="839" vertical-scroll-proportion="0.0">
+            <state line="13" column="13" selection-start="223" selection-end="223" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="posts.coffee" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/js/views/app/posts.coffee">
+      <file leaf-file-name="term_access.coffee" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/js/views/glossary/term_access.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.62271065">
+            <state line="70" column="42" selection-start="2436" selection-end="2436" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -833,22 +712,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/conf/play-authenticate/smtp.conf" />
-        <option value="$PROJECT_DIR$/docs/glossary/intro.md" />
-        <option value="$PROJECT_DIR$/app/providers/AzureUsernamePasswordAuthProvider.java" />
-        <option value="$PROJECT_DIR$/conf/META-INF/persistence.xml" />
-        <option value="$PROJECT_DIR$/project/Build.scala" />
-        <option value="$PROJECT_DIR$/app/service/MyUserServicePlugin.java" />
-        <option value="$PROJECT_DIR$/app/controllers/Application.java" />
-        <option value="$PROJECT_DIR$/app/models/User.java" />
-        <option value="$PROJECT_DIR$/public/js/components/form.coffee" />
-        <option value="$PROJECT_DIR$/public/templates/glossary/term_view.html" />
-        <option value="$PROJECT_DIR$/public/js/views/glossary/terms.coffee" />
-        <option value="$PROJECT_DIR$/public/js/router.coffee" />
-        <option value="$PROJECT_DIR$/public/js/views/glossary/term.coffee" />
-        <option value="$PROJECT_DIR$/public/js/main.js" />
+        <option value="$PROJECT_DIR$/public/templates/glossary/term_access.html" />
+        <option value="$PROJECT_DIR$/public/js/models/term.coffee" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/term_responsibilities.coffee" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/responsibility_form.coffee" />
+        <option value="$PROJECT_DIR$/public/js/models/responsibility.coffee" />
         <option value="$PROJECT_DIR$/public/js/views/glossary/term_section.coffee" />
-        <option value="$PROJECT_DIR$/public/js/views/app/profile.coffee" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/access_form.coffee" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/access.coffee" />
+        <option value="$PROJECT_DIR$/public/js/models/user_group.coffee" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/main.less" />
+        <option value="$PROJECT_DIR$/public/js/components/form.coffee" />
+        <option value="$PROJECT_DIR$/conf/routes" />
+        <option value="$PROJECT_DIR$/public/js/models/access.coffee" />
+        <option value="$PROJECT_DIR$/app/controllers/BusinessAccess.java" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/term_access.coffee" />
+        <option value="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivileges.java" />
       </list>
     </option>
   </component>
@@ -866,7 +745,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1680" />
-    <option name="height" value="967" />
+    <option name="height" value="963" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -988,6 +867,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1002,6 +882,96 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="business" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="mms-app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1021,28 +991,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="social" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1081,28 +1029,6 @@
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1188,11 +1114,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1228,20 +1150,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="conf" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1256,61 +1164,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="META-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1332,10 +1186,27 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stylesheets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1346,7 +1217,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="preferences.pluginManager" />
+    <property name="options.lastSelected" value="usage.statistics" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../common/Models" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="project.structure.side.proportion" value="0.11655012" />
@@ -1354,12 +1225,12 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.4117647" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.4117647" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -1381,14 +1252,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Remote.Play">
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="9999" />
-      <method />
-    </configuration>
     <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <extension name="scalaCoverage" />
@@ -1402,6 +1265,14 @@
       <setting name="testName" value="" />
       <setting name="testKind" value="Class" />
       <setting name="showProgressMessages" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="9999" />
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -1432,13 +1303,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
-      <method />
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -1458,6 +1322,13 @@
       </option>
       <envs />
       <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
@@ -1553,27 +1424,46 @@
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="239388000" />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1680" height="967" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="22" width="1680" height="963" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.43195266" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31286895" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6007109" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42384887" sideWeight="0.99938726" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39197168" sideWeight="0.41666666" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4223013" sideWeight="0.70563036" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4223013" sideWeight="0.29436964" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977462" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.46508875" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33414933" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23929009" sideWeight="0.68713105" order="0" side_tool="false" content_ui="combo" x="112" y="105" width="460" height="843" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23929009" sideWeight="0.5776987" order="0" side_tool="false" content_ui="combo" x="112" y="105" width="460" height="843" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819906" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1581,6 +1471,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31286895" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293979" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1655,115 +1546,123 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/service/MyUserServicePlugin.java">
+    <entry file="file://$PROJECT_DIR$/public/templates/glossary/term_access.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="0" selection-start="2728" selection-end="2728" vertical-scroll-proportion="0.0">
+        <state line="34" column="12" selection-start="970" selection-end="970" vertical-scroll-proportion="-21.25">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/responsibilities.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="0" selection-start="1155" selection-end="1203" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Global.java">
+    <entry file="file://$PROJECT_DIR$/public/js/models/user_group.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="0" selection-start="2747" selection-end="2774" vertical-scroll-proportion="0.0">
+        <state line="10" column="0" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/Application.java">
+    <entry file="file://$PROJECT_DIR$/public/templates/glossary/access.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="41" selection-start="1686" selection-end="1686" vertical-scroll-proportion="0.0">
+        <state line="43" column="0" selection-start="1009" selection-end="1725" vertical-scroll-proportion="-21.25">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/User.java">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="0" selection-start="5518" selection-end="5664" vertical-scroll-proportion="0.0">
+        <state line="950" column="61" selection-start="21631" selection-end="21631" vertical-scroll-proportion="0.57583547">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/components/form.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="12" selection-start="5798" selection-end="5798" vertical-scroll-proportion="0.0">
+        <state line="36" column="0" selection-start="1210" selection-end="1210" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1369635363000" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/access.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="70" selection-start="485" selection-end="543" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/glossary/term_view.html">
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/access_form.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="15" selection-start="74" selection-end="74" vertical-scroll-proportion="-1.875">
+        <state line="15" column="49" selection-start="393" selection-end="393" vertical-scroll-proportion="0.2576687">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/router.coffee">
+    <entry file="file://$PROJECT_DIR$/app/controllers/BusinessApplications.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="86" selection-start="7774" selection-end="7774" vertical-scroll-proportion="0.0">
+        <state line="22" column="13" selection-start="454" selection-end="454" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/term.coffee">
+    <entry file="file://$PROJECT_DIR$/app/controllers/Responsibilities.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="0" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.47130647">
+        <state line="16" column="13" selection-start="269" selection-end="269" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/main.js">
+    <entry file="file://$PROJECT_DIR$/conf/routes">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="9" selection-start="358" selection-end="383" vertical-scroll-proportion="0.16483517">
+        <state line="79" column="66" selection-start="3947" selection-end="3947" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/events.coffee">
+    <entry file="file://$PROJECT_DIR$/public/js/models/access.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="5" selection-start="59" selection-end="59" vertical-scroll-proportion="0.07326008">
+        <state line="20" column="21" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/term_form.coffee">
+    <entry file="file://$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivilegesPK.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.09157509">
+        <state line="13" column="13" selection-start="223" selection-end="223" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/terms.coffee">
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/term_access.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="9" selection-start="5601" selection-end="5602" vertical-scroll-proportion="-46.76">
+        <state line="70" column="42" selection-start="2436" selection-end="2436" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/term_section.coffee">
+    <entry file="file://$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/AccessPrivileges.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="31" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.6221663">
+        <state line="69" column="37" selection-start="1508" selection-end="1508" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/social/profile.html">
+    <entry file="file://$PROJECT_DIR$/app/controllers/BusinessAccess.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/views/app/profile.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="839" selection-end="839" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/views/app/posts.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.62271065">
-          <folding />
+        <state line="58" column="0" selection-start="1994" selection-end="1994" vertical-scroll-proportion="0.33333334">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

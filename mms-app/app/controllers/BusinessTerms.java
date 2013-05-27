@@ -115,25 +115,11 @@ public class BusinessTerms extends Controller {
             term.setTags(tags);
 
             // Parse definition
-            String definition = term.getDefinition();
-            String[] sentences = definition.split("\\.\\s+");
-            for (String sentence : sentences) {
-                Pattern pattern = Pattern.compile("#\\w+");
-                Matcher matcher = pattern.matcher(sentence);
-                if (matcher.find()) {
-                    String obj = matcher.group().substring(1);
-                    BusinessTerm object = BusinessTerm.findByName(obj);
-                    if (object != null) {
-                        BusinessTermAssociation assoc = new BusinessTermAssociation();
-                        assoc.setSubject(term);
-                        assoc.setObject(object);
-                        assoc.setPredicate(sentence);
-
-                        JPA.em().persist(assoc);
-                    }
-                }
+            List<BusinessTermAssociation> assocs = extractBusinessTermAssociations(term);
+            for (BusinessTermAssociation assoc : assocs) {
+                assoc.setSource(SourceType.DEFINITION);
+                JPA.em().persist(assoc);
             }
-
             JPA.em().persist(term);
 
             return ok("{\"id\":\"" + term.getId() + "\"}").as("application/json");
@@ -208,28 +194,147 @@ public class BusinessTerms extends Controller {
             term.setTags(tags);
 
             // Parse definition
-            String definition = term.getDefinition();
-            String[] sentences = definition.split("\\.\\s+");
-            for (String sentence : sentences) {
-                Pattern pattern = Pattern.compile("#\\w+");
-                Matcher matcher = pattern.matcher(sentence);
-                if (matcher.find()) {
-                    String obj = matcher.group().substring(1);
-                    BusinessTerm object = BusinessTerm.findByName(obj);
+            List<BusinessTermAssociation> assocs = extractBusinessTermAssociations(term);
+            List<BusinessTermAssociation> existing =
+                    BusinessTermAssociation.findBySubjectIdFromSource(id, SourceType.DEFINITION);
+            List<Long> changelist = new ArrayList<>();
+
+            // Add new or changed associations
+            for (BusinessTermAssociation assoc : assocs) {
+                List<BusinessTermAssociation> matching =
+                        BusinessTermAssociation.findBySubjectIdAndObjectIdFromSource(
+                                assoc.getSubject().getId(),
+                                assoc.getObject().getId(),
+                                SourceType.DEFINITION);
+                if (matching.isEmpty()) {
+                    assoc.setSource(SourceType.DEFINITION);
+                    JPA.em().persist(assoc);
+                } else {
+                    BusinessTermAssociation a = matching.get(0);
+                    changelist.add(a.getId());
+                    if (!a.getPredicate().equals(assoc.getPredicate())) {
+                        a.setPredicate(assoc.getPredicate());
+                        JPA.em().persist(a);
+                    }
+                }
+            }
+            // Remove deleted associations
+            for (BusinessTermAssociation assoc : existing) {
+                if (!changelist.contains(assoc.getId())) {
+                    JPA.em().remove(assoc);
+                }
+            }
+            JPA.em().persist(term);
+
+            return ok("{\"id\":\"" + term.getId() + "\"}").as("application/json");
+        }
+    }
+
+    private static List<BusinessTermAssociation> findRemaining(
+            List<BusinessTermAssociation> existing,
+            List<BusinessTermAssociation> replacing)
+    {
+        if (existing == null) return null;
+        if (existing.isEmpty()) return existing;
+        if (replacing == null || replacing.isEmpty()) return existing;
+        List<BusinessTermAssociation> remaining = new ArrayList<>(existing);
+        for (BusinessTermAssociation assoc : replacing) {
+            int n = remaining.size();
+            if (n == 0) break;
+            for (int i = 0; i < n; i++) {
+                BusinessTermAssociation a = remaining.get(i);
+                if (a.getSubject().equals(assoc.getSubject()) &&
+                    a.getObject().equals(assoc.getObject()))
+                {
+                    remaining.remove(i);
+                    break;
+                }
+            }
+        }
+        return remaining;
+    }
+
+    private static List<BusinessTermAssociation> extractBusinessTermAssociations(BusinessTerm term) {
+        List<BusinessTermAssociation> assocs = new ArrayList<>();
+        String definition = term.getDefinition();
+        if (definition.endsWith(".")) {
+            definition = definition.substring(0, definition.length() - 1);
+        }
+        String[] sentences = definition.split("\\.\\s+");
+        for (String sentence : sentences) {
+            Pattern p1 = Pattern.compile("#\\w+|#[\"}][^\"}]+[\"}]", Pattern.DOTALL);
+            Pattern p2 = Pattern.compile("^#[\"}]?([^\"}]+)[\"}]?$");
+            Matcher m1 = p1.matcher(sentence);
+            while (m1.find()) {
+                String tag = m1.group();
+                Matcher m2 = p2.matcher(tag);
+                if (m2.find()) {
+                    String objname = m2.group(1);
+                    BusinessTerm object = BusinessTerm.findByName(objname);
                     if (object != null) {
                         BusinessTermAssociation assoc = new BusinessTermAssociation();
                         assoc.setSubject(term);
                         assoc.setObject(object);
                         assoc.setPredicate(sentence);
-
-                        JPA.em().persist(assoc);
+                        assocs.add(assoc);
                     }
                 }
             }
+        }
+        return assocs;
+    }
 
-            JPA.em().persist(term);
+    private static Set<BusinessTermAssociation> convertToSet(List<BusinessTermAssociation> list) {
+        if (list == null) return null;
+        if (list.isEmpty()) return new HashSet<>();
+        Map<Pair<Long>, BusinessTermAssociation> assocMap = new HashMap<>();
+        for (BusinessTermAssociation assoc : list) {
+            Pair<Long> key = new Pair<>(assoc.getSubject().getId(), assoc.getObject().getId());
+            if (assocMap.containsKey(key)) {
+                BusinessTermAssociation existing = assocMap.get(key);
+                String newPredicate = existing.getPredicate() + " " + assoc.getPredicate();
+                existing.setPredicate(newPredicate);
+            } else {
+                assocMap.put(key, assoc);
+            }
+        }
+        return new HashSet<>(assocMap.values());
+    }
 
-            return ok("{\"id\":\"" + term.getId() + "\"}").as("application/json");
+    static class Pair<T> {
+
+        T lft;
+
+        T rgt;
+
+        Pair(T lft, T rgt) {
+            this.lft = lft;
+            this.rgt = rgt;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Pair<%s,%s>", lft, rgt);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Pair pair = (Pair) o;
+
+            if (!lft.equals(pair.lft)) return false;
+            if (!rgt.equals(pair.rgt)) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = lft.hashCode();
+            result = 31 * result + rgt.hashCode();
+            return result;
         }
     }
 }

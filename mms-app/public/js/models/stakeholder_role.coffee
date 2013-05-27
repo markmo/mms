@@ -6,3 +6,5 @@ define [
             name:
                 type: 'Text'
                 validators: ['required']
+
+        toString: -> this.get('name')

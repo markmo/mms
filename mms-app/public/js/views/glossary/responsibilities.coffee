@@ -35,6 +35,7 @@ define [
                 data: JSON.stringify(data)
                 success: =>
                     this.render().done ->
+                        app.resetCache('terms')
                         $('#alert')
                             .find('strong').html('Responsibilities have been successfully updated')
                             .parent()

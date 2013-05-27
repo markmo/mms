@@ -185,7 +185,7 @@ require([
     // to be overridden with calling config above
     if (global.start === 'revisions') {
         Router.initialize({appView: appView, silent: true});
-        $('#spinner').html('');
+        $('#spinner').html('').hide();
         appView.render();
 
         location.href = '/#/revisions'; // TODO: is this the only way?
@@ -193,14 +193,14 @@ require([
 
     } else if (global.start === 'glossary') {
         Router.initialize({appView: appView, silent: true});
-        $('#spinner').html('');
+        $('#spinner').html('').hide();
         appView.render();
 
         location.href = '/#/terms';
 
     } else {
         Router.initialize({appView: appView});
-        $('#spinner').html('');
+        $('#spinner').html('').hide();
         appView.render();
     }
 });

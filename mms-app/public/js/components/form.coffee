@@ -9,6 +9,36 @@ define [
     'tagautocomplete'
 ], (_, Backbone, app, Tag, formTemplate) ->
 
+    Backbone.Form.editors.Access = Backbone.Form.editors.Base.extend
+
+        tagName: 'div'
+
+        initialize: (options) ->
+            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            template = """
+                       <div class="btn-group" data-toggle="buttons-checkbox">
+                       <button id="c" type="button" class="btn btn-mini create">C</button>
+                       <button id="r" type="button" class="btn btn-mini read">R</button>
+                       <button id="u" type="button" class="btn btn-mini update">U</button>
+                       <button id="d" type="button" class="btn btn-mini delete">D</button>
+                       </div>"""
+
+            @$el.html(template)
+            this.setValue(@value)
+            return
+
+        getValue: ->
+            @$el.find('.btn.active').map((i, btn) ->
+                btn.id
+            ).get().join('')
+
+        setValue: (value) ->
+            if value and value.length
+                rights = value.toLowerCase().split('')
+                _.each rights, (r) =>
+                    @$el.find('#' + r).button('toggle')
+
+
     Backbone.Form.editors.Columns = Backbone.Form.editors.Select.extend
 
         initialize: (options) ->

@@ -49,6 +49,7 @@ define [
                 data: JSON.stringify(data)
                 success: =>
                     this.render().done ->
+                        app.resetCache('terms')
                         $('#alert')
                             .find('strong').html('Access privileges have been successfully updated')
                             .parent()
@@ -72,8 +73,8 @@ define [
                         terms: terms.toJSON()
                         groups: groups.toJSON()
                     _.each terms.models, (term) ->
-                        _.each term.get('accessPrivileges'), (ap) ->
-                            _.each ap.access.split(''), (a) ->
-                                $("#access-#{term.id}-#{ap.userGroup.id}-#{a}").button('toggle')
+                        _.each term.get('accessPrivileges').models, (ap) ->
+                            _.each ap.get('access').split(''), (a) ->
+                                $("#access-#{term.id}-#{ap.get('userGroup').id}-#{a}").button('toggle')
                     dfd.resolve()
             return dfd

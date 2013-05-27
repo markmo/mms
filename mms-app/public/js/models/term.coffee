@@ -5,8 +5,10 @@ define [
     'cs!models/domain'
     'cs!models/security_classification'
     'cs!models/tag'
+    'cs!models/responsibility'
+    'cs!models/access'
     'backbone-associations'
-], (Backbone, app, TagsCollection, Domain, SecurityClassification, Tag) ->
+], (Backbone, app, TagsCollection, Domain, SecurityClassification, Tag, Responsibility, Access) ->
     Term = Backbone.AssociatedModel
     Term.extend
         relations: [
@@ -30,6 +32,16 @@ define [
                 key: 'tags'
                 relatedModel: Tag
                 collectionType: TagsCollection
+            }
+            {
+                type: Backbone.Many
+                key: 'people'
+                relatedModel: Responsibility
+            }
+            {
+                type: Backbone.Many
+                key: 'accessPrivileges'
+                relatedModel: Access
             }
         ]
         schema:

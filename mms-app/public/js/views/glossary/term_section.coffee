@@ -7,8 +7,10 @@ define [
     'cs!views/glossary/term'
     'cs!views/glossary/term_form'
     'cs!views/glossary/associations'
+    'cs!views/glossary/term_responsibilities'
+    'cs!views/glossary/term_access'
     'text!templates/glossary/term_section.html'
-], ($, _, Backbone, app, Vm, TermView, TermForm, AssociationsSection, termSectionTemplate) ->
+], ($, _, Backbone, app, Vm, TermView, TermForm, AssociationsSection, TermResponsibilitiesSection, TermAccessSection, termSectionTemplate) ->
     Backbone.View.extend
 
         el: '#term-section'
@@ -31,6 +33,18 @@ define [
             )
             @associationsSection.render()
 
+        showResponsibilities: ->
+            @responsibilitiesSection = Vm.create(this, 'TermResponsibilitiesSection', TermResponsibilitiesSection,
+                termId: @termId
+            )
+            @responsibilitiesSection.render()
+
+        showAccess: ->
+            @accessSection = Vm.create(this, 'TermAccessSection', TermAccessSection,
+                termId: @termId
+            )
+            @accessSection.render()
+
         createTerm: ->
             termForm = Vm.create(this, 'TermForm', TermForm)
             termForm.render()
@@ -45,6 +59,7 @@ define [
                 parentTerm: @parentTerm)
             termForm.render()
             termForm.once 'closed', =>
+                app.resetCache('associations', {subjectId: @termId})
                 this.showTerm()
             return
 
@@ -53,9 +68,14 @@ define [
             $('ul.nav').on 'shown', 'a[data-toggle="tab"]', (event) =>
                 if $(event.target).attr('href') == '#relationships'
                     this.showRelationships()
+                else if $(event.target).attr('href') == '#responsibilities'
+                    this.showResponsibilities()
+                else if $(event.target).attr('href') == '#access'
+                    this.showAccess()
                 return true
             return this
 
         clean: ->
             @associationsSection.clean() if @associationsSection
+            @responsibilitiesSection.clean() if @responsibilitiesSection
             @$el.html('')

@@ -1,7 +1,7 @@
 define [
     'backbone'
 ], (Backbone) ->
-    Backbone.Model.extend
+    Backbone.AssociatedModel.extend
         schema:
             firstName:
                 type: 'Text'

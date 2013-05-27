@@ -82,8 +82,17 @@ define [
         vendors: (value, options) ->
             this.collections('vendors', value, options)
 
+        resetCache: (name, options) ->
+            if name
+                memo = '_' + name
+                if options and !_.isEmpty(options)
+                    memo += '_' + _.chain(options).pairs().flatten().value().join('_')
+                delete @[memo]
+
         collections: (name, value, options) ->
             memo = '_' + name
+            if options and !_.isEmpty(options)
+                memo += '_' + _.chain(options).pairs().flatten().value().join('_')
             if value and value instanceof Backbone.Collection
                 @[memo] = value
                 return this

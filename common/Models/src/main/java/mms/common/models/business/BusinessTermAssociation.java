@@ -29,12 +29,51 @@ public class BusinessTermAssociation {
     @JoinColumn(name = "object_term_id")
     private BusinessTerm object;
 
+    @Enumerated(EnumType.STRING)
+    private SourceType source;
+
     @SuppressWarnings("unchecked")
     public static List<BusinessTermAssociation> findBySubjectId(Long id) {
         return JPA.em().createQuery(
                 "select a from BusinessTermAssociation a where a.subject.id = ?1"
         )
                 .setParameter(1, id)
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<BusinessTermAssociation> findBySubjectIdFromSource(Long id, SourceType source) {
+        return JPA.em().createQuery(
+                "select a from BusinessTermAssociation a " +
+                "where a.subject.id = ?1 and a.source = ?2"
+        )
+                .setParameter(1, id)
+                .setParameter(2, source)
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<BusinessTermAssociation> findBySubjectIdAndObjectId(
+            Long subjectId, Long objectId) {
+        return JPA.em().createQuery(
+                "select a from BusinessTermAssociation a " +
+                "where a.subject.id = ?1 and a.object.id = ?2"
+        )
+                .setParameter(1, subjectId)
+                .setParameter(2, objectId)
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<BusinessTermAssociation> findBySubjectIdAndObjectIdFromSource(
+            Long subjectId, Long objectId, SourceType source) {
+        return JPA.em().createQuery(
+                "select a from BusinessTermAssociation a " +
+                "where a.subject.id = ?1 and a.object.id = ?2 and a.source = ?3"
+        )
+                .setParameter(1, subjectId)
+                .setParameter(2, objectId)
+                .setParameter(3, source)
                 .getResultList();
     }
 
@@ -68,6 +107,14 @@ public class BusinessTermAssociation {
 
     public void setObject(BusinessTerm object) {
         this.object = object;
+    }
+
+    public SourceType getSource() {
+        return source;
+    }
+
+    public void setSource(SourceType source) {
+        this.source = source;
     }
 
     @Override
