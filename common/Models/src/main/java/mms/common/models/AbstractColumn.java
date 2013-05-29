@@ -90,6 +90,7 @@ public abstract class AbstractColumn extends AuditedModel implements Indexable {
     public Map toIndex() {
         HashMap map = new HashMap();
         map.put("id", id);
+        map.put("url", "columns/" + id);
         map.put("objectType", "Column");
         map.put("name", name);
         return map;

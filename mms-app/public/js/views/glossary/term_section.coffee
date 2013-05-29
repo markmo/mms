@@ -49,8 +49,11 @@ define [
             termForm = Vm.create(this, 'TermForm', TermForm)
             termForm.render()
             $('ul.nav a[href="#relationships"]').hide()
-            termForm.once 'closed', =>
-                this.showTerm()
+            termForm.once 'closed', (id) =>
+                if id
+                    @termId = id
+                    this.showTerm()
+                else this.clean()
             return
 
         editTerm: ->

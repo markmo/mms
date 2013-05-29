@@ -23,3 +23,5 @@ test-result
 server.pid
 *.iml
 *.eml
+data
+data-dev

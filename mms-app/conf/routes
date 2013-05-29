@@ -56,6 +56,8 @@ GET     /sandboxes/:id/namespaces       @controllers.Namespaces.findNamespacesBy
 POST    /sandboxes                      @controllers.Sandboxes.create
 PUT     /sandboxes/:id                  @controllers.Sandboxes.update(id: Long)
 
+GET     /search/clean                   controllers.Search.cleanIndex
+GET     /search/reindex                 controllers.Search.reindex
 GET     /search/:terms                  @controllers.Search.index(terms: String)
 
 GET     /session                        @controllers.Application.clientSession

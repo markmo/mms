@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
+import indexing.BusinessTermIndex;
 import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
@@ -107,7 +108,7 @@ public class BusinessTerms extends Controller {
                     if (tag.getId() == null) {
                         JPA.em().persist(tag);
                     } else {
-                        JPA.em().merge(tag);
+//                        JPA.em().merge(tag);
                     }
                     tags.add(tag);
                 }
@@ -121,6 +122,10 @@ public class BusinessTerms extends Controller {
                 JPA.em().persist(assoc);
             }
             JPA.em().persist(term);
+
+            BusinessTermIndex termIndex = new BusinessTermIndex();
+            termIndex.setBusinessTerm(term);
+            termIndex.index();
 
             return ok("{\"id\":\"" + term.getId() + "\"}").as("application/json");
         }

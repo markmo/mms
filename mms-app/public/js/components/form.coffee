@@ -68,16 +68,15 @@ define [
                 .attr('data-snap-ignore', true)
                 .addClass('custom form-vertical')
             this.render()
-            if @value
-                $.ajax(
-                    type: 'GET'
-                    url: '/settings'
-                ).done((schema) =>
-                    $('#custom-form').jsonForm(this.getSchema(schema, @value))
-                    return
-                ).fail((jqXHR, textStatus, errorThrown) ->
-                    alert(errorThrown)
-                )
+            $.ajax(
+                type: 'GET'
+                url: '/settings'
+            ).done((schema) =>
+                $('#custom-form').jsonForm(this.getSchema(schema, @value))
+                return
+            ).fail((jqXHR, textStatus, errorThrown) ->
+                alert(errorThrown)
+            )
             return this
 
         getValue: ->

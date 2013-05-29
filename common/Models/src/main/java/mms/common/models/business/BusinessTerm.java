@@ -2,12 +2,15 @@ package mms.common.models.business;
 
 import static utils.JPA_Helper.getSingleResult;
 
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
+import com.github.cleverage.elasticsearch.IndexUtils;
+import com.github.cleverage.elasticsearch.Indexable;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import play.db.jpa.JPA;
 
 import mms.common.models.*;
@@ -19,7 +22,7 @@ import mms.common.models.Column;
  * Time: 2:36 PM
  */
 @Entity
-public class BusinessTerm extends AuditedModel {
+public class BusinessTerm extends AuditedModel implements Indexable {
 
     @Id
     @GeneratedValue
@@ -56,6 +59,10 @@ public class BusinessTerm extends AuditedModel {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
+
+    @ManyToOne
+    @JoinColumn(name = "concept_type_id")
+    private ConceptType conceptType;
 
     @ManyToOne
     @JoinColumn(name = "security_class_id")
@@ -153,6 +160,14 @@ public class BusinessTerm extends AuditedModel {
         this.tags = tags;
     }
 
+    public ConceptType getConceptType() {
+        return conceptType;
+    }
+
+    public void setConceptType(ConceptType conceptType) {
+        this.conceptType = conceptType;
+    }
+
     public SecurityClassification getSecurityClassification() {
         return securityClassification;
     }
@@ -207,6 +222,57 @@ public class BusinessTerm extends AuditedModel {
 
     public void setCustomMetadata(String customMetadata) {
         this.customMetadata = customMetadata;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map toIndex() {
+        HashMap map = new HashMap();
+        map.put("id", id);
+        map.put("url", "terms/" + id);
+        map.put("objectType", "Business Term");
+        map.put("name", name);
+        map.put("definition", definition);
+        map.put("description", description);
+        if (domain != null)
+            map.put("domain", domain.getName());
+        if (tags != null && !tags.isEmpty()) {
+//            List<String> tagWords = Lists.transform(new ArrayList(tags), new Function<Tag, String>() {
+//                public String apply(Tag tag) {return tag.getName();}
+//            });
+//            map.put("tags", Joiner.on(' ').join(tagWords));
+            map.put("tags", IndexUtils.toIndex(new ArrayList(tags)));
+        }
+        if (conceptType != null)
+            map.put("conceptType", conceptType.getName());
+        if (securityClassification != null)
+            map.put("securityClassification", securityClassification.getName());
+        if (representations != null && !representations.isEmpty())
+            map.put("columns", IndexUtils.toIndex(new ArrayList(representations)));
+        if (datasourceOfRecord != null)
+            map.put("datasource", datasourceOfRecord.getName());
+        if (people != null && !people.isEmpty())
+            map.put("stakeholders", IndexUtils.toIndex(new ArrayList(people)));
+        return map;
+    }
+
+    public Indexable fromIndex(Map map) {
+        if (map == null) return this;
+        name = (String)map.get("name");
+        definition = (String)map.get("definition");
+        description = (String)map.get("description");
+        List<Tag> tags1 = IndexUtils.getIndexables(map, "tags", Tag.class);
+//        String strTags = (String)map.get("tags");
+//        String[] tagWords = strTags.split(" ");
+//        List<Tag> tags1 = Lists.transform(Arrays.asList(tagWords), new Function<String, Tag>() {
+//            public Tag apply(String name) {return Tag.findByName(name);}
+//        });
+        setTags(new HashSet<>(tags1));
+        List<Column> columns = IndexUtils.getIndexables(map, "columns", Column.class);
+        setRepresentations(new HashSet<>(columns));
+        List<BusinessTermStakeholderPerson> stakeholders =
+                IndexUtils.getIndexables(map, "stakeholders", BusinessTermStakeholderPerson.class);
+        setPeople(new HashSet<>(stakeholders));
+        return this;
     }
 
     @Override

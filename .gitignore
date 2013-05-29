@@ -23,3 +23,5 @@ test-result
 server.pid
 *.iml
 *.eml
+mms-app/data
+mms-app/data-dev

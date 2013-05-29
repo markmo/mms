@@ -1,6 +1,13 @@
 package mms.common.models.business;
 
+import static utils.JPA_Helper.getSingleResult;
+
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.*;
+
+import com.github.cleverage.elasticsearch.Indexable;
+import play.db.jpa.JPA;
 
 /**
  * User: markmo
@@ -8,7 +15,7 @@ import javax.persistence.*;
  * Time: 2:47 PM
  */
 @Entity
-public class Tag {
+public class Tag implements Indexable {
 
     @Id
     @GeneratedValue
@@ -17,6 +24,15 @@ public class Tag {
 
     @Column(name = "tag_name")
     private String name;
+
+    public static Tag findByName(String name) {
+        return getSingleResult(Tag.class,
+                JPA.em().createQuery(
+                        "select t from Tag t where t.name = ?1"
+                )
+                        .setParameter(1, name)
+        );
+    }
 
     public Long getId() {
         return id;
@@ -32,6 +48,21 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map toIndex() {
+        HashMap map = new HashMap();
+        map.put("id", id);
+        map.put("objectType", "Tag");
+        map.put("name", name);
+        return map;
+    }
+
+    public Indexable fromIndex(Map map) {
+        if (map == null) return this;
+        name = (String)map.get("name");
+        return this;
     }
 
     @Override

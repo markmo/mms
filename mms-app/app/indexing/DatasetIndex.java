@@ -23,8 +23,8 @@ import mms.common.models.Dataset;
                 "id: {type: \"integer\"}," +
                 "name: {type: \"string\"}," +
                 "description: {type: \"string\"}," +
-                "objectType: {type: \"string\"}," +
-                "dataType: {type: \"string\"}" +
+                "objectType: {type: \"string\", index: \"not_analyzed\"}," +
+                "dataType: {type: \"string\", index: \"not_analyzed\"}" +
             "}}}")
 public class DatasetIndex extends Index {
 
@@ -57,5 +57,4 @@ public class DatasetIndex extends Index {
     public String toString() {
         return "Dataset{name=\"" + dataset.getName() + "\"}";
     }
-
 }

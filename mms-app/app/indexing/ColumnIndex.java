@@ -21,8 +21,8 @@ import mms.common.models.Column;
             "properties: {" +
                 "dataset: {type: \"nested\"}," +
                 "id: {type: \"integer\"}," +
-                "columnType: {type: \"string\"}," +
-                "dataType: {type: \"string\"}," +
+                "columnType: {type: \"string\", index: \"not_analyzed\"}," +
+                "dataType: {type: \"string\", index: \"not_analyzed\"}," +
                 "name: {type: \"string\"}" +
             "}}}")
 public class ColumnIndex extends Index {

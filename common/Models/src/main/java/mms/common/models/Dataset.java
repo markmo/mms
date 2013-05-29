@@ -270,6 +270,7 @@ public abstract class Dataset extends AuditedModel implements Indexable {
     public Map toIndex() {
         HashMap map = new HashMap();
         map.put("id", id);
+        map.put("url", "datasets/" + id);
         map.put("objectType", "Dataset");
         map.put("dataType", "Complex");
         map.put("name", name);

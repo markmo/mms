@@ -22,8 +22,9 @@ define [
             @term.set(@form.getValue())
             app.terms().done (terms) =>
                 terms.add(@term)
-                @term.save()
-                this.trigger('closed')
+                @term.save null,
+                    success: (model) =>
+                        this.trigger('closed', model.id)
             return
 
         cancel: ->
