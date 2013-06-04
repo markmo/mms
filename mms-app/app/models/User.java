@@ -6,7 +6,6 @@ import static controllers.Application.getSingleResult;
 import java.util.*;
 import javax.persistence.*;
 
-import be.objectify.deadbolt.core.models.*;
 import com.fasterxml.jackson.annotation.*;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
 import com.feth.play.module.pa.user.*;
@@ -15,7 +14,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import play.data.format.Formats;
 import play.db.jpa.JPA;
-import play.libs.F;
 
 import models.TokenAction.Type;
 
@@ -29,22 +27,13 @@ import models.TokenAction.Type;
 @Table(name = "users")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") // still not working
 // using DTO at bottom for JSON serialization
-public class User implements Subject {
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-    @GeneratedValue
-    @Column(name = "user_id")
-	public Long id;
+public class User extends AbstractSubject {
 
 //	@Email
 	// if you make this unique, keep in mind that users *must* merge/link their
 	// accounts then on signup with additional providers
 	// @Column(unique = true)
 	public String email;
-
-    public String name;
 
     public String firstName;
 
@@ -88,43 +77,10 @@ public class User implements Subject {
 
 	public boolean emailValidated;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-	public List<SecurityRole> roles;
-
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference("linkedAccount")
 	public List<LinkedAccount> linkedAccounts;
-
-	@ManyToMany(cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            name = "user_permissions",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id")
-    )
-	public List<UserPermission> permissions;
-
-    @Override
-    public String getIdentifier() {
-        return Long.toString(id);
-    }
-
-	@Override
-	public List<? extends Role> getRoles() {
-		return roles;
-	}
-
-	@Override
-	public List<? extends Permission> getPermissions() {
-		return permissions;
-	}
 
     @Transient
     public String getName() {

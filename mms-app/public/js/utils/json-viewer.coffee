@@ -1,7 +1,9 @@
 define ['jquery', 'underscore'], ($, _) ->
 
     toHtml: (schema, json, container) ->
-        obj = JSON.parse(json)
+        obj = $.parseJSON(json)
+        if (typeof obj is 'string')
+            obj = $.parseJSON(obj)
 
         visit = (schema, node, container) ->
             if _.isArray(node)

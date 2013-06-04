@@ -4,7 +4,7 @@
 @import be.objectify.deadbolt.core.utils.TemplateUtils._
 
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 <head>
     <title>@title</title>
 
@@ -15,6 +15,7 @@
     <meta name="author" content="Mark Moloney &copy; Datascience Ltd.">
     <!-- Le scripts -->
     @if(scripts == null) {
+    <script src="@routes.Assets.at("js/lib/jquery/jquery-1.9.1.min.js")"></script>
     <script src="@routes.Assets.at("js/lib/bootstrap/bootstrap.min.js")"></script>
     } else {
         @scripts
@@ -37,6 +38,8 @@
     <link href="@routes.Assets.at("css/jquery-file-upload/css/jquery.fileupload-ui.css")" rel="stylesheet">
     <link href="@routes.Assets.at("css/jquery-file-upload/css/bootstrap-image-gallery.min.css")" rel="stylesheet">
     <link href="@routes.Assets.at("css/jqtree.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/visualsearch/visualsearch-datauri.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("css/visualsearch/visualsearch.css")" rel="stylesheet">
     <link href="@routes.Assets.at("stylesheets/main.min.css")" rel="stylesheet">
     <link href="@routes.Assets.at("stylesheets/snap.min.css")" rel="stylesheet">
 
@@ -61,6 +64,7 @@
 
     <div id="main" class="absolute">
         <div id="layout-container">
+            <div id="shade"></div>
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
                     <a href="#" id="open-left" class="pull-left snap-btn" onclick="return false;"></a>
@@ -73,7 +77,7 @@
                         </a>
                         <a class="brand" href="@routes.Application.index()"><span class="appname">MMS</span> <em><span style="font-size: 14px;">information asset management</span></em></a>
 
-                        <div class="btn-group pull-right">
+                        <div id="user-control" class="btn-group pull-right">
                             @subjectPresentOr() {
                             @defining(Application.getLocalUser(session())) { user =>
                             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -93,7 +97,9 @@
                             }
                         </div>
 
-                        <div class="nav-collapse">
+                        <div class="visual_search pull-left"></div>
+
+                        <div class="nav-collapse pull-right">
                             <ul class="nav">
                                 <li>
                                     <a href="@routes.Application.glossary()">Glossary</a>
@@ -134,6 +140,7 @@
                     @flash().get(Application.FLASH_MESSAGE_KEY)
                 </div>
             }
+            <div id="search-results" class="well"></div>
             @content
             </div><!-- /container -->
         </div>

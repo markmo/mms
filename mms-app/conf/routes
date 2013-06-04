@@ -179,6 +179,12 @@ POST    /login                          @controllers.Application.doLogin
 
 GET     /logout                         com.feth.play.module.pa.controllers.Authenticate.logout
 
+GET     /organizations/new              controllers.Organizations.create
+GET     /organizations/:id/edit         controllers.Organizations.edit(id: Long)
+GET     /organizations                  controllers.Organizations.index
+POST    /organizations/update           controllers.Organizations.update
+POST    /organizations/delete           controllers.Organizations.delete
+
 GET     /profile/:id                    @controllers.Users.profile(id: Long)
 GET     /profile                        @controllers.Application.profile
 GET     /profile.json                   @controllers.Application.profileAsJSON

@@ -1,0 +1,24 @@
+<div class="clearfix">
+    <div class="pull-right">
+        <button type="button" class="close" aria-hidden="true">&times;</button>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="pull-right">
+        <a href="/#/search"><small>More search options</small></a>
+    </div>
+</div>
+{{#if hits}}
+<div class="scroll-region">
+    <ul>
+        {{#each hits}}
+        <li data-uri="{{url}}">
+            <span class="label">{{objectType}}</span>
+            <strong>{{name}}</strong>{{#if _highlights}}: {{{_highlights}}}{{else}}{{#if definition}}: {{definition}}{{/if}}{{/if}}
+        </li>
+        {{/each}}
+    </ul>
+</div>
+{{else}}
+<p><i>No results found. Try removing facets.</i></p>
+{{/if}}

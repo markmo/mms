@@ -17,6 +17,7 @@ define [
 
         initialize: (options) ->
             @termId = options?.termId
+            @parentTerm = options?.parentTerm
 
         showTerm: ->
             termView = Vm.create(this, 'TermView', TermView,
