@@ -181,7 +181,8 @@ GET     /logout                         com.feth.play.module.pa.controllers.Auth
 
 GET     /organizations/new              controllers.Organizations.create
 GET     /organizations/:id/edit         controllers.Organizations.edit(id: Long)
-GET     /organizations                  controllers.Organizations.index
+#GET     /organizations                  controllers.Organizations.index
+GET     /organizations                  controllers.Organizations.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 POST    /organizations/update           controllers.Organizations.update
 POST    /organizations/delete           controllers.Organizations.delete
 

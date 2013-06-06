@@ -9,7 +9,7 @@
             <input type="hidden" name="@idField.name" id="@idField.id" value="@idField.value">
         }
         @helper.inputText(organizationForm("name"), '_label -> "Name", 'class -> "span5")
-        <a href="@routes.Organizations.index()" class="btn">Cancel</a>
+        <a href="@routes.Organizations.list(0, "name", "asc", "")" class="btn">Cancel</a>
         <input type="submit" class="btn btn-primary" value="@if(isNew) {Create} else {Update}">
     }
 }

@@ -1,4 +1,13 @@
-@(organizations: List[Organization])
+@(currentPage: Page[Organization], currentSortBy: String, currentOrder: String, currentFilter: String)
+
+@import helpers.ListHelper
+
+@link(newPageIndex: Int, newSortBy: String) = @{
+  ListHelper.link(currentSortBy, currentOrder, currentFilter, newPageIndex, newSortBy)
+}
+@header(key: String, title: String) = @{
+  Html(ListHelper.header(currentSortBy, currentOrder, currentFilter, key, title))
+}
 
 @main("Organizations", null, null) {
     @if(flash.contains("success")) {
@@ -20,19 +29,19 @@
             <span>New organization&hellip;</span>
         </a>
     </div>
-    @if(organizations == null || organizations.isEmpty()) {
+    @if(currentPage.isEmpty) {
         <p>None defined.</p>
     } else {
         @helper.form(action = routes.Organizations.delete()) {
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Name</th>
+                    @header("name", "Name")
                     <th colspan="2" style="width: 91px;"></th>
                 </tr>
                 </thead>
                 <tbody>
-                @for(o <- organizations) {
+                @for(o <- currentPage.getList) {
                     <tr>
                         <td><a href="#">@o.name</a></td>
                         <td style="width: 14px;"><a href="@routes.Organizations.edit(o.id)"><i class="icon-edit"></i></a></td>
@@ -42,7 +51,33 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="2"></td>
+                    <td colspan="2">
+                        <div id="pagination" class="pagination">
+                            <ul>
+                                @if(currentPage.hasPrev) {
+                                <li class="prev">
+                                    <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Previous</a>
+                                </li>
+                                } else {
+                                <li class="prev disabled">
+                                    <a>&larr; Previous</a>
+                                </li>
+                                }
+                                <li class="current">
+                                    <a>Displaying @currentPage.getDisplayXtoYofZ</a>
+                                </li>
+                                @if(currentPage.hasNext) {
+                                <li class="next">
+                                    <a href="@link(currentPage.getPageIndex + 1, null)">Next &rarr;</a>
+                                </li>
+                                } else {
+                                <li class="next disabled">
+                                    <a>Next &rarr;</a>
+                                </li>
+                                }
+                            </ul>
+                        </div>
+                    </td>
                     <td style="width: 77px;">
                         <button type="submit" id="btnDelete" class="btn btn-small btn-danger">
                             <i class="icon-remove icon-white"></i>

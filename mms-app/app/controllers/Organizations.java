@@ -25,14 +25,32 @@ public class Organizations extends Controller {
 
     final static Form<Organization> organizationForm = form(Organization.class);
 
+//    @Transactional(readOnly = true)
+//    public static Result index() throws IOException {
+//        @SuppressWarnings("unchecked")
+//        List<Organization> organizations = JPA.em().createQuery(
+//                "select o from Organization o"
+//        )
+//                .getResultList();
+//        return ok(views.html.organizations.render(organizations));
+//    }
+
+    /**
+     * Display the paginated list of organizations.
+     *
+     * @param pageIndex Current page number (starts from 0)
+     * @param sortBy Column to be sorted
+     * @param order Sort order (either asc or desc)
+     * @param filter Filter applied on organization names
+     */
     @Transactional(readOnly = true)
-    public static Result index() throws IOException {
-        @SuppressWarnings("unchecked")
-        List<Organization> organizations = JPA.em().createQuery(
-                "select o from Organization o"
-        )
-                .getResultList();
-        return ok(views.html.organizations.render(organizations));
+    public static Result list(int pageIndex, String sortBy, String order, String filter) {
+        return ok(
+                views.html.organizations.render(
+                        Organization.page(pageIndex, 10, sortBy, order, filter),
+                        sortBy, order, filter
+                )
+        );
     }
 
     public static Result create() {
@@ -44,7 +62,7 @@ public class Organizations extends Controller {
         Organization organization = JPA.em().find(Organization.class, id);
         if (organization == null) {
             flash("error", "Organization could not be found");
-            return redirect(routes.Organizations.index());
+            return redirect(routes.Organizations.list(0, "name", "asc", ""));
         }
         Form<Organization> filledForm = organizationForm.fill(organization);
         return ok(views.html.organizationForm.render(false, filledForm));
@@ -63,7 +81,7 @@ public class Organizations extends Controller {
                 JPA.em().merge(organization);
             }
             flash("success", "Organization '" + organization.name + "' has been successfully saved");
-            return redirect(routes.Organizations.index());
+            return redirect(routes.Organizations.list(0, "name", "asc", ""));
         }
     }
 
@@ -83,6 +101,6 @@ public class Organizations extends Controller {
         } else {
             flash("success", "The selected organizations have been deleted");
         }
-        return redirect(routes.Organizations.index());
+        return redirect(routes.Organizations.list(0, "name", "asc", ""));
     }
 }
