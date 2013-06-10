@@ -78,7 +78,7 @@ public class TokenAction {
         JPA.em().createQuery(
                 "delete from TokenAction t where t.targetUser.id = ?1 and t.type = ?2"
         )
-                .setParameter(1, u.id)
+                .setParameter(1, u.getId())
                 .setParameter(2, type);
     }
 

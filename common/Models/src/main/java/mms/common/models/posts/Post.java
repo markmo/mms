@@ -34,7 +34,7 @@ public class Post {
     @JoinColumn(name = "thread_id")
     private DiscussionThread thread;
 
-    private Long userId;
+    private int userId;
 
     public Long getId() {
         return id;
@@ -84,11 +84,11 @@ public class Post {
         this.thread = thread;
     }
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

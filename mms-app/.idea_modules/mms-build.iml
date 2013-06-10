@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="FacetManager">
-    <facet type="scala" name="Scala">
-      <configuration>
-        <option name="compilerLibraryLevel" value="Project" />
-        <option name="compilerLibraryName" value="Scala 2.10.1" />
-      </configuration>
-    </facet>
-  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/../project/target/scala_2.9.2" />
-    <output-test url="file://$MODULE_DIR$/../project/target/scala_2.9.2" />
+    <output url="file://$MODULE_DIR$/../project/target/idea-classes" />
+    <output-test url="file://$MODULE_DIR$/../project/target/idea-test-classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../project">
       <sourceFolder url="file://$MODULE_DIR$/../project" isTestSource="false" />
@@ -25,7 +17,6 @@
     <orderEntry type="module-library">
       <library name="sbt-and-plugins">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../project/target/scala-2.9.2/sbt-0.12/classes" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/collections-0.12.2.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/org.parboiled/parboiled-java/1.0.2/jars/parboiled-java.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/net.databinder/dispatch-futures_2.9.1/0.8.6/jars/dispatch-futures_2.9.1.jar!/" />
@@ -40,10 +31,12 @@
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/asm/asm/3.3.1/jars/asm.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/commons-httpclient-3.1.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/org.javassist/javassist/3.16.1-GA/jars/javassist.jar!/" />
+          <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/cache/net.sf.proguard/proguard-base/jars/proguard-base-4.8.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/xsbti/interface-0.12.2.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/play/routes-compiler_2.9.2/2.1.0/jars/routes-compiler_2.9.2.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/classpath-0.12.2.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/run-0.12.2.jar!/" />
+          <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/cache/scala_2.9.2/sbt_0.12/org.scala-sbt/sbt-android-plugin/jars/sbt-android-plugin-0.6.3-20130429-SNAPSHOT.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/org.clapper/grizzled-slf4j_2.9.1/0.6.5/jars/grizzled-slf4j_2.9.1.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/testing-0.12.2.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/io-0.12.2.jar!/" />
@@ -54,6 +47,7 @@
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/play/play-exceptions/2.1.0/jars/play-exceptions.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/org.slf4j/slf4j-api/1.6.2/jars/slf4j-api.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/compile-0.12.2.jar!/" />
+          <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/cache/com.google.android.tools/ddmlib/jars/ddmlib-r10.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/commons-logging/commons-logging/1.1.1/jars/commons-logging.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/logging-0.12.2.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/commons-logging-1.0.4.jar!/" />
@@ -108,6 +102,7 @@
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/com.google.guava/guava/10.0.1/jars/guava.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/com.github.scala-incubator.io/scala-io-core_2.9.2/0.4.1/jars/scala-io-core_2.9.2.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/ivy-2.3.0-rc1.jar!/" />
+          <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/cache/scala_2.9.2/sbt_0.12/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.5.0-SNAPSHOT.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/asm/asm-tree/3.3.1/jars/asm-tree.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/org.apache.httpcomponents/httpclient/4.1.2/jars/httpclient.jar!/" />
           <root url="jar:///usr/local/Cellar/play/2.1.0/libexec/framework/sbt/boot/scala-2.9.2/org.scala-sbt/sbt/0.12.2/api-0.12.2.jar!/" />
@@ -129,6 +124,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="SBT: scala:2.9.2" level="project" />
   </component>
 </module>
 

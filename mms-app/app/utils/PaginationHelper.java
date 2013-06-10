@@ -1,4 +1,4 @@
-package helpers;
+package utils;
 
 import controllers.routes;
 
@@ -7,20 +7,22 @@ import controllers.routes;
  * Date: 5/06/13
  * Time: 8:40 PM
  */
-public class ListHelper {
+public class PaginationHelper {
 
 //    private String currentSortBy;
 //    private String currentOrder;
 //    private String currentFilter;
 //
-//    public ListHelper(String currentSortBy, String currentOrder, String currentFilter) {
+//    public PaginationHelper(String currentSortBy, String currentOrder,
+//                            String currentFilter) {
 //        this.currentSortBy = currentSortBy;
 //        this.currentOrder = currentOrder;
 //        this.currentFilter = currentFilter;
 //    }
 
-    public static String link(String currentSortBy, String currentOrder, String currentFilter,
-                       int newPageIndex, String newSortBy) {
+    public static String link(String currentSortBy, String currentOrder,
+                              String currentFilter,
+                              int newPageIndex, String newSortBy) {
         String sortBy = currentSortBy;
         String order = currentOrder;
         if (newSortBy != null) {
@@ -35,11 +37,12 @@ public class ListHelper {
         return routes.Organizations.list(newPageIndex, sortBy, order, currentFilter).toString();
     }
 
-    public static String header(String currentSortBy, String currentOrder, String currentFilter,
-                         String key, String title) {
+    public static String header(String currentSortBy, String currentOrder,
+                                String currentFilter,
+                                String key, String title) {
         return
                 "<th class=\"" + key.replace(".", "_") + " header " +
-                ("asc".equals(currentOrder) ? "headerSortDown" : "headerSortUp") +
+                ("asc".equals(currentOrder) ? "headerSortUp" : "headerSortDown") +
                 "\"><a href=\"" + link(currentSortBy, currentOrder,currentFilter, 0, key) + "\">" + title +
                 "</a></th>";
     }

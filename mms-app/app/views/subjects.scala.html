@@ -1,4 +1,5 @@
-@(currentPage: Page[Organization], currentSortBy: String, currentOrder: String, currentFilter: String)
+@(currentPage: Page[Tuple3[org.code_factory.jpa.nestedset.Node[AbstractSubject], AbstractSubject, Boolean]],
+  currentSortBy: String, currentOrder: String, currentFilter: String)
 
 @import tags._
 @import utils.PaginationHelper.{link => _link, header => _header}
@@ -11,7 +12,7 @@
   Html(_header(currentSortBy, currentOrder, currentFilter, key, title))
 }
 
-@main("Organizations", null, null) {
+@main("Security Subjects", null, null) {
     @if(flash.contains("success")) {
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -24,39 +25,45 @@
             <div>@flash.get("error")</div>
         </div>
     }
-    <h1>Organizations</h1>
+    <h1>Security Subjects</h1>
     <div class="clearfix" style="margin-bottom: 10px;">
-        <a href="@routes.Organizations.create" class="btn btn-small btn-success">
+        <a href="@routes.Users.create" class="btn btn-small btn-success">
             <i class="icon-plus icon-white"></i>
-            <span>New organization&hellip;</span>
+            <span>New user&hellip;</span>
+        </a>
+        <a href="@routes.SecurityGroups.create" class="btn btn-small btn-success">
+            <i class="icon-plus icon-white"></i>
+            <span>New security group&hellip;</span>
         </a>
     </div>
     @if(currentPage.isEmpty) {
         <p>None defined.</p>
     } else {
-        @helper.form(action = routes.Organizations.delete) {
+        @helper.form(action = routes.SecuritySubjects.delete) {
             <table class="table table-hover">
                 <thead>
                 <tr>
                     @header("name", "Name")
                     <th colspan="2" style="width: 91px;"></th>
                 </tr>
-                <tr>
-                    <th>
-                        <div class="input-append">
-                            <input id="filter" name="filter" type="text">
-                            <span id="btn-filter" class="add-on"><i class="icon-search"></i></span>
-                        </div>
-                    </th>
-                    <th colspan="2" style="width: 91px;"></th>
-                </tr>
                 </thead>
                 <tbody>
-                @for(o <- currentPage.getList) {
+                @for((node, subject, open) <- currentPage.getList) {
                     <tr>
-                        <td><a href="#">@o.name</a></td>
-                        <td style="width: 14px;"><a href="@routes.Organizations.edit(o.id)"><i class="icon-edit"></i></a></td>
-                        <td style="width: 77px;"><input name="deletions[]" value="@o.id" type="checkbox"></td>
+                        <td>
+                            @if(node.hasChildren()) {
+                            <a href="#" class="level@subject.getLevel()">@if(open) {+} else {&ndash;}</a>
+                            <a href="#">@subject.getName()</a>
+                            } else {
+                            <a href="#" class="level@subject.getLevel()">@subject.getName()</a>
+                            }
+                        </td>
+                        @if(subject.isInstanceOf[User]) {
+                        <td style="width: 14px;"><a href="@routes.Users.edit(subject.getId())"><i class="icon-edit"></i></a></td>
+                        } else {
+                        <td style="width: 14px;"><a href="@routes.SecurityGroups.edit(subject.getId())"><i class="icon-edit"></i></a></td>
+                        }
+                        <td style="width: 77px;"><input name="deletions[]" value="@subject.getId()" type="checkbox"></td>
                     </tr>
                 }
                 </tbody>

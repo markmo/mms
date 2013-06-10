@@ -10,6 +10,10 @@ import com.fasterxml.jackson.annotation.*;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
 import com.feth.play.module.pa.user.*;
 import org.apache.commons.lang.StringUtils;
+import org.code_factory.jpa.nestedset.JpaNestedSetManager;
+import org.code_factory.jpa.nestedset.NestedSetManager;
+import org.code_factory.jpa.nestedset.Node;
+import org.code_factory.jpa.nestedset.annotations.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import play.data.format.Formats;
@@ -29,15 +33,17 @@ import models.TokenAction.Type;
 // using DTO at bottom for JSON serialization
 public class User extends AbstractSubject {
 
+    private String name;
+
 //	@Email
 	// if you make this unique, keep in mind that users *must* merge/link their
 	// accounts then on signup with additional providers
 	// @Column(unique = true)
 	public String email;
 
-    public String firstName;
+    private String firstName;
 
-    public String lastName;
+    private String lastName;
 
     public String title;
 
@@ -82,7 +88,30 @@ public class User extends AbstractSubject {
     @JsonManagedReference("linkedAccount")
 	public List<LinkedAccount> linkedAccounts;
 
-    @Transient
+    @Column(updatable=false)
+    @LeftColumn
+    private int lft;
+
+    @RightColumn
+    @Column(updatable=false)
+    private int rgt;
+
+    @LevelColumn
+    @Column(updatable=false)
+    private int level;
+
+    @RootColumn
+    private int rootId;
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         StringBuilder sb = new StringBuilder();
         if (firstName != null) {
@@ -97,6 +126,7 @@ public class User extends AbstractSubject {
     }
 
     public void setName(String name) {
+        this.name = name;
         if (name == null) return;
         String[] parts = name.trim().split("\\s+");
         int len = parts.length;
@@ -104,6 +134,64 @@ public class User extends AbstractSubject {
         if (len > 1) {
             firstName = StringUtils.join(Arrays.copyOfRange(parts, 0, len - 1), " ");
         }
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        setName(getName());
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        setName(getName());
+    }
+
+    @Override
+    public int getLeftValue() {
+        return this.lft;
+    }
+
+    @Override
+    public int getRightValue() {
+        return this.rgt;
+    }
+
+    @Override
+    public int getLevel() {
+        return this.level;
+    }
+
+    @Override
+    public void setLeftValue(int value) {
+        this.lft = value;
+    }
+
+    @Override
+    public void setRightValue(int value) {
+        this.rgt = value;
+    }
+
+    @Override
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    @Override
+    public int getRootValue() {
+        return this.rootId;
+    }
+
+    @Override
+    public void setRootValue(int value) {
+        this.rootId = value;
     }
 
     public static boolean existsByAuthUserIdentity(
@@ -119,7 +207,9 @@ public class User extends AbstractSubject {
 
     private static Query getAuthUserFind(final AuthUserIdentity identity) {
         return JPA.em().createQuery(
-                "select u from User u join LinkedAccount a where u.active = true and a.providerUserId = ?1 and a.providerKey = ?2"
+                "select u from User u join LinkedAccount a " +
+                "where u.active = true and a.providerUserId = ?1 " +
+                "and a.providerKey = ?2"
         )
                 .setParameter(1, identity.getId())
                 .setParameter(2, identity.getProvider());
@@ -295,7 +385,7 @@ public class User extends AbstractSubject {
 		TokenAction.deleteByUser(this, Type.PASSWORD_RESET);
 	}
 
-    public static User findById(Long id) {
+    public static User findById(int id) {
         return getSingleResult(User.class, JPA.em().createQuery(
                 "select u from User u where u.id = ?1"
         )
@@ -304,11 +394,24 @@ public class User extends AbstractSubject {
     }
 
     public static User update(User partialUser) {
-        if (partialUser.id == null) {
+        NestedSetManager nsm = new JpaNestedSetManager(JPA.em());
+        SecurityGroup parent = partialUser.parentGroup;
+        SecurityGroup parentGroup = null;
+        if (parent != null && parent.getId() > 0) {
+            parentGroup = JPA.em().find(SecurityGroup.class, parent.getId());
+        }
+        if (partialUser.getId() == 0) {
+            partialUser.parentGroup = parentGroup;
+            if (parentGroup == null) {
+                nsm.createRoot(partialUser);
+            } else {
+                Node<AbstractSubject> node = nsm.getNode((AbstractSubject)parentGroup);
+                node.addChild(partialUser);
+            }
             JPA.em().persist(partialUser);
             return partialUser;
         } else {
-            User user = User.findById(partialUser.id);
+            User user = User.findById(partialUser.getId());
             final String[] includedProperties = new String[]{
                     "email",
                     "firstName",
@@ -319,6 +422,13 @@ public class User extends AbstractSubject {
                     "biography"
             };
             copyProperties(partialUser, user, Arrays.asList(includedProperties));
+            user.parentGroup = parentGroup;
+            if (parentGroup == null) {
+                nsm.createRoot(user);
+            } else {
+                Node<AbstractSubject> node = nsm.getNode((AbstractSubject)parentGroup);
+                node.addChild(user);
+            }
             JPA.em().persist(user);
             return user;
         }
@@ -326,7 +436,7 @@ public class User extends AbstractSubject {
 
     public UserDTO getDTO() {
         UserDTO dto = new UserDTO();
-        dto.id = id;
+        dto.id = getId();
         dto.email = email;
         dto.firstName = firstName;
         dto.lastName = lastName;
@@ -344,7 +454,7 @@ public class User extends AbstractSubject {
 
     public static class UserDTO {
 
-        public Long id;
+        public int id;
         public String email;
         public String firstName;
         public String lastName;

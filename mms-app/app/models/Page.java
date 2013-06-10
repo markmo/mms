@@ -2,12 +2,16 @@ package models;
 
 import java.util.List;
 
+import com.google.common.collect.*;
+
 /**
  * User: markmo
  * Date: 5/06/13
  * Time: 8:12 PM
  */
 public class Page<T> {
+
+    private static final int DEFAULT_RANGE_SIZE = 5;
 
     private final int pageSize;
     private final long totalRowCount;
@@ -43,6 +47,33 @@ public class Page<T> {
 
     public boolean isEmpty() {
         return (list == null || list.isEmpty());
+    }
+
+    public Integer[] nearestIndexes() {
+        return nearestIndexes(DEFAULT_RANGE_SIZE);
+    }
+
+    public Integer[] nearestIndexes(int rangeSize) {
+        int behindSize = rangeSize / 2;
+        int aheadSize = rangeSize - behindSize;
+        int totalPageCount = (int)Math.ceil(new Double(totalRowCount) / pageSize);
+        int size = Math.min(rangeSize, totalPageCount);
+        Integer[] indexes = new Integer[size];
+        Range<Integer> range;
+        if (pageIndex == 1) {
+            range = Range.closed(1, size);
+        } else {
+            int ahead = Math.min(pageIndex + aheadSize, totalPageCount) - pageIndex;
+            int behind = Math.min(rangeSize - ahead, pageIndex - 1);
+            if (behind < behindSize)
+                ahead = Math.min(pageIndex + rangeSize - behind, totalPageCount) - pageIndex;
+            range = Range.closed(pageIndex - behind, pageIndex + ahead);
+        }
+        return ContiguousSet.create(range, DiscreteDomain.integers()).toArray(indexes);
+    }
+
+    public boolean isCurrentIndex(int idx) {
+        return pageIndex == idx;
     }
 
     public String getDisplayXtoYofZ() {

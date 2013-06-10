@@ -77,19 +77,19 @@ public class Account extends Controller {
 
     @Transactional(readOnly = true)
     @Restrict(@Group(Application.USER_ROLE))
-    public static Result edit(Long id) {
+    public static Result edit(int id) {
         User user = JPA.em().find(User.class, id);
         Form<User> userForm = USER_FORM.fill(user);
-        return ok(edit.render(userForm));
+        return ok(edit.render(id, userForm));
     }
 
     @Transactional
     @Restrict(@Group(Application.USER_ROLE))
-    public static Result update() {
+    public Result update(int id) {
         Form<User> boundForm = USER_FORM.bindFromRequest();
         if (boundForm.hasErrors()) {
             flash("error", "Please correct the form below.");
-            return badRequest(edit.render(boundForm));
+            return badRequest(edit.render(id, boundForm));
         }
         User user = User.update(boundForm.get());
         flash("success",

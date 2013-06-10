@@ -32,11 +32,11 @@
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK" />
   <component name="RegexUtilComponent" text="std|~|lower_quartile|~|dwelling|~|district|~|end_date|~|area|~|region|~|bedrooms|~|upper_quartile|~|start_date|~|bonds_received|~|average_rent|~|median_rent|~|date_type 65.47|~|245|~|&quot;Apartment&quot;|~|&quot;Gisborne&quot;|~|2011-02-28|~|&quot;Gisborne&quot;|~|&quot;Gisborne&quot;|~|2|~|352|~|2010-09-01|~|9|~|308|~|330|~|&quot;range&quot;" flags="40" regex="((\Q|~|\E)|^)\W*\Q&quot;\E[^\Q|\E\n]*\Q&quot;\E" mode="0" />
-  <component name="WebServicesPlugin" addRequiredLibraries="true" />
+  <component addRequiredLibraries="true" name="WebServicesPlugin" />
   <component name="com.sixrr.metrics.MetricsReloaded">
-    <option name="selectedProfile" value="" />
-    <option name="autoscroll" value="false" />
-    <option name="showOnlyWarnings" value="false" />
+    <option value="" name="selectedProfile" />
+    <option value="false" name="autoscroll" />
+    <option value="false" name="showOnlyWarnings" />
   </component>
 </project>
 

@@ -1,0 +1,19 @@
+@(isNew: Boolean, id: Int, groupForm: Form[SecurityGroup])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Edit Security Group") {
+    <h1>@if(isNew) {New} else {Edit} Security Group</h1>
+    @form(action = routes.SecurityGroups.update(id)) {
+        @inputText(groupForm("name"), '_label -> "Name", 'class -> "span5")
+        @select(
+          groupForm("parentGroup.id"),
+          options(SecurityGroup.options),
+          '_label -> "Security Group",
+          '_showConstraints -> false
+        )
+        <a href="@routes.SecuritySubjects.list(1, "name", "asc", "")" class="btn">Cancel</a>
+        <input type="submit" class="btn btn-primary" value="@if(isNew) {Create} else {Update}">
+    }
+}

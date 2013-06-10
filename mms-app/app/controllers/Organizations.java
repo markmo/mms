@@ -1,13 +1,9 @@
 package controllers;
 
-import static play.data.Form.*;
+import static play.data.Form.form;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
-import be.objectify.deadbolt.java.actions.*;
-import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -62,7 +58,7 @@ public class Organizations extends Controller {
         Organization organization = JPA.em().find(Organization.class, id);
         if (organization == null) {
             flash("error", "Organization could not be found");
-            return redirect(routes.Organizations.list(0, "name", "asc", ""));
+            return redirect(routes.Organizations.list(1, "name", "asc", ""));
         }
         Form<Organization> filledForm = organizationForm.fill(organization);
         return ok(views.html.organizationForm.render(false, filledForm));
@@ -81,7 +77,7 @@ public class Organizations extends Controller {
                 JPA.em().merge(organization);
             }
             flash("success", "Organization '" + organization.name + "' has been successfully saved");
-            return redirect(routes.Organizations.list(0, "name", "asc", ""));
+            return redirect(routes.Organizations.list(1, "name", "asc", ""));
         }
     }
 

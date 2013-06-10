@@ -5,8 +5,14 @@ import java.util.List;
 import javax.persistence.*;
 
 import be.objectify.deadbolt.core.models.*;
+import org.code_factory.jpa.nestedset.NodeInfo;
+import org.code_factory.jpa.nestedset.annotations.LeftColumn;
+import org.code_factory.jpa.nestedset.annotations.LevelColumn;
+import org.code_factory.jpa.nestedset.annotations.RightColumn;
+import org.code_factory.jpa.nestedset.annotations.RootColumn;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import play.db.jpa.JPA;
 
 /**
  * User: markmo
@@ -15,21 +21,18 @@ import org.hibernate.annotations.LazyCollectionOption;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class AbstractSubject implements Subject {
+public abstract class AbstractSubject implements Subject, NodeInfo {
 
     @Id
     @GeneratedValue
     @Column(name = "subject_id")
-    public Long id;
-
-    @Column(name = "subject_name")
-    public String name;
+    protected int id;
 
     @ManyToOne
     @JoinColumn(name = "organization_id")
     public Organization organization;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_group_id")
     public SecurityGroup parentGroup;
 
@@ -50,6 +53,32 @@ public abstract class AbstractSubject implements Subject {
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     public List<UserPermission> permissions;
+
+    public abstract String getName();
+
+//    @Column(updatable=false)
+//    @LeftColumn
+//    private int lft;
+//
+//    @RightColumn
+//    @Column(updatable=false)
+//    private int rgt;
+//
+//    @LevelColumn
+//    @Column(updatable=false)
+//    private int level;
+//
+//    @RootColumn
+//    private int rootId;
+//
+//    @Override
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     @Override
     public String getIdentifier() {
@@ -78,5 +107,63 @@ public abstract class AbstractSubject implements Subject {
             permissionList.addAll(parentGroup.getPermissions());
         }
         return permissionList;
+    }
+
+//    @Override
+//    public int getLeftValue() {
+//        return this.lft;
+//    }
+//
+//    @Override
+//    public int getRightValue() {
+//        return this.rgt;
+//    }
+//
+//    @Override
+//    public int getLevel() {
+//        return this.level;
+//    }
+//
+//    @Override
+//    public void setLeftValue(int value) {
+//        this.lft = value;
+//    }
+//
+//    @Override
+//    public void setRightValue(int value) {
+//        this.rgt = value;
+//    }
+//
+//    @Override
+//    public void setLevel(int level) {
+//        this.level = level;
+//    }
+//
+//    @Override
+//    public int getRootValue() {
+//        return this.rootId;
+//    }
+//
+//    @Override
+//    public void setRootValue(int value) {
+//        this.rootId = value;
+//    }
+
+    public static Page<AbstractSubject> page(int pageIndex, int pageSize, String sortBy, String order, String filter) {
+        if (pageIndex < 1) pageIndex = 1;
+        Long totalRowCount = (Long) JPA.em()
+                .createQuery("select count(s) from AbstractSubject s where lower(s.name) like ?1")
+                .setParameter(1, "%" + filter.toLowerCase() + "%")
+                .getSingleResult();
+        @SuppressWarnings("unchecked")
+        List<AbstractSubject> list = JPA.em()
+                .createQuery("select s from AbstractSubject s where lower(s.name) like ?1" +
+                            " order by s.lft")
+//                            " order by s." + sortBy + " " + order)
+                .setParameter(1, "%" + filter.toLowerCase() + "%")
+                .setFirstResult((pageIndex - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList();
+        return new Page<>(list, totalRowCount, pageIndex, pageSize);
     }
 }

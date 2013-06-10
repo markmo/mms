@@ -21,7 +21,7 @@ public class Organization {
     @Column(name = "organization_name")
     public String name;
 
-    public static Page page(int pageIndex, int pageSize, String sortBy, String order, String filter) {
+    public static Page<Organization> page(int pageIndex, int pageSize, String sortBy, String order, String filter) {
         if (pageIndex < 1) pageIndex = 1;
         Long totalRowCount = (Long)JPA.em()
                 .createQuery("select count(o) from Organization o where lower(o.name) like ?1")

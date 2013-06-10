@@ -43,6 +43,7 @@ object ApplicationBuild extends Build {
       )
     ,"org.eobjects.metamodel" % "MetaModel-pojo" % "3.4.1"
     ,"nz.co.datascience" % "rel_2.9.1" % "0.3.1"
+    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
 
     // Hadoop
     ,"org.apache.hadoop" % "hadoop-core" % "1.1.2"

@@ -288,11 +288,11 @@ public class MyUsernamePasswordAuthProvider
 
         final String html = getEmailTemplate(
                 "views.html.account.email.password_reset", langCode, url,
-                token, user.name, user.email);
+                token, user.getName(), user.email);
 
         final String text = getEmailTemplate(
                 "views.txt.account.email.password_reset", langCode, url,
-                token, user.name, user.email);
+                token, user.getName(), user.email);
 
         return new Body(text, html);
     }
@@ -365,11 +365,11 @@ public class MyUsernamePasswordAuthProvider
 
         final String html = getEmailTemplate(
                 "views.html.account.email.verify_email", langCode, url,
-                token, user.name, user.email);
+                token, user.getName(), user.email);
 
         final String text = getEmailTemplate(
                 "views.txt.account.email.verify_email", langCode, url,
-                token, user.name, user.email);
+                token, user.getName(), user.email);
 
         return new Body(text, html);
     }
@@ -384,6 +384,6 @@ public class MyUsernamePasswordAuthProvider
     }
 
     private String getEmailName(final User user) {
-        return getEmailName(user.email, user.name);
+        return getEmailName(user.email, user.getName());
     }
 }

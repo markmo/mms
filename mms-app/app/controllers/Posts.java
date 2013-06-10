@@ -109,7 +109,7 @@ public class Posts extends Controller {
             post.setMessage(postInput.message);
             post.setParent(parent);
             post.setThread(thread);
-            post.setUserId(user.id);
+            post.setUserId(user.getId());
             if (thread.getPosts() == null) {
                 thread.setPosts(new ArrayList<Post>());
             }
@@ -145,7 +145,7 @@ public class Posts extends Controller {
         public String entityType;
         public Long entityId;
         public Long parentId;
-        public Long userId;
+        public int userId;
         public String subject;
         public String message;
     }

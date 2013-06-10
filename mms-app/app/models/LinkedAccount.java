@@ -31,7 +31,7 @@ public class LinkedAccount {
                 JPA.em().createQuery(
                         "select a from LinkedAccount a where a.user.id = ?1 and a.providerKey = ?2"
                 )
-                        .setParameter(1, user.id)
+                        .setParameter(1, user.getId())
                         .setParameter(2, key)
         );
     }

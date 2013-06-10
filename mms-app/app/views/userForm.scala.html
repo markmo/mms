@@ -1,0 +1,24 @@
+@(isNew: Boolean, id: Int, userForm: Form[User])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Edit User") {
+    <h1>@if(isNew) {New} else {Edit} User</h1>
+    @form(action = routes.Users.update(id)) {
+        @inputText(userForm("firstName"), '_label -> "First Name", 'class -> "span5")
+        @inputText(userForm("lastName"), '_label -> "Last Name", 'class -> "span5")
+        @inputText(userForm("email"), '_label -> "Email", 'class -> "span5")
+        @inputText(userForm("title"), '_label -> "Title", 'class -> "span5")
+        @select(
+          userForm("parentGroup.id"),
+          options(SecurityGroup.options),
+          '_label -> "Security Group",
+          '_showConstraints -> false
+        )
+        @inputText(userForm("dept"), '_label -> "Department", 'class -> "span5")
+        @textarea(userForm("biography"), '_label -> "Biography", 'class -> "span5")
+        <a href="@routes.SecuritySubjects.list(1, "name", "asc", "")" class="btn">Cancel</a>
+        <input type="submit" class="btn btn-primary" value="@if(isNew) {Create} else {Update}">
+    }
+}

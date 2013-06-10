@@ -1,4 +1,4 @@
-@(accountForm: Form[User])
+@(id: Int, accountForm: Form[User])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -14,7 +14,7 @@
 <div id="account-edit" class="row">
 
     <div class="span3">
-        @helper.form(routes.Account.update) {
+        @helper.form(routes.Account.update(id)) {
 
             @if(accountForm.hasGlobalErrors) {
             <p class="error">
@@ -50,7 +50,6 @@
             'class -> "input-xxlarge", 'rows -> 5
             )
 
-            <input type="hidden" name="id" value="@accountForm("id").value">
             <input type="submit" value="@Messages("account.edit.submit")" class="btn btn-primary">
         }
     </div>

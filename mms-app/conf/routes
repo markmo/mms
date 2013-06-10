@@ -144,8 +144,8 @@ DELETE  /vendors                        controllers.Vendors.delete
 
 ## Authentication and Account Management Module
 
-GET     /account/:id/edit               controllers.Account.edit(id: Long)
-POST    /accounts                       controllers.Account.update()
+GET     /account/:id/edit               controllers.Account.edit(id: Int)
+POST    /accounts/:id                   @controllers.Account.update(id: Int)
 
 GET     /accounts/add                   controllers.Account.link
 
@@ -179,9 +179,9 @@ POST    /login                          @controllers.Application.doLogin
 
 GET     /logout                         com.feth.play.module.pa.controllers.Authenticate.logout
 
+# Organizations
 GET     /organizations/new              controllers.Organizations.create
 GET     /organizations/:id/edit         controllers.Organizations.edit(id: Long)
-#GET     /organizations                  controllers.Organizations.index
 GET     /organizations                  controllers.Organizations.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 POST    /organizations/update           controllers.Organizations.update
 POST    /organizations/delete           controllers.Organizations.delete
@@ -192,9 +192,22 @@ GET     /profile.json                   @controllers.Application.profileAsJSON
 
 GET     /restricted                     @controllers.Application.restricted
 
+# Security Groups
+GET     /securitygroups/new             controllers.SecurityGroups.create
+GET     /securitygroups/:id/edit        controllers.SecurityGroups.edit(id: Int)
+POST    /securitygroups/:id             @controllers.SecurityGroups.update(id: Int)
+
+# Security Subjects
+GET     /subjects                       controllers.SecuritySubjects.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+POST    /subjects/delete                controllers.SecuritySubjects.delete
+
 GET     /signup                         @controllers.Application.signup
 POST    /signup                         @controllers.Application.doSignup
 
+# Users
+GET     /users/new                      controllers.Users.create
+GET     /users/:id/edit                 controllers.Users.edit(id: Int)
+POST    /users/:id                      @controllers.Users.update(id: Int)
 
 ## Assets
 
