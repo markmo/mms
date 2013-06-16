@@ -10,10 +10,8 @@ import com.fasterxml.jackson.annotation.*;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthUser;
 import com.feth.play.module.pa.user.*;
 import org.apache.commons.lang.StringUtils;
-import org.code_factory.jpa.nestedset.JpaNestedSetManager;
-import org.code_factory.jpa.nestedset.NestedSetManager;
-import org.code_factory.jpa.nestedset.Node;
-import org.code_factory.jpa.nestedset.annotations.*;
+import org.code_factory.jpa.nestedset.*;
+import org.code_factory.jpa.nestedset.annotations.NodeClass;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import play.data.format.Formats;
@@ -28,12 +26,11 @@ import models.TokenAction.Type;
  * Modified by Mark Moloney for JPA
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "mms")
+@NodeClass(type = SecuritySubject.class)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") // still not working
 // using DTO at bottom for JSON serialization
-public class User extends AbstractSubject {
-
-    private String name;
+public class User extends SecuritySubject {
 
 //	@Email
 	// if you make this unique, keep in mind that users *must* merge/link their
@@ -88,30 +85,6 @@ public class User extends AbstractSubject {
     @JsonManagedReference("linkedAccount")
 	public List<LinkedAccount> linkedAccounts;
 
-    @Column(updatable=false)
-    @LeftColumn
-    private int lft;
-
-    @RightColumn
-    @Column(updatable=false)
-    private int rgt;
-
-    @LevelColumn
-    @Column(updatable=false)
-    private int level;
-
-    @RootColumn
-    private int rootId;
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         StringBuilder sb = new StringBuilder();
         if (firstName != null) {
@@ -152,46 +125,6 @@ public class User extends AbstractSubject {
     public void setLastName(String lastName) {
         this.lastName = lastName;
         setName(getName());
-    }
-
-    @Override
-    public int getLeftValue() {
-        return this.lft;
-    }
-
-    @Override
-    public int getRightValue() {
-        return this.rgt;
-    }
-
-    @Override
-    public int getLevel() {
-        return this.level;
-    }
-
-    @Override
-    public void setLeftValue(int value) {
-        this.lft = value;
-    }
-
-    @Override
-    public void setRightValue(int value) {
-        this.rgt = value;
-    }
-
-    @Override
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    @Override
-    public int getRootValue() {
-        return this.rootId;
-    }
-
-    @Override
-    public void setRootValue(int value) {
-        this.rootId = value;
     }
 
     public static boolean existsByAuthUserIdentity(
@@ -272,7 +205,9 @@ public class User extends AbstractSubject {
 	}
 
 	public static User create(final AuthUser authUser) {
-		final User user = new User();
+        NestedSetManager nsm = new JpaNestedSetManager(JPA.em());
+        Node<User> node = nsm.createRoot(new User());
+		final User user = node.unwrap();
 		user.roles = Collections.singletonList(
                 SecurityRole.findByRoleName(controllers.Application.USER_ROLE));
 		// user.permissions = new ArrayList<UserPermission>();
@@ -281,7 +216,7 @@ public class User extends AbstractSubject {
 		user.lastLogin = new Date();
 
         ///////////// this wasn't in the original
-        // TODO: was ebean creating this association automatically
+        // TODO: was ebean creating this association automatically?
 
         LinkedAccount a = LinkedAccount.create(authUser);
         a.user = user;
@@ -301,12 +236,13 @@ public class User extends AbstractSubject {
 		}
 
 		if (authUser instanceof NameIdentity) {
-			final NameIdentity identity = (NameIdentity) authUser;
+			final NameIdentity identity = (NameIdentity)authUser;
 			final String name = identity.getName();
 			if (name != null) {
 				user.setName(name);
 			}
 		}
+
         JPA.em().persist(user);
 
 		return user;
@@ -393,41 +329,47 @@ public class User extends AbstractSubject {
         );
     }
 
-    public static User update(User partialUser) {
+    public static User update(UserDTO userDTO) {
         NestedSetManager nsm = new JpaNestedSetManager(JPA.em());
-        SecurityGroup parent = partialUser.parentGroup;
+        SecurityGroup parent = userDTO.parentGroup;
         SecurityGroup parentGroup = null;
         if (parent != null && parent.getId() > 0) {
             parentGroup = JPA.em().find(SecurityGroup.class, parent.getId());
         }
-        if (partialUser.getId() == 0) {
-            partialUser.parentGroup = parentGroup;
-            if (parentGroup == null) {
-                nsm.createRoot(partialUser);
-            } else {
-                Node<AbstractSubject> node = nsm.getNode((AbstractSubject)parentGroup);
-                node.addChild(partialUser);
-            }
-            JPA.em().persist(partialUser);
-            return partialUser;
-        } else {
-            User user = User.findById(partialUser.getId());
-            final String[] includedProperties = new String[]{
-                    "email",
-                    "firstName",
-                    "lastName",
-                    "name",
-                    "title",
-                    "dept",
-                    "biography"
-            };
-            copyProperties(partialUser, user, Arrays.asList(includedProperties));
-            user.parentGroup = parentGroup;
+        final String[] includedProperties = new String[]{
+                "email",
+                "firstName",
+                "lastName",
+                "name",
+                "title",
+                "dept",
+                "biography",
+                "roleIds"
+        };
+        if (userDTO.id == 0) {
+            userDTO.parentGroup = parentGroup;
+            User user = new User();
+            copyProperties(userDTO, user, Arrays.asList(includedProperties));
             if (parentGroup == null) {
                 nsm.createRoot(user);
             } else {
-                Node<AbstractSubject> node = nsm.getNode((AbstractSubject)parentGroup);
+                Node<SecuritySubject> node = nsm.getNode((SecuritySubject)parentGroup);
                 node.addChild(user);
+            }
+            JPA.em().persist(user);
+            return user;
+        } else {
+            User user = User.findById(userDTO.id);
+            copyProperties(userDTO, user, Arrays.asList(includedProperties));
+            if (!isSameGroup(user.parentGroup, parentGroup)) {
+                user.parentGroup = parentGroup;
+                if (parentGroup == null) {
+                    Node<User> node = nsm.getNode(user);
+                    node.moveToRoot();
+                } else {
+                    Node<SecuritySubject> node = nsm.getNode((SecuritySubject)parentGroup);
+                    nsm.getNode((SecuritySubject)user).moveAsLastChildOf(node);
+                }
             }
             JPA.em().persist(user);
             return user;
@@ -448,6 +390,8 @@ public class User extends AbstractSubject {
         dto.numberFollowers = (followers == null) ? 0 : followers.size();
         dto.numberFollowing = (following == null) ? 0 : following.size();
         dto.biography = biography;
+        dto.parentGroup = parentGroup;
+        dto.roleIds = getRoleIds();
 
         return dto;
     }
@@ -466,6 +410,8 @@ public class User extends AbstractSubject {
         public int numberVotes;
         public int numberFollowers;
         public int numberFollowing;
+        public SecurityGroup parentGroup;
+        public List<Long> roleIds;
 
     }
 }

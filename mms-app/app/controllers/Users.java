@@ -21,7 +21,7 @@ import models.User;
  */
 public class Users extends Controller {
 
-    final static Form<User> userForm = form(User.class);
+    final static Form<User.UserDTO> userForm = form(User.UserDTO.class);
 
     @Inject
     ObjectMapper mapper;
@@ -46,19 +46,19 @@ public class Users extends Controller {
             flash("error", "User could not be found");
             return redirect(routes.SecuritySubjects.list(1, "name", "asc", ""));
         }
-        Form<User> filledForm = userForm.fill(user);
+        Form<User.UserDTO> filledForm = userForm.fill(user.getDTO());
         return ok(views.html.userForm.render(false, id, filledForm));
     }
 
     @Transactional
     public Result update(int id) {
-        Form<User> filledForm = userForm.bindFromRequest();
+        Form<User.UserDTO> filledForm = userForm.bindFromRequest();
         if (filledForm.hasErrors()) {
             return badRequest(views.html.userForm.render(false, id, filledForm));
         } else {
-            User partialUser = filledForm.get();
-            partialUser.setId(id);
-            User user = User.update(partialUser);
+            User.UserDTO userDTO = filledForm.get();
+            userDTO.id = id;
+            User user = User.update(userDTO);
             flash("success", "User '" + user.getName() + "' has been successfully saved");
             return redirect(routes.SecuritySubjects.list(1, "name", "asc", ""));
         }

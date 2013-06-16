@@ -78,12 +78,12 @@ public class Global extends GlobalSettings {
         });
 
         //Logger.warn("Getting an instance from guice: " + app.plugin(InjectPlugin.class).getInstance(ObjectMapper.class));
-        JPA.withTransaction(new F.Callback0() {
-            @Override
-            public void invoke() {
-                initialData();
-            }
-        });
+//        JPA.withTransaction(new F.Callback0() {
+//            @Override
+//            public void invoke() {
+//                initialData();
+//            }
+//        });
 
         //IndexService.cleanIndex();
     }

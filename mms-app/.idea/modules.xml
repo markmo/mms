@@ -21,6 +21,7 @@
       <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/standardizers/AnalyzerBeans-standardizers.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/standardizers/AnalyzerBeans-standardizers.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/value-distribution/AnalyzerBeans-value-distribution.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/value-distribution/AnalyzerBeans-value-distribution.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/writers/AnalyzerBeans-writers.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/writers/AnalyzerBeans-writers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../JPA-NestedSet/JpaNestedSet.iml" filepath="$PROJECT_DIR$/../../JPA-NestedSet/JpaNestedSet.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms.iml" filepath="$PROJECT_DIR$/.idea_modules/mms.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms-build.iml" filepath="$PROJECT_DIR$/.idea_modules/mms-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/../common/Models/mms-models.iml" filepath="$PROJECT_DIR$/../common/Models/mms-models.iml" />

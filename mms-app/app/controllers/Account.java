@@ -73,20 +73,20 @@ public class Account extends Controller {
 
     private static final Form<Accept> ACCEPT_FORM = form(Accept.class);
     private static final Form<Account.PasswordChange> PASSWORD_CHANGE_FORM = form(Account.PasswordChange.class);
-    private static final Form<User> USER_FORM = form(User.class);
+    private static final Form<User.UserDTO> USER_FORM = form(User.UserDTO.class);
 
     @Transactional(readOnly = true)
     @Restrict(@Group(Application.USER_ROLE))
     public static Result edit(int id) {
         User user = JPA.em().find(User.class, id);
-        Form<User> userForm = USER_FORM.fill(user);
+        Form<User.UserDTO> userForm = USER_FORM.fill(user.getDTO());
         return ok(edit.render(id, userForm));
     }
 
     @Transactional
     @Restrict(@Group(Application.USER_ROLE))
     public Result update(int id) {
-        Form<User> boundForm = USER_FORM.bindFromRequest();
+        Form<User.UserDTO> boundForm = USER_FORM.bindFromRequest();
         if (boundForm.hasErrors()) {
             flash("error", "Please correct the form below.");
             return badRequest(edit.render(id, boundForm));

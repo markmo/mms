@@ -2,38 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="716c433e-460e-411b-a2ac-6b6e6f63c867" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/SecurityGroups.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/SecuritySubjects.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/tags/paginator.scala.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/securityGroupForm.scala.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/subjects.scala.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/userForm.scala.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/helpers/ListHelper.java" afterPath="$PROJECT_DIR$/app/utils/PaginationHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/AbstractSubject.java" afterPath="$PROJECT_DIR$/app/models/AbstractSubject.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/annotations/NodeClass.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/tags/multiSelect.scala.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/models/AbstractSubject.java" afterPath="$PROJECT_DIR$/app/models/SecuritySubject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/img/glyphicons/png/glyphicons_003_user.png" afterPath="$PROJECT_DIR$/public/img/glyphicons/png/glyphicons_003_user.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/img/glyphicons/png/glyphicons_043_group.png" afterPath="$PROJECT_DIR$/public/img/glyphicons/png/glyphicons_043_group.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Account.java" afterPath="$PROJECT_DIR$/app/controllers/Account.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/Build.scala" afterPath="$PROJECT_DIR$/project/Build.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/LinkedAccount.java" afterPath="$PROJECT_DIR$/app/models/LinkedAccount.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/service/MyUserServicePlugin.java" afterPath="$PROJECT_DIR$/app/service/MyUserServicePlugin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/providers/MyUsernamePasswordAuthProvider.java" afterPath="$PROJECT_DIR$/app/providers/MyUsernamePasswordAuthProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Organization.java" afterPath="$PROJECT_DIR$/app/models/Organization.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Configuration.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Configuration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Global.java" afterPath="$PROJECT_DIR$/app/Global.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNestedSetManager.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNestedSetManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/NestedSetManager.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/NestedSetManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Node.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Node.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Organizations.java" afterPath="$PROJECT_DIR$/app/controllers/Organizations.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Page.java" afterPath="$PROJECT_DIR$/app/models/Page.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/posts/Post.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/posts/Post.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Posts.java" afterPath="$PROJECT_DIR$/app/controllers/Posts.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/SecurityGroup.java" afterPath="$PROJECT_DIR$/app/models/SecurityGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/TokenAction.java" afterPath="$PROJECT_DIR$/app/models/TokenAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/SecurityRole.java" afterPath="$PROJECT_DIR$/app/models/SecurityRole.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/SecuritySubjects.java" afterPath="$PROJECT_DIR$/app/controllers/SecuritySubjects.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Settings.java" afterPath="$PROJECT_DIR$/app/controllers/Settings.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/User.java" afterPath="$PROJECT_DIR$/app/models/User.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Users.java" afterPath="$PROJECT_DIR$/app/controllers/Users.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/account/edit.scala.html" afterPath="$PROJECT_DIR$/app/views/account/edit.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/main.less" afterPath="$PROJECT_DIR$/app/assets/stylesheets/main.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/main.scala.html" afterPath="$PROJECT_DIR$/app/views/main.scala.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea_modules/mms-build.iml" afterPath="$PROJECT_DIR$/.idea_modules/mms-build.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea_modules/mms.iml" afterPath="$PROJECT_DIR$/.idea_modules/mms.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/organizationForm.scala.html" afterPath="$PROJECT_DIR$/app/views/organizationForm.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/organizations.scala.html" afterPath="$PROJECT_DIR$/app/views/organizations.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/tags/paginator.scala.html" afterPath="$PROJECT_DIR$/app/views/tags/paginator.scala.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/conf/META-INF/persistence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/profile.scala.html" afterPath="$PROJECT_DIR$/app/views/profile.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/routes" afterPath="$PROJECT_DIR$/conf/routes" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/subjects.scala.html" afterPath="$PROJECT_DIR$/app/views/subjects.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/userForm.scala.html" afterPath="$PROJECT_DIR$/app/views/userForm.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mms-app.iws" />
@@ -57,6 +59,38 @@
     <sortChildren value="false" />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java" line="508" class="org.code_factory.jpa.nestedset.JpaNode" package="org.code_factory.jpa.nestedset">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/app/controllers/Users.java" line="49" class="controllers.Users" package="controllers">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -93,7 +127,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
@@ -121,22 +154,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/account/edit.scala.html" />
-        <option value="$PROJECT_DIR$/conf/routes" />
-        <option value="$PROJECT_DIR$/app/views/securityGroupForm.scala.html" />
-        <option value="$PROJECT_DIR$/app/views/userForm.scala.html" />
-        <option value="$PROJECT_DIR$/app/module/Dependencies.java" />
-        <option value="$PROJECT_DIR$/app/controllers/SecurityGroups.java" />
-        <option value="$PROJECT_DIR$/app/controllers/Users.java" />
-        <option value="$PROJECT_DIR$/app/controllers/Account.java" />
-        <option value="$PROJECT_DIR$/app/models/SecurityGroup.java" />
-        <option value="$PROJECT_DIR$/app/models/User.java" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/main.less" />
-        <option value="$PROJECT_DIR$/app/models/Tuple2.java" />
+        <option value="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/NestedSetManager.java" />
+        <option value="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Node.java" />
+        <option value="$PROJECT_DIR$/app/models/SecurityGroup.java" />
+        <option value="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNestedSetManager.java" />
+        <option value="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java" />
         <option value="$PROJECT_DIR$/app/views/subjects.scala.html" />
-        <option value="$PROJECT_DIR$/app/controllers/SecuritySubjects.java" />
-        <option value="$PROJECT_DIR$/conf/META-INF/persistence.xml" />
-        <option value="$PROJECT_DIR$/app/models/AbstractSubject.java" />
+        <option value="$PROJECT_DIR$/app/models/SecurityRole.java" />
+        <option value="$PROJECT_DIR$/app/Global.java" />
+        <option value="$PROJECT_DIR$/app/views/userForm.scala.html" />
+        <option value="$PROJECT_DIR$/app/controllers/Users.java" />
+        <option value="$PROJECT_DIR$/app/views/account/edit.scala.html" />
+        <option value="$PROJECT_DIR$/app/controllers/Account.java" />
+        <option value="$PROJECT_DIR$/app/models/User.java" />
+        <option value="$PROJECT_DIR$/app/models/SecuritySubject.java" />
+        <option value="$PROJECT_DIR$/app/views/tags/multiSelect.scala.html" />
       </list>
     </option>
   </component>
@@ -154,7 +187,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1680" />
-    <option name="height" value="963" />
+    <option name="height" value="918" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -164,34 +197,46 @@
             <id />
           </State>
           <State>
-            <id>Abstraction issues</id>
-          </State>
-          <State>
-            <id>Android</id>
-          </State>
-          <State>
-            <id>Android Lint</id>
+            <id>Assignment issues</id>
           </State>
           <State>
             <id>CSS</id>
           </State>
           <State>
-            <id>Code style issues</id>
+            <id>Control flow issues</id>
           </State>
           <State>
-            <id>Control flow issues</id>
+            <id>Data flow issues</id>
+          </State>
+          <State>
+            <id>Data flow issuesGroovy</id>
+          </State>
+          <State>
+            <id>Data flow issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Encapsulation issues</id>
+          </State>
+          <State>
+            <id>Error handling</id>
+          </State>
+          <State>
+            <id>GeneralJavaScript</id>
           </State>
           <State>
             <id>Groovy</id>
           </State>
           <State>
-            <id>Imports</id>
-          </State>
-          <State>
-            <id>Inheritance issues</id>
+            <id>Initialization issues</id>
           </State>
           <State>
             <id>Internationalization issues</id>
+          </State>
+          <State>
+            <id>J2ME issues</id>
+          </State>
+          <State>
+            <id>JPA issues</id>
           </State>
           <State>
             <id>JSP Inspections</id>
@@ -203,44 +248,48 @@
             <id>JavaScript</id>
           </State>
           <State>
-            <id>LESS</id>
+            <id>Numeric issues</id>
           </State>
           <State>
-            <id>Logging issues</id>
+            <id>Pattern Validation</id>
           </State>
           <State>
-            <id>PHP</id>
+            <id>Performance issues</id>
           </State>
           <State>
-            <id>Potentially confusing code constructsGroovy</id>
+            <id>Portability issues</id>
           </State>
           <State>
-            <id>Potentially confusing code constructsJavaScript</id>
+            <id>Probable bugs</id>
+          </State>
+          <State>
+            <id>Probable bugsJavaScript</id>
+          </State>
+          <State>
+            <id>Resource management issues</id>
+          </State>
+          <State>
+            <id>SQL</id>
           </State>
           <State>
             <id>Scala: General</id>
           </State>
           <State>
-            <id>TestNG</id>
+            <id>Serialization issues</id>
           </State>
           <State>
             <id>Threading issues</id>
           </State>
           <State>
-            <id>UnusedPHP</id>
+            <id>Threading issuesGroovy</id>
           </State>
           <State>
-            <id>Visibility issues</id>
+            <id>Web Services</id>
           </State>
           <State>
-            <id>XPath</id>
+            <id>XML</id>
           </State>
         </expanded-state>
-        <selected-state>
-          <State>
-            <id>Abstraction issues</id>
-          </State>
-        </selected-state>
       </profile-state>
     </entry>
   </component>
@@ -306,6 +355,308 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="schema" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="glossary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="glossary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="select2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="select2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Build.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ApplicationBuild$" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$TypeDefinitionTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="conf" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -339,6 +690,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tags" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -410,28 +779,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="module" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Dependencies" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -484,8 +831,8 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="preferences.fileTypes" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../common/Models" />
+    <property name="options.lastSelected" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../JPA-NestedSet" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="project.structure.side.proportion" value="0.11655012" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -558,6 +905,34 @@
       <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -719,16 +1094,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1680" height="963" extended-state="0" />
+    <frame x="0" y="22" width="1680" height="918" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.43195266" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31077695" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6007109" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.70563036" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42139384" sideWeight="0.29436964" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45112783" sideWeight="0.70563036" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4808959" sideWeight="0.29436964" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977462" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
@@ -736,16 +1113,14 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.46508875" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33414933" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23929009" sideWeight="0.75" order="0" side_tool="false" content_ui="combo" x="112" y="105" width="460" height="843" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23929009" sideWeight="0.5488722" order="0" side_tool="false" content_ui="combo" x="112" y="105" width="460" height="843" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.43195266" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819906" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3111639" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293979" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -820,119 +1195,124 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/play/play-java-jpa_2.10/2.1.0/play-java-jpa_2.10-2.1.0.jar!/play/db/jpa/JPA.class">
+    <entry file="file://$PROJECT_DIR$/app/views/tables.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="25" selection-start="837" selection-end="837" vertical-scroll-proportion="-12.0" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/play/play_2.10/2.1.0/play_2.10-2.1.0.jar!/play/libs/F.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="178" column="24" selection-start="6698" selection-end="6698" vertical-scroll-proportion="-7.76" />
-      </provider>
-    </entry>
-    <entry file="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/local/com.typesafe.akka/akka-actor/2.0.1/jars/akka-actor.jar!/akka/actor/UntypedActor.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/module/Dependencies.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="305" selection-end="305" vertical-scroll-proportion="0.14723927">
+        <state line="13" column="0" selection-start="36" selection-end="333" vertical-scroll-proportion="0.2613941">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/Account.java">
+    <entry file="file://$PROJECT_DIR$/app/views/main.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
+        <state line="31" column="0" selection-start="1236" selection-end="1314" vertical-scroll-proportion="0.63437927">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/Users.java">
+    <entry file="file://$PROJECT_DIR$/app/controllers/BusinessTerms.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="217" selection-end="217" vertical-scroll-proportion="0.0">
+        <state line="26" column="13" selection-start="589" selection-end="589" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.less">
+    <entry file="file://$PROJECT_DIR$/app/Global.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1183" column="15" selection-start="27326" selection-end="27326" vertical-scroll-proportion="-29.916666">
+        <state line="86" column="0" selection-start="2612" selection-end="2786" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/User.java">
+    <entry file="jar:///usr/local/Cellar/play/2.1.0/libexec/repository/cache/be.objectify/deadbolt-core_2.10/jars/deadbolt-core_2.10-2.1-SNAPSHOT.jar!/be/objectify/deadbolt/core/models/Role.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="429" column="36" selection-start="13004" selection-end="13004" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/Page.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="149" selection-end="149" vertical-scroll-proportion="0.16564417">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/utils/PaginationHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="115" selection-end="115" vertical-scroll-proportion="0.0">
+        <state line="8" column="17" selection-start="296" selection-end="296" vertical-scroll-proportion="-4.2">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/subjects.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="101" selection-start="2161" selection-end="2161" vertical-scroll-proportion="-10.0">
+        <state line="3" column="0" selection-start="180" selection-end="195" vertical-scroll-proportion="10.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf/META-INF/persistence.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="12" selection-start="1041" selection-end="1091" vertical-scroll-proportion="0.2658228">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/AbstractSubject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="151" column="0" selection-start="3688" selection-end="3688" vertical-scroll-proportion="0.9165644">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4105#4135#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/SecurityGroup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="32" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3284#3314#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/SecurityGroups.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="78" selection-start="1003" selection-end="1003" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/SecuritySubjects.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="0" selection-start="2303" selection-end="2303" vertical-scroll-proportion="0.84662575">
+        <state line="45" column="13" selection-start="1627" selection-end="1627" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/userForm.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="54" selection-start="54" selection-end="54" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="13" selection-start="1214" selection-end="1214" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/account/edit.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="41" selection-start="41" selection-end="41" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/Account.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="18" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="413" column="34" selection-start="13467" selection-end="13467" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/Users.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="1372" selection-end="1372" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/SecurityRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="41" selection-start="1058" selection-end="1062" vertical-scroll-proportion="0.0064935065">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2183#2199#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/SecuritySubject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="166" column="0" selection-start="3869" selection-end="3869" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/tags/multiSelect.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="76" selection-start="132" selection-end="132" vertical-scroll-proportion="0.10053619">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -953,7 +1333,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>Scala (mms-build)|Scala</last-edited>
+          <last-edited>Scala</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

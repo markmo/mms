@@ -17,6 +17,9 @@ package models;
 
 import static controllers.Application.getSingleResult;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import javax.persistence.*;
 
 import be.objectify.deadbolt.core.models.Role;
@@ -59,5 +62,18 @@ public class SecurityRole implements Role {
                 "select count(r.id) from SecurityRole r"
         )
                 .getFirstResult()).intValue();
+    }
+
+    public static Map<String, String> options() {
+        @SuppressWarnings("unchecked")
+        List<SecurityRole> roles = JPA.em().createQuery(
+                "from SecurityRole order by roleName"
+        )
+                .getResultList();
+        LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
+        for (SecurityRole role : roles) {
+            options.put(String.valueOf(role.id), role.getName());
+        }
+        return options;
     }
 }

@@ -111,7 +111,8 @@ GET     /security-classifications       controllers.SecurityClassifications.inde
 
 # Settings
 GET     /settings                       controllers.Settings.show
-GET     /settings/edit                  controllers.Settings.edit
+GET     /settings/create                controllers.Settings.create
+GET     /settings/:id/edit              controllers.Settings.edit(id: Long)
 POST    /settings/:id                   controllers.Settings.update(id: Long)
 
 # Stakeholder Roles
@@ -182,7 +183,7 @@ GET     /logout                         com.feth.play.module.pa.controllers.Auth
 # Organizations
 GET     /organizations/new              controllers.Organizations.create
 GET     /organizations/:id/edit         controllers.Organizations.edit(id: Long)
-GET     /organizations                  controllers.Organizations.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /organizations                  controllers.Organizations.list(p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
 POST    /organizations/update           controllers.Organizations.update
 POST    /organizations/delete           controllers.Organizations.delete
 
@@ -198,7 +199,8 @@ GET     /securitygroups/:id/edit        controllers.SecurityGroups.edit(id: Int)
 POST    /securitygroups/:id             @controllers.SecurityGroups.update(id: Int)
 
 # Security Subjects
-GET     /subjects                       controllers.SecuritySubjects.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /subjects                       controllers.SecuritySubjects.list(p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
+GET     /subjects/:id/toggle            controllers.SecuritySubjects.updateTreeDisplay(id: Int, open: Boolean, p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
 POST    /subjects/delete                controllers.SecuritySubjects.delete
 
 GET     /signup                         @controllers.Application.signup

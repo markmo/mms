@@ -27,6 +27,7 @@
         <option value="$PROJECT_DIR$/../../java/AnalyzerBeans/core/pom.xml" />
         <option value="$PROJECT_DIR$/../../java/AnalyzerBeans/api/pom.xml" />
         <option value="$PROJECT_DIR$/../common/Models/pom.xml" />
+        <option value="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" />
       </list>
     </option>
   </component>

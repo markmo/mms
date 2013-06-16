@@ -5,11 +5,9 @@ import static controllers.Application.copyProperties;
 import java.util.*;
 import javax.persistence.*;
 
-import org.code_factory.jpa.nestedset.JpaNestedSetManager;
-import org.code_factory.jpa.nestedset.NestedSetManager;
-import org.code_factory.jpa.nestedset.Node;
-
-import org.code_factory.jpa.nestedset.annotations.*;
+import com.fasterxml.jackson.annotation.*;
+import org.code_factory.jpa.nestedset.*;
+import org.code_factory.jpa.nestedset.annotations.NodeClass;
 import play.db.jpa.JPA;
 
 /**
@@ -18,84 +16,16 @@ import play.db.jpa.JPA;
  * Time: 8:19 PM
  */
 @Entity
-public class SecurityGroup extends AbstractSubject {
-
-    private String name;
+@NodeClass(type = SecuritySubject.class)
+public class SecurityGroup extends SecuritySubject {
 
     @OneToMany(cascade = CascadeType.DETACH, mappedBy = "parentGroup")
-    public List<AbstractSubject> children;
+    @JsonIgnore
+    public List<SecuritySubject> children;
 
-    @Column(updatable=false)
-    @LeftColumn
-    private int lft;
-
-    @RightColumn
-    @Column(updatable=false)
-    private int rgt;
-
-    @LevelColumn
-    @Column(updatable=false)
-    private int level;
-
-    @RootColumn
-    private int rootId;
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public int getLeftValue() {
-        return this.lft;
-    }
-
-    @Override
-    public int getRightValue() {
-        return this.rgt;
-    }
-
-    @Override
-    public int getLevel() {
-        return this.level;
-    }
-
-    @Override
-    public void setLeftValue(int value) {
-        this.lft = value;
-    }
-
-    @Override
-    public void setRightValue(int value) {
-        this.rgt = value;
-    }
-
-    @Override
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    @Override
-    public int getRootValue() {
-        return this.rootId;
-    }
-
-    @Override
-    public void setRootValue(int value) {
-        this.rootId = value;
-    }
+    // The following has to be in the subclass since the NestedSetManager
+    // only looks for annotations in the declared fields of the immediate
+    // class.
 
     public static SecurityGroup update(SecurityGroup partialGroup) {
         NestedSetManager nsm = new JpaNestedSetManager(JPA.em());
@@ -119,12 +49,15 @@ public class SecurityGroup extends AbstractSubject {
             SecurityGroup group = JPA.em().find(SecurityGroup.class, partialGroup.getId());
             final String[] includedProperties = new String[]{"name"};
             copyProperties(partialGroup, group, Arrays.asList(includedProperties));
-            group.parentGroup = parentGroup;
-            if (parentGroup == null) {
-                nsm.createRoot(group);
-            } else {
-                Node<SecurityGroup> node = nsm.getNode(parentGroup);
-                node.addChild(group);
+            if (!isSameGroup(group.parentGroup, parentGroup)) {
+                group.parentGroup = parentGroup;
+                Node<SecurityGroup> node = nsm.getNode(group);
+                if (parentGroup == null) {
+                    node.moveToRoot();
+                } else {
+                    Node<SecurityGroup> parentNode = nsm.getNode(parentGroup);
+                    node.moveAsLastChildOf(parentNode);
+                }
             }
             JPA.em().persist(group);
             return group;

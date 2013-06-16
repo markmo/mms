@@ -1,4 +1,4 @@
-@(currentPage: Page[Tuple3[org.code_factory.jpa.nestedset.Node[AbstractSubject], AbstractSubject, Boolean]],
+@(currentPage: Page[Tuple3[org.code_factory.jpa.nestedset.Node[SecuritySubject], SecuritySubject, Boolean]],
   currentSortBy: String, currentOrder: String, currentFilter: String)
 
 @import tags._
@@ -25,7 +25,7 @@
             <div>@flash.get("error")</div>
         </div>
     }
-    <h1>Security Subjects</h1>
+    <h1>User Hierarchy</h1>
     <div class="clearfix" style="margin-bottom: 10px;">
         <a href="@routes.Users.create" class="btn btn-small btn-success">
             <i class="icon-plus icon-white"></i>
@@ -52,10 +52,22 @@
                     <tr>
                         <td>
                             @if(node.hasChildren()) {
-                            <a href="#" class="level@subject.getLevel()">@if(open) {+} else {&ndash;}</a>
-                            <a href="#">@subject.getName()</a>
+                            <a href="@routes.SecuritySubjects.updateTreeDisplay(subject.getId(), !open, currentPage.getPageIndex, currentSortBy, currentOrder, currentFilter)" class="level@subject.getLevel()"><span class="tree-toggle">@if(open) {&#x25bc;} else {&#x25ba;}</span></a>
+                            <a href="#">
+                                @if(subject.isInstanceOf[User]) {
+                                <i class="icon-man"></i>@subject.getName()
+                                } else {
+                                <i class="icon-group"></i>@subject.getName()
+                                }
+                            </a>
                             } else {
-                            <a href="#" class="level@subject.getLevel()">@subject.getName()</a>
+                            <a href="#" class="level@subject.getLevel() leaf">
+                                @if(subject.isInstanceOf[User]) {
+                                <i class="icon-man"></i>@subject.getName()
+                                } else {
+                                <i class="icon-group"></i>@subject.getName()
+                                }
+                            </a>
                             }
                         </td>
                         @if(subject.isInstanceOf[User]) {

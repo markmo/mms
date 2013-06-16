@@ -28,16 +28,21 @@ public class Settings extends Controller {
         return ok(setting.customSchema).as("application/json");
     }
 
+    public static Result create() {
+        return ok(views.html.settings.render(new Long(0), form(Setting.class)));
+    }
+
     @Transactional(readOnly = true)
-    public static Result edit() {
+    public static Result edit(Long id) {
         @SuppressWarnings("unchecked")
         Setting setting = getSingleResult(Setting.class,
                 JPA.em().createQuery(
-                        "select s from Setting s"
+                        "select s from Setting s where s.id = ?1"
                 )
+                        .setParameter(1, id)
         );
         Form<Setting> settingForm = form(Setting.class).fill(setting);
-        return ok(views.html.settings.render(setting.id, settingForm));
+        return ok(views.html.settings.render(id, settingForm));
     }
 
     @Transactional
@@ -48,7 +53,12 @@ public class Settings extends Controller {
         } else {
             Setting setting = settingForm.get();
             setting.id = id;
-            JPA.em().merge(setting);
+            if (id == 0) {
+                setting.id = null;
+                JPA.em().persist(setting);
+            } else {
+                JPA.em().merge(setting);
+            }
         }
         flash("success", "Settings have been updated");
         return redirect(routes.Application.index());

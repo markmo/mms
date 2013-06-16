@@ -1,9 +1,26 @@
-@(isNew: Boolean, id: Int, userForm: Form[User])
+@(isNew: Boolean, id: Int, userForm: Form[User.UserDTO])
 
 @import helper._
 @import helper.twitterBootstrap._
+@import tags._
 
-@main("Edit User") {
+@scripts = {
+<link href="@routes.Assets.at("css/select2/select2.css")" rel="stylesheet">
+<style>
+    #roles_field {
+        margin-bottom: 10.5px;
+    }
+</style>
+<script src="@routes.Assets.at("js/lib/jquery/jquery-1.9.1.min.js")"></script>
+<script src="@routes.Assets.at("js/lib/select2/select2.js")"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#roles').select2({width: '380px'});
+    });
+</script>
+}
+
+@main("Edit User", "", scripts) {
     <h1>@if(isNew) {New} else {Edit} User</h1>
     @form(action = routes.Users.update(id)) {
         @inputText(userForm("firstName"), '_label -> "First Name", 'class -> "span5")
@@ -15,6 +32,14 @@
           options(SecurityGroup.options),
           '_label -> "Security Group",
           '_showConstraints -> false
+        )
+        @multiSelect(
+          userForm("roleIds"),
+          options(SecurityRole.options),
+          'id -> "roles",
+          '_label -> "Security Roles",
+          '_showConstraints -> false,
+          'multiple -> true
         )
         @inputText(userForm("dept"), '_label -> "Department", 'class -> "span5")
         @textarea(userForm("biography"), '_label -> "Biography", 'class -> "span5")
