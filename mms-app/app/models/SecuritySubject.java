@@ -178,18 +178,28 @@ public abstract class SecuritySubject implements Subject, NodeInfo {
 
     public static Page<SecuritySubject> page(int pageIndex, int pageSize,
                                              String sortBy, String order,
-                                             String filter) {
+                                             String filter, Set<String[]> closedNodes) {
         if (pageIndex < 1) pageIndex = 1;
         Long totalRowCount = (Long) JPA.em()
                 .createQuery("select count(s) from SecuritySubject s where lower(s.name) like ?1")
                 .setParameter(1, "%" + filter.toLowerCase() + "%")
                 .getSingleResult();
+        String q = "select s from SecuritySubject s where lower(s.name) like ?1";
+        int n = closedNodes.size(), j = 2;
+        for (int i = 0; i < n; i++) {
+            q += String.format(" and (s.lft <= ?%s or s.lft >= ?%s)", j++, j++);
+        }
+        q += " order by s.rootId, s.lft";
+//            " order by s." + sortBy + " " + order)
+        Query query = JPA.em().createQuery(q);
+        query.setParameter(1, "%" + filter.toLowerCase() + "%");
+        j = 2;
+        for (String[] bounds : closedNodes) {
+            query.setParameter(j++, Integer.parseInt(bounds[1]));
+            query.setParameter(j++, Integer.parseInt(bounds[2]));
+        }
         @SuppressWarnings("unchecked")
-        List<SecuritySubject> list = JPA.em()
-                .createQuery("select s from SecuritySubject s where lower(s.name) like ?1 " +
-                             "order by s.rootId, s.lft")
-//                            " order by s." + sortBy + " " + order)
-                .setParameter(1, "%" + filter.toLowerCase() + "%")
+        List<SecuritySubject> list = query
                 .setFirstResult((pageIndex - 1) * pageSize)
                 .setMaxResults(pageSize)
                 .getResultList();

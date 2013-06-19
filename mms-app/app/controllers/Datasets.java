@@ -8,13 +8,11 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import indexing.DatasetIndex;
-import org.codehaus.jackson.JsonNode;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.F;
-import play.libs.Json;
 import play.mvc.*;
 
 import mms.common.models.Dataset;
@@ -33,13 +31,13 @@ public class Datasets extends Controller {
     ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-    public static Result index() {
+    public Result index() throws IOException {
         @SuppressWarnings("unchecked")
         List<Dataset> datasets = JPA.em().createQuery(
                 "select s from Dataset s"
                 )
                 .getResultList();
-        JsonNode json = Json.toJson(datasets);
+        String json = mapper.writeValueAsString(datasets);
         return ok(json);
     }
 

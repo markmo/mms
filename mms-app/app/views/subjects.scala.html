@@ -44,6 +44,7 @@
                 <thead>
                 <tr>
                     @header("name", "Name")
+                    <th>Roles</th>
                     <th colspan="2" style="width: 91px;"></th>
                 </tr>
                 </thead>
@@ -52,7 +53,7 @@
                     <tr>
                         <td>
                             @if(node.hasChildren()) {
-                            <a href="@routes.SecuritySubjects.updateTreeDisplay(subject.getId(), !open, currentPage.getPageIndex, currentSortBy, currentOrder, currentFilter)" class="level@subject.getLevel()"><span class="tree-toggle">@if(open) {&#x25bc;} else {&#x25ba;}</span></a>
+                            <a href="@routes.SecuritySubjects.updateTreeDisplay(subject.getId(), s"${subject.getId()},${subject.getLeftValue()},${subject.getRightValue()}", !open, currentPage.getPageIndex, currentSortBy, currentOrder, currentFilter)" class="level@subject.getLevel()"><span class="tree-toggle">@if(open) {&#x25bc;} else {&#x25ba;}</span></a>
                             <a href="#">
                                 @if(subject.isInstanceOf[User]) {
                                 <i class="icon-man"></i>@subject.getName()
@@ -70,6 +71,11 @@
                             </a>
                             }
                         </td>
+                        <td>
+                        @for((roleName, i) <- subject.roles.map(_.roleName).zipWithIndex) {
+                            @{roleName}@if(i < subject.roles.size - 1){, }
+                        }
+                        </td>
                         @if(subject.isInstanceOf[User]) {
                         <td style="width: 14px;"><a href="@routes.Users.edit(subject.getId())"><i class="icon-edit"></i></a></td>
                         } else {
@@ -81,7 +87,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="3">
                         @paginator(currentPage, currentSortBy, currentOrder, currentFilter)
                     </td>
                     <td style="width: 77px;">

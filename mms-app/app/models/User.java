@@ -331,24 +331,23 @@ public class User extends SecuritySubject {
 
     public static User update(UserDTO userDTO) {
         NestedSetManager nsm = new JpaNestedSetManager(JPA.em());
-        SecurityGroup parent = userDTO.parentGroup;
+        SecurityGroup.SecurityGroupDTO parent = userDTO.parentGroup;
         SecurityGroup parentGroup = null;
-        if (parent != null && parent.getId() > 0) {
-            parentGroup = JPA.em().find(SecurityGroup.class, parent.getId());
+        if (parent != null && parent.id > 0) {
+            parentGroup = JPA.em().find(SecurityGroup.class, parent.id);
         }
         final String[] includedProperties = new String[]{
                 "email",
                 "firstName",
                 "lastName",
-                "name",
                 "title",
                 "dept",
                 "biography",
                 "roleIds"
         };
         if (userDTO.id == 0) {
-            userDTO.parentGroup = parentGroup;
             User user = new User();
+            user.parentGroup = parentGroup;
             copyProperties(userDTO, user, Arrays.asList(includedProperties));
             if (parentGroup == null) {
                 nsm.createRoot(user);
@@ -361,6 +360,11 @@ public class User extends SecuritySubject {
         } else {
             User user = User.findById(userDTO.id);
             copyProperties(userDTO, user, Arrays.asList(includedProperties));
+            if (userDTO.roleIds == null || userDTO.roleIds.isEmpty()) {
+                if (user.roles != null) {
+                    user.roles.clear();
+                }
+            }
             if (!isSameGroup(user.parentGroup, parentGroup)) {
                 user.parentGroup = parentGroup;
                 if (parentGroup == null) {
@@ -378,7 +382,7 @@ public class User extends SecuritySubject {
 
     public UserDTO getDTO() {
         UserDTO dto = new UserDTO();
-        dto.id = getId();
+        dto.id = id;
         dto.email = email;
         dto.firstName = firstName;
         dto.lastName = lastName;
@@ -390,7 +394,9 @@ public class User extends SecuritySubject {
         dto.numberFollowers = (followers == null) ? 0 : followers.size();
         dto.numberFollowing = (following == null) ? 0 : following.size();
         dto.biography = biography;
-        dto.parentGroup = parentGroup;
+        if (parentGroup != null) {
+            dto.parentGroup = parentGroup.getDTO();
+        }
         dto.roleIds = getRoleIds();
 
         return dto;
@@ -410,7 +416,7 @@ public class User extends SecuritySubject {
         public int numberVotes;
         public int numberFollowers;
         public int numberFollowing;
-        public SecurityGroup parentGroup;
+        public SecurityGroup.SecurityGroupDTO parentGroup;
         public List<Long> roleIds;
 
     }

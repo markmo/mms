@@ -23,32 +23,34 @@ public class SecurityGroup extends SecuritySubject {
     @JsonIgnore
     public List<SecuritySubject> children;
 
-    // The following has to be in the subclass since the NestedSetManager
-    // only looks for annotations in the declared fields of the immediate
-    // class.
-
-    public static SecurityGroup update(SecurityGroup partialGroup) {
+    public static SecurityGroup update(SecurityGroupDTO groupDTO) {
         NestedSetManager nsm = new JpaNestedSetManager(JPA.em());
-        SecurityGroup parent = partialGroup.parentGroup;
+        SecurityGroupDTO parent = groupDTO.parentGroup;
         SecurityGroup parentGroup = null;
-        if (parent != null && parent.getId() > 0) {
-            parentGroup = JPA.em().find(SecurityGroup.class, parent.getId());
+        if (parent != null && parent.id > 0) {
+            parentGroup = JPA.em().find(SecurityGroup.class, parent.id);
         }
-        if (partialGroup.getId() == 0) {
-            partialGroup.parentGroup = parentGroup;
+        final String[] includedProperties = new String[]{"name", "roleIds"};
+        if (groupDTO.id == 0) {
+            SecurityGroup group = new SecurityGroup();
+            group.parentGroup = parentGroup;
+            copyProperties(groupDTO, group, Arrays.asList(includedProperties));
             if (parentGroup == null) {
-                partialGroup.setRootValue(1);
-                nsm.createRoot(partialGroup);
+                nsm.createRoot(group);
             } else {
                 Node<SecurityGroup> node = nsm.getNode(parentGroup);
-                node.addChild(partialGroup);
+                node.addChild(group);
             }
-            JPA.em().persist(partialGroup);
-            return partialGroup;
+            JPA.em().persist(group);
+            return group;
         } else {
-            SecurityGroup group = JPA.em().find(SecurityGroup.class, partialGroup.getId());
-            final String[] includedProperties = new String[]{"name"};
-            copyProperties(partialGroup, group, Arrays.asList(includedProperties));
+            SecurityGroup group = JPA.em().find(SecurityGroup.class, groupDTO.id);
+            copyProperties(groupDTO, group, Arrays.asList(includedProperties));
+            if (groupDTO.roleIds == null || groupDTO.roleIds.isEmpty()) {
+                if (group.roles != null) {
+                    group.roles.clear();
+                }
+            }
             if (!isSameGroup(group.parentGroup, parentGroup)) {
                 group.parentGroup = parentGroup;
                 Node<SecurityGroup> node = nsm.getNode(group);
@@ -76,5 +78,25 @@ public class SecurityGroup extends SecuritySubject {
             options.put(String.valueOf(group.getId()), group.getName());
         }
         return options;
+    }
+
+    public SecurityGroupDTO getDTO() {
+        SecurityGroupDTO dto = new SecurityGroupDTO();
+        dto.id = id;
+        dto.name = name;
+        if (parentGroup != null) {
+            dto.parentGroup = parentGroup.getDTO();
+        }
+        dto.roleIds = getRoleIds();
+
+        return dto;
+    }
+
+    public static class SecurityGroupDTO {
+
+        public int id;
+        public String name;
+        public SecurityGroupDTO parentGroup;
+        public List<Long> roleIds;
     }
 }

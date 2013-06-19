@@ -14,7 +14,7 @@ GET     /columns                        @controllers.Columns.index
 GET     /datasets/:id/columns           @controllers.Columns.findColumnsByDatasetId(id: Long)
 
 # Datasets
-GET     /datasets                       controllers.Datasets.index
+GET     /datasets                       @controllers.Datasets.index
 GET     /namespaces/:id/datasets        @controllers.Datasets.findDatasetsByNamespaceId(id: Long)
 GET     /datasets/:id/stats             controllers.Datasets.stats(id: Long)
 POST    /datasets                       controllers.Datasets.create
@@ -200,7 +200,7 @@ POST    /securitygroups/:id             @controllers.SecurityGroups.update(id: I
 
 # Security Subjects
 GET     /subjects                       controllers.SecuritySubjects.list(p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
-GET     /subjects/:id/toggle            controllers.SecuritySubjects.updateTreeDisplay(id: Int, open: Boolean, p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
+GET     /subjects/:id/toggle            controllers.SecuritySubjects.updateTreeDisplay(id: Int, bounds: String, open: Boolean, p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
 POST    /subjects/delete                controllers.SecuritySubjects.delete
 
 GET     /signup                         @controllers.Application.signup

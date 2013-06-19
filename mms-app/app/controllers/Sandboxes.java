@@ -2,6 +2,7 @@ package controllers;
 
 import static play.data.Form.form;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,6 @@ import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
-import play.libs.Json;
 import play.mvc.*;
 
 import mms.common.models.Sandbox;
@@ -26,13 +26,13 @@ public class Sandboxes extends Controller {
     ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-    public Result index() {
+    public Result index() throws IOException {
         @SuppressWarnings("unchecked")
         List<Sandbox> sandboxes = JPA.em().createQuery(
                 "select s from Sandbox s"
         )
                 .getResultList();
-        JsonNode json = Json.toJson(sandboxes);
+        String json = mapper.writeValueAsString(sandboxes);
         return ok(json).as("application/json");
     }
 

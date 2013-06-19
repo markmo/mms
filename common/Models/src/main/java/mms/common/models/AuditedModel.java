@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.*;
 
 import mms.common.models.posts.DiscussionThread;
@@ -58,6 +59,7 @@ public abstract class AuditedModel {
         referential integrity.
      */
     @ForeignKey(name = "none")
+    @JsonIgnore
     private Set<DiscussionThread> threads;
 
     @PrePersist

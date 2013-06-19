@@ -23,14 +23,15 @@ public class SecuritySubjects extends Controller {
     @Transactional(readOnly = true)
     public static Result list(int pageIndex, String sortBy, String order, String filter) {
         NestedSetManager nsm = new JpaNestedSetManager(JPA.em());
-        Page<SecuritySubject> page = SecuritySubject.page(pageIndex, 10, sortBy, order, filter);
+        Set<String[]> closedNodes = getClosedNodes(getClosedNodes());
+        Set<String> closedIds = getClosedIds(closedNodes);
+        Page<SecuritySubject> page = SecuritySubject.page(pageIndex, 10, sortBy, order, filter, closedNodes);
         List<Tuple3<Node<SecuritySubject>, SecuritySubject, Boolean>> list = new ArrayList<>();
-        Set<String> closedNodes = getClosedNodes();
         for (SecuritySubject subject : page.getList()) {
             int id = subject.getId();
-            Boolean open = !closedNodes.contains(String.valueOf(id));
+            Boolean open = !closedIds.contains(String.valueOf(id));
             Node<SecuritySubject> node = nsm.getNode(subject);
-            if (!isAncestorClosed(node, closedNodes)) {
+            if (!isAncestorClosed(node, closedIds)) {
                 list.add(new Tuple3<>(node, subject, open));
             }
         }
@@ -49,29 +50,48 @@ public class SecuritySubjects extends Controller {
         return false;
     }
 
+    private static Set<String> getClosedIds(Set<String[]> closedNodes) {
+        if (closedNodes.isEmpty()) return Collections.emptySet();
+        Set<String> closedIds = new HashSet<>();
+        for (String[] bounds : closedNodes) {
+            closedIds.add(bounds[0]);
+        }
+        return closedIds;
+    }
+
+    private static Set<String[]> getClosedNodes(Set<String> closedNodes) {
+        if (closedNodes.isEmpty()) return Collections.emptySet();
+        Set<String[]> closedSet = new HashSet<>();
+        for (String bounds : closedNodes) {
+            closedSet.add(bounds.split(","));
+        }
+        return closedSet;
+    }
+
     private static Set<String> getClosedNodes() {
         String closed = session("closed");
         Set<String> closedSet;
-        if (closed == null) {
+        if (closed == null || closed.isEmpty()) {
             closedSet = new HashSet<>();
         } else {
-            closedSet = new HashSet<>(Arrays.asList(closed.split(",")));
+            closedSet = new HashSet<>(Arrays.asList(closed.split(";")));
         }
         return closedSet;
     }
 
     @Transactional(readOnly = true)
-    public static Result updateTreeDisplay(int nodeId, boolean open, int pageIndex,
+    public static Result updateTreeDisplay(int nodeId, String bounds,
+                                           boolean open, int pageIndex,
                                            String sortBy, String order,
                                            String filter) {
         Set<String> closedSet = getClosedNodes();
-        String id = String.valueOf(nodeId);
+//        String id = String.valueOf(nodeId);
         if (open) {
-            closedSet.remove(id);
+            closedSet.remove(bounds);
         } else {
-            closedSet.add(id);
+            closedSet.add(bounds);
         }
-        session("closed", Joiner.on(',').join(closedSet));
+        session("closed", Joiner.on(';').join(closedSet));
         return list(pageIndex, sortBy, order, filter);
     }
 

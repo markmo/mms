@@ -16,7 +16,7 @@ import models.SecurityGroup;
  */
 public class SecurityGroups extends Controller {
 
-    final static Form<SecurityGroup> groupForm = form(SecurityGroup.class);
+    final static Form<SecurityGroup.SecurityGroupDTO> groupForm = form(SecurityGroup.SecurityGroupDTO.class);
 
     @Transactional(readOnly = true)
     public static Result create() {
@@ -30,19 +30,19 @@ public class SecurityGroups extends Controller {
             flash("error", "Security Group could not be found");
             return redirect(routes.SecuritySubjects.list(1, "name", "asc", ""));
         }
-        Form<SecurityGroup> filledForm = groupForm.fill(group);
+        Form<SecurityGroup.SecurityGroupDTO> filledForm = groupForm.fill(group.getDTO());
         return ok(views.html.securityGroupForm.render(false, id, filledForm));
     }
 
     @Transactional
     public Result update(int id) {
-        Form<SecurityGroup> filledForm = groupForm.bindFromRequest();
+        Form<SecurityGroup.SecurityGroupDTO> filledForm = groupForm.bindFromRequest();
         if (filledForm.hasErrors()) {
             flash("error", filledForm.errors().toString());
             return badRequest(views.html.securityGroupForm.render(false, id, filledForm));
         } else {
-            SecurityGroup partialGroup = filledForm.get();
-            partialGroup.setId(id);
+            SecurityGroup.SecurityGroupDTO partialGroup = filledForm.get();
+            partialGroup.id = id;
             SecurityGroup group = SecurityGroup.update(partialGroup);
             flash("success", "Security Group '" + group.getName() + "' has been successfully saved");
             return redirect(routes.SecuritySubjects.list(1, "name", "asc", ""));
