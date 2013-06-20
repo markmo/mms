@@ -1,6 +1,7 @@
 package controllers;
 
 import static play.data.Form.form;
+import static utils.QueryTool.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,11 +32,12 @@ public class BusinessTerms extends Controller {
 
     @Transactional(readOnly = true)
     public Result index() throws IOException {
-        @SuppressWarnings("unchecked")
-        List<BusinessTerm> businessTerms = JPA.em().createQuery(
-                "select t from BusinessTerm t"
-        )
-                .getResultList();
+//        @SuppressWarnings("unchecked")
+//        List<BusinessTerm> businessTerms = JPA.em().createQuery(
+//                "select t from BusinessTerm t"
+//        )
+//                .getResultList();
+        List<BusinessTerm> businessTerms = getResultList(BusinessTerm.class, JPA.em(), session());
         String json = mapper.writeValueAsString(businessTerms);
         return ok(json).as("application/json");
     }

@@ -31,7 +31,6 @@ import play.db.jpa.JPA;
  * @author Mark Moloney modified for JPA
  */
 @Entity
-@Table(name = "user_role")
 public class SecurityRole implements Role {
 
     private static final long serialVersionUID = 1L;

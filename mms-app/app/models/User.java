@@ -343,7 +343,8 @@ public class User extends SecuritySubject {
                 "title",
                 "dept",
                 "biography",
-                "roleIds"
+                "roleIds",
+                "organization"
         };
         if (userDTO.id == 0) {
             User user = new User();
@@ -394,6 +395,7 @@ public class User extends SecuritySubject {
         dto.numberFollowers = (followers == null) ? 0 : followers.size();
         dto.numberFollowing = (following == null) ? 0 : following.size();
         dto.biography = biography;
+        dto.organization = organization;
         if (parentGroup != null) {
             dto.parentGroup = parentGroup.getDTO();
         }
@@ -416,6 +418,7 @@ public class User extends SecuritySubject {
         public int numberVotes;
         public int numberFollowers;
         public int numberFollowing;
+        public Organization organization;
         public SecurityGroup.SecurityGroupDTO parentGroup;
         public List<Long> roleIds;
 

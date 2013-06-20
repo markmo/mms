@@ -8,7 +8,6 @@ import javax.persistence.*;
  * Time: 11:04 AM
  */
 @Entity
-@Table(name = "os")
 public class OperatingSystem {
 
     @Id

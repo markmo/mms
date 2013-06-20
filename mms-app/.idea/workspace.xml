@@ -3,24 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="716c433e-460e-411b-a2ac-6b6e6f63c867" name="Default" comment="">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/annotations/NodeClass.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/AuditedModel.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/AuditedModel.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/utils/QueryTool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/BusinessTerms.java" afterPath="$PROJECT_DIR$/app/controllers/BusinessTerms.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Configuration.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Configuration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Datasets.java" afterPath="$PROJECT_DIR$/app/controllers/Datasets.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNestedSetManager.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNestedSetManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/NestedSetManager.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/NestedSetManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Node.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Node.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Sandboxes.java" afterPath="$PROJECT_DIR$/app/controllers/Sandboxes.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/SecurityGroup.java" afterPath="$PROJECT_DIR$/app/models/SecurityGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/SecurityGroups.java" afterPath="$PROJECT_DIR$/app/controllers/SecurityGroups.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/SecuritySubject.java" afterPath="$PROJECT_DIR$/app/models/SecuritySubject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/SecuritySubjects.java" afterPath="$PROJECT_DIR$/app/controllers/SecuritySubjects.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/OperatingSystem.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/OperatingSystem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Organization.java" afterPath="$PROJECT_DIR$/app/models/Organization.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/SecurityRole.java" afterPath="$PROJECT_DIR$/app/models/SecurityRole.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/User.java" afterPath="$PROJECT_DIR$/app/models/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/tags/multiSelect.scala.html" afterPath="$PROJECT_DIR$/app/views/tags/multiSelect.scala.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/routes" afterPath="$PROJECT_DIR$/conf/routes" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/securityGroupForm.scala.html" afterPath="$PROJECT_DIR$/app/views/securityGroupForm.scala.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/subjects.scala.html" afterPath="$PROJECT_DIR$/app/views/subjects.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/userForm.scala.html" afterPath="$PROJECT_DIR$/app/views/userForm.scala.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mms-app.iws" />
@@ -106,7 +101,112 @@
     <favorites_list name="mms-app" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="Application.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/Application.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="170" column="62" selection-start="6094" selection-end="6120" vertical-scroll-proportion="-4.6">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Organization.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/Organization.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="0" selection-start="1865" selection-end="1865" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#1372#1402#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OperatingSystem.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/OperatingSystem.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="0" selection-start="134" selection-end="134" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SecurityRole.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/SecurityRole.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="46" selection-start="823" selection-end="823" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#2156#2172#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Users.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/Users.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="13" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="User.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="328" column="10" selection-start="10513" selection-end="10513" vertical-scroll-proportion="0.018691588">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QueryTool.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/utils/QueryTool.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="0" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="userForm.scala.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/userForm.scala.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="33" column="36" selection-start="1178" selection-end="1178" vertical-scroll-proportion="-18.75">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SecurityGroup.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/SecurityGroup.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="64" selection-start="647" selection-end="647" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JpaNode.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="6" selection-start="899" selection-end="899" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -124,22 +224,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/controllers/Account.java" />
-        <option value="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/AuditedModel.java" />
-        <option value="$PROJECT_DIR$/app/controllers/Sandboxes.java" />
-        <option value="$PROJECT_DIR$/app/controllers/Datasets.java" />
-        <option value="$PROJECT_DIR$/public/js/main.js" />
         <option value="$PROJECT_DIR$/app/controllers/Application.java" />
-        <option value="$PROJECT_DIR$/app/views/userForm.scala.html" />
         <option value="$PROJECT_DIR$/app/views/tags/multiSelect.scala.html" />
         <option value="$PROJECT_DIR$/app/views/securityGroupForm.scala.html" />
         <option value="$PROJECT_DIR$/app/controllers/SecurityGroups.java" />
-        <option value="$PROJECT_DIR$/app/models/User.java" />
         <option value="$PROJECT_DIR$/app/models/SecurityGroup.java" />
         <option value="$PROJECT_DIR$/conf/routes" />
         <option value="$PROJECT_DIR$/app/views/subjects.scala.html" />
         <option value="$PROJECT_DIR$/app/controllers/SecuritySubjects.java" />
         <option value="$PROJECT_DIR$/app/models/SecuritySubject.java" />
+        <option value="$PROJECT_DIR$/app/utils/QueryTool.java" />
+        <option value="$PROJECT_DIR$/app/controllers/BusinessTerms.java" />
+        <option value="$PROJECT_DIR$/app/views/userForm.scala.html" />
+        <option value="$PROJECT_DIR$/app/models/Organization.java" />
+        <option value="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/OperatingSystem.java" />
+        <option value="$PROJECT_DIR$/app/models/SecurityRole.java" />
+        <option value="$PROJECT_DIR$/app/models/User.java" />
       </list>
     </option>
   </component>
@@ -365,6 +465,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="business" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -920,64 +1046,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="security" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyDeadboltHandler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="providers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mms-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1006,15 +1074,69 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="JPA-NestedSet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JPA-NestedSet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JPA-NestedSet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="stylesheets" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JPA-NestedSet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nestedset" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1295,7 +1417,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="918" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.43195266" order="2" side_tool="true" content_ui="tabs" />
@@ -1304,7 +1426,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6007109" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.45" sideWeight="0.70563036" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45" sideWeight="0.70563036" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4808959" sideWeight="0.29436964" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1424,97 +1546,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/service/MyUserServicePlugin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="14" selection-start="440" selection-end="441" vertical-scroll-proportion="-6.6">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="399" column="0" selection-start="15504" selection-end="15605" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/views/home/home.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/Application.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="5" selection-start="6613" selection-end="6613" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/userForm.scala.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="109" selection-end="124" vertical-scroll-proportion="-2.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/securityGroupForm.scala.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="73" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/tags/multiSelect.scala.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="30" selection-start="569" selection-end="569" vertical-scroll-proportion="0.3409091">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/Users.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="33" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/SecurityRole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="13" selection-start="1034" selection-end="1034" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2183#2199#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="368" column="0" selection-start="12014" selection-end="12014" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/SecurityGroups.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="45" column="69" selection-start="1597" selection-end="1597" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/SecurityGroup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="64" selection-start="647" selection-end="647" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2475#2505#1" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1545,6 +1580,99 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5440#5470#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/BusinessTerms.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="13" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1371766884000" expanded="false" signature="-1:-1" placeholder="/unchecked/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/Application.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="170" column="62" selection-start="6094" selection-end="6120" vertical-scroll-proportion="-4.6">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/utils/QueryTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="0" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/userForm.scala.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="36" selection-start="1178" selection-end="1178" vertical-scroll-proportion="-18.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/SecurityGroup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="64" selection-start="647" selection-end="647" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="6" selection-start="899" selection-end="899" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/Organization.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="0" selection-start="1865" selection-end="1865" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#1372#1402#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/OperatingSystem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="134" selection-end="134" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/SecurityRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="46" selection-start="823" selection-end="823" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#2156#2172#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/Users.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="13" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="328" column="10" selection-start="10513" selection-end="10513" vertical-scroll-proportion="0.018691588">
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -28,6 +28,12 @@
         @inputText(userForm("email"), '_label -> "Email", 'class -> "span5")
         @inputText(userForm("title"), '_label -> "Title", 'class -> "span5")
         @select(
+          userForm("organization.id"),
+          options(Organization.options),
+          '_label -> "Organization",
+          '_showConstraints -> false
+        )
+        @select(
           userForm("parentGroup.id"),
           options(SecurityGroup.options),
           '_label -> "Security Group",

@@ -1,6 +1,8 @@
 package models;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.*;
 
 import play.db.jpa.JPA;
@@ -36,5 +38,19 @@ public class Organization {
                 .setMaxResults(pageSize)
                 .getResultList();
         return new Page<>(list, totalRowCount, pageIndex, pageSize);
+    }
+
+    public static Map<String, String> options() {
+        @SuppressWarnings("unchecked")
+        List<Organization> organizations = JPA.em().createQuery(
+                "from Organization order by name"
+        )
+                .getResultList();
+        LinkedHashMap<String, String> options = new LinkedHashMap<>();
+        options.put("0", "-- Select an Organization");
+        for (Organization organization : organizations) {
+            options.put(String.valueOf(organization.id), organization.name);
+        }
+        return options;
     }
 }
