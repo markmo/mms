@@ -1,0 +1,3 @@
+[submodule "deps/JPA-NestedSet"]
+	path = deps/JPA-NestedSet
+	url = git@github.com:markmo/JPA-NestedSet.git
