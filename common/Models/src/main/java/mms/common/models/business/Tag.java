@@ -9,13 +9,15 @@ import javax.persistence.*;
 import com.github.cleverage.elasticsearch.Indexable;
 import play.db.jpa.JPA;
 
+import mms.common.models.AuditedModel;
+
 /**
  * User: markmo
  * Date: 22/04/13
  * Time: 2:47 PM
  */
 @Entity
-public class Tag implements Indexable {
+public class Tag extends AuditedModel implements Indexable {
 
     @Id
     @GeneratedValue

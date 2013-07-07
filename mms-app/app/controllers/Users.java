@@ -11,6 +11,7 @@ import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
+import providers.MyUsernamePasswordAuthProvider;
 
 import models.User;
 
@@ -44,7 +45,7 @@ public class Users extends Controller {
         User user = JPA.em().find(User.class, id);
         if (user == null) {
             flash("error", "User could not be found");
-            return redirect(routes.SecuritySubjects.list(1, "name", "asc", ""));
+            return redirect(routes.SecuritySubjects.list(1, "name", "asc", "", ""));
         }
         Form<User.UserDTO> filledForm = userForm.fill(user.getDTO());
         return ok(views.html.userForm.render(false, id, filledForm));
@@ -60,7 +61,20 @@ public class Users extends Controller {
             userDTO.id = id;
             User user = User.update(userDTO);
             flash("success", "User '" + user.getName() + "' has been successfully saved");
-            return redirect(routes.SecuritySubjects.list(1, "name", "asc", ""));
+            return redirect(routes.SecuritySubjects.list(1, "name", "asc", "", ""));
         }
+    }
+
+    @Transactional
+    public static Result resendVerificationEmail(int userId) {
+        final User user = JPA.em().find(User.class, userId);
+        if (user.emailValidated) {
+            flash("info", "Email for " + user.getName() + " has already been validated");
+        } else {
+            MyUsernamePasswordAuthProvider.getProvider()
+                    .sendVerifyEmailMailingAfterSignup(user, ctx());
+            flash("success", "Verification email for " + user.getName() + " has been sent");
+        }
+        return redirect(routes.SecuritySubjects.list(0, "name", "asc", "", ""));
     }
 }

@@ -1,16 +1,12 @@
-@(currentPage: Page[_], currentSortBy: String, currentOrder: String, currentFilter: String)
-
-@import utils.PaginationHelper.{link => _link}
-
-@link(newPageIndex: Int, newSortBy: String) = @{
-  _link(currentSortBy, currentOrder, currentFilter, newPageIndex, newSortBy)
-}
+@(currentPage: Page[_], currentSortBy: String, currentOrder: String,
+  currentFilterColumn: String, currentFilterValue: String,
+  link: Int => Call)
 
 <div id="pagination" class="pagination">
     <ul>
         @if(currentPage.hasPrev) {
         <li class="prev">
-            <a href="@link(currentPage.getPageIndex - 1, null)">&laquo; Previous</a>
+            <a href="@link(currentPage.getPageIndex - 1)">&laquo; Previous</a>
         </li>
         } else {
         <li class="prev disabled">
@@ -18,14 +14,14 @@
         </li>
         }
         @for(i <- currentPage.nearestIndexes) {
-        <li@if(currentPage.isCurrentIndex(i)) { class="active"}><a href="@link(i, null)">@i</a></li>
+        <li@if(currentPage.isCurrentIndex(i)) { class="active"}><a href="@link(i)">@i</a></li>
         }
         <li class="current">
             <span>Displaying @currentPage.getDisplayXtoYofZ</span>
         </li>
         @if(currentPage.hasNext) {
         <li class="next">
-            <a href="@link(currentPage.getPageIndex + 1, null)">Next &raquo;</a>
+            <a href="@link(currentPage.getPageIndex + 1)">Next &raquo;</a>
         </li>
         } else {
         <li class="next disabled">

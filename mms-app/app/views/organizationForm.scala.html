@@ -10,7 +10,8 @@
             <input type="hidden" name="@idField.name" id="@idField.id" value="@idField.value">
         }
         @inputText(organizationForm("name"), '_label -> "Name", 'class -> "span5")
+        @inputText(organizationForm("code"), '_label -> "Code")
         <a href="@routes.Organizations.list(1, "name", "asc", "")" class="btn">Cancel</a>
-        <input type="submit" class="btn btn-primary" value="@if(isNew) {Create} else {Update}">
+        <input type="submit" class="btn btn-primary" value="@{if(isNew) "Create" else "Update"}">
     }
 }

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import mms.common.models.AuditedModel;
 import mms.common.models.Datasource;
 
 /**
@@ -12,7 +13,7 @@ import mms.common.models.Datasource;
  * Time: 3:31 PM
  */
 @Entity
-public class Application {
+public class Application extends AuditedModel {
 
     @Id
     @GeneratedValue

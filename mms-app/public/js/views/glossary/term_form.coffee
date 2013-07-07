@@ -8,7 +8,7 @@ define [
     'cs!models/term'
     'chosen'
     'select2'
-    'jquery-resize'
+    'jquery_resize'
 ], ($, _, Backbone, Handlebars, app, Form, Term) ->
     Backbone.View.extend
 

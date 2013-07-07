@@ -4,7 +4,7 @@ define [
     'cs!events'
     'cs!models/tag'
     'text!templates/components/form.html'
-    'backbone-forms'
+    'backbone_forms'
     'jsonform'
     'tagautocomplete'
 ], (_, Backbone, app, Tag, formTemplate) ->

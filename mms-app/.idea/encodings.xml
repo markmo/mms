@@ -21,6 +21,7 @@
     <file url="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/value-distribution" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/writers" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../java/AnalyzerBeans/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../deps/JPA-NestedSet" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

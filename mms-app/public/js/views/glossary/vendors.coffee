@@ -4,9 +4,10 @@ define [
     'handlebars'
     'cs!events'
     'cs!vm'
+    'cs!components/paginator'
     'cs!views/glossary/vendor_form'
     'text!templates/glossary/vendors.html'
-], ($, Backbone, Handlebars, app, Vm, VendorForm, vendorsPageTemplate) ->
+], ($, Backbone, Handlebars, app, Vm, Paginator, VendorForm, vendorsPageTemplate) ->
     Backbone.View.extend
         el: '#page'
 
@@ -57,6 +58,7 @@ define [
                 @vendors = coll
                 @$el.html @compiled
                     vendors: coll.toJSON()
+                paginator = Vm.create(this, 'Paginator', Paginator, {pageableCollection: coll})
             return this
 
         clean: ->

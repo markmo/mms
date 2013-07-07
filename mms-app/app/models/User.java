@@ -16,6 +16,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import play.data.format.Formats;
 import play.db.jpa.JPA;
+import providers.MyUsernamePasswordAuthUser;
 
 import models.TokenAction.Type;
 
@@ -242,6 +243,9 @@ public class User extends SecuritySubject {
 				user.setName(name);
 			}
 		}
+        MyUsernamePasswordAuthUser authUser1 = (MyUsernamePasswordAuthUser)authUser;
+        final Organization organization = Organization.findByCode(authUser1.getOrganizationCode());
+        user.organization = organization;
 
         JPA.em().persist(user);
 

@@ -32,6 +32,8 @@ public abstract class AuditedModel {
     @javax.persistence.Column(name = "updated_by")
     public Long updatedBy;
 
+    public Long organizationId;
+
     @ManyToAny(metaColumn = @javax.persistence.Column(name = "entity_type"))
     @AnyMetaDef(
             idType = "long", metaType = "string",

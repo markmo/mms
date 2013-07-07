@@ -5,13 +5,15 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
 
+import mms.common.models.AuditedModel;
+
 /**
  * User: markmo
  * Date: 22/04/13
  * Time: 2:42 PM
  */
 @Entity
-public class Domain {
+public class Domain extends AuditedModel {
 
     @Id
     @GeneratedValue

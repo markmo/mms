@@ -2,7 +2,7 @@ define [
     'jquery'
     'underscore'
     'backbone'
-    'backbone-collectionsubset'
+    'backbone_subcollections'
 ], ($, _, Backbone) ->
 
     # TODO add cache time to memo

@@ -1,0 +1,20 @@
+<ul>
+    {{#if pageableCollection.hasPrevious()}}
+    <li class="prev">
+        <a id="previousPage" href="#">&laquo; Previous</a>
+    </li>
+    {{else}}
+    <li class="prev disabled">
+        <a>&laquo; Previous</a>
+    </li>
+    {{/if}}
+    {{#if(pageableCollection.hasNext()}}
+    <li class="next">
+        <a id="nextPage" href="#">Next &raquo;</a>
+    </li>
+    {{else}}
+    <li class="next disabled">
+        <a>Next &raquo;</a>
+    </li>
+    {{/if}}
+</ul>

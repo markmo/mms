@@ -2,6 +2,8 @@ package models;
 
 import javax.persistence.*;
 
+import mms.common.models.AuditedModel;
+
 /**
  * User: markmo
  * Date: 1/05/13
@@ -9,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "settings")
-public class Setting {
+public class Setting extends AuditedModel {
 
     @Id
     @GeneratedValue

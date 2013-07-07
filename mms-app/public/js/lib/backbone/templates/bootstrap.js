@@ -1,13 +1,13 @@
-/** 
+/**
  * Requirements when customising templates:
  * - Each template must have one 'parent' element tag.
  * - "data-type" attributes are required.
  * - The main placeholder tags such as the following are required: fieldsets, fields
  */
-define(['jquery', 'underscore', 'backbone', 'backbone-forms'], function($, _, Backbone) {
+define(['jquery', 'underscore', 'backbone', 'backbone_forms'], function($, _, Backbone) {
   var Form = Backbone.Form;
 
-    
+
   //TWITTER BOOTSTRAP TEMPLATES
   //Requires Bootstrap 2.x
   Form.setTemplates({
@@ -83,7 +83,7 @@ define(['jquery', 'underscore', 'backbone', 'backbone-forms'], function($, _, Ba
       </div>\
     '
   }, {
-  
+
     //CLASSNAMES
     error: 'error' //Set on the field tag when validation fails
   });

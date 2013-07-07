@@ -24,10 +24,8 @@ import play.i18n.Messages;
 import play.mvc.*;
 import play.mvc.Http.Context;
 
-import models.LinkedAccount;
-import models.TokenAction;
+import models.*;
 import models.TokenAction.Type;
-import models.User;
 
 public class MyUsernamePasswordAuthProvider
         extends
@@ -101,10 +99,17 @@ public class MyUsernamePasswordAuthProvider
         @Required
         public String name;
 
+        @Required
+        public String organizationCode;
+
         public String validate() {
             if (password == null || !password.equals(repeatPassword)) {
                 return Messages
                         .get("playauthenticate.password.signup.error.passwords_not_same");
+            }
+            Organization organization = Organization.findByCode(organizationCode);
+            if (organization == null) {
+                return "Organization not found";
             }
             return null;
         }

@@ -4,6 +4,7 @@ import static play.data.Form.form;
 
 import java.util.Map;
 
+import be.objectify.deadbolt.java.actions.*;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -16,7 +17,6 @@ import models.Organization;
  * Date: 1/06/13
  * Time: 8:28 PM
  */
-//@Restrict(@Group(Application.USER_ROLE))
 public class Organizations extends Controller {
 
     final static Form<Organization> organizationForm = form(Organization.class);
@@ -40,13 +40,28 @@ public class Organizations extends Controller {
      * @param filter Filter applied on organization names
      */
     @Transactional(readOnly = true)
-    public static Result list(int pageIndex, String sortBy, String order, String filter) {
+    @Restrict(@Group(Application.SUPERADMIN_ROLE))
+    public static Result list(int pageIndex, String sortBy, String order,
+                              String filterColumn, String filterValue) {
         return ok(
                 views.html.organizations.render(
-                        Organization.page(pageIndex, 10, sortBy, order, filter),
-                        sortBy, order, filter
+                        Organization.page(pageIndex, 10, sortBy, order, filterColumn, filterValue),
+                        sortBy, order, filterColumn, filterValue
                 )
         );
+    }
+
+    @Transactional(readOnly = true)
+    public static Result findByCode(String code) {
+        Organization organization = Organization.findByCode(code);
+        String json;
+        if (organization != null) {
+            json = String.format("{\"name\":\"%s\"}", organization.name);
+            return ok(json).as("application/json");
+        } else {
+            json = String.format("{\"error\":\"%s\"}", "Organization could not be found");
+            return notFound(json).as("application/json");
+        }
     }
 
     public static Result create() {
@@ -54,11 +69,12 @@ public class Organizations extends Controller {
     }
 
     @Transactional(readOnly = true)
+    @Restrict({@Group(Application.ADMIN_ROLE), @Group(Application.SUPERADMIN_ROLE)})
     public static Result edit(Long id) {
         Organization organization = JPA.em().find(Organization.class, id);
         if (organization == null) {
             flash("error", "Organization could not be found");
-            return redirect(routes.Organizations.list(0, "name", "asc", ""));
+            return redirect(routes.Organizations.list(0, "name", "asc", "", ""));
         }
         Form<Organization> filledForm = organizationForm.fill(organization);
         return ok(views.html.organizationForm.render(false, filledForm));
@@ -72,16 +88,22 @@ public class Organizations extends Controller {
         } else {
             Organization organization = filledForm.get();
             if (organization.id == null) {
+                // Check that the code or name hasn't already been used
+                Organization organization1 = Organization.findByCodeOrName(organization.code, organization.name);
+                if (organization1 != null) {
+                    return badRequest("That organization name or code has already been used.");
+                }
                 JPA.em().persist(organization);
             } else {
                 JPA.em().merge(organization);
             }
             flash("success", "Organization '" + organization.name + "' has been successfully saved");
-            return redirect(routes.Organizations.list(0, "name", "asc", ""));
+            return redirect(routes.Organizations.list(0, "name", "asc", "", ""));
         }
     }
 
     @Transactional
+    @Restrict({@Group(Application.ADMIN_ROLE), @Group(Application.SUPERADMIN_ROLE)})
     public static Result delete() {
         Map<String, String[]> params = request().body().asFormUrlEncoded();
         String[] deletions = params.get("deletions[]");
@@ -97,6 +119,6 @@ public class Organizations extends Controller {
         } else {
             flash("success", "The selected organizations have been deleted");
         }
-        return redirect(routes.Organizations.list(0, "name", "asc", ""));
+        return redirect(routes.Organizations.list(0, "name", "asc", "", ""));
     }
 }

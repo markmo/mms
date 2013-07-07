@@ -1,0 +1,17 @@
+@(f: Form[_], constraints: Boolean = false)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+<fieldset id="organizationForm" style="display: none; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
+    <legend>Create Organization</legend>
+    <hr>
+    <div class="notification"></div>
+
+    @inputText(f("name"), '_label -> "Name", 'class -> "span5", 'id -> "organizationName1")
+
+    @inputText(f("code"), '_label -> "Code", 'id -> "organizationCode1")
+
+    <input id="btnCancelNewOrganization" type="button" class="btn" value="Cancel">
+    <input id="btnSubmitNewOrganization" type="button" class="btn btn-primary" value="Create">
+</fieldset>

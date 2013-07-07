@@ -18,7 +18,7 @@
     <script src="@routes.Assets.at("js/lib/jquery/jquery-1.9.1.min.js")"></script>
     <script src="@routes.Assets.at("js/lib/bootstrap/bootstrap.min.js")"></script>
     } else {
-        @scripts
+    @scripts
     }
     <script src="@routes.Assets.at("js/lib/sonic/sonic.js")"></script>
     <script src="@routes.Assets.at("js/lib/d3/d3.v3.min.js")"></script>
@@ -42,6 +42,7 @@
     <link href="@routes.Assets.at("css/visualsearch/visualsearch.css")" rel="stylesheet">
     <link href="@routes.Assets.at("stylesheets/main.min.css")" rel="stylesheet">
     <link href="@routes.Assets.at("stylesheets/snap.min.css")" rel="stylesheet">
+    <link href="@routes.Assets.at("stylesheets/button-spinner.min.css")" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -79,26 +80,24 @@
 
                         <div id="user-control" class="btn-group pull-right">
                             @subjectPresentOr() {
-                            @defining(Application.getLocalUser(session())) { user =>
-                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                <em class="icon-user"></em> @user.getName()
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="@routes.Application.profile()">@Messages("playauthenticate.navigation.profile")</a></li>
-                                <li><a href="@routes.Account.link()">@Messages("playauthenticate.navigation.link_more")</a></li>
-                                <li class="divider"></li>
-                                <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()"><em
-                                class="icon-off"></em> @Messages("playauthenticate.navigation.logout")</a></li>
-                            </ul>
-                            }
+                                @defining(Application.getLocalUser(session())) { user =>
+                                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <em class="icon-user"></em> @user.getName()
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@routes.Application.profile()">@Messages("playauthenticate.navigation.profile")</a></li>
+                                    <li><a href="@routes.Account.link()">@Messages("playauthenticate.navigation.link_more")</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout()"><em
+                                    class="icon-off"></em> @Messages("playauthenticate.navigation.logout")</a></li>
+                                </ul>
+                                }
                             }{
-                            <a href="@routes.Application.login()" class="btn btn-primary @("disabled".when(nav == "login"))">@Messages("playauthenticate.navigation.login")</a>
+                                <a href="@routes.Application.login()" class="btn btn-primary @("disabled".when(nav == "login"))">@Messages("playauthenticate.navigation.login")</a>
                             }
                         </div>
-
                         <div class="visual_search pull-left"></div>
-
                         <div class="nav-collapse pull-right">
                             <ul class="nav">
                                 <li>
@@ -109,20 +108,27 @@
                                 </li>
                                 <li class="dropdown@(" active".when(nav == ""))">
                                     <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                                            Admin
+                                        Admin
                                         <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="@routes.Application.index()">@Messages("playauthenticate.navigation.home")</a></li>
                                         <li><a href="@routes.Application.showRevisions()">Revisions</a></li>
                                         <li><a href="@routes.Settings.edit(1)">Settings</a></li>
+                                        @restrict(la(as("superadmin"), as("admin"))) {
+                                            <li class="divider"></li>
+                                            <li><a href="@routes.SecuritySubjects.list()">User Management</a></li>
+                                        }
+                                        @restrict(la(as("superadmin"))) {
+                                            <li><a href="@routes.Organizations.list()">Organizations</a></li>
+                                        }
                                         @*<li><a href="@routes.Application.api()">API</a></li>*@
                                     </ul>
                                 </li>
                                 @*<li class="@(" active".when(nav == "restricted"))"><a href="@routes.Application.restricted()">@Messages("playauthenticate.navigation.restricted")</a></li>*@
                                 @subjectNotPresent() {
-                                <li class="@(" active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("playauthenticate.navigation.signup")</a></li>
-                            }
+                                    <li class="@(" active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("playauthenticate.navigation.signup")</a></li>
+                                }
                             </ul>
                         </div><!--/.nav-collapse -->
                     </div>

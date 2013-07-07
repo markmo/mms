@@ -4,6 +4,8 @@ import java.util.*;
 import javax.persistence.*;
 
 import be.objectify.deadbolt.core.models.*;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import org.code_factory.jpa.nestedset.NodeInfo;
 import org.code_factory.jpa.nestedset.annotations.*;
 import org.hibernate.annotations.LazyCollection;
@@ -138,6 +140,14 @@ public abstract class SecuritySubject implements Subject, NodeInfo {
         return roleList;
     }
 
+    public boolean isInRole(String roleName) {
+        return Lists.transform(getRoles(), new Function<Role, String>() {
+            public String apply(Role role) {
+                return role.getName();
+            }
+        }).contains(roleName);
+    }
+
     // scala templates don't like arrays
     // Field.indexes not working with an Array field - must be Iterable perhaps
     @Transient
@@ -178,25 +188,38 @@ public abstract class SecuritySubject implements Subject, NodeInfo {
 
     public static Page<SecuritySubject> page(int pageIndex, int pageSize,
                                              String sortBy, String order,
-                                             String filter, Set<String[]> closedNodes) {
+                                             String filterColumn, String filterValue,
+                                             Set<String[]> closedNodes,
+                                             Long organizationId) {
         if (pageIndex < 1) pageIndex = 1;
+        if (filterColumn == null || filterColumn.trim().isEmpty()) {
+            filterColumn = "name";
+        }
         Long totalRowCount = (Long) JPA.em()
-                .createQuery("select count(s) from SecuritySubject s where lower(s.name) like ?1")
-                .setParameter(1, "%" + filter.toLowerCase() + "%")
+                .createQuery("select count(s) from SecuritySubject s " +
+                             "where lower(s." + filterColumn + ") like ?1")
+                .setParameter(1, "%" + filterValue.toLowerCase() + "%")
                 .getSingleResult();
-        String q = "select s from SecuritySubject s where lower(s.name) like ?1";
+        String q = "select s from SecuritySubject s " +
+                "where lower(s." + filterColumn + ") like ?1";
         int n = closedNodes.size(), j = 2;
         for (int i = 0; i < n; i++) {
             q += String.format(" and (s.lft <= ?%s or s.lft >= ?%s)", j++, j++);
         }
-        q += " order by s.rootId, s.lft";
+        if (organizationId != null) {
+            q += " and s.organization.id = ?" + j;
+        }
+        q += " order by s.rootId, s.lft, s.name";
 //            " order by s." + sortBy + " " + order)
         Query query = JPA.em().createQuery(q);
-        query.setParameter(1, "%" + filter.toLowerCase() + "%");
+        query.setParameter(1, "%" + filterValue.toLowerCase() + "%");
         j = 2;
         for (String[] bounds : closedNodes) {
             query.setParameter(j++, Integer.parseInt(bounds[1]));
             query.setParameter(j++, Integer.parseInt(bounds[2]));
+        }
+        if (organizationId != null) {
+            query.setParameter(j, organizationId);
         }
         @SuppressWarnings("unchecked")
         List<SecuritySubject> list = query

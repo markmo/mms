@@ -1,22 +1,19 @@
 import java.util.Arrays;
 
-import com.github.cleverage.elasticsearch.IndexService;
+import com.feth.play.module.pa.PlayAuthenticate;
+import com.feth.play.module.pa.PlayAuthenticate.Resolver;
+import com.feth.play.module.pa.exceptions.AccessDeniedException;
+import com.feth.play.module.pa.exceptions.AuthException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import controllers.routes;
 import module.Dependencies;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.db.jpa.JPA;
-import play.libs.F;
-import play.mvc.Call;
+import play.mvc.*;
 
-import com.feth.play.module.pa.PlayAuthenticate;
-import com.feth.play.module.pa.PlayAuthenticate.Resolver;
-import com.feth.play.module.pa.exceptions.AccessDeniedException;
-import com.feth.play.module.pa.exceptions.AuthException;
-
-import controllers.routes;
 import models.SecurityRole;
 import service.FileRepoService;
 
@@ -44,7 +41,7 @@ public class Global extends GlobalSettings {
 
             @Override
             public Call afterLogout() {
-                return routes.Application.index();
+                return routes.Application.login();
             }
 
             @Override

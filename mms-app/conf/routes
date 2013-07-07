@@ -182,8 +182,9 @@ GET     /logout                         com.feth.play.module.pa.controllers.Auth
 
 # Organizations
 GET     /organizations/new              controllers.Organizations.create
+GET     /organizations/find             controllers.Organizations.findByCode(code: String)
 GET     /organizations/:id/edit         controllers.Organizations.edit(id: Long)
-GET     /organizations                  controllers.Organizations.list(p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
+GET     /organizations                  controllers.Organizations.list(p:Int ?= 1, s ?= "name", o ?= "asc", c ?= "", f ?= "")
 POST    /organizations/update           controllers.Organizations.update
 POST    /organizations/delete           controllers.Organizations.delete
 
@@ -199,8 +200,8 @@ GET     /securitygroups/:id/edit        controllers.SecurityGroups.edit(id: Int)
 POST    /securitygroups/:id             @controllers.SecurityGroups.update(id: Int)
 
 # Security Subjects
-GET     /subjects                       controllers.SecuritySubjects.list(p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
-GET     /subjects/:id/toggle            controllers.SecuritySubjects.updateTreeDisplay(id: Int, bounds: String, open: Boolean, p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
+GET     /subjects                       controllers.SecuritySubjects.list(p:Int ?= 1, s ?= "name", o ?= "asc", c ?= "", f ?= "")
+GET     /subjects/:id/toggle            controllers.SecuritySubjects.updateTreeDisplay(id: Int, bounds: String, open: Boolean, p:Int ?= 1, s ?= "name", o ?= "asc", c ?= "", f ?= "")
 POST    /subjects/delete                controllers.SecuritySubjects.delete
 
 GET     /signup                         @controllers.Application.signup
@@ -209,6 +210,7 @@ POST    /signup                         @controllers.Application.doSignup
 # Users
 GET     /users/new                      controllers.Users.create
 GET     /users/:id/edit                 controllers.Users.edit(id: Int)
+GET     /users/:id/verify               controllers.Users.resendVerificationEmail(id: Int)
 POST    /users/:id                      @controllers.Users.update(id: Int)
 
 ## Assets

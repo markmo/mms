@@ -1,17 +1,19 @@
 require.config({
-    baseUrl: "/assets/js",
+    baseUrl: '/assets/js',
     paths: {
         // Libraries
         jquery: 'lib/jquery/jquery-1.9.1',
         underscore: 'lib/underscore/underscore-min',
         backbone: 'lib/backbone/backbone-min',
-        'backbone-forms': 'lib/backbone/backbone-forms',
-        'backbone-associations': 'lib/backbone/backbone-associations',
-        'backbone-collectionsubset': 'lib/backbone/backbone.collectionsubset.min',
+        backbone_associations: 'lib/backbone/backbone-associations',
+        backbone_subcollections: 'lib/backbone/backbone.collectionsubset.min',
+        backbone_forms: 'lib/backbone/backbone-forms',
+        //backbone_paginator: 'lib/backbone/backbone.paginator.min',
+        'backbone-pageable': 'lib/backbone/backbone-pageable.min',
         handlebars: 'lib/handlebars/handlebars',
         bootstrap: 'lib/bootstrap/bootstrap.min',
         'jquery.ui.widget': 'lib/jquery-file-upload/vendor/jquery.ui.widget',
-        'jquery-resize': 'lib/jquery/jquery.ba-resize.min',
+        jquery_resize: 'lib/jquery/jquery.ba-resize.min',
         tmpl: 'lib/jquery-file-upload/vendor/tmpl.min',
         'load-image': 'lib/jquery-file-upload/vendor/load-image.min',
         'canvas-to-blob': 'lib/jquery-file-upload/vendor/canvas-to-blob.min',
@@ -23,15 +25,15 @@ require.config({
         snap: 'lib/snap/snap.min',
         jsonform: 'lib/jsonform/jsonform',
         tagautocomplete: 'lib/tagautocomplete/bootstrap-tagautocomplete',
-        'bootstrap-typeahead': 'lib/tagautocomplete/bootstrap-typeahead',
-        'caret-position': 'lib/tagautocomplete/caret-position',
-        'rangy-core': 'lib/tagautocomplete/rangy-core',
-        'annotator': 'lib/annotator/annotator-full.min',
-        'jqueryui-core': 'lib/jqueryui/jquery.ui.core',
-        'jqueryui-position': 'lib/jqueryui/jquery.ui.position',
-        'jqueryui-widget': 'lib/jqueryui/jquery.ui.widget',
-        'jqueryui-menu': 'lib/jqueryui/jquery.ui.menu',
-        'jqueryui-autocomplete': 'lib/jqueryui/jquery.ui.autocomplete',
+        bootstrap_typeahead: 'lib/tagautocomplete/bootstrap-typeahead',
+        caret_position: 'lib/tagautocomplete/caret-position',
+        rangy_core: 'lib/tagautocomplete/rangy-core',
+        annotator: 'lib/annotator/annotator-full.min',
+        jqueryui_core: 'lib/jqueryui/jquery.ui.core',
+        jqueryui_position: 'lib/jqueryui/jquery.ui.position',
+        //jqueryui_widget: 'lib/jqueryui/jquery.ui.widget',
+        jqueryui_menu: 'lib/jqueryui/jquery.ui.menu',
+        jqueryui_autocomplete: 'lib/jqueryui/jquery.ui.autocomplete',
         visualsearch: 'lib/visualsearch/visualsearch',
 
         // Require.js plugins
@@ -49,10 +51,10 @@ require.config({
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
-        'backbone-associations': {
+        backbone_associations: {
             deps: ['backbone']
         },
-        'backbone-collectionsubset': {
+        backbone_subcollections: {
             deps: ['backbone']
         },
         handlebars: {
@@ -62,25 +64,25 @@ require.config({
             deps: ['jquery', 'jqueryui_custom', 'linkify']
         },
         tagautocomplete: {
-            deps: ['bootstrap-typeahead', 'rangy-core', 'caret-position']
+            deps: ['bootstrap_typeahead', 'rangy_core', 'caret_position']
         },
-        'jqueryui-core': {
+        jqueryui_core: {
             deps: ['jquery']
         },
-        'jqueryui-widget': {
-            deps: ['jqueryui-core']
+        //jqueryui_widget: {
+        //    deps: ['jqueryui_core']
+        //},
+        jqueryui_position: {
+            deps: ['jqueryui_core']
         },
-        'jqueryui-position': {
-            deps: ['jqueryui-core']
+        jqueryui_menu: {
+          deps: ['jqueryui_position', 'jquery.ui.widget']
         },
-        'jqueryui-menu': {
-          deps: ['jqueryui-position', 'jqueryui-widget']
-        },
-        'jqueryui-autocomplete': {
-            deps: ['jqueryui-menu']
+        jqueryui_autocomplete: {
+            deps: ['jqueryui_menu']
         },
         visualsearch: {
-            deps: ['jqueryui-autocomplete', 'underscore', 'backbone']
+            deps: ['jqueryui_autocomplete', 'underscore', 'backbone']
         }
     }
 });
@@ -109,7 +111,7 @@ require([
 
     require([
         'bootstrap',
-        'backbone-associations',
+        'backbone_associations',
         'lib/jquery/jquery-migrate-1.1.1.min',
         'lib/jquery/jquery.autogrow-textarea',
         'lib/bootstrap-growl/jquery.bootstrap-growl.min',
@@ -127,13 +129,9 @@ require([
     };
 
     Handlebars.registerHelper('humanize', function (value) {
-//        if (value instanceof Date) {
-            return new Handlebars.SafeString(
-                moment(value).fromNow()
-            );
-//        } else {
-//            return value;
-//        }
+        return new Handlebars.SafeString(
+            moment(value).fromNow()
+        );
     });
 
     Handlebars.registerHelper('loop', function (context, options) {
@@ -383,8 +381,7 @@ require([
                 event.preventDefault();
                 var li = $(this);
                 var uri = li.data('uri');
-                var url = baseUrl + '#/' + uri;
-                location.href = url;
+                location.href = baseUrl + '#/' + uri;
                 // load the next page before hiding the search results
                 setTimeout(function () {closeSearchResults();}, 1000);
                 return false;

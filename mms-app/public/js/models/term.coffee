@@ -7,7 +7,7 @@ define [
     'cs!models/tag'
     'cs!models/responsibility'
     'cs!models/access'
-    'backbone-associations'
+    'backbone_associations'
 ], (Backbone, app, TagsCollection, Domain, SecurityClassification, Tag, Responsibility, Access) ->
     Term = Backbone.AssociatedModel
     Term.extend

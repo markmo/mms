@@ -2,13 +2,15 @@ package mms.common.models.business;
 
 import javax.persistence.*;
 
+import mms.common.models.AuditedModel;
+
 /**
  * User: markmo
  * Date: 22/04/13
  * Time: 3:33 PM
  */
 @Entity
-public class Vendor {
+public class Vendor extends AuditedModel {
 
     @Id
     @GeneratedValue

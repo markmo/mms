@@ -2,13 +2,15 @@ package mms.common.models.business;
 
 import javax.persistence.*;
 
+import mms.common.models.AuditedModel;
+
 /**
  * User: markmo
  * Date: 22/04/13
  * Time: 2:56 PM
  */
 @Entity
-public class StakeholderRole {
+public class StakeholderRole extends AuditedModel {
 
     @Id
     @GeneratedValue

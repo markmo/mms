@@ -40,7 +40,7 @@
         <module name="AnalyzerBeans-standardizers" />
         <module name="AnalyzerBeans-value-distribution" />
         <module name="AnalyzerBeans-writers" />
-        <module name="JpaNestedSet" />
+        <module name="JpaNestedSet (2)" />
         <module name="mms-models" />
       </profile>
     </annotationProcessing>
@@ -65,6 +65,7 @@
       <module name="AnalyzerBeans-value-distribution" target="1.6" />
       <module name="AnalyzerBeans-writers" target="1.6" />
       <module name="JpaNestedSet" target="1.7" />
+      <module name="JpaNestedSet (2)" target="1.7" />
       <module name="mms-models" target="1.7" />
     </bytecodeTargetLevel>
   </component>

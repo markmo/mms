@@ -30,7 +30,7 @@ public class SecurityGroup extends SecuritySubject {
         if (parent != null && parent.id > 0) {
             parentGroup = JPA.em().find(SecurityGroup.class, parent.id);
         }
-        final String[] includedProperties = new String[]{"name", "roleIds"};
+        final String[] includedProperties = new String[]{"name", "organization", "roleIds"};
         if (groupDTO.id == 0) {
             SecurityGroup group = new SecurityGroup();
             group.parentGroup = parentGroup;
@@ -84,6 +84,7 @@ public class SecurityGroup extends SecuritySubject {
         SecurityGroupDTO dto = new SecurityGroupDTO();
         dto.id = id;
         dto.name = name;
+        dto.organization = organization;
         if (parentGroup != null) {
             dto.parentGroup = parentGroup.getDTO();
         }
@@ -96,6 +97,7 @@ public class SecurityGroup extends SecuritySubject {
 
         public int id;
         public String name;
+        public Organization organization;
         public SecurityGroupDTO parentGroup;
         public List<Long> roleIds;
     }

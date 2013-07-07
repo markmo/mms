@@ -12,9 +12,12 @@ public class MyUsernamePasswordAuthUser extends UsernamePasswordAuthUser
 
     private final String name;
 
+    private final String organizationCode;
+
     public MyUsernamePasswordAuthUser(final MySignup signup) {
         super(signup.password, signup.email);
         this.name = signup.name;
+        this.organizationCode = signup.organizationCode;
     }
 
     /**
@@ -25,10 +28,15 @@ public class MyUsernamePasswordAuthUser extends UsernamePasswordAuthUser
     public MyUsernamePasswordAuthUser(final String password) {
         super(password, null);
         name = null;
+        organizationCode = null;
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    public String getOrganizationCode() {
+        return organizationCode;
     }
 }

@@ -28,7 +28,7 @@ public class SecurityGroups extends Controller {
         SecurityGroup group = JPA.em().find(SecurityGroup.class, id);
         if (group == null) {
             flash("error", "Security Group could not be found");
-            return redirect(routes.SecuritySubjects.list(1, "name", "asc", ""));
+            return redirect(routes.SecuritySubjects.list(1, "name", "asc", "", ""));
         }
         Form<SecurityGroup.SecurityGroupDTO> filledForm = groupForm.fill(group.getDTO());
         return ok(views.html.securityGroupForm.render(false, id, filledForm));
@@ -45,7 +45,7 @@ public class SecurityGroups extends Controller {
             partialGroup.id = id;
             SecurityGroup group = SecurityGroup.update(partialGroup);
             flash("success", "Security Group '" + group.getName() + "' has been successfully saved");
-            return redirect(routes.SecuritySubjects.list(1, "name", "asc", ""));
+            return redirect(routes.SecuritySubjects.list(1, "name", "asc", "", ""));
         }
     }
 }

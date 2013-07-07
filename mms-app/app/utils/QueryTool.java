@@ -24,10 +24,10 @@ public class QueryTool {
         CriteriaQuery<T> cq = cb.createQuery(entity);
         Root<T> queryRoot = cq.from(entity);
         User localUser = Application.getLocalUser(session);
-        if (localUser != null) {
+        if (localUser != null && !localUser.isInRole("superadmin")) {
             Organization organization = localUser.organization;
             if (organization != null) {
-                cq.where(cb.equal(queryRoot.get("organization"), organization));
+                cq.where(cb.equal(queryRoot.get("organizationId"), organization.id));
             }
         }
         return cq;

@@ -1,7 +1,7 @@
 define [
     'backbone'
     'cs!events'
-    'backbone-associations'
+    'backbone_associations'
 ], (Backbone, app) ->
     Domain = Backbone.AssociatedModel
     Domain.extend

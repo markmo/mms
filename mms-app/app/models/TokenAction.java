@@ -79,7 +79,16 @@ public class TokenAction {
                 "delete from TokenAction t where t.targetUser.id = ?1 and t.type = ?2"
         )
                 .setParameter(1, u.getId())
-                .setParameter(2, type);
+                .setParameter(2, type)
+                .executeUpdate();
+    }
+
+    public static void deleteByUser(final User u) {
+        JPA.em().createQuery(
+                "delete from TokenAction t where t.targetUser.id = ?1"
+        )
+                .setParameter(1, u.getId())
+                .executeUpdate();
     }
 
     public boolean isValid() {
