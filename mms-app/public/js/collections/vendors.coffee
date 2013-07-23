@@ -1,14 +1,13 @@
 define [
-    'backbone'
+    'backbone-pageable'
     'cs!models/vendor'
-    'backbone_pageable'
-], (Backbone, vendorModel) ->
-    Backbone.PageableCollection.extend
+], (PageableCollection, vendorModel) ->
+    PageableCollection.extend
         model: vendorModel
         url: '/vendors'
-        mode: 'infinite'
+        mode: 'server'
         state:
-            pageSize: 10
+            pageSize: 25
         queryParams:
             currentPage: 'p'
             sortKey: 's'

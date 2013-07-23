@@ -185,6 +185,12 @@ define [
             require ['cs!views/glossary/vendors'], (VendorsPage) ->
                 vendorsPage = Vm.create(appView, 'VendorsPage', VendorsPage)
                 vendorsPage.render()
+#            require ['cs!views/glossary/vendors', 'cs!components/paginator'], (VendorsPage, Paginator) ->
+#                vendorsPage = Vm.create(appView, 'VendorsPage', VendorsPage)
+#                vendorsPage.render().done (coll) ->
+#                    paginator = Vm.create(vendorsPage, 'Paginator', Paginator, {pageableCollection: coll})
+#                    paginator.render()
+#                    vendorsPage.listenTo(paginator, 'previous next', vendorsPage.render)
 
         router.on 'route:defaultAction', () ->
             require ['cs!views/home/home'], (HomePage) ->

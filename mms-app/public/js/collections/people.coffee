@@ -1,7 +1,14 @@
 define [
-    'backbone'
+    'backbone-pageable'
     'cs!models/person'
-], (Backbone, personModel) ->
-    Backbone.Collection.extend
-        url: '/people'
+], (PageableCollection, personModel) ->
+    PageableCollection.extend
         model: personModel
+        url: '/people'
+        mode: 'server'
+        state:
+            pageSize: 25
+        queryParams:
+            currentPage: 'p'
+            sortKey: 's'
+            order: 'o'

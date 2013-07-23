@@ -2,7 +2,7 @@ define [
     'jquery'
     'underscore'
     'backbone'
-    'backbone_forms'
+    'backbone-forms'
     'cs!events'
 ], ($, _, Backbone, Form, app) ->
     Backbone.View.extend

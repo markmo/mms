@@ -948,7 +948,11 @@ i[class^="icon-"] {
     color: rgba(255, 255, 255, 0.75);
   }
 }
-#responsibilitiesForm table, #accessForm table, .field-access {
+
+#responsibilitiesForm table,
+#accessForm table,
+.field-access,
+.access-changes {
 
   button.create.active {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -1305,7 +1309,6 @@ form {
 tfoot .pagination {
   float: left;
   margin-right: 10px;
-  display: none;
 }
 
 .infscr-msg {
@@ -1315,4 +1318,21 @@ tfoot .pagination {
 
 #infscr-loading td {
   text-align: center;
+}
+
+.table th a {
+  padding-right: 15px;
+}
+
+.table.access-changes {
+  margin-bottom: 0;
+
+  td, th {
+    font-size: 13px;
+    padding: 6px 8px 3px 8px;
+  }
+
+  .btn-mini {
+    width: 28px;
+  }
 }

@@ -2,14 +2,14 @@ require.config({
     baseUrl: '/assets/js',
     paths: {
         // Libraries
-        jquery: 'lib/jquery/jquery-1.9.1',
+        jquery: 'lib/jquery/jquery-1.9.1.min',
         underscore: 'lib/underscore/underscore-min',
-        backbone: 'lib/backbone/backbone-min',
+        backbone: 'lib/backbone/backbone',
         backbone_associations: 'lib/backbone/backbone-associations',
-        backbone_subcollections: 'lib/backbone/backbone.collectionsubset.min',
-        backbone_forms: 'lib/backbone/backbone-forms',
+        'backbone-forms': 'lib/backbone/backbone-forms.min',
+        'backbone-pageable': 'lib/backbone/backbone-pageable',
         //backbone_paginator: 'lib/backbone/backbone.paginator.min',
-        'backbone-pageable': 'lib/backbone/backbone-pageable.min',
+        backbone_subcollections: 'lib/backbone/backbone.collectionsubset.min',
         handlebars: 'lib/handlebars/handlebars',
         bootstrap: 'lib/bootstrap/bootstrap.min',
         'jquery.ui.widget': 'lib/jquery-file-upload/vendor/jquery.ui.widget',
@@ -50,9 +50,6 @@ require.config({
         backbone: {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
-        },
-        backbone_associations: {
-            deps: ['backbone']
         },
         backbone_subcollections: {
             deps: ['backbone']
@@ -106,12 +103,12 @@ require([
     'text!templates/app/search_results.html',
     'lib/backbone/templates/bootstrap',
     'lib/jquery-file-upload/jquery.fileupload',
+    'views/helpers',
     'visualsearch'
 ], function($, _, Backbone, Handlebars, AppView, Router, app, Vm, Snap, Session, searchResultsTemplate) {
 
     require([
         'bootstrap',
-        'backbone_associations',
         'lib/jquery/jquery-migrate-1.1.1.min',
         'lib/jquery/jquery.autogrow-textarea',
         'lib/bootstrap-growl/jquery.bootstrap-growl.min',
@@ -127,59 +124,6 @@ require([
     Backbone.View.prototype.delay = function (ms, fn) {
         return setTimeout(fn, ms);
     };
-
-    Handlebars.registerHelper('humanize', function (value) {
-        return new Handlebars.SafeString(
-            moment(value).fromNow()
-        );
-    });
-
-    Handlebars.registerHelper('loop', function (context, options) {
-        var fn = options.fn,
-            inverse = options.inverse,
-            ret = '';
-        if (context && context.length > 0) {
-            for (var i = 0, j = context.length; i < j; i += 1) {
-                ret = ret + fn(_.extend({}, context[i], {i: i}));
-            }
-        } else {
-            ret = inverse(this);
-        }
-        return ret;
-    });
-
-    Handlebars.registerHelper('foreach', function (arr, options) {
-        if (options.inverse && !arr.length)
-            return options.inverse(this);
-
-        return arr.map(function (item, index) {
-            item.$index = index;
-            item.$first = index === 0;
-            item.$last  = index === arr.length - 1;
-            item.$more  = index < arr.length - 1;
-            return options.fn(item);
-        }).join('');
-    });
-
-    Handlebars.registerHelper('isRoleSelected', function (context, options) {
-        var hash = options.hash;
-        var roleId = context.id;
-        var term = hash.term;
-        var personId = hash.person.id;
-        var isSelected = false;
-        if (term.people) {
-            for (var i = 0, n = term.people.length; i < n; i += 1) {
-                var r = term.people[i];
-                if (r.person.id === personId &&
-                    r.stakeholderRole.id === roleId)
-                {
-                    isSelected = true;
-                    break;
-                }
-            }
-        }
-        return isSelected ? "selected" : "";
-    });
 
     // Sliding main window
     // https://github.com/jakiestfu/Snap.js/
@@ -318,7 +262,7 @@ require([
 //                                var domain = _.map(coll.models, function (domain) {
 //                                    return {value: domain.id + '', label: domain.get('name')};
 //                                });
-                                callback(facets.domain);
+                            callback(facets.domain);
 //                            });
                             break;
                         case 'obj. type':
@@ -337,7 +281,7 @@ require([
 //                                var tags = _.map(coll.models, function (tag) {
 //                                    return {value: tag.id + '', label: tag.get('name')};
 //                                });
-                                callback(facets.tags_name);
+                            callback(facets.tags_name);
 //                            });
                             break;
                     }
@@ -390,6 +334,7 @@ require([
                 closeSearchResults();
             });
     });
+
     var session = new Session();
     $.ajax('/session').done(function (data) {
         session.set('user', JSON.parse(data));

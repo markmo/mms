@@ -4,17 +4,19 @@ define [
     'handlebars'
     'cs!events'
     'cs!vm'
+    'cs!components/pageable_view'
     'cs!views/glossary/person_form'
     'text!templates/glossary/people.html'
-], ($, Backbone, Handlebars, app, Vm, PersonForm, peoplePageTemplate) ->
-    Backbone.View.extend
+], ($, Backbone, Handlebars, app, Vm, PageableView, PersonForm, peoplePageTemplate) ->
+    PageableView.extend
         el: '#page'
 
-        events:
-            'click #create-person': 'create'
-            'click .person-name': 'edit'
-            'click .person-edit': 'edit'
-            'click #btnDelete': 'remove'
+        events: ->
+            _.extend {}, PageableView.prototype.events,
+                'click #create-person': 'create'
+                'click .person-name': 'edit'
+                'click .person-edit': 'edit'
+                'click #btnDelete': 'remove'
 
         compiled: Handlebars.compile peoplePageTemplate
 
@@ -48,16 +50,16 @@ define [
                     data: {id: deletions}
                 ).done =>
                     _.each deletions, (id) =>
-                        @people.remove(@people.get(id))
+                        @pageableCollection.remove(@pageableCollection.get(id))
                     this.render()
             return false
 
-        render: ->
+        doRender: ->
             app.people().done (coll) =>
-                @people = coll
+                @pageableCollection = coll
                 @$el.html @compiled
-                    people: coll.toJSON()
-            return this
+                    pageableCollection: coll
 
         clean: ->
+            this.stopListening()
             @$el.html('')

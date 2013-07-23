@@ -358,6 +358,7 @@
     <orderEntry type="library" name="postgresql-9.1-901.jdbc4.jar" level="project" />
     <orderEntry type="library" name="stanford-ner.jar" level="project" />
     <orderEntry type="module" module-name="JpaNestedSet" />
+    <orderEntry type="module" module-name="mms-models" />
   </component>
 </module>
 

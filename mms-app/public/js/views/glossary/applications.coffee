@@ -4,17 +4,19 @@ define [
     'handlebars'
     'cs!events'
     'cs!vm'
+    'cs!components/pageable_view'
     'cs!views/glossary/application_form'
     'text!templates/glossary/applications.html'
-], ($, Backbone, Handlebars, app, Vm, ApplicationForm, applicationsPageTemplate) ->
-    Backbone.View.extend
+], ($, Backbone, Handlebars, app, Vm, PageableView, ApplicationForm, applicationsPageTemplate) ->
+    PageableView.extend
         el: '#page'
 
-        events:
-            'click #create-application': 'create'
-            'click .application-name': 'edit'
-            'click .application-edit': 'edit'
-            'click #btnDelete': 'remove'
+        events: ->
+            _.extend {}, PageableView.prototype.events,
+                'click #create-application': 'create'
+                'click .application-name': 'edit'
+                'click .application-edit': 'edit'
+                'click #btnDelete': 'remove'
 
         compiled: Handlebars.compile applicationsPageTemplate
 
@@ -50,16 +52,16 @@ define [
                     data: {id: deletions}
                 ).done =>
                     _.each deletions, (id) =>
-                        @applications.remove(@applications.get(id))
+                        @pageableCollection.remove(@pageableCollection.get(id))
                     this.render()
             return false
 
-        render: ->
+        doRender: ->
             app.applications().done (coll) =>
-                @applications = coll
+                @pageableCollection = coll
                 @$el.html @compiled
-                    applications: coll.toJSON()
-            return this
+                    pageableCollection: coll
 
         clean: ->
+            this.stopListening()
             @$el.html('')

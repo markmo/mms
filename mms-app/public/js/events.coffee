@@ -1,9 +1,10 @@
 define [
+    'require'
     'jquery'
     'underscore'
     'backbone'
     'backbone_subcollections'
-], ($, _, Backbone) ->
+], (require, $, _, Backbone) ->
 
     # TODO add cache time to memo
 

@@ -4,18 +4,19 @@ define [
     'handlebars'
     'cs!events'
     'cs!vm'
-    'cs!components/paginator'
+    'cs!components/pageable_view'
     'cs!views/glossary/vendor_form'
     'text!templates/glossary/vendors.html'
-], ($, Backbone, Handlebars, app, Vm, Paginator, VendorForm, vendorsPageTemplate) ->
-    Backbone.View.extend
+], ($, Backbone, Handlebars, app, Vm, PageableView, VendorForm, vendorsPageTemplate) ->
+    PageableView.extend
         el: '#page'
 
-        events:
-            'click #create-vendor': 'create'
-            'click .vendor-name': 'edit'
-            'click .vendor-edit': 'edit'
-            'click #btnDelete': 'remove'
+        events: ->
+            _.extend {}, PageableView.prototype.events,
+                'click #create-vendor': 'create'
+                'click .vendor-name': 'edit'
+                'click .vendor-edit': 'edit'
+                'click #btnDelete': 'remove'
 
         compiled: Handlebars.compile vendorsPageTemplate
 
@@ -49,17 +50,25 @@ define [
                     data: {id: deletions}
                 ).done =>
                     _.each deletions, (id) =>
-                        @vendors.remove(@vendors.get(id))
+                        @pageableCollection.remove(@pageableCollection.get(id))
                     this.render()
             return false
 
-        render: ->
+        preRender: ->
+            if @paginator
+                this.stopListening(@paginator)
+                @paginator.clean?()
+
+        doRender: ->
             app.vendors().done (coll) =>
-                @vendors = coll
+                @pageableCollection = coll
                 @$el.html @compiled
-                    vendors: coll.toJSON()
-                paginator = Vm.create(this, 'Paginator', Paginator, {pageableCollection: coll})
-            return this
+                    # alternative to sending the pageableCollection
+                    page:
+                        list: coll.toJSON()
+                        sortKey: coll.state.sortKey
+                        sortOrder: if coll.state.order == -1 then 'headerSortUp' else 'headerSortDown'
 
         clean: ->
+            this.stopListening()
             @$el.html('')

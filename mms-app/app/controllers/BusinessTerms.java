@@ -5,20 +5,21 @@ import static utils.QueryTool.*;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Joiner;
 import com.google.inject.Inject;
-import indexing.BusinessTermIndex;
 import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
+import indexing.BusinessTermIndex;
 import mms.common.models.SecurityClassification;
 import mms.common.models.business.*;
+import models.Page;
 
 /**
  * User: markmo
@@ -31,15 +32,29 @@ public class BusinessTerms extends Controller {
     ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-    public Result index() throws IOException {
-//        @SuppressWarnings("unchecked")
-//        List<BusinessTerm> businessTerms = JPA.em().createQuery(
-//                "select t from BusinessTerm t"
-//        )
-//                .getResultList();
-        List<BusinessTerm> businessTerms = getResultList(BusinessTerm.class, JPA.em(), session());
-        String json = mapper.writeValueAsString(businessTerms);
-        return ok(json).as("application/json");
+    public Result index(int pageIndex, int pageSize, String sortBy, String order) throws IOException {
+        if (sortBy == null || sortBy.isEmpty()) sortBy = "name";
+        if (order == null || order.isEmpty()) order = "asc";
+        Page<BusinessTerm> page =
+                getPageScopedToOrganization(BusinessTerm.class, JPA.em(),
+                        session(), pageIndex, pageSize, sortBy, order);
+        long totalRowCount = page.getTotalRowCount();
+        List<String> links = new ArrayList<>();
+        links.add(String.format("<%s&total_entries=%d>; rel=\"first\"",
+                routes.BusinessTerms.index(1, pageSize, sortBy, order), totalRowCount));
+        links.add(String.format("<%s&total_entries=%d>; rel=\"last\"",
+                routes.BusinessTerms.index(page.getLastPageIndex(), pageSize, sortBy, order), totalRowCount));
+        if (page.hasPrev()) {
+            links.add(String.format("<%s&total_entries=%d>; rel=\"prev\"",
+                    routes.BusinessTerms.index(pageIndex - 1, pageSize, sortBy, order), totalRowCount));
+        }
+        if (page.getTotalRowCount() >= ((pageIndex + 1) * pageSize)) {
+            links.add(String.format("<%s&total_entries=%d>; rel=\"next\"",
+                    routes.BusinessTerms.index(pageIndex + 1, pageSize, sortBy, order), totalRowCount));
+        }
+        String linksHeader = Joiner.on(',').join(links);
+        response().setHeader("Link", linksHeader);
+        return ok(page.toJSON(mapper)).as("application/json");
     }
 
     @Transactional(readOnly = true)

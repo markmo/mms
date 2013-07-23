@@ -1,8 +1,12 @@
 package models;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.*;
+import org.codehaus.jackson.JsonNode;
+import play.libs.Json;
 
 /**
  * User: markmo
@@ -31,6 +35,10 @@ public class Page<T> {
 
     public int getPageIndex() {
         return pageIndex;
+    }
+
+    public int getLastPageIndex() {
+        return (int)totalRowCount / pageSize;
     }
 
     public List<T> getList() {
@@ -80,5 +88,17 @@ public class Page<T> {
         int start = (pageIndex - 1) * pageSize + 1;
         int end = start + Math.min(pageSize, list.size()) - 1;
         return start + " to " + end + " of " + totalRowCount;
+    }
+
+    public String toJSON(ObjectMapper mapper) throws IOException {
+        String listJson = mapper.writeValueAsString(list);
+        return String.format("[{\"total_entries\":%d},%s]",
+                totalRowCount, listJson);
+    }
+
+    public String toJSON() {
+        JsonNode listJson = Json.toJson(list);
+        return String.format("[{\"total_entries\":%d},%s]",
+                totalRowCount, listJson);
     }
 }

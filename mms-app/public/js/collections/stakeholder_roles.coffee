@@ -1,7 +1,14 @@
 define [
-    'backbone'
+    'backbone-pageable'
     'cs!models/stakeholder_role'
-], (Backbone, roleModel) ->
-    Backbone.Collection.extend
-        url: 'stakeholder-roles'
+], (PageableCollection, roleModel) ->
+    PageableCollection.extend
         model: roleModel
+        url: '/stakeholder-roles'
+        mode: 'server'
+        state:
+            pageSize: 25
+        queryParams:
+            currentPage: 'p'
+            sortKey: 's'
+            order: 'o'

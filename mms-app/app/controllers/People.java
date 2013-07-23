@@ -1,18 +1,16 @@
 package controllers;
 
 import static play.data.Form.form;
-
-import java.io.IOException;
-import java.util.List;
+import static utils.QueryTool.*;
 
 import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
-import play.libs.Json;
 import play.mvc.*;
 
 import mms.common.models.business.Person;
+import models.Page;
 
 /**
  * User: markmo
@@ -22,14 +20,11 @@ import mms.common.models.business.Person;
 public class People extends Controller {
 
     @Transactional(readOnly = true)
-    public static Result index() throws IOException {
-        @SuppressWarnings("unchecked")
-        List<Person> people = JPA.em().createQuery(
-                "select p from Person p"
-        )
-                .getResultList();
-        JsonNode json = Json.toJson(people);
-        return ok(json).as("application/json");
+    public static Result index(int pageIndex, int pageSize, String sortBy, String order) {
+        if (sortBy == null || sortBy.isEmpty()) sortBy = "lastName";
+        if (order == null || order.isEmpty()) order = "asc";
+        Page<Person> page = getPage(Person.class, JPA.em(), pageIndex, pageSize, sortBy, order);
+        return ok(page.toJSON()).as("application/json");
     }
 
     @Transactional

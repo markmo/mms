@@ -5,11 +5,11 @@
         <span>New person&hellip;</span>
     </button>
 </div>
-{{#if people}}
+{{#page pageableCollection}}
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>Name</th>
+        {{sortableHeading pageableCollection 'lastName' 'Name'}}
         <th>Title</th>
         <th>Email</th>
         <th>Phone</th>
@@ -18,7 +18,7 @@
     </tr>
     </thead>
     <tbody>
-    {{#each people}}
+    {{#each list}}
     <tr>
         <td><a href="#" data-id="{{id}}" class="person-name">{{name}}</a></td>
         <td>{{title}}</td>
@@ -38,7 +38,9 @@
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="6"></td>
+        <td colspan="6">
+            <div id="paginator" class="pagination pagination-small"></div>
+        </td>
         <td style="width: 77px;">
             <button id="btnDelete" class="btn btn-small btn-danger">
                 <i class="icon-remove icon-white"></i>
@@ -50,4 +52,4 @@
 </table>
 {{else}}
 <p>None defined.</p>
-{{/if}}
+{{/page}}

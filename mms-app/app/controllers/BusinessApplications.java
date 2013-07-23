@@ -1,9 +1,9 @@
 package controllers;
 
 import static play.data.Form.form;
+import static utils.QueryTool.*;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
@@ -14,6 +14,7 @@ import play.db.jpa.Transactional;
 import play.mvc.*;
 
 import mms.common.models.business.Application;
+import models.Page;
 
 /**
  * User: markmo
@@ -26,14 +27,11 @@ public class BusinessApplications extends Controller {
     ObjectMapper mapper;
 
     @Transactional(readOnly = true)
-    public Result index() throws IOException {
-        @SuppressWarnings("unchecked")
-        List<Application> applications = JPA.em().createQuery(
-                "select a from Application a"
-        )
-                .getResultList();
-        String json = mapper.writeValueAsString(applications);
-        return ok(json).as("application/json");
+    public Result index(int pageIndex, int pageSize, String sortBy, String order) throws IOException {
+        if (sortBy == null || sortBy.isEmpty()) sortBy = "name";
+        if (order == null || order.isEmpty()) order = "asc";
+        Page<Application> page = getPage(Application.class, JPA.em(), pageIndex, pageSize, sortBy, order);
+        return ok(page.toJSON(mapper)).as("application/json");
     }
 
     @Transactional

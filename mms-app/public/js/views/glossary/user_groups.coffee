@@ -4,17 +4,19 @@ define [
     'handlebars'
     'cs!events'
     'cs!vm'
+    'cs!components/pageable_view'
     'cs!views/glossary/user_group_form'
     'text!templates/glossary/user_groups.html'
-], ($, Backbone, Handlebars, app, Vm, UserGroupForm, userGroupsPageTemplate) ->
-    Backbone.View.extend
+], ($, Backbone, Handlebars, app, Vm, PageableView, UserGroupForm, userGroupsPageTemplate) ->
+    PageableView.extend
         el: '#page'
 
-        events:
-            'click #create-group': 'create'
-            'click .group-name': 'edit'
-            'click .group-edit': 'edit'
-            'click #btnDelete': 'remove'
+        events: ->
+            _.extend {}, PageableView.prototype.events,
+                'click #create-group': 'create'
+                'click .group-name': 'edit'
+                'click .group-edit': 'edit'
+                'click #btnDelete': 'remove'
 
         compiled: Handlebars.compile userGroupsPageTemplate
 
@@ -48,16 +50,16 @@ define [
                     data: {id: deletions}
                 ).done =>
                     _.each deletions, (id) =>
-                        @groups.remove(@groups.get(id))
+                        @pageableCollection.remove(@pageableCollection.get(id))
                     this.render()
             return false
 
-        render: ->
+        doRender: ->
             app.userGroups().done (coll) =>
-                @groups = coll
+                @pageableCollection = coll
                 @$el.html @compiled
-                    groups: coll.toJSON()
-            return this
+                    pageableCollection: coll
 
         clean: ->
+            this.stopListening()
             @$el.html('')

@@ -1,18 +1,16 @@
 package controllers;
 
 import static play.data.Form.form;
-
-import java.io.IOException;
-import java.util.List;
+import static utils.QueryTool.*;
 
 import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
-import play.libs.Json;
 import play.mvc.*;
 
 import mms.common.models.business.StakeholderRole;
+import models.Page;
 
 /**
  * User: markmo
@@ -22,14 +20,11 @@ import mms.common.models.business.StakeholderRole;
 public class StakeholderRoles extends Controller {
 
     @Transactional(readOnly = true)
-    public static Result index() throws IOException {
-        @SuppressWarnings("unchecked")
-        List<StakeholderRole> roles = JPA.em().createQuery(
-                "select r from StakeholderRole r"
-        )
-                .getResultList();
-        JsonNode json = Json.toJson(roles);
-        return ok(json).as("application/json");
+    public static Result index(int pageIndex, int pageSize, String sortBy, String order) {
+        if (sortBy == null || sortBy.isEmpty()) sortBy = "name";
+        if (order == null || order.isEmpty()) order = "asc";
+        Page<StakeholderRole> page = getPage(StakeholderRole.class, JPA.em(), pageIndex, pageSize, sortBy, order);
+        return ok(page.toJSON()).as("application/json");
     }
 
     @Transactional

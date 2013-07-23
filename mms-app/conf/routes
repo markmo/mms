@@ -82,7 +82,7 @@ PUT     /access-privileges              controllers.BusinessAccess.update
 DELETE  /access-privileges              controllers.BusinessAccess.delete
 
 # Business Applications
-GET     /applications                   @controllers.BusinessApplications.index
+GET     /applications                   @controllers.BusinessApplications.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
 POST    /applications                   controllers.BusinessApplications.create
 PUT     /applications/:id               controllers.BusinessApplications.update(id: Long)
 DELETE  /applications/:id               controllers.BusinessApplications.delete(id: Long)
@@ -96,7 +96,7 @@ PUT     /domains/:id                    controllers.Domains.update(id: Long)
 GET     /glossary                       @controllers.Application.glossary
 
 # People
-GET     /people                         controllers.People.index
+GET     /people                         controllers.People.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
 POST    /people                         controllers.People.create
 PUT     /people/:id                     controllers.People.update(id: Long)
 DELETE  /people                         controllers.People.delete
@@ -116,7 +116,7 @@ GET     /settings/:id/edit              controllers.Settings.edit(id: Long)
 POST    /settings/:id                   controllers.Settings.update(id: Long)
 
 # Stakeholder Roles
-GET     /stakeholder-roles              controllers.StakeholderRoles.index
+GET     /stakeholder-roles              controllers.StakeholderRoles.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
 POST    /stakeholder-roles              controllers.StakeholderRoles.create
 PUT     /stakeholder-roles/:id          controllers.StakeholderRoles.update(id: Long)
 DELETE  /stakeholder-roles              controllers.StakeholderRoles.delete
@@ -125,19 +125,19 @@ DELETE  /stakeholder-roles              controllers.StakeholderRoles.delete
 GET     /tags                           controllers.Tags.index
 
 # Terms
-GET     /terms                          @controllers.BusinessTerms.index
+GET     /terms                          @controllers.BusinessTerms.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
 POST    /terms                          controllers.BusinessTerms.create
 PUT     /terms/:id                      controllers.BusinessTerms.update(id: Long)
 GET     /associations/:id               @controllers.BusinessTerms.associations(id: Long)
 
 # User Groups
-GET     /usergroups                     controllers.UserGroups.index
+GET     /usergroups                     controllers.UserGroups.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
 POST    /usergroups                     controllers.UserGroups.create
 PUT     /usergroups/:id                 controllers.UserGroups.update(id: Long)
 DELETE  /usergroups                     controllers.UserGroups.delete
 
 # Vendors
-GET     /vendors                        @controllers.Vendors.index
+GET     /vendors                        @controllers.Vendors.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
 POST    /vendors                        controllers.Vendors.create
 PUT     /vendors/:id                    controllers.Vendors.update(id: Long)
 DELETE  /vendors                        controllers.Vendors.delete

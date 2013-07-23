@@ -1,0 +1,28 @@
+<table class="table access-changes">
+    <thead>
+    <tr>
+        <th>Business Term</th>
+        <th>User Group</th>
+        <th>Access</th>
+    </tr>
+    </thead>
+    <tbody>
+        {{#each changes}}
+        <tr>
+            <td>{{term}}</td>
+            <td>{{group}}</td>
+            <td>
+                <div class="btn-group">
+                    {{#each access}}
+                    {{#notEq this 'X'}}
+                    <button type="button" class="btn btn-mini {{crudClass this}}">{{this}}</button>
+                    {{else}}
+                    <button type="button" class="btn btn-mini">&nbsp;</button>
+                    {{/notEq}}
+                    {{/each}}
+                </div>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

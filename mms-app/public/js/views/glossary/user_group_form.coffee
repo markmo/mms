@@ -3,6 +3,7 @@ define [
     'backbone'
     'cs!events'
     'cs!models/user_group'
+    'cs!components/form'
 ], ($, Backbone, app, UserGroupRole) ->
     Backbone.View.extend
 

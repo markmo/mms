@@ -40,6 +40,7 @@
         <module name="AnalyzerBeans-standardizers" />
         <module name="AnalyzerBeans-value-distribution" />
         <module name="AnalyzerBeans-writers" />
+        <module name="JpaNestedSet" />
         <module name="JpaNestedSet (2)" />
         <module name="mms-models" />
       </profile>

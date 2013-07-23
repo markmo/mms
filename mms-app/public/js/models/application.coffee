@@ -1,7 +1,6 @@
 define [
     'backbone'
-    'cs!events'
-], (Backbone, app) ->
+], (Backbone) ->
     Backbone.Model.extend
         schema:
             name:

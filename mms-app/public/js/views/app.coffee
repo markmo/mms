@@ -1,10 +1,15 @@
 define [
-    'jquery',
-    'backbone',
-    'cs!vm',
-    'cs!events',
+    #'require'
+    'jquery'
+    'backbone'
+    'cs!vm'
+    'cs!events'
     'text!templates/layout.html'
-], ($, Backbone, Vm, Events, layoutTemplate) ->
+    'cs!views/header/header'
+    'cs!views/footer/footer'
+], (
+    #require,
+    $, Backbone, Vm, Events, layoutTemplate, HeaderView, FooterView) ->
 
     Backbone.View.extend
         el: '.content'
@@ -15,11 +20,11 @@ define [
 
         render: ->
             $(@el).html layoutTemplate
-            require ['cs!views/header/header'], (HeaderView) =>
-                headerView = Vm.create(this, 'HeaderView', HeaderView)
-                headerView.render()
+            #require ['cs!views/header/header'], (HeaderView) =>
+            headerView = Vm.create(this, 'HeaderView', HeaderView)
+            headerView.render()
 
-            require ['cs!views/footer/footer'], (FooterView) =>
-                footerView = Vm.create(this, 'FooterView', FooterView, {appView: this})
-                footerView.render()
+            #require ['cs!views/footer/footer'], (FooterView) =>
+            footerView = Vm.create(this, 'FooterView', FooterView, {appView: this})
+            footerView.render()
             return this

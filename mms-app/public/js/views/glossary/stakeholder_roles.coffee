@@ -4,17 +4,19 @@ define [
     'handlebars'
     'cs!events'
     'cs!vm'
+    'cs!components/pageable_view'
     'cs!views/glossary/stakeholder_role_form'
     'text!templates/glossary/stakeholder_roles.html'
-], ($, Backbone, Handlebars, app, Vm, StakeholderRoleForm, stakeholderRolesPageTemplate) ->
-    Backbone.View.extend
+], ($, Backbone, Handlebars, app, Vm, PageableView, StakeholderRoleForm, stakeholderRolesPageTemplate) ->
+    PageableView.extend
         el: '#page'
 
-        events:
-            'click #create-role': 'create'
-            'click .role-name': 'edit'
-            'click .role-edit': 'edit'
-            'click #btnDelete': 'remove'
+        events: ->
+            _.extend {}, PageableView.prototype.events,
+                'click #create-role': 'create'
+                'click .role-name': 'edit'
+                'click .role-edit': 'edit'
+                'click #btnDelete': 'remove'
 
         compiled: Handlebars.compile stakeholderRolesPageTemplate
 
@@ -48,16 +50,16 @@ define [
                     data: {id: deletions}
                 ).done =>
                     _.each deletions, (id) =>
-                        @roles.remove(@roles.get(id))
+                        @pageableCollection.remove(@pageableCollection.get(id))
                     this.render()
             return false
 
-        render: ->
+        doRender: ->
             app.stakeholderRoles().done (coll) =>
-                @roles = coll
+                @pageableCollection = coll
                 @$el.html @compiled
-                    roles: coll.toJSON()
-            return this
+                    pageableCollection: coll
 
         clean: ->
+            this.stopListening()
             @$el.html('')

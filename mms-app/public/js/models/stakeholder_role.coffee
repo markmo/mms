@@ -1,7 +1,8 @@
 define [
     'backbone'
+    'backbone_associations'
 ], (Backbone) ->
-    Backbone.Model.extend
+    Backbone.AssociatedModel.extend
         schema:
             name:
                 type: 'Text'

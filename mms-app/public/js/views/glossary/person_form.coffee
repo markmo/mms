@@ -3,6 +3,7 @@ define [
     'backbone'
     'cs!events'
     'cs!models/person'
+    'cs!components/form'
 ], ($, Backbone, app, Person) ->
     Backbone.View.extend
 

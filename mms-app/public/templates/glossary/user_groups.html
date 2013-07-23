@@ -5,16 +5,16 @@
         <span>New group&hellip;</span>
     </button>
 </div>
-{{#if groups}}
+{{#page pageableCollection}}
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>Name</th>
+        {{sortableHeading pageableCollection 'name' 'Name'}}
         <th colspan="2" style="width: 91px;"></th>
     </tr>
     </thead>
     <tbody>
-    {{#each groups}}
+    {{#each list}}
     <tr>
         <td><a href="#" data-id="{{id}}" class="group-name">{{name}}</a></td>
         <td style="width: 14px;"><a href="#" class="group-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
@@ -24,7 +24,9 @@
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="2"></td>
+        <td colspan="2">
+            <div id="paginator" class="pagination pagination-small"></div>
+        </td>
         <td style="width: 77px;">
             <button id="btnDelete" class="btn btn-small btn-danger">
                 <i class="icon-remove icon-white"></i>
@@ -36,4 +38,4 @@
 </table>
 {{else}}
 <p>None defined.</p>
-{{/if}}
+{{/page}}

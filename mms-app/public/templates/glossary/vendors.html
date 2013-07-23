@@ -5,16 +5,16 @@
         <span>New vendor&hellip;</span>
     </button>
 </div>
-{{#if vendors}}
+{{#if page.list}}
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>Name</th>
+        {{sortableHeading page 'name' 'Name'}}
         <th colspan="2" style="width: 91px;"></th>
     </tr>
     </thead>
     <tbody>
-    {{#each vendors}}
+    {{#each page.list}}
     <tr>
         <td><a href="#" data-id="{{id}}" class="vendor-name">{{name}}</a></td>
         <td style="width: 14px;"><a href="#" class="vendor-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
@@ -25,7 +25,7 @@
     <tfoot>
     <tr>
         <td colspan="2">
-            <div id="pagination" class="pagination"></div>
+            <div id="paginator" class="pagination pagination-small"></div>
         </td>
         <td style="width: 77px;">
             <button id="btnDelete" class="btn btn-small btn-danger">

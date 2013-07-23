@@ -1,7 +1,14 @@
 define [
-    'backbone'
+    'backbone-pageable'
     'cs!models/application'
-], (Backbone, applicationModel) ->
-    Backbone.Collection.extend
-        url: '/applications'
+], (PageableCollection, applicationModel) ->
+    PageableCollection.extend
         model: applicationModel
+        url: '/applications'
+        mode: 'server'
+        state:
+            pageSize: 25
+        queryParams:
+            currentPage: 'p'
+            sortKey: 's'
+            order: 'o'

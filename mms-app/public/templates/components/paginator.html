@@ -1,20 +1,23 @@
 <ul>
-    {{#if pageableCollection.hasPrevious()}}
+    {{#hasPrevious pageableCollection}}
     <li class="prev">
-        <a id="previousPage" href="#">&laquo; Previous</a>
+        <a href="#">&laquo; Previous</a>
     </li>
     {{else}}
     <li class="prev disabled">
-        <a>&laquo; Previous</a>
+        <span>&laquo; Previous</span>
     </li>
-    {{/if}}
-    {{#if(pageableCollection.hasNext()}}
+    {{/hasPrevious}}
+    <li class="current">
+        <span>{{start}} to {{end}} of {{totalRowCount}}</span>
+    </li>
+    {{#hasNext pageableCollection}}
     <li class="next">
-        <a id="nextPage" href="#">Next &raquo;</a>
+        <a href="#">Next &raquo;</a>
     </li>
     {{else}}
     <li class="next disabled">
-        <a>Next &raquo;</a>
+        <span>Next &raquo;</span>
     </li>
-    {{/if}}
+    {{/hasNext}}
 </ul>

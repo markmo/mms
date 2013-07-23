@@ -1,20 +1,21 @@
 define [
     'underscore'
     'backbone'
+    'backbone-forms'
     'cs!events'
     'cs!models/tag'
     'text!templates/components/form.html'
-    'backbone_forms'
+    'backbone-forms'
     'jsonform'
     'tagautocomplete'
-], (_, Backbone, app, Tag, formTemplate) ->
+], (_, Backbone, Form, app, Tag, formTemplate) ->
 
-    Backbone.Form.editors.Access = Backbone.Form.editors.Base.extend
+    Form.editors.Access = Form.editors.Base.extend
 
         tagName: 'div'
 
         initialize: (options) ->
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             template = """
                        <div class="btn-group" data-toggle="buttons-checkbox">
                        <button id="c" type="button" class="btn btn-mini create">C</button>
@@ -39,10 +40,10 @@ define [
                     @$el.find('#' + r).button('toggle')
 
 
-    Backbone.Form.editors.Columns = Backbone.Form.editors.Select.extend
+    Form.editors.Columns = Form.editors.Select.extend
 
         initialize: (options) ->
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             app.columns().done (columns) =>
                 @columns = columns
 
@@ -58,12 +59,12 @@ define [
                 @$el.val(value.id)
 
 
-    Backbone.Form.editors.CustomMetadata = Backbone.Form.editors.Base.extend
+    Form.editors.CustomMetadata = Form.editors.Base.extend
 
         tagName: 'div'
 
         initialize: (options) ->
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             @$el.attr('id', 'custom-form')
                 .attr('data-snap-ignore', true)
                 .addClass('custom form-vertical')
@@ -95,10 +96,10 @@ define [
                 form: []
 
 
-    Backbone.Form.editors.Domains = Backbone.Form.editors.Select.extend
+    Form.editors.Domains = Form.editors.Select.extend
 
         initialize: (options) ->
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             app.domains().done (domains) =>
                 @domains = domains
 
@@ -114,7 +115,7 @@ define [
                 @$el.val(value.id)
 
 
-    Backbone.Form.editors.ModelSelect = Backbone.Form.editors.Select.extend
+    Form.editors.ModelSelect = Form.editors.Select.extend
 
         initialize: (options) ->
             collectionName = options.schema.collection
@@ -124,7 +125,7 @@ define [
                         {val: model.id, label: model.toString()}
                     array.unshift({val: null, label: ''})
                     callback(array)
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             app[collectionName].call(app).done (coll) =>
                 @coll = coll
 
@@ -140,10 +141,10 @@ define [
                 @$el.val(value.id)
 
 
-    Backbone.Form.editors.SecurityClassifications = Backbone.Form.editors.Select.extend
+    Form.editors.SecurityClassifications = Form.editors.Select.extend
 
         initialize: (options) ->
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             app.securityClassifications().done (securityClassifications) =>
                 @securityClassifications = securityClassifications
 
@@ -159,10 +160,10 @@ define [
                 @$el.val(value.id)
 
 
-    Backbone.Form.editors.Tags = Backbone.Form.editors.Text.extend
+    Form.editors.Tags = Form.editors.Text.extend
 
         initialize: (options) ->
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             app.tags().done (tags) =>
                 @tags = tags
 
@@ -181,12 +182,12 @@ define [
             return
 
 
-    Backbone.Form.editors.TaggableContent = Backbone.Form.editors.Base.extend
+    Form.editors.TaggableContent = Form.editors.Base.extend
 
         tagName: 'div'
 
         initialize: (options) ->
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             @$el.attr('contenteditable', true).addClass('autotag')
             app.terms().done (terms) =>
                 @terms = terms
@@ -210,10 +211,10 @@ define [
             @$el.text(value)
 
 
-    Backbone.Form.editors.Terms = Backbone.Form.editors.Select.extend
+    Form.editors.Terms = Form.editors.Select.extend
 
         initialize: (options) ->
-            Backbone.Form.editors.Base.prototype.initialize.call(this, options)
+            Form.editors.Base.prototype.initialize.call(this, options)
             app.terms().done (terms) =>
                 @terms = terms
 
@@ -229,7 +230,7 @@ define [
                 @$el.val(value.id)
 
 
-    Backbone.Form.editors.Markdown = Backbone.Form.editors.Base.extend
+    Form.editors.Markdown = Form.editors.Base.extend
 
         events:
             change: ->
@@ -259,10 +260,10 @@ define [
             return unless @hasFocus
 
 
-    Backbone.Form.setTemplates
+    Form.setTemplates
         form_with_buttons: formTemplate
 
-    Backbone.Form.extend
+    Form.extend
 
         events:
             'click #btnCancel': 'cancel'
@@ -282,7 +283,7 @@ define [
                 }
             else
                 opts = model
-            Backbone.Form.prototype.initialize.call(this, opts)
+            Form.prototype.initialize.call(this, opts)
 
         cancel: (event) ->
             event.preventDefault()

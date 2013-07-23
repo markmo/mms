@@ -3,6 +3,7 @@ define [
     'backbone'
     'cs!events'
     'cs!models/stakeholder_role'
+    'cs!components/form'
 ], ($, Backbone, app, StakeholderRole) ->
     Backbone.View.extend
 
