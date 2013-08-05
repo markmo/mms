@@ -7,7 +7,7 @@ define [
         url: '/people'
         mode: 'server'
         state:
-            pageSize: 25
+            pageSize: 15
         queryParams:
             currentPage: 'p'
             sortKey: 's'

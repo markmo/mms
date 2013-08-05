@@ -5,7 +5,7 @@ define [
     'cs!events'
     'cs!utils/json-viewer',
     'text!templates/glossary/term_view.html'
-    'annotator'
+#    'annotator'
 ], ($, Backbone, Handlebars, app, JsonViewer, termPageTemplate) ->
     Backbone.View.extend
 
@@ -61,7 +61,7 @@ define [
                     alert(errorThrown)
                 )
                 @$el.attr('data-snap-ignore', true)
-                @$el.annotator()
+#                @$el.annotator()
             return this
 
         getSchema: (schema) ->

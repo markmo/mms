@@ -6,7 +6,7 @@ require.config({
         underscore: 'lib/underscore/underscore-min',
         backbone: 'lib/backbone/backbone',
         backbone_associations: 'lib/backbone/backbone-associations',
-        'backbone-forms': 'lib/backbone/backbone-forms.min',
+        'backbone-forms': 'lib/backbone/backbone-forms',
         'backbone-pageable': 'lib/backbone/backbone-pageable',
         //backbone_paginator: 'lib/backbone/backbone.paginator.min',
         backbone_subcollections: 'lib/backbone/backbone.collectionsubset.min',
@@ -109,7 +109,7 @@ require([
 
     require([
         'bootstrap',
-        'lib/jquery/jquery-migrate-1.1.1.min',
+//        'lib/jquery/jquery-migrate-1.1.1.min',
         'lib/jquery/jquery.autogrow-textarea',
         'lib/bootstrap-growl/jquery.bootstrap-growl.min',
         'lib/jquery-file-upload/vendor/bootstrap-image-gallery.min',

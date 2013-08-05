@@ -1,9 +1,10 @@
 define [
     'jquery'
+    'underscore'
     'backbone'
     'cs!vm'
     'cs!components/paginator'
-], ($, Backbone, Vm, Paginator) ->
+], ($, _, Backbone, Vm, Paginator) ->
     Backbone.View.extend
         events:
             'click a[data-sort]': 'sort'
@@ -26,8 +27,9 @@ define [
         postRender: ->
             @paginator = paginator = Vm.create(this, 'Paginator', Paginator, {pageableCollection: @pageableCollection})
             paginator.render()
-            this.listenTo paginator, 'previous next', _.bind(this.prePageChange, this)
+            this.listenTo paginator, 'previous next', _.bind(this.prePageChange, this) if _.isFunction(this.prePageChange)
             this.listenTo paginator, 'previous next', _.bind(this.render, this)
+            return
 
         # can't create a subview before render as there will be no DOM elements
         # in the parent view at this stage to attach events or create selectors

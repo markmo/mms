@@ -4,6 +4,7 @@ define [
     'handlebars'
     'cs!events'
     'cs!vm'
+    'cs!components/pageable_view'
     'cs!views/app/posts'
     'cs!views/glossary/domains'
     'cs!views/glossary/left_menu'
@@ -11,15 +12,16 @@ define [
     'text!templates/glossary/terms.html'
     'lib/jqtree/jquery.cookie'
     'lib/jqtree/tree.jquery'
-], ($, Backbone, Handlebars, app, Vm, PostsSection, DomainsSection, LeftMenuSection, TermSection, termsPageTemplate) ->
-    Backbone.View.extend
+], ($, Backbone, Handlebars, app, Vm, PageableView, PostsSection, DomainsSection, LeftMenuSection, TermSection, termsPageTemplate) ->
+    PageableView.extend
         el: '#page'
 
-        events:
-            'click #create-term': 'create'
-            'click .item-title': 'link'
-            'dblclick .item-title': 'edit'
-            'click .edit-btn': 'edit'
+        events: ->
+            _.extend {}, PageableView.prototype.events,
+                'click #create-term': 'create'
+                'click .item-title': 'link'
+                'dblclick .item-title': 'edit'
+                'click .edit-btn': 'edit'
 
         compiled: Handlebars.compile termsPageTemplate
 
@@ -60,15 +62,21 @@ define [
             leftMenuSection.render()
             return this
 
-        render: (domainId) ->
+        doRender: (domainId) ->
             @domainId = domainId if domainId
+            dfd = $.Deferred()
             app.domains().done (domains) =>
                 domain = domains.get(@domainId)
                 app.termsByDomain(@domainId).done (coll) =>
+                    @pageableCollection = coll
                     terms = app.convertCollectionToTree(coll)
                     @$el.html @compiled
                         domain: domain?.toString() || 'ALL'
-                    $('#terms-tree').tree({data: terms, dragAndDrop: true})
+                    $('#terms-tree').tree(
+                        data: terms
+                        dragAndDrop: true
+                        saveState: true
+                        )
                         .bind('tree.click', (event) =>
                             node = event.node
                             if node
@@ -133,8 +141,8 @@ define [
                         return false
 
                     if @termId then this.show()
-                return
-            return this
+                    dfd.resolve()
+            dfd
 
         clean: ->
 #            $('#open-left').off()

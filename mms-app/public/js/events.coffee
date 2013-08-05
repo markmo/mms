@@ -62,7 +62,7 @@ define [
             if domainId
                 memo = '_terms_' + domainId
                 dfd = $.Deferred()
-                return dfd.resolve(@[memo]) if @[memo]
+                return dfd.resolve(@[memo]) if @[memo] and not options?.refresh
 
                 this.terms(null, options).done (terms) =>
                     filtered = terms.subcollection

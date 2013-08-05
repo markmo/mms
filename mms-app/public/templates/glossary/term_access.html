@@ -17,7 +17,17 @@
     {{#each privileges}}
     <tr>
         <td>{{group}}</td>
-        <td>{{{access}}}</td>
+        <td>
+            <div class="btn-group access-changes">
+                {{#each access}}
+                {{#notEq this 'X'}}
+                <button type="button" class="btn btn-mini {{crudClass this}}">{{this}}</button>
+                {{else}}
+                <button type="button" class="btn btn-mini">&nbsp;</button>
+                {{/notEq}}
+                {{/each}}
+            </div>
+        </td>
         <td style="width: 77px;"><input class="access-delete" data-id="{{cid}}" type="checkbox"></td>
     </tr>
     {{/each}}

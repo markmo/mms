@@ -6,13 +6,13 @@
  * If using regular <script> tags to include your files, use backbone-forms.min.js
  *
  * Copyright (c) 2013 Charles Davison, Pow Media Ltd
- * 
+ *
  * License and more information at:
  * http://github.com/powmedia/backbone-forms
  */
 define(['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
 
-  
+
 //==================================================================================================
 //FORM
 //==================================================================================================
@@ -309,7 +309,7 @@ var Form = (function() {
       }, options);
 
       this.model.set(this.getValue(), setOptions);
-      
+
       if (modelError) return modelError;
     },
 
@@ -431,14 +431,14 @@ Form.helpers = (function() {
     }
     return result;
   };
-  
+
   /**
    * This function is used to transform the key from a schema into the title used in a label.
    * (If a specific title is provided it will be used instead).
-   * 
+   *
    * By default this converts a camelCase string into words, i.e. Camel Case
    * If you have a different naming convention for schema keys, replace this function.
-   * 
+   *
    * @param {String}  Key
    * @return {String} Title
    */
@@ -482,14 +482,14 @@ Form.helpers = (function() {
    */
   helpers.createTemplate = function(str, context) {
     var template = helpers.compileTemplate($.trim(str));
-    
+
     if (!context) {
       return template;
     } else {
       return template(context);
     }
   };
-  
+
 
   /**
    * Sets the template compiler to the given function
@@ -498,43 +498,43 @@ Form.helpers = (function() {
   helpers.setTemplateCompiler = function(compiler) {
     helpers.compileTemplate = compiler;
   };
-  
-  
+
+
   /**
    * Sets the templates to be used.
-   * 
+   *
    * If the templates passed in are strings, they will be compiled, expecting Mustache style tags,
    * i.e. <div>{{varName}}</div>
    *
    * You can also pass in previously compiled Underscore templates, in which case you can use any style
    * tags.
-   * 
+   *
    * @param {Object} templates
    * @param {Object} classNames
    */
   helpers.setTemplates = function(templates, classNames) {
     var createTemplate = helpers.createTemplate;
-    
+
     Form.templates = Form.templates || {};
     Form.classNames = Form.classNames || {};
-    
+
     //Set templates, compiling them if necessary
     _.each(templates, function(template, key, index) {
       if (_.isString(template)) template = createTemplate(template);
-      
+
       Form.templates[key] = template;
     });
-    
+
     //Set class names
     _.extend(Form.classNames, classNames);
   };
-  
-  
+
+
   /**
    * Return the editor constructor for a given schema 'type'.
    * Accepts strings for the default editors, or the reference to the constructor function
    * for custom editors
-   * 
+   *
    * @param {String|Function} The schema type e.g. 'Text', 'Select', or the editor constructor e.g. editors.Date
    * @param {Object}          Options to pass to editor, including required 'key', 'schema'
    * @return {Mixed}          An instance of the mapped editor
@@ -550,8 +550,8 @@ Form.helpers = (function() {
 
     return new constructorFn(options);
   };
-  
-  
+
+
   /**
    * Returns a validation function based on the type defined in the schema
    *
@@ -565,11 +565,11 @@ Form.helpers = (function() {
     if (_.isRegExp(validator)) {
       return validators.regexp({ regexp: validator });
     }
-    
+
     //Use a built-in validator if given a string
     if (_.isString(validator)) {
       if (!validators[validator]) throw new Error('Validator "'+validator+'" not found');
-      
+
       return validators[validator]();
     }
 
@@ -579,10 +579,10 @@ Form.helpers = (function() {
     //Use a customised built-in validator if given an object
     if (_.isObject(validator) && validator.type) {
       var config = validator;
-      
+
       return validators[config.type](config);
     }
-    
+
     //Unkown validator type
     throw new Error('Invalid validator: ' + validator);
   };
@@ -594,7 +594,7 @@ Form.helpers = (function() {
    * @param {String} html
    * @return {Object}
    */
-  helpers.parseHTML = function(html) { 
+  helpers.parseHTML = function(html) {
     if ($.parseHTML !== undefined) {
       return $($.parseHTML(html));
     }
@@ -606,7 +606,7 @@ Form.helpers = (function() {
 
 })();
 
-  
+
 //==================================================================================================
 //VALIDATORS
 //==================================================================================================
@@ -622,87 +622,87 @@ Form.validators = (function() {
     url: 'Invalid URL',
     match: 'Must match field "{{field}}"'
   };
-  
+
   validators.required = function(options) {
     options = _.extend({
       type: 'required',
       message: this.errMessages.required
     }, options);
-     
+
     return function required(value) {
       options.value = value;
-      
+
       var err = {
         type: options.type,
         message: Form.helpers.createTemplate(options.message, options)
       };
-      
+
       if (value === null || value === undefined || value === false || value === '') return err;
     };
   };
-  
+
   validators.regexp = function(options) {
     if (!options.regexp) throw new Error('Missing required "regexp" option for "regexp" validator');
-  
+
     options = _.extend({
       type: 'regexp',
       message: this.errMessages.regexp
     }, options);
-    
+
     return function regexp(value) {
       options.value = value;
-      
+
       var err = {
         type: options.type,
         message: Form.helpers.createTemplate(options.message, options)
       };
-      
+
       //Don't check empty values (add a 'required' validator for this)
       if (value === null || value === undefined || value === '') return;
 
       if (!options.regexp.test(value)) return err;
     };
   };
-  
+
   validators.email = function(options) {
     options = _.extend({
       type: 'email',
       message: this.errMessages.email,
       regexp: /^[\w\-]{1,}([\w\-\+.]{1,1}[\w\-]{1,}){0,}[@][\w\-]{1,}([.]([\w\-]{1,})){1,3}$/
     }, options);
-    
+
     return validators.regexp(options);
   };
-  
+
   validators.url = function(options) {
     options = _.extend({
       type: 'url',
       message: this.errMessages.url,
       regexp: /^(http|https):\/\/(([A-Z0-9][A-Z0-9_\-]*)(\.[A-Z0-9][A-Z0-9_\-]*)+)(:(\d+))?\/?/i
     }, options);
-    
+
     return validators.regexp(options);
   };
-  
+
   validators.match = function(options) {
     if (!options.field) throw new Error('Missing required "field" options for "match" validator');
-    
+
     options = _.extend({
       type: 'match',
       message: this.errMessages.match
     }, options);
-    
+
     return function match(value, attrs) {
       options.value = value;
-      
+
       var err = {
         type: options.type,
         message: Form.helpers.createTemplate(options.message, options)
       };
-      
+
       //Don't check empty values (add a 'required' validator for this)
       if (value === null || value === undefined || value === '') return;
-      
+
       if (value !== attrs[options.field]) return err;
     };
   };
@@ -753,6 +753,7 @@ Form.Field = (function() {
       this.key = options.key;
       this.value = options.value;
       this.model = options.model;
+      this.options = options;
 
       //Turn schema shorthand notation (e.g. 'Text') into schema object
       if (_.isString(options.schema)) options.schema = { type: options.schema };
@@ -1507,11 +1508,11 @@ Form.editors = (function() {
 
       else if (_.isFunction(options)) {
         var newOptions;
-        
+
         options(function(opts) {
           newOptions = opts;
         }, this);
-        
+
         html = this._getOptionsHtml(newOptions);
       }
 
@@ -2259,7 +2260,7 @@ Form.editors = (function() {
 
 
   //SETUP
-  
+
   //Add function shortcuts
   Form.setTemplates = Form.helpers.setTemplates;
   Form.setTemplateCompiler = Form.helpers.setTemplateCompiler;
@@ -2269,19 +2270,19 @@ Form.editors = (function() {
 
   //DEFAULT TEMPLATES
   Form.setTemplates({
-    
+
     //HTML
     form: '\
       <form class="bbf-form">{{fieldsets}}</form>\
     ',
-    
+
     fieldset: '\
       <fieldset>\
         <legend>{{legend}}</legend>\
         <ul>{{fields}}</ul>\
       </fieldset>\
     ',
-    
+
     field: '\
       <li class="bbf-field field-{{key}}">\
         <label for="{{id}}">{{title}}</label>\

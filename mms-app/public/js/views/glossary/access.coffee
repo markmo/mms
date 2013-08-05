@@ -112,28 +112,31 @@ define [
                 content: compiled {changes: changes}
                 animate: true
             modal.open()
-            data = _.values @changes
-#            $.ajax
-#                url: '/access-privileges'
-#                type: 'put'
-#                contentType: 'application/json'
-#                data: JSON.stringify(data)
-#                success: =>
-#                    this.render().done ->
-#                        app.resetCache('terms')
-#                        $('#alert')
-#                            .find('strong').html('Access privileges have been successfully updated')
-#                            .parent()
-#                            .removeClass('alert-error')
-#                            .addClass('alert-success in')
-#                            .show()
-#                error: (jqXHR, textStatus, errorThrown) ->
-#                    $('#alert')
-#                        .find('strong').html(errorThrown)
-#                        .parent()
-#                        .removeClass('alert-success')
-#                        .addClass('alert-error in')
-#                        .show()
+            modal.on 'ok', _.bind(this.ok, this)
+            @data = _.values @changes
+
+        ok: ->
+            $.ajax
+                url: '/access-privileges'
+                type: 'put'
+                contentType: 'application/json'
+                data: JSON.stringify(@data)
+                success: =>
+                    this.render().done ->
+                        app.resetCache('terms')
+                        $('#alert')
+                            .find('strong').html('Access privileges have been successfully updated')
+                            .parent()
+                            .removeClass('alert-error')
+                            .addClass('alert-success in')
+                            .show()
+                error: (jqXHR, textStatus, errorThrown) ->
+                    $('#alert')
+                        .find('strong').html(errorThrown)
+                        .parent()
+                        .removeClass('alert-success')
+                        .addClass('alert-error in')
+                        .show()
             return false
 
         initialize: (options) ->

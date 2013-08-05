@@ -59,7 +59,8 @@ define [
             form = new Form(term,
                 title: 'Define Term'
                 template: 'form_with_buttons'
-            ).render()
+            )
+            form.render()
 
             form.on 'cancel', _.bind(this.cancel, this)
 

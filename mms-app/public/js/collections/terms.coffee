@@ -7,7 +7,7 @@ define [
         url: '/terms'
         mode: 'infinite'
         state:
-            pageSize: 2
+            pageSize: 15
         queryParams:
             currentPage: 'p'
             sortKey: 's'

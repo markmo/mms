@@ -64,11 +64,13 @@ define [
                     privileges: privileges.map (a) =>
                         access = a.get('access')
                         if access and access.length
-                            access = access.toUpperCase().split('').join(',')
+                            access = access.toUpperCase().split('')
+                            accessChanges = ['C', 'R', 'U', 'D'].map (a) ->
+                                if _.contains(access, a) then a else 'X'
                         {
                             cid: a.cid
                             group: a.get('userGroup').get('name')
-                            access: access
+                            access: accessChanges
                         }
             return this
 

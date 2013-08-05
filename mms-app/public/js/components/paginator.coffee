@@ -35,5 +35,8 @@ define [
                 pageableCollection: @pageableCollection
                 start: start
                 end: end
-                totalRowCount: state.totalRecords
+                totalRowCount: state.totalRecords - Math.min(state.pageSize, @pageableCollection.length)
+                # compensate for bug in backbone-pageable that is incrementing
+                # the total record count as a result of an add event on sync,
+                # which could be as a result of new behaviour in jquery
             return this

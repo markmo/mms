@@ -37,7 +37,11 @@ define [
             app.domains().done (coll) =>
                 domains = app.convertCollectionToTree(coll)
                 @$el.html @compiled
-                $('#domains-tree').tree({data: domains, dragAndDrop: true})
+                $('#domains-tree').tree(
+                    data: domains
+                    dragAndDrop: true
+                    saveState: true
+                    )
                     .bind('tree.select', (event) =>
                         node = event.node
                         if node

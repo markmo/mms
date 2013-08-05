@@ -48,7 +48,7 @@ public class BusinessTerms extends Controller {
             links.add(String.format("<%s&total_entries=%d>; rel=\"prev\"",
                     routes.BusinessTerms.index(pageIndex - 1, pageSize, sortBy, order), totalRowCount));
         }
-        if (page.getTotalRowCount() >= ((pageIndex + 1) * pageSize)) {
+        if (page.getTotalRowCount() >= (pageIndex * pageSize)) {
             links.add(String.format("<%s&total_entries=%d>; rel=\"next\"",
                     routes.BusinessTerms.index(pageIndex + 1, pageSize, sortBy, order), totalRowCount));
         }

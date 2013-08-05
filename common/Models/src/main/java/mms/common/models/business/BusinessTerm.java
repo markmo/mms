@@ -11,6 +11,8 @@ import com.github.cleverage.elasticsearch.Indexable;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import org.code_factory.jpa.nestedset.NodeInfo;
+import org.code_factory.jpa.nestedset.annotations.*;
 import play.db.jpa.JPA;
 
 import mms.common.models.*;
@@ -22,7 +24,7 @@ import mms.common.models.Column;
  * Time: 2:36 PM
  */
 @Entity
-public class BusinessTerm extends AuditedModel implements Indexable {
+public class BusinessTerm extends AuditedModel implements Indexable, NodeInfo {
 
     @Id
     @GeneratedValue
@@ -86,6 +88,18 @@ public class BusinessTerm extends AuditedModel implements Indexable {
 
     @javax.persistence.Column(length = 8000)
     private String customMetadata;
+
+    @LeftColumn
+    private int lft;
+
+    @RightColumn
+    private int rgt;
+
+    @LevelColumn
+    private int level;
+
+    @RootColumn
+    private int rootId;
 
     public static BusinessTerm findByName(String name) {
         return getSingleResult(BusinessTerm.class,
@@ -222,6 +236,46 @@ public class BusinessTerm extends AuditedModel implements Indexable {
 
     public void setCustomMetadata(String customMetadata) {
         this.customMetadata = customMetadata;
+    }
+
+    @Override
+    public int getLeftValue() {
+        return this.lft;
+    }
+
+    @Override
+    public int getRightValue() {
+        return this.rgt;
+    }
+
+    @Override
+    public int getLevel() {
+        return this.level;
+    }
+
+    @Override
+    public void setLeftValue(int value) {
+        this.lft = value;
+    }
+
+    @Override
+    public void setRightValue(int value) {
+        this.rgt = value;
+    }
+
+    @Override
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    @Override
+    public int getRootValue() {
+        return this.rootId;
+    }
+
+    @Override
+    public void setRootValue(int value) {
+        this.rootId = value;
     }
 
     @SuppressWarnings("unchecked")

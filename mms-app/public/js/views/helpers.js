@@ -120,18 +120,22 @@ define(['handlebars', 'underscore'], function (Handlebars, _) {
     Handlebars.registerHelper('crudClass', function (a) {
         switch('' + a) {
             case 'C+':
+            case 'C':
                 return 'create active';
             case 'C-':
                 return 'create';
             case 'R+':
+            case 'R':
                 return 'read active';
             case 'R-':
                 return 'read';
             case 'U+':
+            case 'U':
                 return 'update active';
             case 'U-':
                 return 'update';
             case 'D+':
+            case 'D':
                 return 'delete active';
             case 'D-':
                 return 'delete';

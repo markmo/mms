@@ -3,88 +3,41 @@
   <component name="ChangeListManager">
     <list default="true" id="716c433e-460e-411b-a2ac-6b6e6f63c867" name="Default" comment="">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/annotations/NodeClass.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/glossary/access_changes.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/views/helpers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/components/pageable_view.coffee" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/css/bootstrap-2.1.1.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/js/bootstrap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/js/bootstrap.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/js/lib/backbone/backbone-min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/js/lib/backbone/templates/default.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/js/lib/backbone/templates/default.js" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/utils/sub.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../deps/JPA-NestedSet" afterPath="$PROJECT_DIR$/../deps/JPA-NestedSet" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/BusinessApplications.java" afterPath="$PROJECT_DIR$/app/controllers/BusinessApplications.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTerm.java" afterPath="$PROJECT_DIR$/../common/Models/src/main/java/mms/common/models/business/BusinessTerm.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/BusinessTerms.java" afterPath="$PROJECT_DIR$/app/controllers/BusinessTerms.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Configuration.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Configuration.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNestedSetManager.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNestedSetManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/JpaNode.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/NestedSetManager.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/NestedSetManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Node.java" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/src/main/java/org/code_factory/jpa/nestedset/Node.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Page.java" afterPath="$PROJECT_DIR$/app/models/Page.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/People.java" afterPath="$PROJECT_DIR$/app/controllers/People.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/utils/QueryTool.java" afterPath="$PROJECT_DIR$/app/utils/QueryTool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/StakeholderRoles.java" afterPath="$PROJECT_DIR$/app/controllers/StakeholderRoles.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UserGroups.java" afterPath="$PROJECT_DIR$/app/controllers/UserGroups.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Vendors.java" afterPath="$PROJECT_DIR$/app/controllers/Vendors.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/access.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/access.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/access.html" afterPath="$PROJECT_DIR$/public/templates/glossary/access.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app.coffee" afterPath="$PROJECT_DIR$/public/js/views/app.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/application.coffee" afterPath="$PROJECT_DIR$/public/js/models/application.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/application_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/application_form.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/collections/applications.coffee" afterPath="$PROJECT_DIR$/public/js/collections/applications.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/applications.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/applications.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/applications.html" afterPath="$PROJECT_DIR$/public/templates/glossary/applications.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/backbone/backbone-associations-min.js" afterPath="$PROJECT_DIR$/public/js/lib/backbone/backbone-associations-min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/backbone/backbone-associations.js" afterPath="$PROJECT_DIR$/public/js/lib/backbone/backbone-associations.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/backbone/backbone-pageable.min.js" afterPath="$PROJECT_DIR$/public/js/lib/backbone/backbone-pageable.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/backbone/backbone.js" afterPath="$PROJECT_DIR$/public/js/lib/backbone/backbone.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/bootstrap/bootstrap-dropdown.js" afterPath="$PROJECT_DIR$/public/js/lib/bootstrap/bootstrap-dropdown.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/bootstrap-responsive.css" afterPath="$PROJECT_DIR$/public/css/bootstrap-responsive.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/bootstrap-responsive.min.css" afterPath="$PROJECT_DIR$/public/css/bootstrap-responsive.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/bootstrap.css" afterPath="$PROJECT_DIR$/public/css/bootstrap.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/backbone/templates/bootstrap.js" afterPath="$PROJECT_DIR$/public/js/lib/backbone/templates/bootstrap.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/bootstrap/bootstrap.js" afterPath="$PROJECT_DIR$/public/js/lib/bootstrap/bootstrap.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/public/css/bootstrap.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/bootstrap/bootstrap.min.js" afterPath="$PROJECT_DIR$/public/js/lib/bootstrap/bootstrap.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/app/column_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/app/column_form.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/backbone/backbone-forms.js" afterPath="$PROJECT_DIR$/public/js/lib/backbone/backbone-forms.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/domains.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/domains.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/events.coffee" afterPath="$PROJECT_DIR$/public/js/events.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/form.coffee" afterPath="$PROJECT_DIR$/public/js/components/form.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/header/header.coffee" afterPath="$PROJECT_DIR$/public/js/views/header/header.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/backbone/editors/list.js" afterPath="$PROJECT_DIR$/public/js/lib/backbone/editors/list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/backbone/editors/list.min.js" afterPath="$PROJECT_DIR$/public/js/lib/backbone/editors/list.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/helpers.js" afterPath="$PROJECT_DIR$/public/js/views/helpers.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/main.js" afterPath="$PROJECT_DIR$/public/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/main.less" afterPath="$PROJECT_DIR$/app/assets/stylesheets/main.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea_modules/mms.iml" afterPath="$PROJECT_DIR$/.idea_modules/mms.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/main.scala.html" afterPath="$PROJECT_DIR$/app/views/main.scala.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/pageable_view.coffee" afterPath="$PROJECT_DIR$/public/js/components/pageable_view.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/components/paginator.coffee" afterPath="$PROJECT_DIR$/public/js/components/paginator.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/components/paginator.html" afterPath="$PROJECT_DIR$/public/templates/components/paginator.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/collections/people.coffee" afterPath="$PROJECT_DIR$/public/js/collections/people.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/people.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/people.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/people.html" afterPath="$PROJECT_DIR$/public/templates/glossary/people.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/person.coffee" afterPath="$PROJECT_DIR$/public/js/models/person.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/person_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/person_form.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" afterPath="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../common/Models/pom.xml" afterPath="$PROJECT_DIR$/../common/Models/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/require/require.js" afterPath="$PROJECT_DIR$/public/js/lib/require/require.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/require/require.min.js" afterPath="$PROJECT_DIR$/public/js/lib/require/require.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/router.coffee" afterPath="$PROJECT_DIR$/public/js/router.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/routes" afterPath="$PROJECT_DIR$/conf/routes" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/security_classification.coffee" afterPath="$PROJECT_DIR$/public/js/models/security_classification.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/stakeholder_role.coffee" afterPath="$PROJECT_DIR$/public/js/models/stakeholder_role.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/stakeholder_role_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/stakeholder_role_form.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/settings.scala.html" afterPath="$PROJECT_DIR$/app/views/settings.scala.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/collections/stakeholder_roles.coffee" afterPath="$PROJECT_DIR$/public/js/collections/stakeholder_roles.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/stakeholder_roles.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/stakeholder_roles.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/stakeholder_roles.html" afterPath="$PROJECT_DIR$/public/templates/glossary/stakeholder_roles.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/term.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/term.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/term_access.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/term_access.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/term_access.html" afterPath="$PROJECT_DIR$/public/templates/glossary/term_access.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/term_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/term_form.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/collections/terms.coffee" afterPath="$PROJECT_DIR$/public/js/collections/terms.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/require/text.js" afterPath="$PROJECT_DIR$/public/js/lib/require/text.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/user_group_form.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/user_group_form.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/terms.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/terms.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/terms.html" afterPath="$PROJECT_DIR$/public/templates/glossary/terms.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/models/user_group.coffee" afterPath="$PROJECT_DIR$/public/js/models/user_group.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/collections/user_groups.coffee" afterPath="$PROJECT_DIR$/public/js/collections/user_groups.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/user_groups.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/user_groups.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/user_groups.html" afterPath="$PROJECT_DIR$/public/templates/glossary/user_groups.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/collections/vendors.coffee" afterPath="$PROJECT_DIR$/public/js/collections/vendors.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/views/glossary/vendors.coffee" afterPath="$PROJECT_DIR$/public/js/views/glossary/vendors.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/glossary/vendors.html" afterPath="$PROJECT_DIR$/public/templates/glossary/vendors.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/lib/visualsearch/visualsearch.js" afterPath="$PROJECT_DIR$/public/js/lib/visualsearch/visualsearch.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mms-app.iws" />
@@ -145,6 +98,23 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/app/controllers/BusinessTerms.java" line="50" class="controllers.BusinessTerms" package="controllers">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -153,7 +123,17 @@
     <favorites_list name="mms-app" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="terms.coffee" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/js/views/glossary/terms.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.49511003" vertical-offset="405" max-vertical-offset="2355">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -171,22 +151,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/public/js/collections/terms.coffee" />
-        <option value="$PROJECT_DIR$/app/models/Page.java" />
-        <option value="$PROJECT_DIR$/public/js/components/pageable_view.coffee" />
-        <option value="$PROJECT_DIR$/public/js/views/helpers.js" />
-        <option value="$PROJECT_DIR$/public/templates/glossary/access_changes.html" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/main.less" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/terms.coffee" />
         <option value="$PROJECT_DIR$/public/js/components/paginator.coffee" />
-        <option value="$PROJECT_DIR$/public/templates/components/paginator.html" />
-        <option value="$PROJECT_DIR$/public/js/lib/backbone/backbone-pageable.js" />
-        <option value="$PROJECT_DIR$/public/js/main.js" />
-        <option value="$PROJECT_DIR$/public/js/lib/visualsearch/visualsearch.js" />
-        <option value="$PROJECT_DIR$/public/templates/glossary/access.html" />
         <option value="$PROJECT_DIR$/app/controllers/BusinessTerms.java" />
-        <option value="$PROJECT_DIR$/public/js/views/glossary/access.coffee" />
-        <option value="$PROJECT_DIR$/public/js/collections/user_groups.coffee" />
         <option value="$PROJECT_DIR$/app/controllers/UserGroups.java" />
+        <option value="$PROJECT_DIR$/public/js/collections/terms.coffee" />
+        <option value="$PROJECT_DIR$/public/js/collections/applications.coffee" />
+        <option value="$PROJECT_DIR$/public/js/collections/people.coffee" />
+        <option value="$PROJECT_DIR$/public/js/collections/stakeholder_roles.coffee" />
+        <option value="$PROJECT_DIR$/public/js/collections/vendors.coffee" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/domains.coffee" />
+        <option value="$PROJECT_DIR$/app/views/settings.scala.html" />
+        <option value="$PROJECT_DIR$/app/views/main.scala.html" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/term.coffee" />
+        <option value="$PROJECT_DIR$/public/js/views/glossary/term_access.coffee" />
+        <option value="$PROJECT_DIR$/public/templates/glossary/term_access.html" />
+        <option value="$PROJECT_DIR$/public/js/views/helpers.js" />
       </list>
     </option>
   </component>
@@ -204,7 +184,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1680" />
-    <option name="height" value="962" />
+    <option name="height" value="964" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -342,6 +322,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -350,9 +331,98 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mms-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="glossary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -372,12 +442,12 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.4117647" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.4117647" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -401,6 +471,14 @@
     </key>
   </component>
   <component name="RunManager" selected="Remote.Play">
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="9999" />
+      <method />
+    </configuration>
     <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <extension name="scalaCoverage" />
@@ -416,28 +494,7 @@
       <setting name="showProgressMessages" value="true" />
       <method />
     </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="9999" />
-      <method />
-    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true" engineId="embedded" uri="null">
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -466,6 +523,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -504,6 +574,12 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
     <configuration default="true" type="ScalaScriptRunConfiguration" factoryName="Scala Script">
       <module name="" />
       <setting name="path" value="" />
@@ -511,12 +587,6 @@
       <setting name="consoleargs" value="" />
       <setting name="params" value="" />
       <setting name="workingDirectory" value="$PROJECT_DIR$" />
-      <method />
-    </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="Play" type="Remote" factoryName="Remote">
@@ -530,6 +600,12 @@
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="false" />
       </RunnerSettings>
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="9999" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Debug" />
       <method />
     </configuration>
@@ -627,18 +703,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1680" height="962" extended-state="6" />
-    <editor active="false" />
+    <frame x="0" y="22" width="1680" height="964" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32938388" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.43195266" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24468085" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6007109" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3280116" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40601504" sideWeight="0.70563036" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40543735" sideWeight="0.70563036" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4781582" sideWeight="0.29436964" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -647,7 +724,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.46508875" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33414933" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23929009" sideWeight="0.6706161" order="0" side_tool="false" content_ui="combo" x="112" y="105" width="460" height="843" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23929009" sideWeight="0.59456265" order="0" side_tool="false" content_ui="combo" x="112" y="105" width="460" height="843" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819906" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -655,7 +732,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557261" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293979" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -664,9 +740,9 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.43195266" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819906" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6007109" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Leiningen" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.6007109" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4781582" sideWeight="0.29436964" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -685,8 +761,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293979" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23958333" sideWeight="0.46508875" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33414933" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33414933" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -760,97 +836,129 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/js/views/helpers.js">
+    <entry file="file://$PROJECT_DIR$/public/js/collections/user_groups.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="0" selection-start="4465" selection-end="4465" vertical-scroll-proportion="0.0" vertical-offset="1442" max-vertical-offset="2235" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1331" column="28" selection-start="29350" selection-end="29350" vertical-scroll-proportion="-24.0" vertical-offset="19389" max-vertical-offset="20160" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/glossary/access_changes.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="34" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="769">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="452">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/components/paginator.html">
+    <entry file="file://$PROJECT_DIR$/public/js/collections/vendors.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="53" selection-start="309" selection-end="309" vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="435">
+        <state line="13" column="22" selection-start="337" selection-end="337" vertical-scroll-proportion="0.2383863" vertical-offset="0" max-vertical-offset="818">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/components/pageable_view.coffee">
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/domains.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="25" selection-start="633" selection-end="633" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="630" />
+        <state line="42" column="35" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.3398533" vertical-offset="352" max-vertical-offset="1170">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/collections/terms.coffee">
+    <entry file="file://$PROJECT_DIR$/public/js/collections/tags.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="209" selection-end="209" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="452">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/lib/backbone/backbone.js">
+    <entry file="file://$PROJECT_DIR$/app/views/main.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="72" selection-start="1691" selection-end="1691" vertical-scroll-proportion="1.0992366" vertical-offset="0" max-vertical-offset="23820" />
+        <state line="101" column="44" selection-start="5598" selection-end="5598" vertical-scroll-proportion="0.2880922" vertical-offset="1275" max-vertical-offset="2745">
+          <folding>
+            <marker date="1375616530000" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1375616530000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/main.js">
+    <entry file="file://$PROJECT_DIR$/app/views/settings.scala.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="36" selection-start="6878" selection-end="6878" vertical-scroll-proportion="0.21880065" vertical-offset="2715" max-vertical-offset="5595" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/lib/visualsearch/visualsearch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="984" column="45" selection-start="33144" selection-end="33144" vertical-scroll-proportion="0.7570093" vertical-offset="14274" max-vertical-offset="29025" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/components/paginator.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="270" selection-end="270" vertical-scroll-proportion="0.2519084" vertical-offset="0" max-vertical-offset="675" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/lib/backbone/backbone-pageable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="363" column="78" selection-start="13133" selection-end="13133" vertical-scroll-proportion="0.66825396" vertical-offset="5024" max-vertical-offset="19965" />
+        <state line="18" column="51" selection-start="741" selection-end="741" vertical-scroll-proportion="0.34005037" vertical-offset="0" max-vertical-offset="794">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/templates/glossary/access.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="397" selection-end="397" vertical-scroll-proportion="0.23771791" vertical-offset="0" max-vertical-offset="1005">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1005">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/glossary/access_changes.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="774" selection-end="774" vertical-scroll-proportion="-17.5" vertical-offset="0" max-vertical-offset="510">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/term.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="23" selection-start="2128" selection-end="2128" vertical-scroll-proportion="0.0" vertical-offset="367" max-vertical-offset="1185">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/term_access.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="49" selection-start="2582" selection-end="2582" vertical-scroll-proportion="0.7799511" vertical-offset="442" max-vertical-offset="1260">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/access_form.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.045232274" vertical-offset="37" max-vertical-offset="1095">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/templates/glossary/term_access.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="48" selection-start="559" selection-end="559" vertical-scroll-proportion="-12.5" vertical-offset="0" max-vertical-offset="825">
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/views/glossary/access.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="153" column="31" selection-start="5654" selection-end="5654" vertical-scroll-proportion="0.0" vertical-offset="2128" max-vertical-offset="2910" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/collections/user_groups.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="23" selection-start="205" selection-end="205" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/BusinessTerms.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="1161" selection-end="2195" vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="5520">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2377#2407#1" expanded="true" />
-          </folding>
+        <state line="63" column="56" selection-start="2251" selection-end="2251" vertical-scroll-proportion="0.3215159" vertical-offset="682" max-vertical-offset="2955">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/UserGroups.java">
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/main.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="27" selection-start="118" selection-end="118" vertical-scroll-proportion="0.091603056" vertical-offset="15" max-vertical-offset="1425">
+        <state line="941" column="0" selection-start="21473" selection-end="21473" vertical-scroll-proportion="-0.34126985" vertical-offset="14373" max-vertical-offset="20235">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/views/helpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="138" column="0" selection-start="4390" selection-end="4390" vertical-scroll-proportion="0.8716381" vertical-offset="1357" max-vertical-offset="2295">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/views/glossary/terms.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.49511003" vertical-offset="405" max-vertical-offset="2355">
           <folding />
         </state>
       </provider>
@@ -908,7 +1016,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>mms</last-edited>
+          <last-edited>mms-models</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
