@@ -128,7 +128,7 @@ GET     /tags                           controllers.Tags.index
 GET     /terms                          @controllers.BusinessTerms.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
 POST    /terms                          controllers.BusinessTerms.create
 PUT     /terms/:id                      controllers.BusinessTerms.update(id: Long)
-GET     /associations/:id               @controllers.BusinessTerms.associations(id: Long)
+GET     /terms/:id/associations         @controllers.BusinessTerms.associations(id: Long)
 
 # User Groups
 GET     /usergroups                     controllers.UserGroups.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")

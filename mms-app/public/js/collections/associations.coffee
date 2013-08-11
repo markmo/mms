@@ -1,12 +1,11 @@
 define [
-    'backbone'
-    'cs!models/association'
+  'backbone'
+  'cs!models/association'
 ], (Backbone, associationModel) ->
-    Backbone.Collection.extend
-        url: ->
-            '/associations/' + @subjectId
 
-        model: associationModel
+  Backbone.Collection.extend
 
-        initialize: (models, options) ->
-            @subjectId = options?.subjectId
+    model: associationModel
+
+    initialize: (models, options) ->
+      this.url = "/terms/#{options.termId}/associations"

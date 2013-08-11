@@ -1,14 +1,18 @@
 define [
-    'jquery'
-    'backbone'
-    'handlebars'
-    'text!templates/glossary/left_menu.html'
-], ($, Backbone, Handlebars, leftMenuPageTemplate) ->
-    Backbone.View.extend
-        el: '#left-menu'
+  'backbone'
+  'handlebars'
+  'text!templates/glossary/left_menu.html'
+], (Backbone, Handlebars, leftMenuPageTemplate) ->
 
-        compiled: Handlebars.compile leftMenuPageTemplate
+  Backbone.View.extend
 
-        render: ->
-            @$el.html @compiled()
-            return this
+    el: '#left-menu'
+
+    compiled: Handlebars.compile leftMenuPageTemplate
+
+    initialize: ->
+      this.render()
+
+    render: ->
+      @$el.html @compiled()
+      return this

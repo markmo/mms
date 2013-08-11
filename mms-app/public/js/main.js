@@ -5,6 +5,7 @@ require.config({
         jquery: 'lib/jquery/jquery-1.9.1.min',
         underscore: 'lib/underscore/underscore-min',
         backbone: 'lib/backbone/backbone',
+        marionnette: 'lib/marionette/backbone.marionette',
         backbone_associations: 'lib/backbone/backbone-associations',
         'backbone-forms': 'lib/backbone/backbone-forms',
         'backbone-pageable': 'lib/backbone/backbone-pageable',
@@ -104,7 +105,8 @@ require([
     'lib/backbone/templates/bootstrap',
     'lib/jquery-file-upload/jquery.fileupload',
     'views/helpers',
-    'visualsearch'
+    'visualsearch',
+    'cs!utils/backbone_sub'
 ], function($, _, Backbone, Handlebars, AppView, Router, app, Vm, Snap, Session, searchResultsTemplate) {
 
     require([

@@ -1,40 +1,40 @@
 <h1>Vendors</h1>
 <div class="clearfix" style="margin-bottom: 10px;">
-    <button id="create-vendor" class="btn btn-small btn-success">
-        <i class="icon-plus icon-white"></i>
-        <span>New vendor&hellip;</span>
-    </button>
+  <button id="create-item" class="btn btn-small btn-success">
+    <i class="icon-plus icon-white"></i>
+    <span>New Vendor&hellip;</span>
+  </button>
 </div>
 {{#if page.list}}
 <table class="table table-hover">
-    <thead>
-    <tr>
-        {{sortableHeading page 'name' 'Name'}}
-        <th colspan="2" style="width: 91px;"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each page.list}}
-    <tr>
-        <td><a href="#" data-id="{{id}}" class="vendor-name">{{name}}</a></td>
-        <td style="width: 14px;"><a href="#" class="vendor-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
-        <td style="width: 77px;"><input class="vendor-delete" data-id="{{id}}" type="checkbox"></td>
-    </tr>
-    {{/each}}
-    </tbody>
-    <tfoot>
-    <tr>
-        <td colspan="2">
-            <div id="paginator" class="pagination pagination-small"></div>
-        </td>
-        <td style="width: 77px;">
-            <button id="btnDelete" class="btn btn-small btn-danger">
-                <i class="icon-remove icon-white"></i>
-                <span>Delete</span>
-            </button>
-        </td>
-    </tr>
-    </tfoot>
+  <thead>
+  <tr>
+    {{sortableHeading page 'name' 'Name'}}
+    <th colspan="2" style="width: 91px;"></th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each page.list}}
+  <tr>
+    <td><a href="#" data-id="{{id}}" class="item-name">{{name}}</a></td>
+    <td style="width: 14px;"><a href="#" class="item-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
+    <td style="width: 77px;"><input class="item-delete" data-id="{{id}}" type="checkbox"></td>
+  </tr>
+  {{/each}}
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="2">
+      <div id="paginator" class="pagination pagination-small"></div>
+    </td>
+    <td style="width: 77px;">
+      <button id="delete-item" class="btn btn-small btn-danger">
+        <i class="icon-remove icon-white"></i>
+        <span>Delete</span>
+      </button>
+    </td>
+  </tr>
+  </tfoot>
 </table>
 {{else}}
 <p>None defined.</p>

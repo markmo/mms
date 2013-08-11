@@ -1,44 +1,44 @@
 <h1>Applications</h1>
 <div class="clearfix" style="margin-bottom: 10px;">
-    <button id="create-application" class="btn btn-small btn-success">
-        <i class="icon-plus icon-white"></i>
-        <span>New application&hellip;</span>
-    </button>
+  <button id="create-item" class="btn btn-small btn-success">
+    <i class="icon-plus icon-white"></i>
+    <span>New Application&hellip;</span>
+  </button>
 </div>
 {{#page pageableCollection}}
 <table class="table table-hover">
-    <thead>
-    <tr>
-        {{sortableHeading pageableCollection 'name' 'Name'}}
-        {{sortableHeading pageableCollection 'datasource' 'Data Source'}}
-        {{sortableHeading pageableCollection 'vendor' 'Vendor'}}
-        <th colspan="2" style="width: 91px;"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each list}}
-    <tr>
-        <td><a href="#" data-id="{{id}}" class="application-name">{{name}}</a></td>
-        <td>{{datasource}}</td>
-        <td>{{vendor}}</td>
-        <td style="width: 14px;"><a href="#" class="application-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
-        <td style="width: 77px;"><input class="application-delete" data-id="{{id}}" type="checkbox"></td>
-    </tr>
-    {{/each}}
-    </tbody>
-    <tfoot>
-    <tr>
-        <td colspan="4">
-            <div id="paginator" class="pagination pagination-small"></div>
-        </td>
-        <td style="width: 77px;">
-            <button id="btnDelete" class="btn btn-small btn-danger">
-                <i class="icon-remove icon-white"></i>
-                <span>Delete</span>
-            </button>
-        </td>
-    </tr>
-    </tfoot>
+  <thead>
+  <tr>
+    {{sortableHeading pageableCollection 'name' 'Name'}}
+    {{sortableHeading pageableCollection 'datasource' 'Data Source'}}
+    {{sortableHeading pageableCollection 'vendor' 'Vendor'}}
+    <th colspan="2" style="width: 91px;"></th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each list}}
+  <tr>
+    <td><a href="#" data-id="{{id}}" class="item-name">{{name}}</a></td>
+    <td>{{datasource}}</td>
+    <td>{{vendor}}</td>
+    <td style="width: 14px;"><a href="#" class="item-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
+    <td style="width: 77px;"><input class="item-delete" data-id="{{id}}" type="checkbox"></td>
+  </tr>
+  {{/each}}
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="4">
+      <div id="paginator" class="pagination pagination-small"></div>
+    </td>
+    <td style="width: 77px;">
+      <button id="delete-item" class="btn btn-small btn-danger">
+        <i class="icon-remove icon-white"></i>
+        <span>Delete</span>
+      </button>
+    </td>
+  </tr>
+  </tfoot>
 </table>
 {{else}}
 <p>None defined.</p>

@@ -1,64 +1,57 @@
 define [
-    'jquery'
-    'backbone'
-    'handlebars'
-    'cs!events'
-    'text!templates/glossary/responsibilities.html'
-], ($, Backbone, Handlebars, app, responsibilitiesPageTemplate) ->
-    Backbone.View.extend
-        el: '#page'
+  'jquery'
+  'cs!events'
+  'cs!components/m_view'
+  'text!templates/glossary/responsibilities.html'
+], ($, app, MView, responsibilitiesTemplate) ->
 
-        events:
-            'submit #responsibilitiesForm': 'update'
+  MView.extend
 
-        compiled: Handlebars.compile responsibilitiesPageTemplate
+    events:
+      'submit #responsibilitiesForm': 'update'
 
-        update: (event) ->
-            event.preventDefault()
-            values = $(event.target).serializeArray()
-            re = /role\[(\d+)\]\[(\d+)\]/
-            data = []
-            for val in values
-                match = re.exec(val.name)
-                termId = match[1]
-                personId = match[2]
-                roleId = val.value
-                if roleId
-                    data.push
-                        termId: termId
-                        personId: personId
-                        roleId: roleId
-            $.ajax
-                url: '/responsibilities'
-                type: 'put'
-                contentType: 'application/json'
-                data: JSON.stringify(data)
-                success: =>
-                    this.render().done ->
-                        app.resetCache('terms')
-                        $('#alert')
-                            .find('strong').html('Responsibilities have been successfully updated')
-                            .parent()
-                            .removeClass('alert-error')
-                            .addClass('alert-success in')
-                            .show()
-                error: (jqXHR, textStatus, errorThrown) ->
-                    $('#alert')
-                        .find('strong').html(errorThrown)
-                        .parent()
-                        .removeClass('alert-success')
-                        .addClass('alert-error in')
-                        .show()
-            return false
+    template: responsibilitiesTemplate
 
-        render: ->
-            dfd = $.Deferred()
-            app.terms(null, {refresh: true}).done (terms) =>
-                app.stakeholderRoles().done (roles) =>
-                    app.people().done (people) =>
-                        @$el.html @compiled
-                            terms: terms.toJSON()
-                            roles: roles.toJSON()
-                            people: people.toJSON()
-                        dfd.resolve()
-            return dfd
+    update: (event) ->
+      event.preventDefault()
+      values = $(event.target).serializeArray()
+      re = /role\[(\d+)\]\[(\d+)\]/
+      data = []
+      for val in values
+        match = re.exec(val.name)
+        termId = match[1]
+        personId = match[2]
+        roleId = val.value
+        if roleId
+          data.push
+            termId: termId
+            personId: personId
+            roleId: roleId
+      $.ajax
+        type: 'PUT'
+        url: '/responsibilities'
+        contentType: 'application/json'
+        data: JSON.stringify(data)
+        success: =>
+          this.render()
+          app.resetCache('terms')
+          $('#alert')
+            .find('strong').html('Responsibilities have been successfully updated')
+            .parent().removeClass('alert-error').addClass('alert-success in')
+            .show()
+        error: (jqXHR, textStatus, errorThrown) ->
+          $('#alert')
+            .find('strong').html(errorThrown)
+            .parent().removeClass('alert-success').addClass('alert-error in')
+            .show()
+      return false
+
+    initialize: (options) ->
+      MView.prototype.initialize.call(this)
+      this.hasData(options, this.render)
+
+    render: ->
+      this.renderTemplate
+        terms: @terms.toJSON()
+        roles: @roles.toJSON()
+        people: @people.toJSON()

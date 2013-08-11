@@ -1,74 +1,26 @@
 define [
-    'jquery'
-    'backbone'
-    'handlebars'
-    'cs!events'
-    'cs!vm'
-    'cs!components/pageable_view'
-    'cs!views/glossary/vendor_form'
-    'text!templates/glossary/vendors.html'
-], ($, Backbone, Handlebars, app, Vm, PageableView, VendorForm, vendorsPageTemplate) ->
-    PageableView.extend
-        el: '#page'
+  'cs!views/gridview'
+  'cs!views/glossary/vendor_form'
+  'text!templates/glossary/vendors.html'
+], (GridView, VendorForm, vendorsTemplate) ->
 
-        events: ->
-            _.extend {}, PageableView.prototype.events,
-                'click #create-vendor': 'create'
-                'click .vendor-name': 'edit'
-                'click .vendor-edit': 'edit'
-                'click #btnDelete': 'remove'
+  GridView.extend
 
-        compiled: Handlebars.compile vendorsPageTemplate
+    template: vendorsTemplate
 
-        create: ->
-            vendorForm = Vm.create(this, 'VendorForm', VendorForm)
-            modal = new Backbone.BootstrapModal
-                title: 'New Vendor'
-                content: vendorForm
-                animate: true
-            modal.open()
-            return false
+    initialize: (options) ->
+      this._super(options)
+      this.hasData(options, this.render)
+      options.collection = options.vendors
+      options.form =
+        name: 'Vendor'
+        form: VendorForm
+        url: '/vendors'
 
-        edit: (event) ->
-            id = $(event.currentTarget).data('id')
-            vendorForm = Vm.create(this, 'VendorForm', VendorForm, {vendorId: id})
-            modal = new Backbone.BootstrapModal
-                title: 'Edit Vendor'
-                content: vendorForm
-                animate: true
-            modal.open()
-            return false
-
-        remove: ->
-            deletions = []
-            $('.vendor-delete').each ->
-                deletions.push($(this).data('id')) if $(this).attr('checked')
-            if deletions.length
-                $.ajax(
-                    type: 'DELETE'
-                    url: '/vendors'
-                    data: {id: deletions}
-                ).done =>
-                    _.each deletions, (id) =>
-                        @pageableCollection.remove(@pageableCollection.get(id))
-                    this.render()
-            return false
-
-        preRender: ->
-            if @paginator
-                this.stopListening(@paginator)
-                @paginator.clean?()
-
-        doRender: ->
-            app.vendors().done (coll) =>
-                @pageableCollection = coll
-                @$el.html @compiled
-                    # alternative to sending the pageableCollection
-                    page:
-                        list: coll.toJSON()
-                        sortKey: coll.state.sortKey
-                        sortOrder: if coll.state.order == -1 then 'headerSortUp' else 'headerSortDown'
-
-        clean: ->
-            this.stopListening()
-            @$el.html('')
+    doRender: ->
+      state = @vendors.state
+      @$el.html @compiled
+        page: # alternative to sending the pageableCollection
+          list: @vendors.toJSON()
+          sortKey: state.sortKey
+          order: if state.order == -1 then 'headerSortUp' else 'headerSortDown'

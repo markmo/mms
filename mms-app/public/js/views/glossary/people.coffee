@@ -54,11 +54,14 @@ define [
                     this.render()
             return false
 
+        initialize: (options) ->
+            @pageableCollection = options.collection
+            this.listenTo @pageableCollection, 'sync', this.render
+
         doRender: ->
-            app.people().done (coll) =>
-                @pageableCollection = coll
-                @$el.html @compiled
-                    pageableCollection: coll
+            @$el.html @compiled
+                pageableCollection: @pageableCollection
+            return this
 
         clean: ->
             this.stopListening()

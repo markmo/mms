@@ -1,42 +1,38 @@
 define [
-    'jquery'
-    'underscore'
-    'backbone'
-    'cs!events'
-    'cs!models/application'
-    'cs!components/form'
-], ($, _, Backbone, app, Application) ->
-    Backbone.View.extend
+  'underscore'
+  'backbone'
+  'cs!models/application'
+  'cs!components/form'
+], (_, Backbone, Application) ->
 
-        ok: ->
-            @application.set(@form.getValue())
-            app.applications().done (applications) =>
-                applications.add(@application)
-                @application.save null,
-                    success: => this.parent.render()
-            return
+  Backbone.View.extend
 
-        cancel: ->
+    ok: ->
+      @application.set(@form.getValue())
+      @collection.add(@application)
+      @collection.save null,
+        success: => this.parentView.render
+      return false
 
-        initialize: (options) ->
-            @applicationId = options?.applicationId
-            this.on 'ok', _.bind(this.ok, this)
-            this.on 'cancel', _.bind(this.cancel, this)
+    cancel: ->
+      return false
 
-        render: ->
-            if @applicationId
-                app.applications().done (applications) =>
-                    application = applications.get(@applicationId)
-                    this.renderForm(application)
-            else this.renderForm(new Application)
+    initialize: (options) ->
+      @collection = options.collection
+      @id = options.id
+      this.listenTo @collection, 'sync', this.render
+      this.on 'ok', this.ok
+      this.on 'cancel', this.cancel
 
-        renderForm: (application) ->
-            this.cleanForm() if @form
-            @form = new Backbone.Form({model: application}).render()
-            @application = application
-            @$el.html @form.el
-            return this
+    render: ->
+      if @id
+        application = @collection.get(@id)
+        this.renderForm(application)
+      else this.renderForm(new Application)
 
-        cleanForm: ->
-            @form.remove()
-            return
+    renderForm: (application) ->
+      @form?.remove()
+      @form = new Backbone.Form({model: application}).render()
+      @application = application
+      @$el.html @form.el
+      return this

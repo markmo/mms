@@ -51,14 +51,10 @@ define [
                     term: term.toJSON()
                     defn: defn
                 @$el.addClass('readonly')
-                $.ajax(
-                    type: 'GET'
-                    url: '/settings'
-                ).done((schema) =>
-                    JsonViewer.toHtml(this.getSchema(schema), term.get('customMetadata'), $('#custom-metadata'))
-                    return
+                $.get('/settings').done((schema) =>
+                  JsonViewer.toHtml(this.getSchema(schema), term.get('customMetadata'), $('#custom-metadata'))
                 ).fail((jqXHR, textStatus, errorThrown) ->
-                    alert(errorThrown)
+                  alert(errorThrown)
                 )
                 @$el.attr('data-snap-ignore', true)
 #                @$el.annotator()
