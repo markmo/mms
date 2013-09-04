@@ -3,28 +3,18 @@ define [
   'underscore'
   'backbone'
   'handlebars'
-  'cs!components/pageable_view'
-  'cs!components/crud_view'
-  'cs!components/mixin'
-], ($, _, Backbone, Handlebars, Pageable, Crud, mixin) ->
-
-  # monkey patch View.extend to include mixins
-#  originalExtend = Backbone.View.extend
-#
-#  extend = (protoProps, classProps) ->
-#    clazz = originalExtend.call(this, protoProps, classProps)
-#    mixin(clazz, clazz::mixins) if _.has(clazz.prototype, 'mixins')
-#    return clazz
-#
-#  Backbone.View.extend = extend
+  'cs!framework/pageable_view'
+  'cs!framework/crud_view'
+], ($, _, Backbone, Handlebars, Pageable, Crud) ->
 
   Backbone.View.extend
-    mixins: [Pageable, Crud]
+    traits: [Pageable, Crud]
 
     el: '#page' # default container element
 
     initialize: ->
       @compiled = Handlebars.compile @template
+      @collection = options.collection
 
     hasData: (collections, callback) ->
       state = {}
@@ -45,6 +35,10 @@ define [
       this.preRender() if _.isFunction(this['preRender'])
       $.when(this.doRender()).then this.postRender
       return this
+
+    doRender: ->
+      @$el.html @compiled
+        pageableCollection: @collection
 
     close: ->
       this.stopListening()

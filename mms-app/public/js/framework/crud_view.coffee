@@ -2,13 +2,15 @@ define [
   'jquery'
   'backbone'
   'cs!vm'
+  'bootstrap'
+  'bootstrap-modal'
 ], ($, Backbone, Vm) ->
 
   Backbone.View.extend
 
     events:
       'click #create-item': 'create'
-      'click .item-name': 'edit'
+      'click .item-name': 'show'
       'click .item-edit': 'edit'
       'click #delete-item': 'delete'
 
@@ -38,18 +40,36 @@ define [
       modal.open()
       return false
 
+    show: (event) ->
+      event.preventDefault()
+      id = $(event.currentTarget).data('id')
+      model = @collection.get(id)
+      form = @form
+      view = Vm.create this, "#{@form.name}View", form.readonly,
+        collection: @collection
+        model: model
+        form: form
+      modal = new Backbone.BootstrapModal
+        title: "#{form.name} Details"
+        content: view
+        animate: true
+        okText: 'Edit'
+        okCloses: false
+      modal.open()
+      return false
+
     delete: (event) ->
       event.preventDefault()
-      deletions = []
-      $('.item-delete').each ->
-        deletions.push($(this).data('id')) if $(this).attr('checked')
+      deletions = $('.delete-checkbox').map ->
+        $(this).data('id') if $(this).attr('checked')
+      collection = @collection
       if deletions.length
         $.ajax(
           type: 'DELETE'
-          url: @form.url
+          url: collection.url
           data: {id: deletions}
         ).done =>
-          @collection.remove(@collection.get(id)) for id in deletions
+          collection.remove(collection.get(id)) for id in deletions
           this.render()
       return false
 

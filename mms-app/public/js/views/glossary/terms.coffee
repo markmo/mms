@@ -4,7 +4,7 @@ define [
   'handlebars'
   'cs!events'
   'cs!vm'
-  'cs!components/pageable_view'
+  'cs!framework/pageable_view'
   'cs!views/app/posts'
   'cs!views/glossary/domains'
   'cs!views/glossary/left_menu'

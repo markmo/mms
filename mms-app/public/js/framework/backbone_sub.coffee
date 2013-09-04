@@ -1,7 +1,7 @@
 define [
   'underscore'
   'backbone'
-  'cs!components/mixin'
+  'cs!framework/mixin'
 ], (_, Backbone, mixin) ->
 
   # The base Class implementation (does nothing)
@@ -47,7 +47,7 @@ define [
               # but on the superclass
               @_super = _super[name]
 
-              # The method only need to be bound temporarily, so we
+              # The method only needs to be bound temporarily, so we
               # remove it when we're done executing
               ret = fn.apply(this, arguments)
               @_super = tmp
@@ -68,7 +68,7 @@ define [
   # monkey patch View.extend to include mixins and super function
   Backbone.View.extend = (protoProps, classProps) ->
     child = sub(this, protoProps, classProps)
-    mixin(child, child::mixins) if _.has(child.prototype, 'mixins')
+    mixin(child, child::traits) if _.has(child.prototype, 'traits')
     return child
 
   return Backbone.View

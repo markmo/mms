@@ -106,7 +106,7 @@ require([
     'lib/jquery-file-upload/jquery.fileupload',
     'views/helpers',
     'visualsearch',
-    'cs!utils/backbone_sub'
+    'cs!framework/backbone_sub'
 ], function($, _, Backbone, Handlebars, AppView, Router, app, Vm, Snap, Session, searchResultsTemplate) {
 
     require([

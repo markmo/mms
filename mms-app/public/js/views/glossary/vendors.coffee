@@ -11,11 +11,9 @@ define [
     initialize: (options) ->
       this._super(options)
       this.hasData(options, this.render)
-      options.collection = options.vendors
       options.form =
         name: 'Vendor'
         form: VendorForm
-        url: '/vendors'
 
     doRender: ->
       state = @vendors.state
