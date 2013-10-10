@@ -1,0 +1,43 @@
+<ul>
+  {{#hasPrevious collection}}
+  {{#if longForm}}
+  <li class="first">
+    <a href="#">First</a>
+  </li>
+  {{/if}}
+  <li class="prev">
+    <a href="#">&laquo; Previous</a>
+  </li>
+  {{else}}
+  {{#if longForm}}
+  <li class="first disabled">
+    <a href="#">First</a>
+  </li>
+  {{/if}}
+  <li class="prev disabled">
+    <span>&laquo; Previous</span>
+  </li>
+  {{/hasPrevious}}
+  <li class="current">
+    <span>{{start}} to {{end}} of {{totalRowCount}}</span>
+  </li>
+  {{#hasNext collection}}
+  <li class="next">
+    <a href="#">Next &raquo;</a>
+  </li>
+  {{#if longForm}}
+  <li class="last">
+    <a href="#">Last</a>
+  </li>
+  {{/if}}
+  {{else}}
+  <li class="next disabled">
+    <span>Next &raquo;</span>
+  </li>
+  {{#if longForm}}
+  <li class="last disabled">
+    <a href="#">Last</a>
+  </li>
+  {{/if}}
+  {{/hasNext}}
+</ul>

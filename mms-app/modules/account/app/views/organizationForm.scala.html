@@ -1,0 +1,23 @@
+@(isNew: Boolean, organizationForm: Form[models.account.Organization])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Edit Organization") {
+
+  <h1>@if(isNew) {New} else {Edit} Organization</h1>
+
+  @form(action = controllers.account.routes.Organizations.update) {
+
+    @defining(organizationForm("id")) { idField =>
+      <input type="hidden" name="@idField.name" id="@idField.id" value="@idField.value">
+    }
+
+    @inputText(organizationForm("name"), '_label -> "Name", 'class -> "span5")
+
+    @inputText(organizationForm("code"), '_label -> "Code")
+
+    <a href="@controllers.account.routes.Organizations.list(1, "name", "asc", "")" class="btn">Cancel</a>
+    <input type="submit" class="btn btn-primary" value="@{if(isNew) "Create" else "Update"}">
+  }
+}

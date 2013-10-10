@@ -7,10 +7,10 @@ import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreLabel;
 
-import service.FileRepoService;
-import service.FileService;
-import service.file.hdfs.HadoopFileRepoService;
-import service.file.jcr.ModeShapeFileRepoService;
+//import service.FileRepoService;
+//import service.FileService;
+//import service.file.hdfs.HadoopFileRepoService;
+//import service.file.jcr.ModeShapeFileRepoService;
 
 /**
  * User: markmo
@@ -30,18 +30,18 @@ public class Dependencies implements Module {
         return mapper;
     }
 
-    @Provides
-    @Singleton
-    FileRepoService provideFileRepoService() {
-        //return new HadoopFileRepoService();
-        return new ModeShapeFileRepoService();
-    }
-
-    @Provides
-    @Singleton
-    FileService provideFileService() {
-        return new FileService();
-    }
+//    @Provides
+//    @Singleton
+//    FileRepoService provideFileRepoService() {
+//        //return new HadoopFileRepoService();
+//        return new ModeShapeFileRepoService();
+//    }
+//
+//    @Provides
+//    @Singleton
+//    FileService provideFileService() {
+//        return new FileService();
+//    }
 
     @Provides
     @Singleton

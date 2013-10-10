@@ -86,6 +86,14 @@ define(['handlebars', 'underscore'], function (Handlebars, _) {
     }
   });
 
+  Handlebars.registerHelper('truthy', function (value, block) {
+    if (value === 1 || value === true) {
+      return block.fn(this);
+    } else {
+      return block.inverse(this);
+    }
+  });
+
   Handlebars.registerHelper('sortableHeading', function (page, field, label) {
     var sortKey, order;
     if (page.state) {
@@ -140,5 +148,26 @@ define(['handlebars', 'underscore'], function (Handlebars, _) {
         return '';
     }
   });
+
+  Handlebars.registerHelper('date', function (date, format) {
+    if (date) {
+      return moment(date).format(format);
+    }
+    return '';
+  });
+  var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  Handlebars.registerHelper('dayOfWeek', function (day) {
+    return daysOfWeek[day];
+  });
+
+//  Handlebars.registerHelper('can', function (activity, block) {
+//    var user = app.currentUser;
+//    if (activity in permissions && user.get('isLoggedIn') && user.isInRole(permissions[activity]).length) {
+//      return block.fn(this);
+//    } else {
+//      return block.inverse(this);
+//    }
+//  });
 
 });

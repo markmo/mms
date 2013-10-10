@@ -1,0 +1,42 @@
+@(start: String)
+
+@import helper._
+
+@scripts = {
+  <script type="text/javascript">
+  var global = {
+    start: '@start'
+  };
+  </script>
+  <script src="@routes.Assets.at("js/lib/epiceditor/js/epiceditor.min.js")"></script>
+  <script data-main="assets/js/main" src="@routes.Assets.at("js/lib/require/require.min.js")"></script>
+}
+
+@main("MMS", "/public", scripts) {
+  <div id="content" class="content"></div>
+  <div id="spinner"></div>
+  <script type="text/javascript">
+  var inf = new Sonic({
+    width: 100,
+    height: 50,
+    padding: 10,
+    stepsPerFrame: 2,
+    trailLength: 1,
+    pointDistance: .03,
+    strokeColor: '#1e90ff',
+    step: 'fader',
+    multiplier: 2,
+    setup: function () {
+      this._.lineWidth = 5;
+    },
+    path: [
+      ['arc', 10, 10, 10, -270, -90],
+      ['bezier', 10, 0, 40, 20, 20, 0, 30, 20],
+      ['arc', 40, 10, 10, 90, -90],
+      ['bezier', 40, 0, 10, 20, 30, 0, 20, 20]
+    ]
+  }) ;
+  inf.play();
+  document.getElementById('spinner').appendChild(inf.canvas);
+  </script>
+}

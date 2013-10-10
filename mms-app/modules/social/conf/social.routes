@@ -1,0 +1,3 @@
+# Posts
+GET     /posts/:entityType/:id          @controllers.social.Posts.posts(entityType: String, id: Long)
+POST    /posts/:entityType/:id          @controllers.social.Posts.create(entityType: String, id: Long)

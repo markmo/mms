@@ -1,7 +1,6 @@
 //     Backbone.js 1.0.0
 
-//     (c) 2010-2011 Jeremy Ashkenas, DocumentCloud Inc.
-//     (c) 2011-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+//     (c) 2010-2013 Jeremy Ashkenas, DocumentCloud Inc.
 //     Backbone may be freely distributed under the MIT license.
 //     For all details and documentation:
 //     http://backbonejs.org
@@ -53,7 +52,7 @@
   };
 
   // Turn on `emulateHTTP` to support legacy HTTP servers. Setting this option
-  // will fake `"PATCH"`, `"PUT"` and `"DELETE"` requests via the `_method` parameter and
+  // will fake `"PUT"` and `"DELETE"` requests via the `_method` parameter and
   // set a `X-Http-Method-Override` header.
   Backbone.emulateHTTP = false;
 
@@ -249,9 +248,8 @@
     options || (options = {});
     this.cid = _.uniqueId('c');
     this.attributes = {};
-    if (options.collection) this.collection = options.collection;
+    _.extend(this, _.pick(options, modelOptions));
     if (options.parse) attrs = this.parse(attrs, options) || {};
-    options._attrs || (options._attrs = attrs);
     if (defaults = _.result(this, 'defaults')) {
       attrs = _.defaults({}, attrs, defaults);
     }
@@ -259,6 +257,9 @@
     this.changed = {};
     this.initialize.apply(this, arguments);
   };
+
+  // A list of options to be attached directly to the model, if provided.
+  var modelOptions = ['url', 'urlRoot', 'collection'];
 
   // Attach all inheritable methods to the Model prototype.
   _.extend(Model.prototype, Events, {
@@ -455,16 +456,13 @@
         (attrs = {})[key] = val;
       }
 
+      // If we're not waiting and attributes exist, save acts as `set(attr).save(null, opts)`.
+      if (attrs && (!options || !options.wait) && !this.set(attrs, options)) return false;
+
       options = _.extend({validate: true}, options);
 
-      // If we're not waiting and attributes exist, save acts as
-      // `set(attr).save(null, opts)` with validation. Otherwise, check if
-      // the model will be valid when the attributes, if any, are set.
-      if (attrs && !options.wait) {
-        if (!this.set(attrs, options)) return false;
-      } else {
-        if (!this._validate(attrs, options)) return false;
-      }
+      // Do not persist invalid models.
+      if (!this._validate(attrs, options)) return false;
 
       // Set temporary attributes if `{wait: true}`.
       if (attrs && options.wait) {
@@ -536,6 +534,11 @@
       if (this.isNew()) return base;
       return base + (base.charAt(base.length - 1) === '/' ? '' : '/') + encodeURIComponent(this.id);
     },
+    _url: function() {
+      var base = _.result(this, 'urlRoot') || _.result(this.collection, 'url') || urlError();
+      if (this.isNew()) return base;
+      return base + (base.charAt(base.length - 1) === '/' ? '' : '/') + encodeURIComponent(this.id);
+    },
 
     // **parse** converts a response into the hash of attributes to be `set` on
     // the model. The default implementation is just to pass the response along.
@@ -598,6 +601,7 @@
   // its models in sort order, as they're added and removed.
   var Collection = Backbone.Collection = function(models, options) {
     options || (options = {});
+    if (options.url) this.url = options.url;
     if (options.model) this.model = options.model;
     if (options.comparator !== void 0) this.comparator = options.comparator;
     this._reset();
@@ -607,7 +611,7 @@
 
   // Default options for `Collection#set`.
   var setOptions = {add: true, remove: true, merge: true};
-  var addOptions = {add: true, remove: false};
+  var addOptions = {add: true, merge: false, remove: false};
 
   // Define the Collection's inheritable methods.
   _.extend(Collection.prototype, Events, {
@@ -633,7 +637,7 @@
 
     // Add a model, or list of models to the set.
     add: function(models, options) {
-      return this.set(models, _.extend({merge: false}, options, addOptions));
+      return this.set(models, _.defaults(options || {}, addOptions));
     },
 
     // Remove a model, or a list of models from the set.
@@ -663,7 +667,7 @@
     // already exist in the collection, as necessary. Similar to **Model#set**,
     // the core operation for updating the data contained by the collection.
     set: function(models, options) {
-      options = _.defaults({}, options, setOptions);
+      options = _.defaults(options || {}, setOptions);
       if (options.parse) models = this.parse(models, options);
       if (!_.isArray(models)) models = models ? [models] : [];
       var i, l, model, attrs, existing, sort;
@@ -671,26 +675,23 @@
       var sortable = this.comparator && (at == null) && options.sort !== false;
       var sortAttr = _.isString(this.comparator) ? this.comparator : null;
       var toAdd = [], toRemove = [], modelMap = {};
-      var add = options.add, merge = options.merge, remove = options.remove;
-      var order = !sortable && add && remove ? [] : false;
 
       // Turn bare objects into model references, and prevent invalid models
       // from being added.
       for (i = 0, l = models.length; i < l; i++) {
-        if (!(model = this._prepareModel(attrs = models[i], options))) continue;
+        if (!(model = this._prepareModel(models[i], options))) continue;
 
         // If a duplicate is found, prevent it from being added and
         // optionally merge it into the existing model.
         if (existing = this.get(model)) {
-          if (remove) modelMap[existing.cid] = true;
-          if (merge) {
-            attrs = attrs === model ? model.attributes : options._attrs;
-            existing.set(attrs, options);
+          if (options.remove) modelMap[existing.cid] = true;
+          if (options.merge) {
+            existing.set(model.attributes, options);
             if (sortable && !sort && existing.hasChanged(sortAttr)) sort = true;
           }
 
         // This is a new model, push it to the `toAdd` list.
-        } else if (add) {
+        } else if (options.add) {
           toAdd.push(model);
 
           // Listen to added models' events, and index models for lookup by
@@ -699,12 +700,10 @@
           this._byId[model.cid] = model;
           if (model.id != null) this._byId[model.id] = model;
         }
-        if (order) order.push(existing || model);
-        delete options._attrs;
       }
 
       // Remove nonexistent models if appropriate.
-      if (remove) {
+      if (options.remove) {
         for (i = 0, l = this.length; i < l; ++i) {
           if (!modelMap[(model = this.models[i]).cid]) toRemove.push(model);
         }
@@ -712,14 +711,13 @@
       }
 
       // See if sorting is needed, update `length` and splice in new models.
-      if (toAdd.length || (order && order.length)) {
+      if (toAdd.length) {
         if (sortable) sort = true;
         this.length += toAdd.length;
         if (at != null) {
           splice.apply(this.models, [at, 0].concat(toAdd));
         } else {
-          if (order) this.models.length = 0;
-          push.apply(this.models, order || toAdd);
+          push.apply(this.models, toAdd);
         }
       }
 
@@ -734,7 +732,7 @@
       }
 
       // Trigger `sort` if the collection was sorted.
-      if (sort || (order && order.length)) this.trigger('sort', this, options);
+      if (sort) this.trigger('sort', this, options);
       return this;
     },
 
@@ -783,14 +781,14 @@
     },
 
     // Slice out a sub-array of models from the collection.
-    slice: function() {
-      return slice.apply(this.models, arguments);
+    slice: function(begin, end) {
+      return this.models.slice(begin, end);
     },
 
     // Get a model from the set by id.
     get: function(obj) {
       if (obj == null) return void 0;
-      return this._byId[obj.id] || this._byId[obj.cid] || this._byId[obj];
+      return this._byId[obj.id != null ? obj.id : obj.cid || obj];
     },
 
     // Get the model at the given index.
@@ -876,7 +874,7 @@
       if (!options.wait) this.add(model, options);
       var collection = this;
       var success = options.success;
-      options.success = function(model, resp, options) {
+      options.success = function(resp) {
         if (options.wait) collection.add(model, options);
         if (success) success(model, resp, options);
       };
@@ -913,9 +911,11 @@
       options || (options = {});
       options.collection = this;
       var model = new this.model(attrs, options);
-      if (!model.validationError) return model;
-      this.trigger('invalid', this, attrs, options);
-      return false;
+      if (!model._validate(attrs, options)) {
+        this.trigger('invalid', this, attrs, options);
+        return false;
+      }
+      return model;
     },
 
     // Internal method to sever a model's ties to a collection.
@@ -947,8 +947,8 @@
     'inject', 'reduceRight', 'foldr', 'find', 'detect', 'filter', 'select',
     'reject', 'every', 'all', 'some', 'any', 'include', 'contains', 'invoke',
     'max', 'min', 'toArray', 'size', 'first', 'head', 'take', 'initial', 'rest',
-    'tail', 'drop', 'last', 'without', 'difference', 'indexOf', 'shuffle',
-    'lastIndexOf', 'isEmpty', 'chain'];
+    'tail', 'drop', 'last', 'without', 'indexOf', 'shuffle', 'lastIndexOf',
+    'isEmpty', 'chain'];
 
   // Mix in each Underscore method as a proxy to `Collection#models`.
   _.each(methods, function(method) {
@@ -983,16 +983,11 @@
   // having to worry about render order ... and makes it easy for the view to
   // react to specific changes in the state of your models.
 
-  // Options with special meaning *(e.g. model, collection, id, className)* are
-  // attached directly to the view.  See `viewOptions` for an exhaustive
-  // list.
-
   // Creating a Backbone.View creates its initial element outside of the DOM,
   // if an existing element is not provided...
   var View = Backbone.View = function(options) {
     this.cid = _.uniqueId('view');
-    options || (options = {});
-    _.extend(this, _.pick(options, viewOptions));
+    this._configure(options || {});
     this._ensureElement();
     this.initialize.apply(this, arguments);
     this.delegateEvents();
@@ -1011,7 +1006,7 @@
     tagName: 'div',
 
     // jQuery delegate for element lookup, scoped to DOM elements within the
-    // current view. This should be preferred to global lookups where possible.
+    // current view. This should be prefered to global lookups where possible.
     $: function(selector) {
       return this.$el.find(selector);
     },
@@ -1051,7 +1046,7 @@
     //
     //     {
     //       'mousedown .title':  'edit',
-    //       'click .button':     'save',
+    //       'click .button':     'save'
     //       'click .open':       function(e) { ... }
     //     }
     //
@@ -1087,6 +1082,16 @@
     undelegateEvents: function() {
       this.$el.off('.delegateEvents' + this.cid);
       return this;
+    },
+
+    // Performs the initial configuration of a View with a set of options.
+    // Keys with special meaning *(e.g. model, collection, id, className)* are
+    // attached directly to the view.  See `viewOptions` for an exhaustive
+    // list.
+    _configure: function(options) {
+      if (this.options) options = _.extend({}, _.result(this, 'options'), options);
+      _.extend(this, _.pick(options, viewOptions));
+      this.options = options;
     },
 
     // Ensure that the View has a DOM element to render into.
@@ -1138,6 +1143,9 @@
     var params = {type: type, dataType: 'json'};
 
     // Ensure that we have a URL.
+    if (typeof model._url === 'function') {
+      params.url = model._url();
+    } else
     if (!options.url) {
       params.url = _.result(model, 'url') || urlError();
     }
@@ -1174,7 +1182,8 @@
     // If we're sending a `PATCH` request, and we're in an old Internet Explorer
     // that still has ActiveX enabled by default, override jQuery to use that
     // for XHR instead. Remove this line when jQuery supports `PATCH` on IE8.
-    if (params.type === 'PATCH' && noXhrPatch) {
+    if (params.type === 'PATCH' && window.ActiveXObject &&
+          !(window.external && window.external.msActiveXFilteringEnabled)) {
       params.xhr = function() {
         return new ActiveXObject("Microsoft.XMLHTTP");
       };
@@ -1185,8 +1194,6 @@
     model.trigger('request', model, xhr, options);
     return xhr;
   };
-
-  var noXhrPatch = typeof window !== 'undefined' && !!window.ActiveXObject && !(window.XMLHttpRequest && (new XMLHttpRequest).dispatchEvent);
 
   // Map from CRUD to HTTP for our default `Backbone.sync` implementation.
   var methodMap = {
@@ -1276,7 +1283,7 @@
     _routeToRegExp: function(route) {
       route = route.replace(escapeRegExp, '\\$&')
                    .replace(optionalParam, '(?:$1)?')
-                   .replace(namedParam, function(match, optional) {
+                   .replace(namedParam, function(match, optional){
                      return optional ? match : '([^\/]+)';
                    })
                    .replace(splatParam, '(.*?)');
@@ -1350,7 +1357,7 @@
         if (this._hasPushState || !this._wantsHashChange || forcePushState) {
           fragment = this.location.pathname;
           var root = this.root.replace(trailingSlash, '');
-          if (!fragment.indexOf(root)) fragment = fragment.slice(root.length);
+          if (!fragment.indexOf(root)) fragment = fragment.substr(root.length);
         } else {
           fragment = this.getHash();
         }
@@ -1399,25 +1406,19 @@
       var loc = this.location;
       var atRoot = loc.pathname.replace(/[^\/]$/, '$&/') === this.root;
 
-      // Transition from hashChange to pushState or vice versa if both are
-      // requested.
-      if (this._wantsHashChange && this._wantsPushState) {
+      // If we've started off with a route from a `pushState`-enabled browser,
+      // but we're currently in a browser that doesn't support it...
+      if (this._wantsHashChange && this._wantsPushState && !this._hasPushState && !atRoot) {
+        this.fragment = this.getFragment(null, true);
+        this.location.replace(this.root + this.location.search + '#' + this.fragment);
+        // Return immediately as browser will do redirect to new url
+        return true;
 
-        // If we've started off with a route from a `pushState`-enabled
-        // browser, but we're currently in a browser that doesn't support it...
-        if (!this._hasPushState && !atRoot) {
-          this.fragment = this.getFragment(null, true);
-          this.location.replace(this.root + this.location.search + '#' + this.fragment);
-          // Return immediately as browser will do redirect to new url
-          return true;
-
-        // Or if we've started out with a hash-based route, but we're currently
-        // in a browser where it could be `pushState`-based instead...
-        } else if (this._hasPushState && atRoot && loc.hash) {
-          this.fragment = this.getHash().replace(routeStripper, '');
-          this.history.replaceState({}, document.title, this.root + this.fragment + loc.search);
-        }
-
+      // Or if we've started out with a hash-based route, but we're currently
+      // in a browser where it could be `pushState`-based instead...
+      } else if (this._wantsPushState && this._hasPushState && atRoot && loc.hash) {
+        this.fragment = this.getHash().replace(routeStripper, '');
+        this.history.replaceState({}, document.title, this.root + this.fragment + loc.search);
       }
 
       if (!this.options.silent) return this.loadUrl();
@@ -1446,7 +1447,7 @@
       }
       if (current === this.fragment) return false;
       if (this.iframe) this.navigate(current);
-      this.loadUrl();
+      this.loadUrl() || this.loadUrl(this.getHash());
     },
 
     // Attempt to load the current URL fragment. If a route succeeds with a
@@ -1454,12 +1455,13 @@
     // returns `false`.
     loadUrl: function(fragmentOverride) {
       var fragment = this.fragment = this.getFragment(fragmentOverride);
-      return _.any(this.handlers, function(handler) {
+      var matched = _.any(this.handlers, function(handler) {
         if (handler.route.test(fragment)) {
           handler.callback(fragment);
           return true;
         }
       });
+      return matched;
     },
 
     // Save a fragment into the hash history, or replace the URL state if the
@@ -1471,16 +1473,11 @@
     // you wish to modify the current URL without adding an entry to the history.
     navigate: function(fragment, options) {
       if (!History.started) return false;
-      if (!options || options === true) options = {trigger: !!options};
-
+      if (!options || options === true) options = {trigger: options};
       fragment = this.getFragment(fragment || '');
       if (this.fragment === fragment) return;
       this.fragment = fragment;
-
       var url = this.root + fragment;
-
-      // Don't include a trailing slash on the root.
-      if (fragment === '' && url !== '/') url = url.slice(0, -1);
 
       // If pushState is available, we use it to set the fragment as a real URL.
       if (this._hasPushState) {
@@ -1503,7 +1500,7 @@
       } else {
         return this.location.assign(url);
       }
-      if (options.trigger) return this.loadUrl(fragment);
+      if (options.trigger) this.loadUrl(fragment);
     },
 
     // Update the hash location, either replacing the current entry, or adding
@@ -1571,7 +1568,7 @@
   };
 
   // Wrap an optional error callback with a fallback error event.
-  var wrapError = function(model, options) {
+  var wrapError = function (model, options) {
     var error = options.error;
     options.error = function(resp) {
       if (error) error(model, resp, options);

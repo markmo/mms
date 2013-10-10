@@ -14,8 +14,8 @@ import play.Logger;
 import play.db.jpa.JPA;
 import play.mvc.*;
 
-import models.SecurityRole;
-import service.FileRepoService;
+import models.account.SecurityRole;
+//import service.FileRepoService;
 
 public class Global extends GlobalSettings {
 
@@ -29,19 +29,19 @@ public class Global extends GlobalSettings {
             @Override
             public Call login() {
                 // Your login page
-                return routes.Application.login();
+                return controllers.account.routes.Application.login();
             }
 
             @Override
             public Call afterAuth() {
                 // The user will be redirected to this page after authentication
                 // if no original URL was saved
-                return routes.Application.index();
+                return controllers.account.routes.Application.index();
             }
 
             @Override
             public Call afterLogout() {
-                return routes.Application.login();
+                return controllers.account.routes.Application.login();
             }
 
             @Override
@@ -54,18 +54,18 @@ public class Global extends GlobalSettings {
 
             @Override
             public Call askMerge() {
-                return routes.Account.askMerge();
+                return controllers.account.routes.Account.askMerge();
             }
 
             @Override
             public Call askLink() {
-                return routes.Account.askLink();
+                return controllers.account.routes.Account.askLink();
             }
 
             @Override
             public Call onException(final AuthException e) {
                 if (e instanceof AccessDeniedException) {
-                    return routes.Signup.oAuthDenied(((AccessDeniedException) e)
+                    return controllers.account.routes.Signup.oAuthDenied(((AccessDeniedException) e)
                             .getProviderKey());
                 }
 
@@ -85,14 +85,14 @@ public class Global extends GlobalSettings {
         //IndexService.cleanIndex();
     }
 
-    @Override
-    public void onStop(Application app) {
-        Logger.info("Application shutdown...");
-        FileRepoService repo = injector.getInstance(FileRepoService.class);
-        if (repo != null) {
-            repo.shutdown();
-        }
-    }
+//    @Override
+//    public void onStop(Application app) {
+//        Logger.info("Application shutdown...");
+//        FileRepoService repo = injector.getInstance(FileRepoService.class);
+//        if (repo != null) {
+//            repo.shutdown();
+//        }
+//    }
 
     /*
     @Override
@@ -107,15 +107,15 @@ public class Global extends GlobalSettings {
         };
     }*/
 
-    private void initialData() {
-        if (SecurityRole.findRowCount() < 1) {
-            for (final String roleName : Arrays.asList(controllers.Application.USER_ROLE)) {
-                final SecurityRole role = new SecurityRole();
-                role.roleName = roleName;
-                JPA.em().persist(role);
-            }
-        }
-    }
+//    private void initialData() {
+//        if (SecurityRole.findRowCount() < 1) {
+//            for (final String roleName : Arrays.asList(controllers.Application.USER_ROLE)) {
+//                final SecurityRole role = new SecurityRole();
+//                role.roleName = roleName;
+//                JPA.em().persist(role);
+//            }
+//        }
+//    }
 
     @Override
     public <A> A getControllerInstance(Class<A> clazz) {

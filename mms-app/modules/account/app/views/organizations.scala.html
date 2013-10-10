@@ -1,0 +1,136 @@
+@(currentPage: models.common.Page[models.account.Organization], currentSortBy: String, currentOrder: String,
+  currentFilterColumn: String, currentFilterValue: String)
+
+@import tags._
+
+@link(newPageIndex: Int, newSortBy: String = null) = @{
+  var sortBy = currentSortBy
+  var order = currentOrder
+  if(newSortBy != null) {
+    sortBy = newSortBy
+    if(currentSortBy == "asc") {
+      order = "desc"
+    } else {
+      order = "asc"
+    }
+  } else {
+    order = "asc"
+  }
+  controllers.account.routes.Organizations.list(newPageIndex, sortBy, order, currentFilterColumn, currentFilterValue)
+}
+
+@header(key: String, title: String) = {
+  <th class="@key.replace(".", "_") header @if(currentSortBy == key) @{
+    if(currentOrder == "asc") "headerSortDown" else "headerSortUp"
+  }">
+    <a href="@link(0, key)">@title</a>
+  </th>
+}
+
+@filter(key: String) = {
+  <th>
+    <div class="input-append">
+      <input id="filter-@key" name="filter-@key" type="text" value="@{
+        if(currentFilterColumn == key) currentFilterValue else ""
+      }" class="span2">
+      <span id="btn-filter-@key" class="add-on"><i class="icon-search"></i></span>
+    </div>
+  </th>
+}
+
+@scripts = {
+  <script src="@routes.Assets.at("js/lib/jquery/jquery-1.9.1.min.js")"></script>
+  <script src="@routes.Assets.at("js/lib/bootstrap/bootstrap.min.js")"></script>
+  <script type="text/javascript">
+  $(function () {
+    $('span[id*="btn-filter-"]').click(function () {
+      var id = $(this).attr('id');
+      var match = /btn-filter-(.+)$/.exec(id);
+      var filterColumn = match[1];
+      var filterValue = $(this).prev().val();
+      if (filterValue) {
+        location.href = '/organizations?p=@{currentPage.getPageIndex}&s=@{currentSortBy}&o=@{currentOrder}&c=' + filterColumn + '&f=' + filterValue;
+      } else {
+        location.href = '/organizations?p= @{currentPage.getPageIndex}&s=@{currentSortBy}&o=@{currentOrder}';
+      }
+    });
+  });
+  </script>
+}
+
+@main("Organizations", null, scripts) {
+
+  @if(flash.contains("success")) {
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div>@flash.get("success")</div>
+    </div>
+  }
+
+  @if(flash.contains("error")) {
+    <div class="alert alert-error">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div>@flash.get("error")</div>
+    </div>
+  }
+
+  <h1>Organizations</h1>
+
+  <div class="clearfix" style="margin-bottom: 10px;">
+    <a href="@controllers.account.routes.Organizations.create" class="btn btn-small btn-success">
+      <i class="icon-plus icon-white"></i>
+      <span>New organization&hellip;</span>
+    </a>
+  </div>
+
+  @helper.form(action = controllers.account.routes.Organizations.delete) {
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          @header("name", "Name")
+          @header("code", "Code")
+          <th colspan="2" style="width: 91px;"></th>
+        </tr>
+        <tr class="filter-row">
+          @filter("name")
+          @filter("code")
+          <th colspan="2" style="width: 91px;"></th>
+        </tr>
+      </thead>
+      @if(currentPage.isEmpty) {
+        <tbody>
+          <tr>
+            <td colspan="4"><em>No results found.</em></td>
+          </tr>
+        </tbody>
+      } else {
+        <tbody>
+        @for(o <- currentPage.getList) {
+          <tr>
+            <td><a href="#">@o.name</a></td>
+            <td>@o.code</td>
+            <td style="width: 14px;">
+              <a href="@controllers.account.routes.Organizations.edit(o.id)"
+                ><i class="icon-edit"></i></a>
+            </td>
+            <td style="width: 77px;"><input name="deletions[]" value="@o.id" type="checkbox"></td>
+          </tr>
+        }
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">
+            @paginator(currentPage, currentSortBy, currentOrder, currentFilterColumn, currentFilterValue, link(_))
+            </td>
+            <td style="width: 77px;">
+              <button type="submit" id="btnDelete" class="btn btn-small btn-danger">
+                <i class="icon-remove icon-white"></i>
+                <span>Delete</span>
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      }
+    </table>
+  }
+}

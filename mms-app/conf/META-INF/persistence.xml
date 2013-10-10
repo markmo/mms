@@ -7,6 +7,14 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <non-jta-data-source>DefaultDS</non-jta-data-source>
         <jar-file>/usr/local/Cellar/play/2.1.0/libexec/repository/cache/mms/mms-models/jars/mms-models-1.0-SNAPSHOT.jar</jar-file>
+        <class>models.account.LinkedAccount</class>
+        <class>models.account.Organization</class>
+        <class>models.account.SecurityGroup</class>
+        <class>models.account.SecurityRole</class>
+        <class>models.account.TokenAction</class>
+        <class>models.account.User</class>
+        <class>models.account.UserPermission</class>
+        <class>models.glossary.Setting</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>

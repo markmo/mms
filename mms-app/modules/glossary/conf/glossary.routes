@@ -1,0 +1,72 @@
+## Business Glossary Module
+
+# Home page
+GET     /                               @controllers.glossary.Application.index
+
+# Access Privileges
+PUT     /access-privileges/patch        controllers.glossary.BusinessAccess.patchUpdate
+PUT     /access-privileges              controllers.glossary.BusinessAccess.update
+DELETE  /access-privileges              controllers.glossary.BusinessAccess.delete
+
+# Business Applications
+GET     /applications                   @controllers.glossary.BusinessApplications.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
+POST    /applications                   controllers.glossary.BusinessApplications.create
+PUT     /applications/:id               controllers.glossary.BusinessApplications.update(id: Long)
+DELETE  /applications/:id               controllers.glossary.BusinessApplications.delete(id: Long)
+
+# Domains
+GET     /domains                        @controllers.glossary.Domains.index
+POST    /domains                        controllers.glossary.Domains.create
+PUT     /domains/:id                    controllers.glossary.Domains.update(id: Long)
+
+# Glossary
+GET     /glossary                       @controllers.glossary.Application.glossary
+
+# People
+GET     /people                         controllers.glossary.People.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
+POST    /people                         controllers.glossary.People.create
+PUT     /people/:id                     controllers.glossary.People.update(id: Long)
+DELETE  /people                         controllers.glossary.People.delete
+
+# Responsibilities
+PUT     /responsibilities/patch         controllers.glossary.Responsibilities.patchUpdate
+PUT     /responsibilities               controllers.glossary.Responsibilities.update
+DELETE  /responsibilities               controllers.glossary.Responsibilities.delete
+
+# Security Classifications
+GET     /security-classifications       controllers.glossary.SecurityClassifications.index
+
+# Settings
+GET     /settings                       controllers.glossary.Settings.show
+GET     /settings/create                controllers.glossary.Settings.create
+GET     /settings/:id/edit              controllers.glossary.Settings.edit(id: Long)
+POST    /settings/:id                   controllers.glossary.Settings.update(id: Long)
+
+# Stakeholder Roles
+GET     /stakeholder-roles              controllers.glossary.StakeholderRoles.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
+POST    /stakeholder-roles              controllers.glossary.StakeholderRoles.create
+PUT     /stakeholder-roles/:id          controllers.glossary.StakeholderRoles.update(id: Long)
+DELETE  /stakeholder-roles              controllers.glossary.StakeholderRoles.delete
+
+# Tags
+GET     /tags                           controllers.glossary.Tags.index
+
+# Terms
+GET     /terms                          @controllers.glossary.BusinessTerms.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
+POST    /terms                          controllers.glossary.BusinessTerms.create
+PUT     /terms/:id                      controllers.glossary.BusinessTerms.update(id: Long)
+GET     /terms/:id/associations         @controllers.glossary.BusinessTerms.associations(id: Long)
+
+# User Groups
+GET     /usergroups                     controllers.glossary.UserGroups.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
+POST    /usergroups                     controllers.glossary.UserGroups.create
+PUT     /usergroups/:id                 controllers.glossary.UserGroups.update(id: Long)
+DELETE  /usergroups                     controllers.glossary.UserGroups.delete
+
+# Vendors
+GET     /vendors                        @controllers.glossary.Vendors.index(p: Int ?= 1, per_page: Int ?= 10, s: String ?= "", o: String ?= "asc")
+POST    /vendors                        controllers.glossary.Vendors.create
+PUT     /vendors/:id                    controllers.glossary.Vendors.update(id: Long)
+DELETE  /vendors                        controllers.glossary.Vendors.delete
+
+GET     /assets/*file                   controllers.Assets.at(path="/public", file)

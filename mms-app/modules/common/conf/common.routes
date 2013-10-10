@@ -1,0 +1,8 @@
+# Data Sources
+GET     /datasources                    @controllers.common.Datasources.index
+POST    /datasources                    controllers.common.Datasources.create
+PUT     /datasources/:id                controllers.common.Datasources.update(id: Long)
+
+GET     /sandboxes                      @controllers.common.Sandboxes.index
+POST    /sandboxes                      @controllers.common.Sandboxes.create
+PUT     /sandboxes/:id                  @controllers.common.Sandboxes.update(id: Long)

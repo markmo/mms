@@ -4,21 +4,21 @@
 
 @main("table list") {
 
-    <h1>@tables.size table(s)</h1>
-    <ul>
-        @for(table <- tables) {
-            <li>
-                @table.getName()
-                @form(routes.Datasets.delete(table.getId())) {
-                    <input type="submit" value="Delete">
-                }
-            </li>
-        }
-    </ul>
+  <h1>@tables.size table(s)</h1>
+  <ul>
+  @for(table <- tables) {
+    <li>
+      @table.getName()
+      @*@form(controllers.registry.routes.Datasets.delete(table.getId())) {*@
+        @*<input type="submit" value="Delete">*@
+      @*}*@
+    </li>
+  }
+  </ul>
 
-    <h2>Add a new table</h2>
-    @form(routes.Datasets.create()) {
-        @inputText(tableForm("name"))
-        <input type="submit" value="Create">
-    }
+  <h2>Add a new table</h2>
+  @*@form(controllers.registry.routes.Datasets.create()) {*@
+    @*@inputText(tableForm("name"))*@
+    @*<input type="submit" value="Create">*@
+  @*}*@
 }

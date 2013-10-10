@@ -8,6 +8,145 @@ object ApplicationBuild extends Build {
   val appName = "mms"
   val appVersion = "1.0-SNAPSHOT"
 
+  val commonResolvers = Seq(
+    Resolver.url("Objectify Play Repository (release)", url("http://schaloner.github.io/releases/"))(Resolver.ivyStylePatterns),
+    Resolver.url("Objectify Play Repository (snapshot)", url("http://schaloner.github.io/snapshots/"))(Resolver.ivyStylePatterns),
+
+    Resolver.url("play-easymail (release)", url("http://joscha.github.com/play-easymail/repo/releases/"))(Resolver.ivyStylePatterns),
+    Resolver.url("play-easymail (snapshot)", url("http://joscha.github.com/play-easymail/repo/snapshots/"))(Resolver.ivyStylePatterns),
+
+    Resolver.url("play-authenticate (release)", url("http://joscha.github.com/play-authenticate/repo/releases/"))(Resolver.ivyStylePatterns),
+    Resolver.url("play-authenticate (snapshot)", url("http://joscha.github.com/play-authenticate/repo/snapshots/"))(Resolver.ivyStylePatterns),
+
+    Resolver.url("play-plugin-releases", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns),
+    //Resolver.url("play-plugin-snapshots", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns),
+    "JBoss Repository (release)" at "https://repository.jboss.org/nexus/content/repositories/releases/",
+    "Public JBoss Repository Group" at "https://repository.jboss.org/nexus/content/groups/public-jboss/",
+    "Developer Repository Group" at "https://repository.jboss.org/nexus/content/groups/developer/",
+    "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository",
+    "sonatype-snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+    "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases"
+  )
+
+  val commonDependencies = Seq(
+    "log4j" % "log4j" % "1.2.17"
+    ,javaCore
+    ,javaJdbc
+    ,javaJpa
+    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
+    ,"com.google.guava" % "guava" % "14.0"
+    ,"com.google.inject" % "guice" % "3.0"
+    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
+  )
+
+  val common = play.Project(
+    appName + "-common", appVersion, commonDependencies, path = file("modules/common")
+  ).settings(
+    resolvers ++= commonResolvers
+  )
+
+  val accountDependencies = Seq(
+    // Add your project dependencies here
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+    ,"log4j" % "log4j" % "1.2.17"
+    ,javaCore
+    ,javaJdbc
+    ,javaJpa
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.2.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.2.Final"
+    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
+    ,"com.feth" %% "play-authenticate" % "0.2.5-SNAPSHOT"
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
+    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.1"
+    ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
+    ,"com.google.inject" % "guice" % "3.0"
+    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
+    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
+  )
+
+  val account = play.Project(
+    appName + "-account", appVersion, accountDependencies, path = file("modules/account")
+  ).settings(
+    resolvers ++= commonResolvers
+  ).dependsOn(
+    common
+  ).aggregate(
+    common
+  )
+
+  val socialDependencies = Seq(
+    // Add your project dependencies here
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+    ,"log4j" % "log4j" % "1.2.17"
+    ,javaCore
+    ,javaJdbc
+    ,javaJpa
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.2.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.2.Final"
+    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
+    ,"com.feth" %% "play-authenticate" % "0.2.5-SNAPSHOT"
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
+    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.1"
+    ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
+    ,"com.google.inject" % "guice" % "3.0"
+    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
+    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
+  )
+
+  val social = play.Project(
+    appName + "-social", appVersion, socialDependencies, path = file("modules/social")
+  ).settings(
+    resolvers ++= commonResolvers
+  ).dependsOn(
+    common, account
+  ).aggregate(
+    common, account
+  )
+
+  val glossaryDependencies = Seq(
+    // Add your project dependencies here
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+    ,"log4j" % "log4j" % "1.2.17"
+    ,javaCore
+    ,javaJdbc
+    ,javaJpa
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.2.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.2.Final"
+    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
+    ,"com.feth" %% "play-authenticate" % "0.2.5-SNAPSHOT"
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
+    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.1"
+    ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
+    ,"com.google.inject" % "guice" % "3.0"
+    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
+    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
+    ,"com.clever-age" % "play2-elasticsearch" % "0.5-SNAPSHOT" excludeAll(
+      ExclusionRule(organization = "org.apache.lucene")
+      )
+    ,"org.apache.lucene" % "lucene-analyzers" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-highlighter" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-memory" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-queries" % "3.6.2"
+  )
+
+  val glossary = play.Project(
+    appName + "-glossary", appVersion, glossaryDependencies, path = file("modules/glossary")
+  ).settings(
+    resolvers ++= commonResolvers
+  ).dependsOn(
+    common, social, account
+  ).aggregate(
+    common, social, account
+  )
 
   val appDependencies = Seq(
     // Add your project dependencies here
@@ -158,25 +297,9 @@ object ApplicationBuild extends Build {
 
     offline := true,
 
-    resolvers += Resolver.url("Objectify Play Repository (release)", url("http://schaloner.github.com/releases/"))(Resolver.ivyStylePatterns),
-    resolvers += Resolver.url("Objectify Play Repository (snapshot)", url("http://schaloner.github.com/snapshots/"))(Resolver.ivyStylePatterns),
-
-    resolvers += Resolver.url("play-easymail (release)", url("http://joscha.github.com/play-easymail/repo/releases/"))(Resolver.ivyStylePatterns),
-    resolvers += Resolver.url("play-easymail (snapshot)", url("http://joscha.github.com/play-easymail/repo/snapshots/"))(Resolver.ivyStylePatterns),
-
-    resolvers += Resolver.url("play-authenticate (release)", url("http://joscha.github.com/play-authenticate/repo/releases/"))(Resolver.ivyStylePatterns),
-    resolvers += Resolver.url("play-authenticate (snapshot)", url("http://joscha.github.com/play-authenticate/repo/snapshots/"))(Resolver.ivyStylePatterns),
-
-    resolvers += Resolver.url("play-plugin-releases", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns),
-    //resolvers += Resolver.url("play-plugin-snapshots", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns),
-    resolvers += "JBoss Repository (release)" at "https://repository.jboss.org/nexus/content/repositories/releases/",
-    resolvers += "Public JBoss Repository Group" at "https://repository.jboss.org/nexus/content/groups/public-jboss/",
-    resolvers += "Developer Repository Group" at "https://repository.jboss.org/nexus/content/groups/developer/",
-    resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository",
-    resolvers += "sonatype-snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-    resolvers += "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases"
-  ).settings(
-    net.virtualvoid.sbt.graph.Plugin.graphSettings: _*
-  )
+    resolvers ++= commonResolvers
+//  ).settings(
+//    net.virtualvoid.sbt.graph.Plugin.graphSettings: _*
+  ).dependsOn(glossary).aggregate(glossary)
 
 }

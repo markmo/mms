@@ -4,8 +4,8 @@ define [
     'backbone'
     'cs!events'
     'cs!vm'
-    'cs!views/app/attachments'
-    'cs!views/app/sandbox_form'
+    'cs!views/attachments'
+    'cs!views/sandbox_form'
     'text!templates/home/main.html'
 ], ($, _, Backbone, app, Vm, AttachmentsSection, SandboxForm, homePageTemplate) ->
     Backbone.View.extend

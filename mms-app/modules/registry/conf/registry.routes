@@ -1,0 +1,44 @@
+# Catalogs
+GET     /datasources/:id/catalogs       @controllers.registry.Catalogs.findCatalogsByDatasourceId(id: Long)
+GET     /catalogs                       @controllers.registry.Catalogs.index
+
+# Columns
+GET     /columns                        @controllers.registry.Columns.index
+GET     /datasets/:id/columns           @controllers.registry.Columns.findColumnsByDatasetId(id: Long)
+
+# Datasets
+GET     /datasets                       @controllers.registry.Datasets.index
+GET     /namespaces/:id/datasets        @controllers.registry.Datasets.findDatasetsByNamespaceId(id: Long)
+GET     /datasets/:id/stats             controllers.registry.Datasets.stats(id: Long)
+POST    /datasets                       controllers.registry.Datasets.create
+PUT     /datasets/:id                   controllers.registry.Datasets.update(id: Long)
+POST    /datasets/:id/delete            controllers.registry.Datasets.delete(id: Long)
+
+POST    /import-datasource              @controllers.registry.Application.importDatasource
+
+# Filter Types
+GET     /filter-types                   @controllers.registry.FilterTypes.index
+
+# Namespaces
+GET     /catalogs/:id/namespaces        @controllers.registry.Namespaces.findNamespacesByCatalogId(id: Long)
+GET     /namespaces                     @controllers.registry.Namespaces.index
+
+GET     /sandboxes/:id/namespaces       @controllers.registry.Namespaces.findNamespacesBySandboxId(id: Long)
+
+# important! the more specific route must come before the general
+GET     /columns/:id/revisions/:revisionId @controllers.registry.Columns.getRevision(id: Long, revisionId: java.lang.Integer)
+GET     /columns/:id/revisions          @controllers.registry.Columns.revisions(id: Long)
+
+#GET     /room                           @controllers.registry.Posts.chatRoom(username: String ?= null)
+GET     /room/chat                      @controllers.registry.Posts.chat(username)
+
+GET     /files/deleteall                @controllers.registry.Files.deleteAll
+GET     /files                          @controllers.registry.Files.index(node ?= null)
+GET     /uploads/:category/:id          @controllers.registry.Files.list(category: String, id: Long)
+GET     /uploads                        @controllers.registry.Files.listAll
+POST    /upload/metadata                @controllers.registry.Files.uploadMetadata
+PUT     /upload/read                    @controllers.registry.Files.readFile
+PUT     /upload/:id                     @controllers.registry.Files.uploadFile(id: Long)
+DELETE  /upload/:id                     @controllers.registry.Files.deleteFile(id: Long)
+
+GET     /assets/*file                   controllers.glossary.Assets.at(path="/public", file)

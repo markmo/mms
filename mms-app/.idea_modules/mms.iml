@@ -357,8 +357,8 @@
     <orderEntry type="library" name="jakarta-regexp-1.4.jar" level="project" />
     <orderEntry type="library" name="postgresql-9.1-901.jdbc4.jar" level="project" />
     <orderEntry type="library" name="stanford-ner.jar" level="project" />
-    <orderEntry type="module" module-name="JpaNestedSet" />
     <orderEntry type="module" module-name="mms-models" />
+    <orderEntry type="module" module-name="JpaNestedSet" />
   </component>
 </module>
 

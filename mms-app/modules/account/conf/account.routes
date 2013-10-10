@@ -1,0 +1,74 @@
+## Authentication and Account Management Module
+
+# Home page
+GET     /                               @controllers.account.Application.index
+
+GET     /account/:id/edit               controllers.account.Account.edit(id: Int)
+POST    /accounts/:id                   @controllers.account.Account.update(id: Int)
+
+GET     /accounts/add                   controllers.account.Account.link
+
+GET     /accounts/link                  controllers.account.Account.askLink
+POST    /accounts/link                  controllers.account.Account.doLink
+
+GET     /accounts/merge                 controllers.account.Account.askMerge
+POST    /accounts/merge                 controllers.account.Account.doMerge
+
+GET     /accounts/exists                controllers.account.Signup.exists
+
+GET     /accounts/password/change       controllers.account.Account.changePassword
+POST    /accounts/password/change       controllers.account.Account.doChangePassword
+
+GET     /accounts/password/reset/:token controllers.account.Signup.resetPassword(token: String)
+POST    /accounts/password/reset        controllers.account.Signup.doResetPassword
+
+GET     /accounts/unverified            controllers.account.Signup.unverified
+
+GET     /accounts/verify/:token         controllers.account.Signup.verify(token: String)
+GET     /accounts/verify                controllers.account.Account.verifyEmail
+
+GET     /authenticate/:provider/denied  controllers.account.Signup.oAuthDenied(provider: String)
+GET     /authenticate/:provider         com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
+
+GET     /login/password/forgot          controllers.account.Signup.forgotPassword(email: String ?= "")
+POST    /login/password/forgot          controllers.account.Signup.doForgotPassword
+
+GET     /login                          @controllers.account.Application.login
+POST    /login                          @controllers.account.Application.doLogin
+
+GET     /logout                         com.feth.play.module.pa.controllers.Authenticate.logout
+
+# Organizations
+GET     /organizations/new              controllers.account.Organizations.create
+GET     /organizations/find             controllers.account.Organizations.findByCode(code: String)
+GET     /organizations/:id/edit         controllers.account.Organizations.edit(id: Long)
+GET     /organizations                  controllers.account.Organizations.list(p:Int ?= 1, s ?= "name", o ?= "asc", c ?= "", f ?= "")
+POST    /organizations/update           controllers.account.Organizations.update
+POST    /organizations/delete           controllers.account.Organizations.delete
+
+GET     /profile/:id                    @controllers.account.Users.profile(id: Long)
+GET     /profile                        @controllers.account.Application.profile
+GET     /profile.json                   @controllers.account.Application.profileAsJSON
+
+GET     /restricted                     @controllers.account.Application.restricted
+
+# Security Groups
+GET     /securitygroups/new             controllers.account.SecurityGroups.create
+GET     /securitygroups/:id/edit        controllers.account.SecurityGroups.edit(id: Int)
+POST    /securitygroups/:id             @controllers.account.SecurityGroups.update(id: Int)
+
+# Security Subjects
+GET     /subjects                       controllers.account.SecuritySubjects.list(p:Int ?= 1, s ?= "name", o ?= "asc", c ?= "", f ?= "")
+GET     /subjects/:id/toggle            controllers.account.SecuritySubjects.updateTreeDisplay(id: Int, bounds: String, open: Boolean, p:Int ?= 1, s ?= "name", o ?= "asc", c ?= "", f ?= "")
+POST    /subjects/delete                controllers.account.SecuritySubjects.delete
+
+GET     /signup                         @controllers.account.Application.signup
+POST    /signup                         @controllers.account.Application.doSignup
+
+# Users
+GET     /users/new                      controllers.account.Users.create
+GET     /users/:id/edit                 controllers.account.Users.edit(id: Int)
+GET     /users/:id/verify               controllers.account.Users.resendVerificationEmail(id: Int)
+POST    /users/:id                      @controllers.account.Users.update(id: Int)
+
+GET     /assets/*file                   controllers.Assets.at(path="/public", file)

@@ -31,8 +31,8 @@ import mms.common.models.Sandbox;
 import mms.common.models.audit.CustomTrackingRevisionEntity;
 import mms.common.models.audit.ModifiedEntityTypeEntity;
 import mms.common.models.relational.Table;
-import models.Organization;
-import models.User;
+import models.account.Organization;
+import models.account.User;
 import views.html.*;
 
 public class Application extends Controller {

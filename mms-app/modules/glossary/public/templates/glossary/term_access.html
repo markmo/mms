@@ -1,0 +1,49 @@
+<div class="clearfix" style="margin-bottom: 10px;">
+  <button id="assign-access" class="btn btn-small btn-success">
+    <i class="icon-plus icon-white"></i>
+    <span>Assign&hellip;</span>
+  </button>
+</div>
+{{#if privileges}}
+<table class="associations table table-hover">
+  <thead>
+  <tr>
+    <th>User Group</th>
+    <th>Privileges</th>
+    <th style="width: 77px;"></th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each privileges}}
+  <tr>
+    <td>{{group}}</td>
+    <td>
+      <div class="btn-group access-changes">
+        {{#each access}}
+        {{#notEq this 'X'}}
+        <button type="button" class="btn btn-mini {{crudClass this}}">{{this}}</button>
+        {{else}}
+        <button type="button" class="btn btn-mini">&nbsp;</button>
+        {{/notEq}}
+        {{/each}}
+      </div>
+    </td>
+    <td style="width: 77px;"><input class="access-delete" data-id="{{cid}}" type="checkbox"></td>
+  </tr>
+  {{/each}}
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="2"></td>
+    <td style="width: 77px;">
+      <button id="btnDelete" class="btn btn-small btn-danger">
+        <i class="icon-remove icon-white"></i>
+        <span>Delete</span>
+      </button>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+{{else}}
+<p>None defined.</p>
+{{/if}}
