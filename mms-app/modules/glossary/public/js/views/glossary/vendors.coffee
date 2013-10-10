@@ -20,12 +20,3 @@ define [
       this._super(options)
       this.listenTo(@collection, 'sync', this.render)
       @collection.fetch() if collectionNotInjected
-
-
-#    doRender: ->
-#      state = @vendors.state
-#      @$el.html @compiled
-#        page: # alternative to sending the pageableCollection
-#          list: @vendors.toJSON()
-#          sortKey: state.sortKey
-#          order: if state.order == -1 then 'headerSortUp' else 'headerSortDown'

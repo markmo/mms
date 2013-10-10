@@ -62,28 +62,15 @@ define [
 
     router.on 'route:access', ->
       require [
-#        'cs!collections/terms'
-#        'cs!collections/user_groups'
         'cs!views/glossary/access'
-      ], (#Terms, UserGroups,
-          AccessView) ->
-#        terms = useCollection 'terms', Terms
-#        groups = this.useCollection 'groups', UserGroups
-        app.setView '.page', new AccessView
-#          terms: terms
-#          groups: groups
-#        terms.fetch()
-#        groups.fetch()
+      ], (AccessView) ->
+        app.setView('.page', new AccessView)
 
     router.on 'route:applications', ->
       require [
-        'cs!collections/applications'
         'cs!views/glossary/applications'
-      ], (Applications, ApplicationsView) ->
-        applications = useCollection 'applications', Applications
-        app.setView '.page', new ApplicationsView
-          collection: applications
-        applications.fetch()
+      ], (ApplicationsView) ->
+        app.setView('.page', new ApplicationsView)
 
     router.on 'route:namespaces', (catalogId) ->
       require ['cs!views/app/namespaces'], (NamespacesPage) ->
@@ -156,32 +143,15 @@ define [
 
     router.on 'route:people', ->
       require [
-        'cs!collections/people'
         'cs!views/glossary/people'
-      ], (People, PeopleView) ->
-        people = this.useCollection 'people', People
-        Vm.create appView, 'PeopleView', PeopleView,
-          collection: people
-        people.fetch()
+      ], (PeopleView) ->
+        app.setView('.page', new PeopleView)
 
     router.on 'route:responsibilities', ->
       require [
-#        'cs!collections/terms'
-#        'cs!collections/stakeholder_roles'
-#        'cs!collections/people'
         'cs!views/glossary/responsibilities'
-      ], (#Terms, Roles, People,
-          ResponsibilitiesView) ->
-#        terms = useCollection 'terms', Terms
-#        roles = useCollection 'roles', Roles
-#        people = useCollection 'people', People
-        app.setView '.page', new ResponsibilitiesView
-#          terms: terms
-#          roles: roles
-#          people: people
-#        terms.fetch()
-#        roles.fetch()
-#        people.fetch()
+      ], (ResponsibilitiesView) ->
+        app.setView('.page', new ResponsibilitiesView)
 
     router.on 'route:showRevision', (revisionId) ->
       require ['cs!views/app/revised_entities'], (RevisedEntitiesPage) ->
@@ -217,13 +187,9 @@ define [
 
     router.on 'route:stakeholderRoles', ->
       require [
-        'cs!collections/stakeholder_roles'
         'cs!views/glossary/stakeholder_roles'
-      ], (Roles, StakeholderRolesView) ->
-        roles = useCollection 'roles', Roles
-        Vm.create appView, 'StakeholderRolesView', StakeholderRolesView,
-          collection: roles
-        roles.fetch()
+      ], (StakeholderRolesView) ->
+        app.setView('.page', new StakeholderRolesView)
 
     router.on 'route:showTerm', (termId) ->
       require ['cs!views/glossary/terms'], (TermsPage) ->
@@ -232,48 +198,22 @@ define [
 
     router.on 'route:terms', ->
       require [
-#        'cs!collections/domains'
-#        'cs!collections/terms'
-#        'cs!collections/stakeholder_roles'
-#        'cs!collections/people'
         'cs!views/glossary/glossary_layout'
-      ], (#Domains, Terms, Roles, People,
-          GlossaryLayout) ->
-#        domains = useCollection 'domains', Domains
-#        terms = useCollection 'terms', Terms
-#        roles = useCollection 'roles', Roles
-#        people = useCollection 'people', People
-        glossaryLayout = app.setView '.page', new GlossaryLayout
-#          domains: domains
-#          terms: terms
-#          role: roles
-#          people: people
-#        domains.fetch()
-#        terms.fetch()
-#        roles.fetch()
-#        people.fetch()
+      ], (GlossaryLayout) ->
+        glossaryLayout = app.setView('.page', new GlossaryLayout)
         glossaryLayout.render()
 
     router.on 'route:userGroups', ->
       require [
-        'cs!collections/user_groups'
         'cs!views/glossary/user_groups'
-      ], (Groups, UserGroupsView) ->
-        groups = useCollection 'groups', Groups
-        Vm.create appView, 'UserGroupsView', UserGroupsView,
-          collection: groups
-        groups.fetch()
+      ], (UserGroupsView) ->
+        app.setView('.page', new UserGroupsView)
 
     router.on 'route:vendors', ->
       require [
-#        'cs!collections/vendors'
         'cs!views/glossary/vendors'
-      ], (#Vendors,
-          VendorsView) ->
-#        vendors = useCollection 'vendors', Vendors
-        app.setView '.page', new VendorsView
-#          collection: vendors
-#        vendors.fetch()
+      ], (VendorsView) ->
+        app.setView('.page', new VendorsView)
 
     router.on 'route:defaultAction', () ->
       require ['cs!views/home/home'], (HomePage) ->

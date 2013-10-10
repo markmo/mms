@@ -3,6 +3,7 @@ define [
 ], (Backbone) ->
 
   Backbone.AssociatedModel.extend
+
     schema:
       firstName:
         type: 'Text'

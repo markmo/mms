@@ -1,38 +1,8 @@
 define [
-    'jquery'
-    'backbone'
-    'cs!events'
-    'cs!models/user_group'
-    'cs!components/form'
-], ($, Backbone, app, UserGroupRole) ->
-    Backbone.View.extend
+  'cs!framework/form_view'
+  'cs!models/user_group'
+], (FormView, UserGroupRole) ->
 
-        initialize: (options) ->
-            @userGroupId = options?.userGroupId
-            this.on 'ok', =>
-                @group.set(@form.getValue())
-                app.userGroups().done (groups) =>
-                    groups.add(@group)
-                    @group.save null,
-                        success: => this.parent.render()
+  FormView.extend
 
-            this.on 'cancel', ->
-                #alert 'cancel'
-
-        render: ->
-            if @userGroupId
-                app.userGroups().done (groups) =>
-                    group = groups.get(@userGroupId)
-                    this.renderForm(group)
-            else this.renderForm(new UserGroupRole)
-
-        renderForm: (group) ->
-            this.cleanForm() if @form
-            @form = new Backbone.Form({model: group}).render()
-            @group = group
-            @$el.html @form.el
-            return this
-
-        cleanForm: ->
-            @form.remove()
-            return
+    model: UserGroupRole

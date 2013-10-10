@@ -1,8 +1,8 @@
 <h1>User Groups</h1>
 <div class="clearfix" style="margin-bottom: 10px;">
-  <button id="create-group" class="btn btn-small btn-success">
+  <button id="create-item" class="btn btn-small btn-success">
     <i class="icon-plus icon-white"></i>
-    <span>New group&hellip;</span>
+    <span>New Group&hellip;</span>
   </button>
 </div>
 {{#page pageableCollection}}
@@ -16,9 +16,9 @@
   <tbody>
   {{#each list}}
   <tr>
-    <td><a href="#" data-id="{{id}}" class="group-name">{{name}}</a></td>
-    <td style="width: 14px;"><a href="#" class="group-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
-    <td style="width: 77px;"><input class="group-delete" data-id="{{id}}" type="checkbox"></td>
+    <td><a href="#" data-id="{{id}}" class="item-name">{{name}}</a></td>
+    <td style="width: 14px;"><a href="#" class="item-edit" data-id="{{id}}"><i class="icon-edit"></i></a></td>
+    <td style="width: 77px;"><input class="item-delete" data-id="{{id}}" type="checkbox"></td>
   </tr>
   {{/each}}
   </tbody>
@@ -28,7 +28,7 @@
       <div id="paginator" class="pagination pagination-small"></div>
     </td>
     <td style="width: 77px;">
-      <button id="btnDelete" class="btn btn-small btn-danger">
+      <button id="delete-item" class="btn btn-small btn-danger">
         <i class="icon-remove icon-white"></i>
         <span>Delete</span>
       </button>

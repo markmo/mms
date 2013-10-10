@@ -1,9 +1,12 @@
 define [
-    'backbone'
+  'backbone'
 ], (Backbone) ->
-    Backbone.Model.extend
-        schema:
-            name:
-                type: 'Text'
 
-        toString: -> this.get('name')
+  Backbone.Model.extend
+
+    schema:
+      name:
+        type: 'Text'
+
+    toString: ->
+      this.get('name')

@@ -1,26 +1,22 @@
 define [
-  'cs!components/m_view'
-  'cs!components/pageable_view'
-  'cs!components/crud_view'
+  'cs!framework/gridview'
   'cs!views/glossary/user_group_form'
-  'text!templates/glossary/user_groups.html'
-], (MView, Pageable, Crud, GroupForm, groupsTemplate) ->
+  'cs!views/glossary/user_group_view'
+  'cs!collections/user_groups'
+], (GridView, GroupForm, GroupView, Groups) ->
 
-  MView.extend
-    mixins: [Pageable, Crud]
+  GridView.extend
 
-    template: groupsTemplate
+    template: 'glossary/user_groups'
 
-    initialize: (options) ->
-      this._super(options)
-      this.hasData(options, this.render)
-      options.collection = options.groups
+    initialize: (options = {}) ->
       options.form =
         name: 'User Group'
         form: GroupForm
-        url: '/usergroups'
-
-    render: ->
-      @$el.html @compiled
-        pageableCollection: @applications
-      return this
+        readonly: GroupView
+      unless options.collection
+        collectionNotInjected = true
+        options.collection = @collection = new Groups
+      this._super(options)
+      this.listenTo(@collection, 'sync', this.render)
+      @collection.fetch() if collectionNotInjected

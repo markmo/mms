@@ -2,13 +2,19 @@ define [
   'jquery'
   'underscore'
   'backbone'
+  'handlebars'
   'cs!events'
-  'cs!components/pageable_view'
+  'cs!framework/pageable_view'
+  'cs!framework/base_view'
   'cs!components/paginator'
+  'cs!collections/terms'
+  'cs!collections/user_groups'
   'text!templates/glossary/access_changes.html'
-], ($, _, Backbone, Handlebars, app, PageableView, Paginator, accessChangesTemplate) ->
+], ($, _, Backbone, Handlebars, app, PageableView, BaseView, Paginator, Terms, Groups, accessChangesTemplate) ->
 
   PageableView.extend
+
+    traits: [BaseView]
 
     events: ->
       _.extend {}, PageableView.prototype.events,
@@ -50,7 +56,7 @@ define [
       )
       _.extend(@changes, changes)
 
-    prePageChange: ->
+    beforePageChange: ->
       this._findChanges()
 
     update: (event) ->
@@ -143,11 +149,17 @@ define [
             .show()
       return false
 
-    initialize: (options) ->
-      PageableView.prototype.initialize.call(this, options.terms)
+    initialize: (options = {}) ->
+      unless options.terms
+        options.terms = new Terms
+      unless options.groups
+        options.groups = new Groups
+      this._super({collection: options.terms})
       @originalValues = {}
       @changes = {}
       this.hasData(options, this.render)
+      options.terms.fetch()
+      options.groups.fetch()
 
     beforeRender: ->
       if @groupPaginator
@@ -178,8 +190,8 @@ define [
           elem = $("#access-#{s.termId}-#{s.groupId}-#{a}")
           elem.button('toggle') if elem.length
 
-      @groupPaginator = paginator = Vm.create(this, 'GroupPaginator', Paginator, {pageableCollection: @groups})
+      paginator = @groupPaginator = new Paginator({collection: @groups, shortForm: true})
       paginator.setElement('#group-paginator')
       paginator.render()
-      this.listenTo paginator, 'previous next', this.prePageChange
+      this.listenTo paginator, 'previous next', this.beforePageChange
       this.listenTo paginator, 'previous next', this.render

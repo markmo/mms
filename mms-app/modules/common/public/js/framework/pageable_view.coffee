@@ -47,8 +47,8 @@ define [
       sortKey = $(event.target).data('sort')
       state = @collection.state
       @collection
-        .setSorting(sortKey, state.order * -1)
-        .fetch({reset: true}) # https://github.com/wyuenho/backgrid/commit/21810e1
+      .setSorting(sortKey, state.order * -1)
+      .fetch({reset: true}) # https://github.com/wyuenho/backgrid/commit/21810e1
       return false
 
     ###*
@@ -63,13 +63,12 @@ define [
 
       # better to do explicitly in the subclass as need to be in complete
       # control of events to avoid unintended side-effects
-#      this.listenTo(collection, 'sync', this.render)
-
+      #      this.listenTo(collection, 'sync', this.render)
 
       paginator = new Paginator
-        collection: @collection
+        collection: collection
         shortForm: options.shortPaginatorForm
       this.setView('#paginator', paginator)
       this.listenTo(paginator, 'previous next first last',
-          this.prePageChange) if typeof this['prePageChange'] == 'function'
+        this.beforePageChange) if typeof this['beforePageChange'] == 'function'
       this.listenTo(paginator, 'previous next first last', this.render)
