@@ -173,16 +173,19 @@ object ApplicationBuild extends Build {
 
     ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
     ,"com.google.inject" % "guice" % "3.0"
-    ,"net.sf.opencsv" % "opencsv" % "2.4-SNAPSHOT"
+    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
     ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
+
+  //--------------- Registry Dependencies -------------------------------------
+  /*
 //    ,"com.wordnik" %% "swagger-play2" % "1.2.1-SNAPSHOT"
+    ,"net.sf.opencsv" % "opencsv" % "2.4-SNAPSHOT"
     ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-basic-analyzers" % "0.30"
     ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-cli" % "0.30" excludeAll(
       ExclusionRule(organization = "berkeleydb")
       )
     ,"org.eobjects.metamodel" % "MetaModel-pojo" % "3.4.1"
     ,"nz.co.datascience" % "rel_2.9.1" % "0.3.1"
-    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
 
     // Hadoop
     ,"org.apache.hadoop" % "hadoop-core" % "1.1.2"
@@ -288,6 +291,7 @@ object ApplicationBuild extends Build {
       )
     // transitive dependency failing to download from (it appears) http://repo.typesafe.com/typesafe/releases/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar, where it accepts the URL but has no content
     ,"jakarta-regexp" % "jakarta-regexp" % "1.4" from "https://repository.jboss.org/nexus/content/groups/developer/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar"
+    */
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(

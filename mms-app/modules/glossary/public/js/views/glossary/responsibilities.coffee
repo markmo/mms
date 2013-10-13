@@ -5,6 +5,7 @@ define [
   'cs!collections/terms'
   'cs!collections/stakeholder_roles'
   'cs!collections/people'
+  'dotindicator'
 ], ($, app, BaseView, Terms, Roles, People) ->
 
   BaseView.extend
@@ -69,3 +70,7 @@ define [
       terms: @terms.toJSON()
       roles: @roles.toJSON()
       people: @people.toJSON()
+
+    afterRender: ->
+      $('.grid').dotindicator
+        target: '.dot-indicator'

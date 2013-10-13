@@ -56,6 +56,7 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
+    @Transactional
     public Result glossary() {
         return ok(views.html.tables.render("glossary"));
     }

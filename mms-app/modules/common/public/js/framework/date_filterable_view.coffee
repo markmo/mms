@@ -5,6 +5,7 @@ define [
   'jquery'
   'backbone'
   'daterangepicker'
+  'moment'
 ], ($, Backbone) ->
 
   ###*

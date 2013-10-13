@@ -1,4 +1,5 @@
 define [
-    'backbone'
+  'backbone'
 ], (Backbone) ->
-    Backbone.Model.extend()
+
+  Backbone.Model.extend()

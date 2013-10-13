@@ -1,111 +1,106 @@
 define [
-    'jquery'
-    'backbone'
-    'handlebars'
-    'cs!events'
-    'text!templates/attachments.html'
-], ($, Backbone, Handlebars, app, attachmentsPageTemplate) ->
-    Backbone.View.extend
-        el: '.popover.in .popover-content'
+  'jquery'
+  'backbone'
+], ($, Backbone) ->
 
-        events:
-            'click #fileupload .close': 'closePopover'
+  Backbone.View.extend
 
-        compiled: Handlebars.compile attachmentsPageTemplate
+    manage: true
 
-        closePopover: (event) ->
-            $el = $(event.target)
-            popoverId = $el.data('popover-id')
-            $("a[data-popover-id='#{popoverId}']").popover('hide')
-            return
+#    el: '.popover.in .popover-content'
 
-        clean: ->
-            #$('#fileupload').fileupload('destroy')
-            #$(document).unbind('drop dragover')
+    template: 'templates/attachments'
 
-        initialize: (options) ->
-            @popoverId = options.popoverId
-            @entityType = options.entityType
-            @entityId = options.entityId
+    events:
+      'click #fileupload .close': 'closePopover'
 
-        render: ->
-            $(@el).html @compiled
-                popoverId: @popoverId
-            $fileupload = $('#fileupload')
-            $fileupload.fileupload
-                submit: (e, data) =>
-                    file = data.files[0]
-                    $.ajax(
-                        url: '/upload/metadata'
-                        type: 'POST'
-                        dataType: 'json'
-                        data:
-                            name: file.name
-                            size: file.size
-                            type: file.type
-                            lastModifiedDate: file.lastModifiedDate
-                            entityType: @entityType
-                            entityId: @entityId
-                    )
-                        .done (result) ->
-                            $fileupload.fileupload 'option',
-                                url: "upload/#{result.files[0].id}"
-                                type: 'PUT'
-                                multipart: false
-                            $fileupload.fileupload('send', data)
-                            return
-                    return false
+    closePopover: (event) ->
+      $el = $(event.target)
+      popoverId = $el.data('popover-id')
+      $("a[data-popover-id='#{popoverId}']").popover('hide')
 
-            $fileupload.fileupload(
-                'option',
-                'redirect',
-                window.location.href.replace(
-                    /\/[^\/]*$/,
-                    '/cors/result.html?%s'
-                )
-            )
+    initialize: (options) ->
+      @popoverId = options.popoverId
+      @entityType = options.entityType
+      @entityId = options.entityId
 
-            $fileupload.on 'fileuploadpreviewdone', (event, data) =>
-                $.ajax(
-                    url: "/uploads/#{@entityType}/#{@entityId}"
-                )
-                    .done (result) ->
-                        template = $fileupload._renderDownload(result)
-                            .appendTo($fileupload.options.filesContainer)
-                        $fileupload._forceReflow(template)
-                        return
+    serialize: ->
+      popoverId: @popoverId
 
-            filesInQueue = 0
+    afterRender: ->
+      $fileupload = $('#fileupload')
+      $fileupload.fileupload
+        submit: (e, data) =>
+          file = data.files[0]
+          $.ajax(
+            url: '/upload/metadata'
+            type: 'POST'
+            dataType: 'json'
+            data:
+              name: file.name
+              size: file.size
+              type: file.type
+              lastModifiedDate: file.lastModifiedDate
+              entityType: @entityType
+              entityId: @entityId
+          )
+          .done (result) ->
+            $fileupload.fileupload 'option',
+              url: "upload/#{result.files[0].id}"
+              type: 'PUT'
+              multipart: false
+            $fileupload.fileupload('send', data)
 
-            $fileupload.bind 'fileuploadadd', (e, data) ->
-                hasFiles = ++filesInQueue > 0
-                $('button.start').toggle(hasFiles)
-                $('button.cancel').toggle(hasFiles)
-                return
+      $fileupload.fileupload(
+        'option',
+        'redirect',
+        window.location.href.replace(
+          /\/[^\/]*$/,
+          '/cors/result.html?%s'
+        )
+      )
 
-            $fileupload.bind 'fileuploadfail', (e, data) ->
-                hasFiles = --filesInQueue > 0
-                $('button.start').toggle(hasFiles)
-                $('button.cancel').toggle(hasFiles)
-                return
+      $fileupload.on 'fileuploadpreviewdone', (event, data) =>
+        $.ajax(
+          url: "/uploads/#{@entityType}/#{@entityId}"
+        )
+        .done (result) ->
+          template = $fileupload._renderDownload(result)
+            .appendTo($fileupload.options.filesContainer)
+          $fileupload._forceReflow(template)
 
-            $(document).bind 'dragover', (event) =>
-                dropzone = $('.dropzone')
-                timeout = window.dropzoneTimeout
-                if timeout
-                    clearTimeout(timeout)
-                else
-                    dropzone.addClass('in')
-                if (event.target == dropzone[0])
-                    dropzone.addClass('hover')
-                else
-                    dropzone.removeClass('hover')
-                window.dropzoneTimeout = this.delay 100, ->
-                    window.dropzoneTimeout = null
-                    dropzone.removeClass('in hover')
+      filesInQueue = 0
 
-            $(document).bind 'drop dragover', (event) ->
-                event.preventDefault()
-                return false;
+      $fileupload.bind 'fileuploadadd', (e, data) ->
+        hasFiles = ++filesInQueue > 0
+        $('button.start').toggle(hasFiles)
+        $('button.cancel').toggle(hasFiles)
 
-            return this
+      $fileupload.bind 'fileuploadfail', (e, data) ->
+        hasFiles = --filesInQueue > 0
+        $('button.start').toggle(hasFiles)
+        $('button.cancel').toggle(hasFiles)
+
+      $(document).bind 'dragover', (event) ->
+        dropzone = $('.dropzone')
+        timeout = window.dropzoneTimeout
+        if timeout
+          clearTimeout(timeout)
+        else
+          dropzone.addClass('in')
+        if (event.target == dropzone[0])
+          dropzone.addClass('hover')
+        else
+          dropzone.removeClass('hover')
+        window.dropzoneTimeout = setTimeout(->
+          window.dropzoneTimeout = null
+          dropzone.removeClass('in hover')
+        ,100)
+
+      $(document).bind 'drop dragover', (event) ->
+        event.preventDefault()
+        return false
+
+    cleanup: ->
+      $('#fileupload').fileupload('destroy')
+      $(document).unbind('drop dragover')

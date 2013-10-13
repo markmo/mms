@@ -62,7 +62,7 @@ define [
     serialize: ->
       term = @term = @collection.get(@termId)
       people = term.get('people')
-      responsibilities: people.map (r) =>
+      responsibilities: people.map (r) ->
         cid: r.cid
         role: r.get('stakeholderRole').get('name')
         person: r.get('person').name()

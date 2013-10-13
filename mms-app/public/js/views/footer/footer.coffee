@@ -1,12 +1,9 @@
 define [
-    'jquery',
-    'underscore',
-    'backbone',
-    'text!templates/footer/footer.html'
-], ($, _, Backbone, footerTemplate) ->
-    Backbone.View.extend
-        el: '#footer'
+  'backbone',
+], (Backbone) ->
 
-        render: ->
-            $(@el).html(footerTemplate)
-            return this
+  Backbone.View.extend
+
+    manage: true
+
+    template: 'footer/footer'

@@ -1,59 +1,62 @@
 define [
-    'jquery'
-    'underscore'
-    'backbone'
-    'cs!events'
-    'cs!vm'
-    'cs!views/attachments'
-    'cs!views/sandbox_form'
-    'text!templates/home/main.html'
-], ($, _, Backbone, app, Vm, AttachmentsSection, SandboxForm, homePageTemplate) ->
-    Backbone.View.extend
-        el: '#page'
+  'jquery'
+  'backbone'
+  'cs!events'
+  'cs!views/attachments'
+  'cs!views/sandbox_form'
+  'cs!collections/sandboxes'
+], ($, Backbone, app, AttachmentsView, SandboxForm, Sandboxes) ->
 
-        events:
-            'click #create-sandbox': 'createSandbox'
-            'click #btn-attachments': 'addAttachments'
+  Backbone.View.extend
 
-        compiled: Handlebars.compile homePageTemplate
+    manage: true
 
-        addAttachments: (event) ->
-            event.preventDefault()
-            $('#attachments').toggle()
+    template: 'home/main'
 
-        createSandbox: ->
-            sandboxForm = Vm.create(this, 'SandboxForm', SandboxForm)
+    events:
+      'click #create-sandbox': 'createSandbox'
+      'click #btn-attachments': 'addAttachments'
 
-            modal = new Backbone.BootstrapModal(
-                title: 'New Sandbox'
-                content: sandboxForm
-                animate: true
-            ).open()
-            return false
+    addAttachments: (event) ->
+      event.preventDefault()
+      $('#attachments').toggle()
+      return false
 
-        render: ->
-            app.sandboxes().done (sandboxes) =>
-                $(@el).html @compiled
-                    sandboxes: sandboxes.toJSON()
+    createSandbox: ->
+      sandboxForm = new SandboxForm
+        collection: @sandboxes
+      modal = new Backbone.BootstrapModal
+        title: 'New Sandbox'
+        content: sandboxForm
+        animate: true
+      modal.open()
+      return false
 
-                $('#home-features').equalHeights()
+    initialize: (options = {}) ->
+      unless options.sandboxes
+        sandboxesNotInjected = true
+        options.sandboxes = new Sandboxes
+      @sandboxes = options.sandboxes
+      this.listenTo(options.sandboxes, 'sync', this.render)
+      @sandboxes.fetch() if sandboxesNotInjected
 
-                self = this
-                $('#btn-attachments').popover
-                    placement: 'bottom'
-                    trigger: 'click'
-                    delay:
-                        show: 500
-                        hide: 100
-                    content: ->
-                        self.delay 0, -> # allow a repaint cycle
-                            attachmentsView = Vm.create(self, 'AttachmentsSection', AttachmentsSection,
-                                popoverId: 'fileupload'
-                                entityType: 'sandbox'
-                                entityId: app.selectedSandbox()?.id
-                            )
-                            attachmentsView.render()
-                            return
-                        return 'Loading...'
+    serialize: ->
+      sandboxes: @sandboxes.toJSON()
 
-            return this
+    afterRender: ->
+      $('#home-features').equalHeights()
+      $('#btn-attachments').popover
+        placement: 'bottom'
+        trigger: 'click'
+        delay:
+          show: 500
+          hide: 100
+        content: =>
+          setTimeout(=>
+            attachmentsView = this.setView AttachmentsView
+              popoverId: 'fileupload'
+              entityType: 'sandbox'
+              entityId: app.selectedSandbox()?.id
+            attachmentsView.render()
+          ,0) # allow a repaint cycle
+          return 'Loading...'

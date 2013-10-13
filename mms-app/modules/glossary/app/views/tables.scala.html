@@ -1,14 +1,12 @@
 @(start: String)
 
-@import helper._
-
 @scripts = {
   <script type="text/javascript">
   var global = {
     start: '@start'
   };
   </script>
-  <script src="@routes.Assets.at("js/lib/epiceditor/js/epiceditor.min.js")"></script>
+  @*<script src="@routes.Assets.at("js/lib/epiceditor/js/epiceditor.min.js")"></script>*@
   <script data-main="assets/js/main" src="@routes.Assets.at("js/lib/require/require.min.js")"></script>
 }
 

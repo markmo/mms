@@ -1,67 +1,71 @@
 <div id="side-panel" class="pull-right">
-    <div class="side-panel-head ps-top-to-bottomX">
-        <!--<a href="#">Social</a>-->
-        <h3>Comment</h3>
+  <div class="side-panel-head ps-top-to-bottomX">
+    <!--<a href="#">Social</a>-->
+    <h3>Comment</h3>
+  </div>
+  <div class="side-panel-content-border ps-top-to-bottomX"></div>
+  <div id="members" style="display: none;">
+    <div>Co-conspirators:</div>
+    <ul id="members-list"></ul>
+  </div>
+  <div class="side-panel-content">
+    <div>
+      <a href="#" id="btn-attachments" data-popover-id="fileupload">
+        <i class="icon-paperclip pull-left" style="margin-left: 15px; margin-right: 5px;"></i>
+        <small>attachments</small>
+      </a>
     </div>
-    <div class="side-panel-content-border ps-top-to-bottomX"></div>
-    <div id="members" style="display: none;">
-        <div>Co-conspirators:</div>
-        <ul id="members-list"></ul>
-    </div>
-    <div class="side-panel-content">
-        <div>
-            <a href="#" id="btn-attachments" data-popover-id="fileupload">
-                <i class="icon-paperclip pull-left" style="margin-left: 15px; margin-right: 5px;"></i>
-                <small>attachments</small>
-            </a>
+    <div id="new-post" class="media clearfix">
+      <a href="#" class="pull-left" data-popover-id="{{user.id}}">
+        <img class="media-object" src="/assets/img/default-user-icon.png" alt="{{user.name}}"
+             style="width: 48px; height: 48px;">
+      </a>
+      <div class="media-body">
+        <label for="message">New Post</label>
+
+        <div class="bubble me editable">
+          <textarea id="message" name="message"></textarea>
         </div>
-        <div id="new-post" class="media clearfix">
-            <a href="#" class="pull-left" data-popover-id="{{user.id}}">
-                <img class="media-object" src="/assets/img/default-user-icon.png" alt="{{user.name}}" style="width: 48px; height: 48px;">
-            </a>
-            <div class="media-body">
-                <label for="message">New Post</label>
-                <div class="bubble me editable">
-                    <textarea id="message" name="message"></textarea>
-                </div>
-                <div id="typing-spinner" class="pull-left" style="margin-top: -5px; margin-left: 20px;"></div>
-            </div>
-            <div class="clearfix">
-                <div class="pull-right">
-                    <button id="btn-submit" class="btn btn-primary btn-post">Post</button>
-                </div>
-                <div class="pull-left">
-                    <!-- add actions below bubble -->
-                </div>
-            </div>
+        <div id="typing-spinner" class="pull-left" style="margin-top: -5px; margin-left: 20px;"></div>
+      </div>
+      <div class="clearfix">
+        <div class="pull-right">
+          <button id="btn-submit" class="btn btn-primary btn-post">Post</button>
         </div>
-        <ul id="posts" class="media-list">
-            {{#loop posts}}
-            <li class="media">
-                <a href="#" class="pull-left" data-popover-id="{{user.id}}">
-                    <img class="media-object" src="/assets/img/default-user-icon.png" alt="{{user.name}}" style="width: 48px; height: 48px;">
-                </a>
-                <div class="media-body">
-                    <div class="bubble me clearfix">{{message}}</div>
-                    <small class="me">sent {{humanize datetime}}</small>
-                </div>
-                <div class="reply">
-                    <button class="btn btn-mini btn-reply" data-id="{{id}}">Reply</button>
-                </div>
-                <div class="media reply-body clearfix" style="display: none;"></div>
-                {{#loop replies}}
-                <div class="media">
-                    <a href="#" class="pull-right">
-                        <img class="media-object" src="/assets/img/default-user-icon.png" alt="markmo" style="width: 48px; height: 48px;">
-                    </a>
-                    <div class="media-body">
-                        <div class="bubble you clearfix">{{message}}</div>
-                        <small class="you">sent {{humanize datetime}}</small>
-                    </div>
-                </div>
-                {{/loop}}
-            </li>
-            {{/loop}}
-        </ul>
+        <div class="pull-left">
+          <!-- add actions below bubble -->
+        </div>
+      </div>
     </div>
+    <ul id="posts" class="media-list">
+      {{#loop posts}}
+      <li class="media">
+        <a href="#" class="pull-left" data-popover-id="{{user.id}}">
+          <img class="media-object" src="/assets/img/default-user-icon.png" alt="{{user.name}}"
+               style="width: 48px; height: 48px;">
+        </a>
+        <div class="media-body">
+          <div class="bubble me clearfix">{{message}}</div>
+          <small class="me">sent {{humanize datetime}}</small>
+        </div>
+        <div class="reply">
+          <button class="btn btn-mini btn-reply" data-id="{{id}}">Reply</button>
+        </div>
+        <div class="media reply-body clearfix" style="display: none;"></div>
+        {{#loop replies}}
+        <div class="media">
+          <a href="#" class="pull-right">
+            <img class="media-object" src="/assets/img/default-user-icon.png" alt="markmo"
+                 style="width: 48px; height: 48px;">
+          </a>
+          <div class="media-body">
+            <div class="bubble you clearfix">{{message}}</div>
+            <small class="you">sent {{humanize datetime}}</small>
+          </div>
+        </div>
+        {{/loop}}
+      </li>
+      {{/loop}}
+    </ul>
+  </div>
 </div>

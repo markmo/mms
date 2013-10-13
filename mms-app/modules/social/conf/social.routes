@@ -1,3 +1,6 @@
 # Posts
 GET     /posts/:entityType/:id          @controllers.social.Posts.posts(entityType: String, id: Long)
 POST    /posts/:entityType/:id          @controllers.social.Posts.create(entityType: String, id: Long)
+
+#GET     /room                           @controllers.registry.Posts.chatRoom(username: String ?= null)
+GET     /room/chat                      @controllers.social.Posts.chat(username)

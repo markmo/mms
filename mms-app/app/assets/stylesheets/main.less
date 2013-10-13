@@ -892,12 +892,16 @@ i[class^="icon-"] {
 
 .grid {
   float: left;
-  width: 700px;
+  width: 749px;
   overflow-x: scroll;
 
   select, input {
     margin: 0;
   }
+}
+
+#responsibilitiesForm .grid {
+  box-shadow: inset -10px 0px 10px -2px #DDD;
 }
 
 #left-menu {
@@ -1353,4 +1357,22 @@ tfoot .pagination {
 
 .select2-container {
   margin-left: 0;
+}
+
+.dotindicator {
+  float: right;
+  margin-bottom: 20px;
+}
+
+.dot {
+  float: left;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background: #DDD;
+  margin-left: 15px;
+}
+
+.dot.active {
+  background: #888;
 }

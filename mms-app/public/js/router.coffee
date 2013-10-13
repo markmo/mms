@@ -57,8 +57,15 @@ define [
     router = new AppRouter(options)
     app.router = router
 
-    router.on 'route', ->
-      view?.close()
+    router.on 'route:access route:applications route:people route:responsibilities
+              route:showTerm route:stakeholderRoles route:terms route:userGroups
+              route:vendors', ->
+      require [
+        'cs!views/glossary/left_menu'
+      ], (LeftMenuView) ->
+        unless app.hasView('#left-menu')
+          leftMenuView = app.setView('#left-menu', new LeftMenuView)
+          leftMenuView.render()
 
     router.on 'route:access', ->
       require [
@@ -192,16 +199,16 @@ define [
         app.setView('.page', new StakeholderRolesView)
 
     router.on 'route:showTerm', (termId) ->
-      require ['cs!views/glossary/terms'], (TermsPage) ->
-        termsPage = Vm.create(appView, 'TermsPage', TermsPage, {termId: termId})
-        termsPage.render()
+      require [
+        'cs!views/glossary/terms_layout'
+      ], (TermsLayout) ->
+        app.setView('.page', new TermsLayout({termId: termId}))
 
     router.on 'route:terms', ->
       require [
-        'cs!views/glossary/glossary_layout'
-      ], (GlossaryLayout) ->
-        glossaryLayout = app.setView('.page', new GlossaryLayout)
-        glossaryLayout.render()
+        'cs!views/glossary/terms_layout'
+      ], (TermsLayout) ->
+        app.setView('.page', new TermsLayout)
 
     router.on 'route:userGroups', ->
       require [
@@ -216,8 +223,10 @@ define [
         app.setView('.page', new VendorsView)
 
     router.on 'route:defaultAction', () ->
-      require ['cs!views/home/home'], (HomePage) ->
-        homePage = Vm.create(appView, 'HomePage', HomePage)
+      require [
+        'cs!views/home/home'
+      ], (HomePage) ->
+        homePage = app.setView('#page', new HomePage)
         homePage.render()
 
     Backbone.history.start

@@ -38,8 +38,13 @@ define [
         ,'text')
 
     setView: (selector, view) ->
-      $('.main').html('<div style="text-align: center;"><img src="/assets/img/throbber.gif" style="margin-top: 100px;"></div>')
+      $('.main').html(
+        '<div style="text-align: center;"><img src="/assets/img/throbber.gif" style="margin-top: 100px;"></div>'
+      )
       return this.layout.setView(selector, view)
+
+    hasView: (selector) ->
+      return !!(this.layout.getView(selector))
 
     useLayout: (name, options) ->
       # Enable variable arity by allowing the first argument to be the options

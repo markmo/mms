@@ -29,9 +29,6 @@ GET     /sandboxes/:id/namespaces       @controllers.registry.Namespaces.findNam
 GET     /columns/:id/revisions/:revisionId @controllers.registry.Columns.getRevision(id: Long, revisionId: java.lang.Integer)
 GET     /columns/:id/revisions          @controllers.registry.Columns.revisions(id: Long)
 
-#GET     /room                           @controllers.registry.Posts.chatRoom(username: String ?= null)
-GET     /room/chat                      @controllers.registry.Posts.chat(username)
-
 GET     /files/deleteall                @controllers.registry.Files.deleteAll
 GET     /files                          @controllers.registry.Files.index(node ?= null)
 GET     /uploads/:category/:id          @controllers.registry.Files.list(category: String, id: Long)

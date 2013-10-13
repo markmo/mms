@@ -5,6 +5,8 @@ define [
   'cs!events'
   'cs!views/glossary/domain_form'
   'cs!collections/domains'
+  'jquery.cookie'
+  'jqtree'
 ], ($, _, Backbone, app, DomainForm, Domains) ->
 
   Backbone.View.extend
@@ -40,7 +42,7 @@ define [
       unless @collection
         @collection = new Domains
         @collection.fetch()
-      this.listenTo(@collection, 'change', this.render)
+      this.listenTo(@collection, 'sync', this.render)
       $('#left-drawer').on('click', '#create-domain', _.bind(this.create, this))
 
     beforeRender: ->
@@ -49,6 +51,10 @@ define [
     afterRender: ->
       if @collection.length
         domains = app.convertCollectionToTree(@collection)
+        domains.unshift
+          id: null
+          label: 'ALL'
+          children: []
         $('#domains-tree').tree(
           data: domains
           dragAndDrop: true

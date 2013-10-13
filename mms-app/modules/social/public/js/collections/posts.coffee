@@ -1,16 +1,17 @@
 define [
-    'backbone'
-    'cs!models/post'
+  'backbone'
+  'cs!models/post'
 ], (Backbone, postModel) ->
-    Backbone.Collection.extend
-        url: ->
-            '/social/posts/' + @entityType + '/' + @entityId
+  Backbone.Collection.extend
 
-        model: postModel
+    url: ->
+      '/social/posts/' + @entityType + '/' + @entityId
 
-        comparator: (post) ->
-            -post.get('datetime')
+    model: postModel
 
-        initialize: (models, options) ->
-            @entityType = options.entityType
-            @entityId = options.entityId
+    comparator: (post) ->
+      -post.get('datetime')
+
+    initialize: (models, options) ->
+      @entityType = options.entityType
+      @entityId = options.entityId
