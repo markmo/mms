@@ -13,11 +13,23 @@
             <name>typesafe-releases</name>
             <url>http://repo.typesafe.com/typesafe/repo</url>
         </repository>
+        <!--
+        <repository>
+            <id>play-plugin-releases</id>
+            <name>play-plugin-releases</name>
+            <url>http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/</url>
+        </repository>
+        <repository>
+            <id>play-plugin-snapshots</id>
+            <name>play-plugin-snapshots</name>
+            <url>http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/</url>
+        </repository>
+        -->
     </repositories>
 
     <build>
-    <!--
         <plugins>
+            <!--
             <plugin>
                 <groupId>com.github.goldin</groupId>
                 <artifactId>ivy-maven-plugin</artifactId>
@@ -34,21 +46,20 @@
                             <scope>compile</scope>
                             <dependencies>
                                 <dependency>
-                                    <groupId>ivy.com.clever-age</groupId>
+                                    <groupId>com.clever-age</groupId>
                                     <artifactId>play2-elasticsearch</artifactId>
-                                    <version>0.5.3</version>
+                                    <version>0.8-SNAPSHOT</version>
                                 </dependency>
                             </dependencies>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
-        -->
-        <plugins>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -73,29 +84,39 @@
 
     <dependencies>
         <dependency>
-            <groupId>play</groupId>
+            <groupId>com.typesafe.play</groupId>
             <artifactId>play-java-jpa_2.10</artifactId>
-            <version>2.1.0</version>
+            <version>2.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.2.2.Final</version>
+            <version>4.2.6.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
-            <version>4.2.2.Final</version>
+            <version>4.2.6.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.2.1</version>
+            <version>2.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.code_factory</groupId>
+            <artifactId>JpaNestedSet</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>14.0</version>
+            <version>15.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -107,7 +128,7 @@
         <dependency>
             <groupId>com.clever-age</groupId>
             <artifactId>play2-elasticsearch</artifactId>
-            <version>0.5-SNAPSHOT</version>
+            <version>0.8-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.lucene</groupId>

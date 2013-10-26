@@ -8,31 +8,31 @@ import java.util.*;
 import javax.persistence.Query;
 
 import be.objectify.deadbolt.java.actions.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
 import com.feth.play.module.pa.user.AuthUser;
 import com.google.inject.Inject;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
-import providers.MyUsernamePasswordAuthProvider;
-import providers.MyUsernamePasswordAuthProvider.MyLogin;
-import providers.MyUsernamePasswordAuthProvider.MySignup;
+import providers.account.MyUsernamePasswordAuthProvider;
+import providers.account.MyUsernamePasswordAuthProvider.MyLogin;
+import providers.account.MyUsernamePasswordAuthProvider.MySignup;
 
-import mms.common.models.Catalog;
-import mms.common.models.Datasource;
-import mms.common.models.Namespace;
-import mms.common.models.Sandbox;
-import mms.common.models.audit.CustomTrackingRevisionEntity;
-import mms.common.models.audit.ModifiedEntityTypeEntity;
-import mms.common.models.relational.Table;
+import models.domain.Catalog;
+import models.domain.Datasource;
+import models.domain.Namespace;
+import models.domain.Sandbox;
 import models.account.Organization;
 import models.account.User;
+import models.domain.audit.CustomTrackingRevisionEntity;
+import models.domain.audit.ModifiedEntityTypeEntity;
+import models.domain.relational.Table;
 import views.html.*;
 
 public class Application extends Controller {

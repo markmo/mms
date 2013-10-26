@@ -2,12 +2,12 @@ package controllers.glossary;
 
 import java.util.*;
 
-import org.codehaus.jackson.JsonNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
-import mms.common.models.business.*;
+import models.domain.business.*;
 
 /**
  * User: markmo
@@ -63,7 +63,7 @@ public class Responsibilities extends Controller {
     }
 
     private static Map<BusinessTerm, Set<BusinessTermStakeholderPerson>> getResponsibilityMap(JsonNode json) {
-        Iterator<JsonNode> it = json.getElements();
+        Iterator<JsonNode> it = json.elements();
         Map<BusinessTerm, Set<BusinessTermStakeholderPerson>> responsibilityMap = new HashMap<>();
         while (it.hasNext()) {
             JsonNode node = it.next();

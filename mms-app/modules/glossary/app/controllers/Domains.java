@@ -5,16 +5,16 @@ import static play.data.Form.form;
 import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
-import mms.common.models.business.BusinessTerm;
-import mms.common.models.business.Domain;
+import models.domain.business.BusinessTerm;
+import models.domain.business.Domain;
 
 /**
  * User: markmo
@@ -50,7 +50,7 @@ public class Domains extends Controller {
             JsonNode parentNode = json.get("parent");
             Domain parent = null;
             if (!parentNode.isNull()) {
-                parent = JPA.em().find(Domain.class, parentNode.get("id").getLongValue());
+                parent = JPA.em().find(Domain.class, parentNode.get("id").asLong());
             }
             domain.setParent(parent);
             JPA.em().persist(domain);
@@ -72,7 +72,7 @@ public class Domains extends Controller {
             JsonNode parentNode = json.get("parent");
             Domain parent = null;
             if (!parentNode.isNull()) {
-                parent = JPA.em().find(Domain.class, parentNode.get("id").getLongValue());
+                parent = JPA.em().find(Domain.class, parentNode.get("id").asLong());
             }
             domain.setParent(parent);
 

@@ -1,4 +1,4 @@
-package providers;
+package providers.account;
 
 import static play.data.Form.form;
 

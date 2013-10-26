@@ -14,7 +14,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
-import mms.common.models.Column;
+import models.domain.Column;
 
 /**
  * User: markmo

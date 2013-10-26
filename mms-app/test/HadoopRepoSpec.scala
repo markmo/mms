@@ -1,5 +1,5 @@
 import java.io.File
-import mms.common.models.file.{FileUpload, FileContext}
+import models.file.{FileUpload, FileContext}
 import org.specs2.mutable._
 import org.specs2.specification.Scope
 import service.file.hdfs.HadoopFileRepoService

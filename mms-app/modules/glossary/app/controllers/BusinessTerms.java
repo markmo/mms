@@ -1,24 +1,24 @@
 package controllers.glossary;
 
 import static play.data.Form.form;
-import static utils.QueryTool.*;
+import static utils.account.QueryTool.*;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.*;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 import com.google.inject.Inject;
-import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
 import indexing.BusinessTermIndex;
-import mms.common.models.SecurityClassification;
-import mms.common.models.business.*;
+import models.domain.SecurityClassification;
+import models.domain.business.*;
 import models.common.Page;
 
 /**
@@ -82,7 +82,7 @@ public class BusinessTerms extends Controller {
             JsonNode domainNode = json.get("domain");
             Domain domain = null;
             if (!domainNode.isNull()) {
-                domain = JPA.em().find(Domain.class, domainNode.get("id").getLongValue());
+                domain = JPA.em().find(Domain.class, domainNode.get("id").asLong());
             }
             term.setDomain(domain);
 
@@ -90,7 +90,7 @@ public class BusinessTerms extends Controller {
             JsonNode parentNode = json.get("parent");
             BusinessTerm parent = null;
             if (!parentNode.isNull()) {
-                parent = JPA.em().find(BusinessTerm.class, parentNode.get("id").getLongValue());
+                parent = JPA.em().find(BusinessTerm.class, parentNode.get("id").asLong());
             }
             term.setParent(parent);
 
@@ -98,7 +98,7 @@ public class BusinessTerms extends Controller {
             JsonNode scNode = json.get("securityClassification");
             SecurityClassification sc = null;
             if (!scNode.isNull()) {
-                sc = JPA.em().find(SecurityClassification.class, scNode.get("id").getLongValue());
+                sc = JPA.em().find(SecurityClassification.class, scNode.get("id").asLong());
             }
             term.setSecurityClassification(sc);
 
@@ -113,7 +113,7 @@ public class BusinessTerms extends Controller {
             JPA.em().persist(term);
 
             // Persist tags. Must follow persistence of term due to many-to-many.
-            Iterator<JsonNode> it = json.get("tags").getElements();
+            Iterator<JsonNode> it = json.get("tags").elements();
             Set<Tag> tags = new HashSet<Tag>();
             while (it.hasNext()) {
                 Form<Tag> tagForm = form(Tag.class);
@@ -124,7 +124,7 @@ public class BusinessTerms extends Controller {
                 } else {
                     if (tag.getId() == null) {
                         JPA.em().persist(tag);
-                    } else {
+//                    } else {
 //                        JPA.em().merge(tag);
                     }
                     tags.add(tag);
@@ -165,7 +165,7 @@ public class BusinessTerms extends Controller {
             JsonNode domainNode = json.get("domain");
             Domain domain = null;
             if (!domainNode.isNull()) {
-                domain = JPA.em().find(Domain.class, domainNode.get("id").getLongValue());
+                domain = JPA.em().find(Domain.class, domainNode.get("id").asLong());
             }
             term.setDomain(domain);
 
@@ -173,7 +173,7 @@ public class BusinessTerms extends Controller {
             JsonNode parentNode = json.get("parent");
             BusinessTerm parent = null;
             if (!parentNode.isNull()) {
-                parent = JPA.em().find(BusinessTerm.class, parentNode.get("id").getLongValue());
+                parent = JPA.em().find(BusinessTerm.class, parentNode.get("id").asLong());
             }
             term.setParent(parent);
 
@@ -181,7 +181,7 @@ public class BusinessTerms extends Controller {
             JsonNode scNode = json.get("securityClassification");
             SecurityClassification sc = null;
             if (!scNode.isNull()) {
-                sc = JPA.em().find(SecurityClassification.class, scNode.get("id").getLongValue());
+                sc = JPA.em().find(SecurityClassification.class, scNode.get("id").asLong());
             }
             term.setSecurityClassification(sc);
 
@@ -196,7 +196,7 @@ public class BusinessTerms extends Controller {
             term = JPA.em().merge(term);
 
             // Persist tags. Must follow persistence of term due to many-to-many.
-            Iterator<JsonNode> it = json.get("tags").getElements();
+            Iterator<JsonNode> it = json.get("tags").elements();
             Set<Tag> tags = new HashSet<Tag>();
             while (it.hasNext()) {
                 Form<Tag> tagForm = form(Tag.class);
@@ -225,8 +225,8 @@ public class BusinessTerms extends Controller {
             for (BusinessTermAssociation assoc : assocs) {
                 List<BusinessTermAssociation> matching =
                         BusinessTermAssociation.findBySubjectIdAndObjectIdFromSource(
-                                assoc.getSubject().getId(),
-                                assoc.getObject().getId(),
+                                assoc.getSubject().getIdAsLong(),
+                                assoc.getObject().getIdAsLong(),
                                 SourceType.DEFINITION);
                 if (matching.isEmpty()) {
                     assoc.setSource(SourceType.DEFINITION);
@@ -311,7 +311,7 @@ public class BusinessTerms extends Controller {
         if (list.isEmpty()) return new HashSet<>();
         Map<Pair<Long>, BusinessTermAssociation> assocMap = new HashMap<>();
         for (BusinessTermAssociation assoc : list) {
-            Pair<Long> key = new Pair<>(assoc.getSubject().getId(), assoc.getObject().getId());
+            Pair<Long> key = new Pair<>(assoc.getSubject().getIdAsLong(), assoc.getObject().getIdAsLong());
             if (assocMap.containsKey(key)) {
                 BusinessTermAssociation existing = assocMap.get(key);
                 String newPredicate = existing.getPredicate() + " " + assoc.getPredicate();

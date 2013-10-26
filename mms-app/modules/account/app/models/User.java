@@ -16,7 +16,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import play.data.format.Formats;
 import play.db.jpa.JPA;
-import providers.MyUsernamePasswordAuthUser;
+import providers.account.MyUsernamePasswordAuthUser;
 
 import models.account.TokenAction.Type;
 

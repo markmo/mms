@@ -12,8 +12,8 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.*;
-import providers.MyUsernamePasswordAuthProvider;
-import providers.MyUsernamePasswordAuthUser;
+import providers.account.MyUsernamePasswordAuthProvider;
+import providers.account.MyUsernamePasswordAuthUser;
 
 import models.account.User;
 import views.html.account.*;

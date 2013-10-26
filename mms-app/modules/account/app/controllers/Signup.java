@@ -8,10 +8,10 @@ import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
-import providers.MyLoginUsernamePasswordAuthUser;
-import providers.MyUsernamePasswordAuthProvider;
-import providers.MyUsernamePasswordAuthProvider.MyIdentity;
-import providers.MyUsernamePasswordAuthUser;
+import providers.account.MyLoginUsernamePasswordAuthUser;
+import providers.account.MyUsernamePasswordAuthProvider;
+import providers.account.MyUsernamePasswordAuthProvider.MyIdentity;
+import providers.account.MyUsernamePasswordAuthUser;
 
 import models.account.TokenAction;
 import models.account.TokenAction.Type;

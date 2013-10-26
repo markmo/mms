@@ -2,4 +2,4 @@
 9000:com.github.cleverage.elasticsearch.plugin.IndexPlugin
 10000:be.objectify.deadbolt.java.DeadboltPlugin
 10005:service.account.MyUserServicePlugin
-10040:providers.MyUsernamePasswordAuthProvider
+10040:providers.account.MyUsernamePasswordAuthProvider

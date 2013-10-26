@@ -5,21 +5,21 @@ import static play.data.Form.form;
 import java.io.IOException;
 import java.util.*;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
-import mms.common.models.Catalog;
-import mms.common.models.Datasource;
-import mms.common.models.business.BusinessTerm;
-import mms.common.models.posts.DiscussionThread;
-import mms.common.models.posts.Post;
-import models.social.ChatRoom;
 import models.account.User;
+import models.domain.Catalog;
+import models.domain.Datasource;
+import models.domain.business.BusinessTerm;
+import models.domain.posts.DiscussionThread;
+import models.domain.posts.Post;
+import models.social.ChatRoom;
 
 /**
  * User: markmo

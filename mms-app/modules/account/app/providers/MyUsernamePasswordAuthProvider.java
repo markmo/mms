@@ -1,4 +1,4 @@
-package providers;
+package providers.account;
 
 import static play.data.Form.form;
 
@@ -130,7 +130,7 @@ public class MyUsernamePasswordAuthProvider
     }
 
     @Override
-    protected SignupResult signupUser(final MyUsernamePasswordAuthUser user) {
+    protected com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider.SignupResult signupUser(final MyUsernamePasswordAuthUser user) {
         final User u = User.findByUsernamePasswordIdentity(user);
         if (u != null) {
             if (u.emailValidated) {
@@ -153,7 +153,7 @@ public class MyUsernamePasswordAuthProvider
     }
 
     @Override
-    protected LoginResult loginUser(
+    protected com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider.LoginResult loginUser(
             final MyLoginUsernamePasswordAuthUser authUser) {
         final User u = User.findByUsernamePasswordIdentity(authUser);
         if (u == null) {
@@ -305,7 +305,7 @@ public class MyUsernamePasswordAuthProvider
         final String token = generatePasswordResetRecord(user);
         final String subject = getPasswordResetMailingSubject(user, ctx);
         final Body body = getPasswordResetMailingBody(token, user, ctx);
-        mailer.sendMail(subject, body, getEmailName(user));
+        sendMail(subject, body, getEmailName(user));
     }
 
     public boolean isLoginAfterPasswordReset() {
@@ -384,7 +384,7 @@ public class MyUsernamePasswordAuthProvider
         final String subject = getVerifyEmailMailingSubjectAfterSignup(user, ctx);
         final String token = generateVerificationRecord(user);
         final Body body = getVerifyEmailMailingBodyAfterSignup(token, user, ctx);
-        mailer.sendMail(subject, body, getEmailName(user));
+        sendMail(subject, body, getEmailName(user));
     }
 
     private String getEmailName(final User user) {

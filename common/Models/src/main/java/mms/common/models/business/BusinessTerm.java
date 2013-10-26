@@ -29,7 +29,7 @@ public class BusinessTerm extends AuditedModel implements Indexable, NodeInfo {
     @Id
     @GeneratedValue
     @javax.persistence.Column(name = "business_term_id")
-    private Long id;
+    private Integer id;
 
     @javax.persistence.Column(name = "business_term_name")
     private String name;
@@ -110,11 +110,11 @@ public class BusinessTerm extends AuditedModel implements Indexable, NodeInfo {
         );
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -21,8 +21,8 @@ import org.modeshape.jcr.api.JcrTools;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
-import mms.common.models.file.FileContext;
-import mms.common.models.file.FileUpload;
+import models.domain.file.FileContext;
+import models.domain.file.FileUpload;
 import service.FileRepoService;
 
 /**

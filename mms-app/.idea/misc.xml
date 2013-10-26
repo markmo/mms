@@ -3,30 +3,9 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
-  <component name="MavenProjectsManager">
-    <option name="originalFiles">
-      <list>
-        <option value="$PROJECT_DIR$/../common/Models/pom.xml" />
-        <option value="$PROJECT_DIR$/../../java/AnalyzerBeans/components/pom.xml" />
-        <option value="$PROJECT_DIR$/../../java/AnalyzerBeans/core/pom.xml" />
-        <option value="$PROJECT_DIR$/../../java/AnalyzerBeans/api/pom.xml" />
-        <option value="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" />
-        <option value="$PROJECT_DIR$/../deps/JPA-NestedSet/pom.xml" />
-      </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/../../JPA-NestedSet/pom.xml" />
-      </set>
-    </option>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/target/idea_output" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK" />
-  <component name="RegexUtilComponent" text="std|~|lower_quartile|~|dwelling|~|district|~|end_date|~|area|~|region|~|bedrooms|~|upper_quartile|~|start_date|~|bonds_received|~|average_rent|~|median_rent|~|date_type 65.47|~|245|~|&quot;Apartment&quot;|~|&quot;Gisborne&quot;|~|2011-02-28|~|&quot;Gisborne&quot;|~|&quot;Gisborne&quot;|~|2|~|352|~|2010-09-01|~|9|~|308|~|330|~|&quot;range&quot;" flags="40" regex="((\Q|~|\E)|^)\W*\Q&quot;\E[^\Q|\E\n]*\Q&quot;\E" mode="0" />
-  <component addRequiredLibraries="true" name="WebServicesPlugin" />
-  <component name="com.sixrr.metrics.MetricsReloaded">
-    <option value="" name="selectedProfile" />
-    <option value="false" name="autoscroll" />
-    <option value="false" name="showOnlyWarnings" />
-  </component>
+  <component name="RegexUtilComponent" text="1900-01-01 2007/08/13 1900.01.01 1900 01 01 1900-01.01 1900 13 01 1900 02 31" flags="0" regex="(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])" mode="0" />
 </project>
 

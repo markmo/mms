@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import akka.actor.*;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.node.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.libs.*;
 import play.libs.F.*;
 import play.mvc.*;
@@ -32,16 +33,16 @@ public class ChatRoom extends UntypedActor {
             in.onMessage(new Callback<JsonNode>() {
                 public void invoke(JsonNode event) {
                     if (event.has("text")) {
-                        defaultRoom.tell(new Talk(username, event.get("text").asText()));
+                        defaultRoom.tell(new Talk(username, event.get("text").asText()), null);
                     } else {
-                        defaultRoom.tell(new Typing(username, event.get("isTyping").asBoolean()));
+                        defaultRoom.tell(new Typing(username, event.get("isTyping").asBoolean()), null);
                     }
                 }
             });
 
             in.onClose(new Callback0() {
                 public void invoke() {
-                    defaultRoom.tell(new Quit(username));
+                    defaultRoom.tell(new Quit(username), null);
                 }
             });
         } else {
@@ -58,11 +59,11 @@ public class ChatRoom extends UntypedActor {
             Join join = (Join)message;
 
             if (members.containsKey(join.username)) {
-                getSender().tell("This username is already used");
+                getSender().tell("This username is already used", getSelf());
             } else {
                 members.put(join.username, join.channel);
                 notifyAll("join", join.username, "has entered this space");
-                getSender().tell("OK");
+                getSender().tell("OK", getSelf());
             }
         } else if (message instanceof Talk) {
             Talk talk = (Talk)message;

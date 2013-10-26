@@ -6,7 +6,11 @@
     <persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <non-jta-data-source>DefaultDS</non-jta-data-source>
-        <jar-file>/usr/local/Cellar/play/2.1.0/libexec/repository/cache/mms/mms-models/jars/mms-models-1.0-SNAPSHOT.jar</jar-file>
+        <!--<jar-file>/usr/local/Cellar/play/2.1.0/libexec/repository/cache/mms/mms-models/jars/mms-models-1.0-SNAPSHOT.jar</jar-file>-->
+        <jar-file>file:./modules/account/target/scala-2.10/classes</jar-file>
+        <jar-file>file:./modules/domain/target/scala-2.10/classes</jar-file>
+        <jar-file>file:./modules/glossary/target/scala-2.10/classes</jar-file>
+        <!--
         <class>models.account.LinkedAccount</class>
         <class>models.account.Organization</class>
         <class>models.account.SecurityGroup</class>
@@ -15,6 +19,7 @@
         <class>models.account.User</class>
         <class>models.account.UserPermission</class>
         <class>models.glossary.Setting</class>
+        -->
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>

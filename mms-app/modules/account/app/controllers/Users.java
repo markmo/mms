@@ -11,7 +11,7 @@ import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
-import providers.MyUsernamePasswordAuthProvider;
+import providers.account.MyUsernamePasswordAuthProvider;
 
 import models.account.User;
 

@@ -15,16 +15,16 @@
   <meta name="author" content="Mark Moloney &copy; Datascience Ltd.">
   <!-- Le scripts -->
   @if(scripts == null) {
-    @*<script src="@routes.Assets.at("js/lib/jquery/jquery-1.9.1.min.js")"></script>*@
-    @*<script src="@routes.Assets.at("js/lib/bootstrap/bootstrap.min.js")"></script>*@
+    @*<script src="@routes.Assets.at("javascripts/lib/jquery/jquery-1.9.1.min.js")"></script>*@
+    @*<script src="@routes.Assets.at("javascripts/lib/bootstrap/bootstrap.min.js")"></script>*@
   } else {
     @scripts
   }
-  <script src="@routes.Assets.at("js/lib/sonic/sonic.js")"></script>
-  @*<script src="@routes.Assets.at("js/lib/d3/d3.v3.min.js")"></script>*@
-  @*<script src="@routes.Assets.at("js/lib/moment/moment.min.js")"></script>*@
-  @*<script src="@routes.Assets.at("js/lib/rickshaw/rickshaw.min.js")"></script>*@
-  @*<script src="@routes.Assets.at("js/lib/md5.js")"></script>*@
+  <script src="@routes.Assets.at("javascripts/lib/sonic/sonic.js")"></script>
+  @*<script src="@routes.Assets.at("javascripts/lib/d3/d3.v3.min.js")"></script>*@
+  @*<script src="@routes.Assets.at("javascripts/lib/moment/moment.min.js")"></script>*@
+  @*<script src="@routes.Assets.at("javascripts/lib/rickshaw/rickshaw.min.js")"></script>*@
+  @*<script src="@routes.Assets.at("javascripts/lib/md5.js")"></script>*@
   @*<script src="@routes.Application.jsRoutes" defer="defer"></script>*@
 
   <!-- Le styles -->
@@ -33,7 +33,7 @@
   @if(session.get("theme") != "default") {
     <link href="@{routes.Assets.at("css/" + session.get("theme") + "/bootstrap.min.css")}" rel="stylesheet">
   }
-  <link href="@routes.Assets.at("js/lib/backbone-forms/templates/bootstrap.css")" rel="stylesheet">
+  <link href="@routes.Assets.at("javascripts/lib/backbone-forms/templates/bootstrap.css")" rel="stylesheet">
   <link href="@routes.Assets.at("css/select2/select2.css")" rel="stylesheet">
   <link href="@routes.Assets.at("css/rickshaw/rickshaw.min.css")" rel="stylesheet">
   <link href="@routes.Assets.at("css/jquery-file-upload/css/jquery.fileupload-ui.css")" rel="stylesheet">

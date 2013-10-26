@@ -1,15 +1,15 @@
 package controllers.glossary;
 
 import static play.data.Form.form;
-import static utils.QueryTool.*;
+import static utils.account.QueryTool.*;
 
-import org.codehaus.jackson.JsonNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
-import mms.common.models.business.Person;
+import models.domain.business.Person;
 import models.common.Page;
 
 /**

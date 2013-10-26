@@ -24,11 +24,11 @@ import play.libs.Akka;
 import play.libs.F;
 import play.mvc.*;
 
-import mms.common.models.AbstractColumn;
-import mms.common.models.Column;
-import mms.common.models.file.FileContext;
-import mms.common.models.file.FileUpload;
-import mms.common.models.file.FlatFile;
+import models.domain.AbstractColumn;
+import models.domain.Column;
+import models.domain.file.FileContext;
+import models.domain.file.FileUpload;
+import models.domain.file.FlatFile;
 import service.FileRepoService;
 import service.FileService;
 

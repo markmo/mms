@@ -19,7 +19,7 @@ object ApplicationBuild extends Build {
     Resolver.url("play-authenticate (snapshot)", url("http://joscha.github.com/play-authenticate/repo/snapshots/"))(Resolver.ivyStylePatterns),
 
     Resolver.url("play-plugin-releases", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns),
-    //Resolver.url("play-plugin-snapshots", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns),
+    Resolver.url("play-plugin-snapshots", new URL("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots/"))(Resolver.ivyStylePatterns),
     "JBoss Repository (release)" at "https://repository.jboss.org/nexus/content/repositories/releases/",
     "Public JBoss Repository Group" at "https://repository.jboss.org/nexus/content/groups/public-jboss/",
     "Developer Repository Group" at "https://repository.jboss.org/nexus/content/groups/developer/",
@@ -28,24 +28,57 @@ object ApplicationBuild extends Build {
     "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases"
   )
 
+  val domainDependencies = Seq(
+    "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
+    ,"log4j" % "log4j" % "1.2.17"
+    ,javaCore
+    ,javaJdbc
+    ,javaJpa
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.6.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.6.Final"
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.3"
+    ,"com.clever-age" % "play2-elasticsearch" % "0.8-SNAPSHOT"// excludeAll(
+//      ExclusionRule(organization = "org.apache.lucene")
+//      )
+    ,"org.apache.lucene" % "lucene-analyzers" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-highlighter" % "4.4.0"
+    ,"org.apache.lucene" % "lucene-memory" % "4.4.0"
+    ,"org.apache.lucene" % "lucene-queries" % "4.4.0"
+    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
+    ,"com.google.guava" % "guava" % "15.0"
+    ,"org.apache.poi" % "poi" % "3.9"
+    ,"org.apache.poi" % "poi-scratchpad" % "3.9"
+  )
+
+  val domain = play.Project(
+    appName + "-models", appVersion, domainDependencies, path = file("modules/domain")
+  ).settings(
+    resolvers ++= commonResolvers
+  )
+
   val commonDependencies = Seq(
     "log4j" % "log4j" % "1.2.17"
     ,javaCore
     ,javaJdbc
     ,javaJpa
-    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
-    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
-    ,"com.google.guava" % "guava" % "14.0"
+    ,"be.objectify" %% "deadbolt-java" % "2.2-RC1"
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.3"
+    ,"com.google.guava" % "guava" % "15.0"
     ,"com.google.inject" % "guice" % "3.0"
-    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
   )
 
   val common = play.Project(
     appName + "-common", appVersion, commonDependencies, path = file("modules/common")
   ).settings(
     resolvers ++= commonResolvers
+  ).dependsOn(
+    domain
+  ).aggregate(
+    domain
   )
 
   val accountDependencies = Seq(
@@ -55,17 +88,19 @@ object ApplicationBuild extends Build {
     ,javaCore
     ,javaJdbc
     ,javaJpa
-    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.2.Final"
-    ,"org.hibernate" % "hibernate-envers" % "4.2.2.Final"
-    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
-    ,"com.feth" %% "play-authenticate" % "0.2.5-SNAPSHOT"
-    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
-    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.1"
-    ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.6.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.6.Final"
+    ,"be.objectify" %% "deadbolt-java" % "2.2-RC1"
+    ,"com.feth" %% "play-authenticate" % "0.3.4-SNAPSHOT" changing() excludeAll(
+      ExclusionRule(organization = "org.scala-stm", name = "scala-stm_2.10.0"),
+      ExclusionRule(organization = "play")
+      )
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.3"
+    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.3"
+    ,"com.typesafe" %% "play-plugins-mailer" % "2.2.0"
     ,"com.google.inject" % "guice" % "3.0"
-    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
     ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
   )
 
@@ -86,17 +121,19 @@ object ApplicationBuild extends Build {
     ,javaCore
     ,javaJdbc
     ,javaJpa
-    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.2.Final"
-    ,"org.hibernate" % "hibernate-envers" % "4.2.2.Final"
-    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
-    ,"com.feth" %% "play-authenticate" % "0.2.5-SNAPSHOT"
-    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
-    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.1"
-    ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.6.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.6.Final"
+    ,"be.objectify" %% "deadbolt-java" % "2.2-RC1"
+    ,"com.feth" %% "play-authenticate" % "0.3.4-SNAPSHOT" changing() excludeAll(
+      ExclusionRule(organization = "org.scala-stm", name = "scala-stm_2.10.0"),
+      ExclusionRule(organization = "play")
+      )
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.3"
+    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.3"
+    ,"com.typesafe" %% "play-plugins-mailer" % "2.2.0"
     ,"com.google.inject" % "guice" % "3.0"
-    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
     ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
   )
 
@@ -105,9 +142,9 @@ object ApplicationBuild extends Build {
   ).settings(
     resolvers ++= commonResolvers
   ).dependsOn(
-    common, account
+    account
   ).aggregate(
-    common, account
+    account
   )
 
   val glossaryDependencies = Seq(
@@ -117,25 +154,27 @@ object ApplicationBuild extends Build {
     ,javaCore
     ,javaJdbc
     ,javaJpa
-    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.2.Final"
-    ,"org.hibernate" % "hibernate-envers" % "4.2.2.Final"
-    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
-    ,"com.feth" %% "play-authenticate" % "0.2.5-SNAPSHOT"
-    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
-    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.1"
-    ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
-    ,"com.google.inject" % "guice" % "3.0"
-    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
-    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
-    ,"com.clever-age" % "play2-elasticsearch" % "0.5-SNAPSHOT" excludeAll(
-      ExclusionRule(organization = "org.apache.lucene")
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.6.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.6.Final"
+    ,"be.objectify" %% "deadbolt-java" % "2.2-RC1"
+    ,"com.feth" %% "play-authenticate" % "0.3.4-SNAPSHOT" changing() excludeAll(
+      ExclusionRule(organization = "org.scala-stm", name = "scala-stm_2.10.0"),
+      ExclusionRule(organization = "play")
       )
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.3"
+    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.3"
+    ,"com.typesafe" %% "play-plugins-mailer" % "2.2.0"
+    ,"com.google.inject" % "guice" % "3.0"
+    ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
+    ,"com.clever-age" % "play2-elasticsearch" % "0.8-SNAPSHOT"// excludeAll(
+//      ExclusionRule(organization = "org.apache.lucene")
+//      )
     ,"org.apache.lucene" % "lucene-analyzers" % "3.6.2"
-    ,"org.apache.lucene" % "lucene-highlighter" % "3.6.2"
-    ,"org.apache.lucene" % "lucene-memory" % "3.6.2"
-    ,"org.apache.lucene" % "lucene-queries" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-highlighter" % "4.4.0"
+    ,"org.apache.lucene" % "lucene-memory" % "4.4.0"
+    ,"org.apache.lucene" % "lucene-queries" % "4.4.0"
   )
 
   val glossary = play.Project(
@@ -143,9 +182,9 @@ object ApplicationBuild extends Build {
   ).settings(
     resolvers ++= commonResolvers
   ).dependsOn(
-    common, social, account
+    social, account
   ).aggregate(
-    common, social, account
+    social, account
   )
 
   val appDependencies = Seq(
@@ -155,36 +194,38 @@ object ApplicationBuild extends Build {
     ,javaCore
     ,javaJdbc
     ,javaJpa
-    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.2.Final"
-    ,"org.hibernate" % "hibernate-envers" % "4.2.2.Final"
-    ,"be.objectify" %% "deadbolt-java" % "2.1-SNAPSHOT"
-    ,"com.feth" %% "play-authenticate" % "0.2.5-SNAPSHOT"
-    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.1"
-    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.1"
-    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.1"
-    ,"com.clever-age" % "play2-elasticsearch" % "0.5-SNAPSHOT" excludeAll(
-      ExclusionRule(organization = "org.apache.lucene")
+    ,"org.hibernate" % "hibernate-entitymanager" % "4.2.6.Final"
+    ,"org.hibernate" % "hibernate-envers" % "4.2.6.Final"
+    ,"be.objectify" %% "deadbolt-java" % "2.2-RC1"
+    ,"com.feth" %% "play-authenticate" % "0.3.4-SNAPSHOT" changing() excludeAll(
+      ExclusionRule(organization = "org.scala-stm", name = "scala-stm_2.10.0"),
+      ExclusionRule(organization = "play")
       )
+    ,"com.fasterxml.jackson.core" % "jackson-core" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-annotations" % "2.2.3"
+    ,"com.fasterxml.jackson.core" % "jackson-databind" % "2.2.3"
+    ,"com.fasterxml.jackson.datatype" % "jackson-datatype-hibernate4" % "2.2.3"
+    ,"com.clever-age" % "play2-elasticsearch" % "0.8-SNAPSHOT"// excludeAll(
+//      ExclusionRule(organization = "org.apache.lucene")
+//      )
     ,"org.apache.lucene" % "lucene-analyzers" % "3.6.2"
-    ,"org.apache.lucene" % "lucene-highlighter" % "3.6.2"
-    ,"org.apache.lucene" % "lucene-memory" % "3.6.2"
-    ,"org.apache.lucene" % "lucene-queries" % "3.6.2"
+    ,"org.apache.lucene" % "lucene-highlighter" % "4.4.0"
+    ,"org.apache.lucene" % "lucene-memory" % "4.4.0"
+    ,"org.apache.lucene" % "lucene-queries" % "4.4.0"
 
-    ,"com.typesafe" %% "play-plugins-mailer" % "2.1.0"
+    ,"com.typesafe" %% "play-plugins-mailer" % "2.2.0"
     ,"com.google.inject" % "guice" % "3.0"
     ,"org.code_factory" % "JpaNestedSet" % "1.0-SNAPSHOT"
-    ,"mms" % "mms-models" % "1.0-SNAPSHOT" changing()
 
   //--------------- Registry Dependencies -------------------------------------
   /*
 //    ,"com.wordnik" %% "swagger-play2" % "1.2.1-SNAPSHOT"
     ,"net.sf.opencsv" % "opencsv" % "2.4-SNAPSHOT"
-    ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-basic-analyzers" % "0.30"
-    ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-cli" % "0.30" excludeAll(
+    ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-basic-analyzers" % "0.34"
+    ,"org.eobjects.analyzerbeans" % "AnalyzerBeans-cli" % "0.34" excludeAll(
       ExclusionRule(organization = "berkeleydb")
       )
-    ,"org.eobjects.metamodel" % "MetaModel-pojo" % "3.4.1"
+    ,"org.eobjects.metamodel" % "MetaModel-pojo" % "3.4.5"
     ,"nz.co.datascience" % "rel_2.9.1" % "0.3.1"
 
     // Hadoop
@@ -195,12 +236,12 @@ object ApplicationBuild extends Build {
     ,"commons-daemon" % "commons-daemon" % "1.0.13"
 
     // Mongo
-    ,"org.mongodb" % "mongo-java-driver" % "2.11.0"
+    ,"org.mongodb" % "mongo-java-driver" % "2.11.3"
 
     // ModeShape
     // defined in https://repository.jboss.org/nexus/content/repositories/releases/org/modeshape/bom/modeshape-bom-embedded/3.1.3.Final/modeshape-bom-embedded-3.1.3.Final.pom
     ,"javax.jcr" % "jcr" % "2.0"
-    ,"org.modeshape" % "modeshape-jcr-api" % "3.2-SNAPSHOT"
+    ,"org.modeshape" % "modeshape-jcr-api" % "3.5.0.Final"
     ,"javax.transaction" % "jta" % "1.1"
 
     // causing "NoSuchMethodError: org.jboss.logging.Logger.getMessageLogger"
@@ -242,30 +283,30 @@ object ApplicationBuild extends Build {
 //      ExclusionRule(organization = "org.jboss.spec.javax.transaction", artifact = "jboss-transaction-api_1.1_spec")
 //      )
 
-    ,"org.modeshape" % "modeshape-common" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-jcr" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-schematic" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-sequencer-ddl" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-sequencer-msoffice" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-sequencer-text" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-sequencer-xml" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-sequencer-xsd" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-sequencer-wsdl" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-sequencer-zip" % "3.2-SNAPSHOT"
-    ,"org.modeshape" % "modeshape-extractor-tika" % "3.2-SNAPSHOT"
-    ,"org.infinispan" % "infinispan-core" % "5.3.0.Beta2" excludeAll(
+    ,"org.modeshape" % "modeshape-common" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-jcr" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-schematic" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-sequencer-ddl" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-sequencer-msoffice" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-sequencer-text" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-sequencer-xml" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-sequencer-xsd" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-sequencer-wsdl" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-sequencer-zip" % "3.5.0.Final"
+    ,"org.modeshape" % "modeshape-extractor-tika" % "3.5.0.Final"
+    ,"org.infinispan" % "infinispan-core" % "5.3.0.Final" excludeAll(
       ExclusionRule(organization = "org.codehaus.woodstox", name = "woodstox-core-asl"),
       ExclusionRule(organization = "org.codehaus.woodstox", name = "stax2-api")
       )
-    ,"org.infinispan" % "infinispan-lucene-directory" % "5.3.0.Beta2"
-    ,"org.infinispan" % "infinispan-cachestore-bdbje" % "5.3.0.Beta2"
-    ,"org.infinispan" % "infinispan-cachestore-jdbm" % "5.3.0.Beta2"
-    ,"org.infinispan" % "infinispan-cachestore-jdbc" % "5.3.0.Beta2"
+    ,"org.infinispan" % "infinispan-lucene-directory" % "5.3.0.Final"
+    ,"org.infinispan" % "infinispan-cachestore-bdbje" % "5.3.0.Final"
+    ,"org.infinispan" % "infinispan-cachestore-jdbm" % "5.3.0.Final"
+    ,"org.infinispan" % "infinispan-cachestore-jdbc" % "5.3.0.Final"
     ,"c3p0" % "c3p0" % "0.9.1.2" //same as the one used by Infinispan's JDBC cache store
-    ,"org.hibernate" % "hibernate-search-engine" % "4.2.0.Final" excludeAll(
+    ,"org.hibernate" % "hibernate-search-engine" % "4.2.6.Final" excludeAll(
       ExclusionRule(organization = "org.hibernate")
       )
-    ,"org.hibernate" % "hibernate-search-infinispan" % "4.2.0.Final" excludeAll(
+    ,"org.hibernate" % "hibernate-search-infinispan" % "4.2.6.Final" excludeAll(
       ExclusionRule(organization = "org.hibernate")
       )
     // MS Office sequencer
@@ -280,7 +321,7 @@ object ApplicationBuild extends Build {
     ,"org.eclipse.emf" % "ecore-change" % "2.2.3"
     ,"org.eclipse.emf" % "ecore-xmi" % "2.4.1"
     // Tika
-    ,"org.apache.tika" % "tika-parsers" % "1.3" excludeAll(
+    ,"org.apache.tika" % "tika-parsers" % "1.4" excludeAll(
       ExclusionRule(organization = "edu.ucar", name = "netcdf"),
       ExclusionRule(organization = "commons-httpclient", name = "commons-httpclient"),
       ExclusionRule(organization = "com.drewnoakes", name = "metadata-extractor"),
@@ -296,13 +337,14 @@ object ApplicationBuild extends Build {
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
     // Add your own project settings here
-    scalaVersion := "2.10.1",
+    scalaVersion := "2.10.2",
     ebeanEnabled := false,
-
     offline := true,
-
     resolvers ++= commonResolvers
-//  ).settings(
+  ).settings(
+    requireJs += "main.js",
+    requireJsShim += "main.js"
+//    requireNativePath := Some("./scripts/r.js")
 //    net.virtualvoid.sbt.graph.Plugin.graphSettings: _*
   ).dependsOn(glossary).aggregate(glossary)
 

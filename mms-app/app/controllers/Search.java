@@ -14,10 +14,10 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
-import mms.common.models.Column;
-import mms.common.models.Dataset;
-import mms.common.models.business.BusinessTerm;
-import mms.common.models.business.Tag;
+import models.domain.Column;
+import models.domain.Dataset;
+import models.domain.business.BusinessTerm;
+import models.domain.business.Tag;
 
 /**
  * User: markmo

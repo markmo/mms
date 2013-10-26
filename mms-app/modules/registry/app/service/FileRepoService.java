@@ -6,8 +6,8 @@ import java.util.Map;
 
 import javax.jcr.Binary;
 
-import mms.common.models.file.FileContext;
-import mms.common.models.file.FileUpload;
+import models.domain.file.FileContext;
+import models.domain.file.FileUpload;
 
 /**
  * User: markmo

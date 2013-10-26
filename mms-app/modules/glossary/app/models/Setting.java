@@ -2,7 +2,7 @@ package models.glossary;
 
 import javax.persistence.*;
 
-import mms.common.models.AuditedModel;
+import models.domain.AuditedModel;
 
 /**
  * User: markmo

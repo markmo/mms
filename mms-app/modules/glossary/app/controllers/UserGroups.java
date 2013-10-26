@@ -1,19 +1,19 @@
 package controllers.glossary;
 
 import static play.data.Form.form;
-import static utils.QueryTool.*;
+import static utils.account.QueryTool.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Joiner;
-import org.codehaus.jackson.JsonNode;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
-import mms.common.models.business.UserGroup;
+import models.domain.business.UserGroup;
 import models.common.Page;
 
 /**

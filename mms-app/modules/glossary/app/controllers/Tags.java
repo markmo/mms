@@ -2,13 +2,13 @@ package controllers.glossary;
 
 import java.util.List;
 
-import org.codehaus.jackson.JsonNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.*;
 
-import mms.common.models.business.Tag;
+import models.domain.business.Tag;
 
 /**
  * User: markmo

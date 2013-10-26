@@ -8,7 +8,7 @@ import com.github.cleverage.elasticsearch.annotations.IndexMapping;
 import com.github.cleverage.elasticsearch.annotations.IndexType;
 import play.db.jpa.JPA;
 
-import mms.common.models.Column;
+import models.domain.Column;
 
 /**
  * User: markmo

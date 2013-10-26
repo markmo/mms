@@ -3,9 +3,9 @@ package models.common;
 import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.*;
-import org.codehaus.jackson.JsonNode;
 import play.libs.Json;
 
 /**

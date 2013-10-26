@@ -12,8 +12,8 @@ import io.Source
 import java.io._
 import java.util.Date
 import javax.jcr.Binary
-import mms.common.models._
-import mms.common.models.file.{FlatFile, FileColumn}
+import models.domain._
+import models.domain.file.{FlatFile, FileColumn}
 import org.eobjects.analyzer.beans._
 import org.eobjects.analyzer.beans.convert.{ConvertToBooleanTransformer, ConvertToNumberTransformer}
 import org.eobjects.analyzer.beans.stringpattern.{PatternFinderResult, PatternFinderResultHtmlRenderer, PatternFinderAnalyzer}

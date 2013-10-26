@@ -15,10 +15,10 @@ import play.db.jpa.Transactional;
 import play.libs.F;
 import play.mvc.*;
 
-import mms.common.models.Dataset;
-import mms.common.models.file.FileUpload;
-import mms.common.models.file.FlatFile;
-import mms.common.models.relational.Table;
+import models.domain.Dataset;
+import models.domain.file.FileUpload;
+import models.domain.file.FlatFile;
+import models.domain.relational.Table;
 
 /**
  * User: markmo

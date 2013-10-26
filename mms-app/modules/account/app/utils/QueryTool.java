@@ -1,4 +1,4 @@
-package utils;
+package utils.account;
 
 import java.util.List;
 import javax.persistence.EntityManager;

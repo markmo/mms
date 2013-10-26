@@ -2,29 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/api/AnalyzerBeans-api.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/api/AnalyzerBeans-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/basic-analyzers/AnalyzerBeans-basic-analyzers.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/basic-analyzers/AnalyzerBeans-basic-analyzers.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/basic-explorers/AnalyzerBeans-basic-explorers.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/basic-explorers/AnalyzerBeans-basic-explorers.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/basic-filters/AnalyzerBeans-basic-filters.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/basic-filters/AnalyzerBeans-basic-filters.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/basic-transformers/AnalyzerBeans-basic-transformers.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/basic-transformers/AnalyzerBeans-basic-transformers.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/AnalyzerBeans-components.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/AnalyzerBeans-components.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/core/AnalyzerBeans-core.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/core/AnalyzerBeans-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/data-structures/AnalyzerBeans-data-structures.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/data-structures/AnalyzerBeans-data-structures.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/date-gap/AnalyzerBeans-date-gap.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/date-gap/AnalyzerBeans-date-gap.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/el/AnalyzerBeans-el.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/el/AnalyzerBeans-el.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/html-rendering/AnalyzerBeans-html-rendering.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/html-rendering/AnalyzerBeans-html-rendering.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/i18n/AnalyzerBeans-i18n.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/i18n/AnalyzerBeans-i18n.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/javascript/AnalyzerBeans-javascript.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/javascript/AnalyzerBeans-javascript.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/json/AnalyzerBeans-json.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/json/AnalyzerBeans-json.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/pattern-finder/AnalyzerBeans-pattern-finder.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/pattern-finder/AnalyzerBeans-pattern-finder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/reference-data/AnalyzerBeans-reference-data.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/reference-data/AnalyzerBeans-reference-data.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/standardizers/AnalyzerBeans-standardizers.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/standardizers/AnalyzerBeans-standardizers.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/value-distribution/AnalyzerBeans-value-distribution.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/value-distribution/AnalyzerBeans-value-distribution.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../java/AnalyzerBeans/components/writers/AnalyzerBeans-writers.iml" filepath="$PROJECT_DIR$/../../java/AnalyzerBeans/components/writers/AnalyzerBeans-writers.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../deps/JPA-NestedSet/JpaNestedSet.iml" filepath="$PROJECT_DIR$/../deps/JPA-NestedSet/JpaNestedSet.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms.iml" filepath="$PROJECT_DIR$/.idea_modules/mms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms-account.iml" filepath="$PROJECT_DIR$/.idea_modules/mms-account.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms-build.iml" filepath="$PROJECT_DIR$/.idea_modules/mms-build.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../common/Models/mms-models.iml" filepath="$PROJECT_DIR$/../common/Models/mms-models.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms-common.iml" filepath="$PROJECT_DIR$/.idea_modules/mms-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms-glossary.iml" filepath="$PROJECT_DIR$/.idea_modules/mms-glossary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms-models.iml" filepath="$PROJECT_DIR$/.idea_modules/mms-models.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea_modules/mms-social.iml" filepath="$PROJECT_DIR$/.idea_modules/mms-social.iml" />
     </modules>
   </component>
 </project>
